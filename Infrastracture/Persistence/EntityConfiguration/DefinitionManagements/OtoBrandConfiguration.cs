@@ -1,0 +1,19 @@
+using Domain.Entities.DefinitionManagements;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Persistence.EntityConfiguration.DefinitionManagements
+{
+    public class OtoBrandConfiguration : IEntityTypeConfiguration<OtoBrand>
+    {
+        public void Configure(EntityTypeBuilder<OtoBrand> builder)
+        {
+            builder.HasKey(t => t.Gid);
+            builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
+
+
+            builder.Property(y => y.AracMarkaAdi).IsRequired().HasColumnType("varchar").HasMaxLength(100);
+
+        }
+    }
+}

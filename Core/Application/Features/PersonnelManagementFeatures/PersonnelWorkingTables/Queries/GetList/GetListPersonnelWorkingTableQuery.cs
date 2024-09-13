@@ -1,0 +1,52 @@
+using Application.Helpers.PaginationHelpers;
+using Application.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
+using AutoMapper;
+using Core.Application.Request;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
+using X = Domain.Entities.PersonnelManagements;
+using MediatR;
+using System.Linq.Expressions;
+
+namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetList;
+
+public class GetListPersonnelWorkingTableQuery : IRequest<GetListResponse<GetListPersonnelWorkingTableListItemDto>>
+{
+    public PageRequest PageRequest { get; set; }
+
+    public class GetListPersonnelWorkingTableQueryHandler : IRequestHandler<GetListPersonnelWorkingTableQuery, GetListResponse<GetListPersonnelWorkingTableListItemDto>>
+    {
+        private readonly IPersonnelWorkingTableReadRepository _personnelWorkingTableReadRepository;
+        private readonly IMapper _mapper;
+        private readonly NoPagination<X.PersonnelWorkingTable, GetListPersonnelWorkingTableListItemDto> _noPagination;
+
+        public GetListPersonnelWorkingTableQueryHandler(IPersonnelWorkingTableReadRepository personnelWorkingTableReadRepository, IMapper mapper, NoPagination<X.PersonnelWorkingTable, GetListPersonnelWorkingTableListItemDto> noPagination)
+        {
+            _personnelWorkingTableReadRepository = personnelWorkingTableReadRepository;
+            _mapper = mapper;
+            _noPagination = noPagination;
+        }
+
+        public async Task<GetListResponse<GetListPersonnelWorkingTableListItemDto>> Handle(GetListPersonnelWorkingTableQuery request, CancellationToken cancellationToken)
+        {
+            if (request.PageRequest.PageIndex == -1)
+                //unutma
+				//includes varsa eklenecek - Orn: Altta
+				//return await _noPagination.NoPaginationData(cancellationToken, 
+                //    includes: new Expression<Func<PersonnelWorkingTable, object>>[]
+                //    {
+                //       x => x.UserFK,
+                //       x=> x.PersonnelWorkingTableMembers
+                //    });
+				return await _noPagination.NoPaginationData(cancellationToken);
+            IPaginate<X.PersonnelWorkingTable> personnelWorkingTables = await _personnelWorkingTableReadRepository.GetListAllAsync(
+                index: request.PageRequest.PageIndex,
+                size: request.PageRequest.PageSize,
+                cancellationToken: cancellationToken
+            );
+
+            GetListResponse<GetListPersonnelWorkingTableListItemDto> response = _mapper.Map<GetListResponse<GetListPersonnelWorkingTableListItemDto>>(personnelWorkingTables);
+            return response;
+        }
+    }
+}
