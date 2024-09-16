@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.Cities.Commands.Create;
 using Application.Features.DefinitionManagementFeatures.Cities.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.Cities.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.City, DeleteCityCommand>().ReverseMap();
         CreateMap<X.City, DeletedCityResponse>().ReverseMap();
 
-		CreateMap<X.City, GetByGidCityResponse>().ReverseMap();
+        CreateMap<X.City, GetByGidCityResponse>().ReverseMap();
 
         CreateMap<X.City, GetListCityListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.City>, GetListResponse<GetListCityListItemDto>>().ReverseMap();

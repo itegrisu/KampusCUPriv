@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.MeasureTypes.Commands.Cr
 using Application.Features.DefinitionManagementFeatures.MeasureTypes.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.MeasureTypes.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.MeasureTypes.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.MeasureTypes.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.MeasureTypes.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.MeasureType, DeleteMeasureTypeCommand>().ReverseMap();
         CreateMap<X.MeasureType, DeletedMeasureTypeResponse>().ReverseMap();
 
-		CreateMap<X.MeasureType, GetByGidMeasureTypeResponse>().ReverseMap();
+        CreateMap<X.MeasureType, GetByGidMeasureTypeResponse>().ReverseMap();
 
         CreateMap<X.MeasureType, GetListMeasureTypeListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.MeasureType>, GetListResponse<GetListMeasureTypeListItemDto>>().ReverseMap();

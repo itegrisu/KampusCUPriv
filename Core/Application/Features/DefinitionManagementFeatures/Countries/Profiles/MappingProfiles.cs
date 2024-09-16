@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.Countries.Commands.Creat
 using Application.Features.DefinitionManagementFeatures.Countries.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.Countries.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.Countries.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.Countries.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.Countries.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.Country, DeleteCountryCommand>().ReverseMap();
         CreateMap<X.Country, DeletedCountryResponse>().ReverseMap();
 
-		CreateMap<X.Country, GetByGidCountryResponse>().ReverseMap();
+        CreateMap<X.Country, GetByGidCountryResponse>().ReverseMap();
 
         CreateMap<X.Country, GetListCountryListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Country>, GetListResponse<GetListCountryListItemDto>>().ReverseMap();

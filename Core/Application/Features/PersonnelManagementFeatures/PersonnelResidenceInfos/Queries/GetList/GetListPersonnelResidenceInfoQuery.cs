@@ -4,9 +4,11 @@ using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.PersonnelManagements;
+using Domain.Entities.PersonnelManagements;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetList;
 
@@ -30,19 +32,20 @@ public class GetListPersonnelResidenceInfoQuery : IRequest<GetListResponse<GetLi
         public async Task<GetListResponse<GetListPersonnelResidenceInfoListItemDto>> Handle(GetListPersonnelResidenceInfoQuery request, CancellationToken cancellationToken)
         {
             if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<PersonnelResidenceInfo, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.PersonnelResidenceInfoMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
-            IPaginate<X.PersonnelResidenceInfo> personnelResidenceInfos = await _personnelResidenceInfoReadRepository.GetListAllAsync(
+            {
+                return await _noPagination.NoPaginationData(cancellationToken,
+                  includes: new Expression<Func<PersonnelResidenceInfo, object>>[]
+                  {
+                       x => x.UserFK,
+                  });
+            }
+
+
+            IPaginate<X.PersonnelResidenceInfo> personnelResidenceInfos = await _personnelResidenceInfoReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.UserFK)
             );
 
             GetListResponse<GetListPersonnelResidenceInfoListItemDto> response = _mapper.Map<GetListResponse<GetListPersonnelResidenceInfoListItemDto>>(personnelResidenceInfos);

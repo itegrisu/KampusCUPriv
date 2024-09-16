@@ -8,10 +8,10 @@ public class UpdatePersonnelForeignLanguageCommandValidator : AbstractValidator<
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
         RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-RuleFor(c => c.GidLanguageFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidLanguageFK).NotNull().NotEmpty();
 
-RuleFor(c => c.KonusmaDuzeyi).NotNull().NotEmpty();
-RuleFor(c => c.OkumaDuzeyi).NotNull().NotEmpty();
+        RuleFor(c => c.KonusmaDuzeyi).NotNull().NotEmpty();
+        RuleFor(c => c.OkumaDuzeyi).NotNull().NotEmpty();
 
 
     }

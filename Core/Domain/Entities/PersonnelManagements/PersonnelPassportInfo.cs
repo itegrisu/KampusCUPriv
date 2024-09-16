@@ -1,10 +1,5 @@
 using Core.Entities;
 using Domain.Entities.GeneralManagements;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities.PersonnelManagements
 {
@@ -21,3 +16,4 @@ namespace Domain.Entities.PersonnelManagements
 
 
     }
+}

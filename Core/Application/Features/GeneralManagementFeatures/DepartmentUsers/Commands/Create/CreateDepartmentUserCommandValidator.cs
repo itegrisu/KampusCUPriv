@@ -7,9 +7,7 @@ public class CreateDepartmentUserCommandValidator : AbstractValidator<CreateDepa
     public CreateDepartmentUserCommandValidator()
     {
         RuleFor(c => c.GidDepartmanFK).NotNull().NotEmpty();
-RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-
-
+        RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
 
     }
 }
