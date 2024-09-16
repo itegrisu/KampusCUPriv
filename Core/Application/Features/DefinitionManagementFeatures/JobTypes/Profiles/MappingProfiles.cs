@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.JobTypes.Commands.Create
 using Application.Features.DefinitionManagementFeatures.JobTypes.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.JobTypes.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.JobTypes.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.JobTypes.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.JobTypes.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.JobType, DeleteJobTypeCommand>().ReverseMap();
         CreateMap<X.JobType, DeletedJobTypeResponse>().ReverseMap();
 
-		CreateMap<X.JobType, GetByGidJobTypeResponse>().ReverseMap();
+        CreateMap<X.JobType, GetByGidJobTypeResponse>().ReverseMap();
 
         CreateMap<X.JobType, GetListJobTypeListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.JobType>, GetListResponse<GetListJobTypeListItemDto>>().ReverseMap();

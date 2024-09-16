@@ -3,22 +3,20 @@ using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Q
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Rules;
 using Application.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRepo;
 using AutoMapper;
-using X = Domain.Entities.PersonnelManagements;
 using MediatR;
+using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Update;
 
 public class UpdatePersonnelResidenceInfoCommand : IRequest<UpdatedPersonnelResidenceInfoResponse>
 {
     public Guid Gid { get; set; }
-
-	public Guid GidPersonelFK { get; set; }
-
-public string OturumSeriNo { get; set; }
-public DateTime VerilisTarihi { get; set; }
-public DateTime GecerlilikTarihi { get; set; }
-public string? Belge { get; set; }
-public string? Aciklama { get; set; }
+    public Guid GidPersonelFK { get; set; }
+    public string OturumSeriNo { get; set; }
+    public DateTime VerilisTarihi { get; set; }
+    public DateTime GecerlilikTarihi { get; set; }
+    public string? Belge { get; set; }
+    public string? Aciklama { get; set; }
 
 
 
@@ -41,8 +39,9 @@ public string? Aciklama { get; set; }
         public async Task<UpdatedPersonnelResidenceInfoResponse> Handle(UpdatePersonnelResidenceInfoCommand request, CancellationToken cancellationToken)
         {
             X.PersonnelResidenceInfo? personnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
-			//INCLUDES Buraya Gelecek include varsa eklenecek
+            //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelResidenceInfoBusinessRules.PersonnelResidenceInfoShouldExistWhenSelected(personnelResidenceInfo);
+            await _personnelResidenceInfoBusinessRules.PersonnelShouldExistWhenSelected(request.GidPersonelFK);
             personnelResidenceInfo = _mapper.Map(request, personnelResidenceInfo);
 
             _personnelResidenceInfoWriteRepository.Update(personnelResidenceInfo!);

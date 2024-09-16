@@ -3,12 +3,14 @@ using Domain.Entities.AuthManagements;
 using Domain.Entities.DefinitionManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.LogManagements;
+using Domain.Entities.PersonnelManagements;
 using Domain.Entities.PortalManagements;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfiguration.AuthManagements;
 using Persistence.EntityConfiguration.DefinitionManagements;
 using Persistence.EntityConfiguration.GeneralManagements;
 using Persistence.EntityConfiguration.LogManagements;
+using Persistence.EntityConfiguration.PersonnelManagements;
 using Persistence.EntityConfiguration.PortalManagements;
 using C = Core.Context;
 
@@ -35,6 +37,27 @@ namespace Persistence.Context
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserRefreshTokenConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentUserConfiguration());
+
+            modelBuilder.ApplyConfiguration(new PersonnelAddressConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelWorkingTableConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelPermitInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelForeignLanguageConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelGraduatedSchoolConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelPassportInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelResidenceInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelDocumentConfiguration());
+
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.ApplyConfiguration(new PermitTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ForeignLanguageConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new CurrencyConfiguration());
+            modelBuilder.ApplyConfiguration(new JobTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new OtoBrandConfiguration());
+            modelBuilder.ApplyConfiguration(new RoomTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new MeasureTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
 
             modelBuilder.ApplyConfiguration(new AuthUserRoleConfiguration());
@@ -48,7 +71,6 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new LogUserPageVisitConfiguration());
             modelBuilder.ApplyConfiguration(new LogUserPageVisitActionConfiguration());
             modelBuilder.ApplyConfiguration(new LogEmailSendConfiguration());
-
             modelBuilder.ApplyConfiguration(new PortalParameterConfiguration());
             modelBuilder.ApplyConfiguration(new PortalTextConfiguration());
 
@@ -96,6 +118,8 @@ namespace Persistence.Context
         // DbSet, veritabaný tablosu üzerinde CRUD iþlemlerini gerçekleþtirmeyi saðlar
         public DbSet<User> Users { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<DepartmentUser> DepartmentUsers { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<LogAuthorizationError> LogAuthorizationErrors { get; set; }
         public DbSet<LogFailedLogin> LogFailedLogins { get; set; }
@@ -109,7 +133,23 @@ namespace Persistence.Context
         public DbSet<AuthPage> AuthPages { get; set; }
         public DbSet<PortalParameter> PortalParameters { get; set; }
         public DbSet<PortalText> PortalTexts { get; set; }
-
+        public DbSet<PersonnelAddress> PersonnelAddresses { get; set; }
+        public DbSet<PersonnelWorkingTable> PersonnelWorkingTables { get; set; }
+        public DbSet<PersonnelPermitInfo> PersonnelPermitInfos { get; set; }
+        public DbSet<PersonnelForeignLanguage> PersonnelForeignLanguages { get; set; }
+        public DbSet<PersonnelGraduatedSchool> PersonnelGraduatedSchools { get; set; }
+        public DbSet<PersonnelPassportInfo> PersonnelPassportInfos { get; set; }
+        public DbSet<PersonnelResidenceInfo> PersonnelResidenceInfos { get; set; }
+        public DbSet<PersonnelDocument> PersonnelDocuments { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<PermitType> PermitTypes { get; set; }
+        public DbSet<ForeignLanguage> ForeignLanguages { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<JobType> JobTypes { get; set; }
+        public DbSet<OtoBrand> OtoBrands { get; set; }
+        public DbSet<RoomType> RoomTypes { get; set; }
+        public DbSet<MeasureType> MeasureTypes { get; set; }
 
     }
 }

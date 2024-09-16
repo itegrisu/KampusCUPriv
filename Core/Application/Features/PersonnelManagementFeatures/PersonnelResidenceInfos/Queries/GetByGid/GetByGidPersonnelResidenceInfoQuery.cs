@@ -1,9 +1,9 @@
+using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Rules;
+using Application.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRepo;
 using AutoMapper;
 using MediatR;
-using X = Domain.Entities.PersonnelManagements;
 using Microsoft.EntityFrameworkCore;
-using Application.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRepo;
-using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Rules;
+using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetByGid
 {
@@ -26,10 +26,8 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInf
 
             public async Task<GetByGidPersonnelResidenceInfoResponse> Handle(GetByGidPersonnelResidenceInfoQuery request, CancellationToken cancellationToken)
             {
-                X.PersonnelResidenceInfo? personnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
-                    //unutma
-					//includes varsa eklenecek - Orn: Altta
-					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)
+                X.PersonnelResidenceInfo? personnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK));
+
                 await _personnelResidenceInfoBusinessRules.PersonnelResidenceInfoShouldExistWhenSelected(personnelResidenceInfo);
 
                 GetByGidPersonnelResidenceInfoResponse response = _mapper.Map<GetByGidPersonnelResidenceInfoResponse>(personnelResidenceInfo);

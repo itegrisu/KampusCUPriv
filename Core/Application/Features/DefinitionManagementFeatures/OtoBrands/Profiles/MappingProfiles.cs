@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.OtoBrands.Commands.Creat
 using Application.Features.DefinitionManagementFeatures.OtoBrands.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.OtoBrands.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.OtoBrands.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.OtoBrands.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.OtoBrands.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.OtoBrand, DeleteOtoBrandCommand>().ReverseMap();
         CreateMap<X.OtoBrand, DeletedOtoBrandResponse>().ReverseMap();
 
-		CreateMap<X.OtoBrand, GetByGidOtoBrandResponse>().ReverseMap();
+        CreateMap<X.OtoBrand, GetByGidOtoBrandResponse>().ReverseMap();
 
         CreateMap<X.OtoBrand, GetListOtoBrandListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.OtoBrand>, GetListResponse<GetListOtoBrandListItemDto>>().ReverseMap();

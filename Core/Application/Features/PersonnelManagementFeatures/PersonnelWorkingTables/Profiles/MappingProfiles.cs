@@ -2,7 +2,6 @@ using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Co
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetByGid;
-using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetById;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.PersonnelWorkingTable, DeletePersonnelWorkingTableCommand>().ReverseMap();
         CreateMap<X.PersonnelWorkingTable, DeletedPersonnelWorkingTableResponse>().ReverseMap();
 
-		CreateMap<X.PersonnelWorkingTable, GetByGidPersonnelWorkingTableResponse>().ReverseMap();
+        CreateMap<X.PersonnelWorkingTable, GetByGidPersonnelWorkingTableResponse>().ReverseMap();
 
         CreateMap<X.PersonnelWorkingTable, GetListPersonnelWorkingTableListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.PersonnelWorkingTable>, GetListResponse<GetListPersonnelWorkingTableListItemDto>>().ReverseMap();
