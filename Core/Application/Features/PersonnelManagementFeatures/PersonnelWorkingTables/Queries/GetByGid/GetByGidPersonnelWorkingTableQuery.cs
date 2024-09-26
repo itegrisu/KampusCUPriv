@@ -1,9 +1,9 @@
+using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Rules;
+using Application.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
 using AutoMapper;
 using MediatR;
-using X = Domain.Entities.PersonnelManagements;
 using Microsoft.EntityFrameworkCore;
-using Application.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
-using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Rules;
+using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetByGid
 {
@@ -26,10 +26,8 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTable
 
             public async Task<GetByGidPersonnelWorkingTableResponse> Handle(GetByGidPersonnelWorkingTableQuery request, CancellationToken cancellationToken)
             {
-                X.PersonnelWorkingTable? personnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
-                    //unutma
-					//includes varsa eklenecek - Orn: Altta
-					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)
+                X.PersonnelWorkingTable? personnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK));
+
                 await _personnelWorkingTableBusinessRules.PersonnelWorkingTableShouldExistWhenSelected(personnelWorkingTable);
 
                 GetByGidPersonnelWorkingTableResponse response = _mapper.Map<GetByGidPersonnelWorkingTableResponse>(personnelWorkingTable);

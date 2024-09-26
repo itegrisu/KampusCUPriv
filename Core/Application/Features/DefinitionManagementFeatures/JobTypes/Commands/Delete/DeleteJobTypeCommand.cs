@@ -1,15 +1,15 @@
 using Application.Features.DefinitionManagementFeatures.JobTypes.Constants;
 using Application.Features.DefinitionManagementFeatures.JobTypes.Rules;
-using Application.Repositories.DefinitionManagementRepos.JobTypeRepo;
+using Application.Repositories.DefinitionManagementRepos.JopTypeRepo;
 using AutoMapper;
-using X = Domain.Entities.DefinitionManagements;
 using MediatR;
+using X = Domain.Entities.DefinitionManagements;
 
 namespace Application.Features.DefinitionManagementFeatures.JobTypes.Commands.Delete;
 
 public class DeleteJobTypeCommand : IRequest<DeletedJobTypeResponse>
 {
-	public Guid Gid { get; set; }
+    public Guid Gid { get; set; }
 
     public class DeleteJobTypeCommandHandler : IRequestHandler<DeleteJobTypeCommand, DeletedJobTypeResponse>
     {

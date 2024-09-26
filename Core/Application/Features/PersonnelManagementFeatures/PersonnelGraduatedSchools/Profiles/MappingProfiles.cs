@@ -2,7 +2,6 @@ using Application.Features.PersonnelManagementFeatures.PersonnelGraduatedSchools
 using Application.Features.PersonnelManagementFeatures.PersonnelGraduatedSchools.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelGraduatedSchools.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelGraduatedSchools.Queries.GetByGid;
-using Application.Features.PersonnelManagementFeatures.PersonnelGraduatedSchools.Queries.GetById;
 using Application.Features.PersonnelManagementFeatures.PersonnelGraduatedSchools.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.PersonnelGraduatedSchool, DeletePersonnelGraduatedSchoolCommand>().ReverseMap();
         CreateMap<X.PersonnelGraduatedSchool, DeletedPersonnelGraduatedSchoolResponse>().ReverseMap();
 
-		CreateMap<X.PersonnelGraduatedSchool, GetByGidPersonnelGraduatedSchoolResponse>().ReverseMap();
+        CreateMap<X.PersonnelGraduatedSchool, GetByGidPersonnelGraduatedSchoolResponse>().ReverseMap();
 
         CreateMap<X.PersonnelGraduatedSchool, GetListPersonnelGraduatedSchoolListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.PersonnelGraduatedSchool>, GetListResponse<GetListPersonnelGraduatedSchoolListItemDto>>().ReverseMap();

@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.Currencies.Commands.Crea
 using Application.Features.DefinitionManagementFeatures.Currencies.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.Currencies.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.Currencies.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.Currencies.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.Currencies.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.Currency, DeleteCurrencyCommand>().ReverseMap();
         CreateMap<X.Currency, DeletedCurrencyResponse>().ReverseMap();
 
-		CreateMap<X.Currency, GetByGidCurrencyResponse>().ReverseMap();
+        CreateMap<X.Currency, GetByGidCurrencyResponse>().ReverseMap();
 
         CreateMap<X.Currency, GetListCurrencyListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Currency>, GetListResponse<GetListCurrencyListItemDto>>().ReverseMap();

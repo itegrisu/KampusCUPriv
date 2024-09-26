@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.PermitTypes.Commands.Cre
 using Application.Features.DefinitionManagementFeatures.PermitTypes.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.PermitTypes.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.PermitTypes.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.PermitTypes.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.PermitTypes.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.PermitType, DeletePermitTypeCommand>().ReverseMap();
         CreateMap<X.PermitType, DeletedPermitTypeResponse>().ReverseMap();
 
-		CreateMap<X.PermitType, GetByGidPermitTypeResponse>().ReverseMap();
+        CreateMap<X.PermitType, GetByGidPermitTypeResponse>().ReverseMap();
 
         CreateMap<X.PermitType, GetListPermitTypeListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.PermitType>, GetListResponse<GetListPermitTypeListItemDto>>().ReverseMap();

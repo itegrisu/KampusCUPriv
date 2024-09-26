@@ -26,7 +26,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListAuthPageQuery getListAuthPageQuery = new() { PageRequest = pageRequest };
@@ -36,7 +36,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpPut("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> Sort([FromBody] UpdateRowNoAuthPageCommand command)
         {
             UpdateRowNoAuthPageResponse response = await Mediator.Send(command);
@@ -45,7 +45,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> GetByGidPage([FromQuery] GetByUserGidAuthPageQuery getByGidAuthPageQuery)
         {
             GetListResponse<GetByUserGidAuthPageListItemDto> response = await Mediator.Send(getByGidAuthPageQuery);

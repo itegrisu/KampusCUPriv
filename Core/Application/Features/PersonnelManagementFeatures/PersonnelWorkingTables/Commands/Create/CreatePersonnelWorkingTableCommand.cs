@@ -3,9 +3,9 @@ using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Qu
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Rules;
 using Application.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
 using AutoMapper;
-using X = Domain.Entities.PersonnelManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Create;
 
@@ -13,8 +13,8 @@ public class CreatePersonnelWorkingTableCommand : IRequest<CreatedPersonnelWorki
 {
     public Guid GidPersonelFK { get; set; }
 
-public DateTime IseBaslamaTarihi { get; set; }
-public DateTime? IstenCikisTarihi { get; set; }
+    public DateTime IseBaslamaTarihi { get; set; }
+    public DateTime? IstenCikisTarihi { get; set; }
 
 
 
@@ -36,20 +36,21 @@ public DateTime? IstenCikisTarihi { get; set; }
 
         public async Task<CreatedPersonnelWorkingTableResponse> Handle(CreatePersonnelWorkingTableCommand request, CancellationToken cancellationToken)
         {
-            //int maxRowNo = await _personnelWorkingTableReadRepository.GetAll().MaxAsync(r => r.RowNo);
-			X.PersonnelWorkingTable personnelWorkingTable = _mapper.Map<X.PersonnelWorkingTable>(request);
-            //personnelWorkingTable.RowNo = maxRowNo + 1;
+
+            await _personnelWorkingTableBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+
+            X.PersonnelWorkingTable personnelWorkingTable = _mapper.Map<X.PersonnelWorkingTable>(request);
+
 
             await _personnelWorkingTableWriteRepository.AddAsync(personnelWorkingTable);
             await _personnelWorkingTableWriteRepository.SaveAsync();
 
-			X.PersonnelWorkingTable savedPersonnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: x => x.Gid == personnelWorkingTable.Gid);
-			//INCLUDES Buraya Gelecek include varsa eklenecek
-			//include: x => x.Include(x => x.UserFK));
+            X.PersonnelWorkingTable savedPersonnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: x => x.Gid == personnelWorkingTable.Gid, include: x => x.Include(x => x.UserFK));
+
 
             GetByGidPersonnelWorkingTableResponse obj = _mapper.Map<GetByGidPersonnelWorkingTableResponse>(savedPersonnelWorkingTable);
             return new()
-            {           
+            {
                 Title = PersonnelWorkingTablesBusinessMessages.ProcessCompleted,
                 Message = PersonnelWorkingTablesBusinessMessages.SuccessCreatedPersonnelWorkingTableMessage,
                 IsValid = true,

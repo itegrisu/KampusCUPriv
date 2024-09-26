@@ -34,7 +34,7 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
 
     [HttpPost("[action]")]
     [Authorize(AuthenticationSchemes = "Admin")]
-    [ServiceFilter(typeof(CustomAuthorizationFilter))]
+    
     public virtual async Task<IActionResult> Add([FromBody] TCreateCommand request)
     {
         TCreateResponse response = await Mediator.Send(request);
@@ -43,7 +43,7 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
 
     [HttpPut("[action]")]
     [Authorize(AuthenticationSchemes = "Admin")]
-    [ServiceFilter(typeof(CustomAuthorizationFilter))]
+    
     public virtual async Task<IActionResult> Update([FromBody] TUpdateCommand request)
     {
         TUpdateResponse response = await Mediator.Send(request);
@@ -52,7 +52,7 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
 
     [HttpDelete("[action]/{Gid}")]
     [Authorize(AuthenticationSchemes = "Admin")]
-    [ServiceFilter(typeof(CustomAuthorizationFilter))]
+    
     public async Task<IActionResult> Delete([FromRoute] TDeleteCommand deleteCommand)
     {
         TDeleteResponse response = await Mediator.Send(deleteCommand);
@@ -61,7 +61,7 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
 
     [HttpGet("[action]")]
     [Authorize(AuthenticationSchemes = "Admin")]
-    [ServiceFilter(typeof(CustomAuthorizationFilter))]
+    
     public async Task<IActionResult> GetByGid([FromQuery] TGetByGidQuery getByIdQuery)
     {
         TGetByGidResponse response = await Mediator.Send(getByIdQuery);

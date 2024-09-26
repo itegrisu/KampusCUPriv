@@ -2,7 +2,6 @@ using Application.Features.DefinitionManagementFeatures.DocumentTypes.Commands.C
 using Application.Features.DefinitionManagementFeatures.DocumentTypes.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.DocumentTypes.Commands.Update;
 using Application.Features.DefinitionManagementFeatures.DocumentTypes.Queries.GetByGid;
-using Application.Features.DefinitionManagementFeatures.DocumentTypes.Queries.GetById;
 using Application.Features.DefinitionManagementFeatures.DocumentTypes.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.DocumentType, DeleteDocumentTypeCommand>().ReverseMap();
         CreateMap<X.DocumentType, DeletedDocumentTypeResponse>().ReverseMap();
 
-		CreateMap<X.DocumentType, GetByGidDocumentTypeResponse>().ReverseMap();
+        CreateMap<X.DocumentType, GetByGidDocumentTypeResponse>().ReverseMap();
 
         CreateMap<X.DocumentType, GetListDocumentTypeListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.DocumentType>, GetListResponse<GetListDocumentTypeListItemDto>>().ReverseMap();

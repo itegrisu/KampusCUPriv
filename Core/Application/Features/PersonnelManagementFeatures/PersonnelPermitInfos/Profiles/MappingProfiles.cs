@@ -2,7 +2,6 @@ using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Comm
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Queries.GetByGid;
-using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Queries.GetById;
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.PersonnelPermitInfo, DeletePersonnelPermitInfoCommand>().ReverseMap();
         CreateMap<X.PersonnelPermitInfo, DeletedPersonnelPermitInfoResponse>().ReverseMap();
 
-		CreateMap<X.PersonnelPermitInfo, GetByGidPersonnelPermitInfoResponse>().ReverseMap();
+        CreateMap<X.PersonnelPermitInfo, GetByGidPersonnelPermitInfoResponse>().ReverseMap();
 
         CreateMap<X.PersonnelPermitInfo, GetListPersonnelPermitInfoListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.PersonnelPermitInfo>, GetListResponse<GetListPersonnelPermitInfoListItemDto>>().ReverseMap();

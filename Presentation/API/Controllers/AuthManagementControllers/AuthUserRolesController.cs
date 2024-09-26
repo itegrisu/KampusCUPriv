@@ -27,7 +27,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListAuthUserRoleQuery getListAuthUserRoleQuery = new() { PageRequest = pageRequest };
@@ -37,7 +37,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> GetListByUserGid([FromQuery] GetListByUserGidAuthUserRoleQuery getListByUserGidAuthUserRoleQuery)
         {
             GetListResponse<GetListByUserGidAuthUserRoleListItemDto> response = await Mediator.Send(getListByUserGidAuthUserRoleQuery);
@@ -46,7 +46,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpPut("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> Sort([FromBody] UpdateRowNoAuthUserRoleCommand command)
         {
             UpdateRowNoAuthUserRoleResponse response = await Mediator.Send(command);
@@ -55,7 +55,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpPost("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> AddByCheckBox([FromBody] CreateByCheckBoxAuthUserRoleCommand command)
         {
             CreatedByCheckBoxAuthUserRoleResponse response = await Mediator.Send(command);

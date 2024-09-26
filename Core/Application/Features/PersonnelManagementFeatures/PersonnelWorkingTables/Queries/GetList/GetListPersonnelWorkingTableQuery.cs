@@ -4,9 +4,11 @@ using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.PersonnelManagements;
+using Domain.Entities.PersonnelManagements;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetList;
 
@@ -30,19 +32,20 @@ public class GetListPersonnelWorkingTableQuery : IRequest<GetListResponse<GetLis
         public async Task<GetListResponse<GetListPersonnelWorkingTableListItemDto>> Handle(GetListPersonnelWorkingTableQuery request, CancellationToken cancellationToken)
         {
             if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<PersonnelWorkingTable, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.PersonnelWorkingTableMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+            {
+                return await _noPagination.NoPaginationData(cancellationToken,
+                     includes: new Expression<Func<PersonnelWorkingTable, object>>[]
+                   {
+                        x => x.UserFK,
+                   });
+            }
+
+
             IPaginate<X.PersonnelWorkingTable> personnelWorkingTables = await _personnelWorkingTableReadRepository.GetListAllAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.UserFK)
             );
 
             GetListResponse<GetListPersonnelWorkingTableListItemDto> response = _mapper.Map<GetListResponse<GetListPersonnelWorkingTableListItemDto>>(personnelWorkingTables);

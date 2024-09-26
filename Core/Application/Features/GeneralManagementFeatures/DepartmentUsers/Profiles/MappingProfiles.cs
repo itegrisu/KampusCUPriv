@@ -2,7 +2,6 @@ using Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.Cr
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.Delete;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.Update;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetByGid;
-using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetById;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -22,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.DepartmentUser, DeleteDepartmentUserCommand>().ReverseMap();
         CreateMap<X.DepartmentUser, DeletedDepartmentUserResponse>().ReverseMap();
 
-		CreateMap<X.DepartmentUser, GetByGidDepartmentUserResponse>().ReverseMap();
+        CreateMap<X.DepartmentUser, GetByGidDepartmentUserResponse>().ReverseMap();
 
         CreateMap<X.DepartmentUser, GetListDepartmentUserListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.DepartmentUser>, GetListResponse<GetListDepartmentUserListItemDto>>().ReverseMap();

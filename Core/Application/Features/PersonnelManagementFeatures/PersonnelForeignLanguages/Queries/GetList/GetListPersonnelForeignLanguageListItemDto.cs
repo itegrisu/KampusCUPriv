@@ -10,8 +10,8 @@ public class GetListPersonnelForeignLanguageListItemDto : IDto
     public string UserFKTamAd { get; set; }
     public Guid GidLanguageFK { get; set; }
     public string ForeignLanguageFKDilAdi { get; set; }
-    public EnumKonusmaDuzeyi KonusmaDuzeyi { get; set; }
-    public EnumOkumaDuzeyi OkumaDuzeyi { get; set; }
+    public EnumLanguageLevel KonusmaDuzeyi { get; set; }
+    public EnumLanguageLevel OkumaDuzeyi { get; set; }
 
 
 }

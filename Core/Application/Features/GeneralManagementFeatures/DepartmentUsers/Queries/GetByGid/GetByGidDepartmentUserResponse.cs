@@ -5,10 +5,10 @@ namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries
     public class GetByGidDepartmentUserResponse : IResponse
     {
         public Guid Gid { get; set; }
-public Guid GidDepartmanFK { get; set; }
-public Department DepartmentFK { get; set; }
-public Guid GidPersonelFK { get; set; }
-public User UserFK { get; set; }
+        public Guid GidDepartmanFK { get; set; }
+        public string DepartmentFKDepartmanAdi { get; set; }
+        public Guid GidPersonelFK { get; set; }
+        public string UserFKTamAd { get; set; }
 
 
     }

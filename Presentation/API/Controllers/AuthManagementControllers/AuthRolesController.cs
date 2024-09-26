@@ -25,7 +25,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListAuthRoleQuery getListAuthRoleQuery = new() { PageRequest = pageRequest };
@@ -35,7 +35,7 @@ namespace API.Controllers.AuthManagementControllers
 
         [HttpPut("[action]")]
         [Authorize(AuthenticationSchemes = "Admin")]
-        [ServiceFilter(typeof(CustomAuthorizationFilter))]
+        
         public async Task<IActionResult> Sort([FromBody] UpdateRowNoAuthRoleCommand command)
         {
             UpdateRowNoAuthRoleResponse response = await Mediator.Send(command);
