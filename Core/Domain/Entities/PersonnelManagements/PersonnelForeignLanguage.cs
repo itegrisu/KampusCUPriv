@@ -13,8 +13,8 @@ namespace Domain.Entities.PersonnelManagements
         public User UserFK { get; set; }
         public Guid GidLanguageFK { get; set; }
         public ForeignLanguage ForeignLanguageFK { get; set; }
-        public EnumKonusmaDuzeyi KonusmaDuzeyi { get; set; }
-        public EnumOkumaDuzeyi OkumaDuzeyi { get; set; }
+        public EnumLanguageLevel KonusmaDuzeyi { get; set; }
+        public EnumLanguageLevel OkumaDuzeyi { get; set; }
 
 
     }

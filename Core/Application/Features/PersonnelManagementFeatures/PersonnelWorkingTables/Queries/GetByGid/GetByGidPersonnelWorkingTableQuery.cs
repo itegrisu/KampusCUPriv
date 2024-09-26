@@ -26,8 +26,7 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTable
 
             public async Task<GetByGidPersonnelWorkingTableResponse> Handle(GetByGidPersonnelWorkingTableQuery request, CancellationToken cancellationToken)
             {
-                X.PersonnelWorkingTable? personnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.UserFK));
+                X.PersonnelWorkingTable? personnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK));
 
                 await _personnelWorkingTableBusinessRules.PersonnelWorkingTableShouldExistWhenSelected(personnelWorkingTable);
 

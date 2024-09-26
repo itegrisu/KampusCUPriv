@@ -4,6 +4,7 @@ using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Ru
 using Application.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Update;
@@ -11,9 +12,12 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTable
 public class UpdatePersonnelWorkingTableCommand : IRequest<UpdatedPersonnelWorkingTableResponse>
 {
     public Guid Gid { get; set; }
+
     public Guid GidPersonelFK { get; set; }
+
     public DateTime IseBaslamaTarihi { get; set; }
     public DateTime? IstenCikisTarihi { get; set; }
+
 
 
     public class UpdatePersonnelWorkingTableCommandHandler : IRequestHandler<UpdatePersonnelWorkingTableCommand, UpdatedPersonnelWorkingTableResponse>
@@ -37,12 +41,14 @@ public class UpdatePersonnelWorkingTableCommand : IRequest<UpdatedPersonnelWorki
             X.PersonnelWorkingTable? personnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelWorkingTableBusinessRules.PersonnelWorkingTableShouldExistWhenSelected(personnelWorkingTable);
-            await _personnelWorkingTableBusinessRules.PersonnelShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelWorkingTableBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
             personnelWorkingTable = _mapper.Map(request, personnelWorkingTable);
 
             _personnelWorkingTableWriteRepository.Update(personnelWorkingTable!);
             await _personnelWorkingTableWriteRepository.SaveAsync();
-            GetByGidPersonnelWorkingTableResponse obj = _mapper.Map<GetByGidPersonnelWorkingTableResponse>(personnelWorkingTable);
+            X.PersonnelWorkingTable updatedPersonnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: x => x.Gid == personnelWorkingTable.Gid, include: x => x.Include(x => x.UserFK));
+
+            GetByGidPersonnelWorkingTableResponse obj = _mapper.Map<GetByGidPersonnelWorkingTableResponse>(updatedPersonnelWorkingTable);
 
             return new()
             {

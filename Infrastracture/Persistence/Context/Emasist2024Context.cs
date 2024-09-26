@@ -1,18 +1,27 @@
 using Core.Entities;
+using Domain.Entities.AnnouncementManagements;
 using Domain.Entities.AuthManagements;
 using Domain.Entities.DefinitionManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.LogManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.PortalManagements;
+using Domain.Entities.StockManagements;
+using Domain.Entities.SupportManagements;
+using Domain.Entities.TaskManagements;
 using Microsoft.EntityFrameworkCore;
+using Persistence.EntityConfiguration.AnnouncementManagements;
 using Persistence.EntityConfiguration.AuthManagements;
 using Persistence.EntityConfiguration.DefinitionManagements;
 using Persistence.EntityConfiguration.GeneralManagements;
 using Persistence.EntityConfiguration.LogManagements;
 using Persistence.EntityConfiguration.PersonnelManagements;
 using Persistence.EntityConfiguration.PortalManagements;
+using Persistence.EntityConfiguration.StockManagements;
+using Persistence.EntityConfiguration.SupportManagements;
+using Persistence.EntityConfiguration.TaskManagements;
 using C = Core.Context;
+using T = Domain.Entities.TaskManagements;
 
 namespace Persistence.Context
 {
@@ -39,16 +48,9 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new UserRefreshTokenConfiguration());
             modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
             modelBuilder.ApplyConfiguration(new DepartmentUserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserShortCutConfiguration());
 
-            modelBuilder.ApplyConfiguration(new PersonnelAddressConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonnelWorkingTableConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonnelPermitInfoConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonnelForeignLanguageConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonnelGraduatedSchoolConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonnelPassportInfoConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonnelResidenceInfoConfiguration());
-            modelBuilder.ApplyConfiguration(new PersonnelDocumentConfiguration());
-
+            modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CityConfiguration());
             modelBuilder.ApplyConfiguration(new PermitTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ForeignLanguageConfiguration());
@@ -58,7 +60,7 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new OtoBrandConfiguration());
             modelBuilder.ApplyConfiguration(new RoomTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MeasureTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CountryConfiguration());
+
 
             modelBuilder.ApplyConfiguration(new AuthUserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new AuthRoleConfiguration());
@@ -71,8 +73,42 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new LogUserPageVisitConfiguration());
             modelBuilder.ApplyConfiguration(new LogUserPageVisitActionConfiguration());
             modelBuilder.ApplyConfiguration(new LogEmailSendConfiguration());
+
             modelBuilder.ApplyConfiguration(new PortalParameterConfiguration());
             modelBuilder.ApplyConfiguration(new PortalTextConfiguration());
+
+            modelBuilder.ApplyConfiguration(new AnnouncementConfiguration());
+            modelBuilder.ApplyConfiguration(new AnnouncementRecipientConfiguration());
+
+            modelBuilder.ApplyConfiguration(new TaskManagerConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskGroupConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskGroupUserConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskUserConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskCommentConfiguration());
+            modelBuilder.ApplyConfiguration(new TaskFileConfiguration());
+
+
+            modelBuilder.ApplyConfiguration(new SupportRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new SupportMessageConfiguration());
+            modelBuilder.ApplyConfiguration(new SupportMessageDetailConfiguration());
+
+            modelBuilder.ApplyConfiguration(new StockCardConfiguration());
+            modelBuilder.ApplyConfiguration(new StockCardImageConfiguration());
+            modelBuilder.ApplyConfiguration(new StockMovementConfiguration());
+            modelBuilder.ApplyConfiguration(new WarehouseConfiguration());
+
+            modelBuilder.ApplyConfiguration(new PersonnelAddressConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelWorkingTableConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelPermitInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelForeignLanguageConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelGraduatedSchoolConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelPassportInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelResidenceInfoConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonnelDocumentConfiguration());
+
+
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -118,8 +154,6 @@ namespace Persistence.Context
         // DbSet, veritabaný tablosu üzerinde CRUD iþlemlerini gerçekleþtirmeyi saðlar
         public DbSet<User> Users { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<DepartmentUser> DepartmentUsers { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<LogAuthorizationError> LogAuthorizationErrors { get; set; }
         public DbSet<LogFailedLogin> LogFailedLogins { get; set; }
@@ -133,6 +167,23 @@ namespace Persistence.Context
         public DbSet<AuthPage> AuthPages { get; set; }
         public DbSet<PortalParameter> PortalParameters { get; set; }
         public DbSet<PortalText> PortalTexts { get; set; }
+        public DbSet<SupportRequest> SupportRequests { get; set; }
+        public DbSet<SupportMessage> SupportMessages { get; set; }
+        public DbSet<SupportMessageDetail> SupportMessageDetails { get; set; }
+        public DbSet<StockCard> StockCards { get; set; }
+        public DbSet<StockCardImage> StockCardImages { get; set; }
+        public DbSet<TaskComment> TaskComments { get; set; }
+        public DbSet<TaskFile> TaskFiles { get; set; }
+        public DbSet<StockMovement> StockMovements { get; set; }
+        public DbSet<TaskManager> TaskManagers { get; set; }
+        public DbSet<TaskGroup> TaskGroups { get; set; }
+        public DbSet<TaskGroupUser> TaskGroupUsers { get; set; }
+        public DbSet<T.Task> Tasks { get; set; }
+        public DbSet<TaskUser> TaskUsers { get; set; }
+        public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<AnnouncementRecipient> AnnouncementRecipients { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<DepartmentUser> DepartmentUsers { get; set; }
         public DbSet<PersonnelAddress> PersonnelAddresses { get; set; }
         public DbSet<PersonnelWorkingTable> PersonnelWorkingTables { get; set; }
         public DbSet<PersonnelPermitInfo> PersonnelPermitInfos { get; set; }
@@ -141,6 +192,8 @@ namespace Persistence.Context
         public DbSet<PersonnelPassportInfo> PersonnelPassportInfos { get; set; }
         public DbSet<PersonnelResidenceInfo> PersonnelResidenceInfos { get; set; }
         public DbSet<PersonnelDocument> PersonnelDocuments { get; set; }
+        public DbSet<UserShortCut> UserShortCuts { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<PermitType> PermitTypes { get; set; }
         public DbSet<ForeignLanguage> ForeignLanguages { get; set; }
@@ -150,6 +203,5 @@ namespace Persistence.Context
         public DbSet<OtoBrand> OtoBrands { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<MeasureType> MeasureTypes { get; set; }
-
     }
 }

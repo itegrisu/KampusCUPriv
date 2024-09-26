@@ -2,14 +2,13 @@ using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.C
 using Application.Repositories.GeneralManagementRepos.UserRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
-using Domain.Entities.GeneralManagements;
 using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Rules;
 
 public class PersonnelResidenceInfoBusinessRules : BaseBusinessRules
 {
-
+    //public Guid GidPersonelFK { get; set; }
     private readonly IUserReadRepository _userReadRepository;
 
     public PersonnelResidenceInfoBusinessRules(IUserReadRepository userReadRepository)
@@ -23,13 +22,11 @@ public class PersonnelResidenceInfoBusinessRules : BaseBusinessRules
             throw new BusinessException(PersonnelResidenceInfosBusinessMessages.PersonnelResidenceInfoNotExists);
     }
 
-    public async Task PersonnelShouldExistWhenSelected(Guid userGid)
+    public async Task UserShouldExistWhenSelected(Guid gidPersonelFK)
     {
-
-        User user = await _userReadRepository.GetAsync(predicate: x => x.Gid == userGid);
-
+        var user = await _userReadRepository.GetAsync(predicate: x => x.Gid == gidPersonelFK);
         if (user == null)
-            throw new BusinessException(PersonnelResidenceInfosBusinessMessages.PersonnelNotExists);
+            throw new BusinessException(PersonnelResidenceInfosBusinessMessages.UserNotExists);
     }
 
 }

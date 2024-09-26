@@ -20,5 +20,7 @@ public static class PersonnelResidenceInfosBusinessMessages
     public const string IncorrectOperation = "Incorrect Operation";
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
 
-    public const string PersonnelNotExists = "Ýlgili Personel Bulunamadý";
+
+    public const string UserNotExists = "User Not Exists";
+
 }

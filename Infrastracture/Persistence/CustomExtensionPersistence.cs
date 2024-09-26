@@ -1,4 +1,7 @@
 ﻿using Application.Abstractions.EntityServices;
+using Application.Abstractions.UnitOfWork;
+using Application.Repositories.AnnouncementManagementRepos.AnnouncementRecipientRepo;
+using Application.Repositories.AnnouncementManagementRepos.AnnouncementRepo;
 using Application.Repositories.AuthManagementRepos.AuthPageRepo;
 using Application.Repositories.AuthManagementRepos.AuthRolePageRepo;
 using Application.Repositories.AuthManagementRepos.AuthRoleRepo;
@@ -13,10 +16,12 @@ using Application.Repositories.DefinitionManagementRepos.MeasureTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.OtoBrandRepo;
 using Application.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.RoomTypeRepo;
+using Application.Repositories.DefinitonManagementRepos.WarehouseRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using Application.Repositories.GeneralManagementRepos.UserRefreshTokenRepo;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
+using Application.Repositories.GeneralManagementRepos.UserShortCutRepo;
 using Application.Repositories.LogManagementRepos.LogAuthorizationErrorRepo;
 using Application.Repositories.LogManagementRepos.LogEmailSendRepo;
 using Application.Repositories.LogManagementRepos.LogFailedLoginRepo;
@@ -33,10 +38,25 @@ using Application.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRe
 using Application.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
 using Application.Repositories.PortalManagementRepos.PortalParameterRepo;
 using Application.Repositories.PortalManagementRepos.PortalTextRepo;
+using Application.Repositories.StockManagementRepos.StockCardImageRepo;
+using Application.Repositories.StockManagementRepos.StockCardRepo;
+using Application.Repositories.StockManagementRepos.StockMovementRepo;
+using Application.Repositories.SupportManagementRepos.SupportMessageDetailRepo;
+using Application.Repositories.SupportManagementRepos.SupportMessageRepo;
+using Application.Repositories.SupportManagementRepos.SupportRequestRepo;
+using Application.Repositories.TaskManagementRepos.TaskCommentRepo;
+using Application.Repositories.TaskManagementRepos.TaskFileRepo;
+using Application.Repositories.TaskManagementRepos.TaskGroupRepo;
+using Application.Repositories.TaskManagementRepos.TaskGroupUserRepo;
+using Application.Repositories.TaskManagementRepos.TaskManagerRepo;
+using Application.Repositories.TaskManagementRepos.TaskRepo;
+using Application.Repositories.TaskManagementRepos.TaskUserRepo;
 using Core.Repositories.Abstracts;
 using Core.Repositories.Concretes;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Context;
+using Persistence.Repositories.AnnouncementManagementRepos.AnnouncementRecipientRepo;
+using Persistence.Repositories.AnnouncementManagementRepos.AnnouncementRepo;
 using Persistence.Repositories.AuthManagementRepos.AuthPageRepo;
 using Persistence.Repositories.AuthManagementRepos.AuthRolePageRepo;
 using Persistence.Repositories.AuthManagementRepos.AuthRoleRepo;
@@ -51,10 +71,12 @@ using Persistence.Repositories.DefinitionManagementRepos.MeasureTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.OtoBrandRepo;
 using Persistence.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.RoomTypeRepo;
+using Persistence.Repositories.DefinitionManagementRepos.WarehouseRepo;
 using Persistence.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Persistence.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserRefreshTokenRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserRepo;
+using Persistence.Repositories.GeneralManagementRepos.UserShortCutRepo;
 using Persistence.Repositories.LogManagementRepos.LogAuthorizationErrorRepo;
 using Persistence.Repositories.LogManagementRepos.LogEmailSendRepo;
 using Persistence.Repositories.LogManagementRepos.LogFailedLoginRepo;
@@ -71,7 +93,21 @@ using Persistence.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRe
 using Persistence.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
 using Persistence.Repositories.PortalManagementRepos.PortalParameterRepo;
 using Persistence.Repositories.PortalManagementRepos.PortalTextRepo;
+using Persistence.Repositories.StockManagementsRepos.StockCardImageRepo;
+using Persistence.Repositories.StockManagementsRepos.StockCardRepo;
+using Persistence.Repositories.StockManagementsRepos.StockMovementRepo;
+using Persistence.Repositories.SupportManagementRepos.SupportMessageDetailRepo;
+using Persistence.Repositories.SupportManagementRepos.SupportMessageRepo;
+using Persistence.Repositories.SupportManagementRepos.SupportRequestRepo;
+using Persistence.Repositories.TaskManagementRepos.TaskCommentRepo;
+using Persistence.Repositories.TaskManagementRepos.TaskFileRepo;
+using Persistence.Repositories.TaskManagementRepos.TaskGroupRepo;
+using Persistence.Repositories.TaskManagementRepos.TaskGroupUserRepo;
+using Persistence.Repositories.TaskManagementRepos.TaskManagerRepo;
+using Persistence.Repositories.TaskManagementRepos.TaskRepo;
+using Persistence.Repositories.TaskManagementRepos.TaskUserRepo;
 using Persistence.Services.EntityServices;
+using Persistence.Services.UnitOfWork;
 using C = Core.Context;
 
 namespace Persistence
@@ -91,21 +127,12 @@ namespace Persistence
             services.AddScoped<IUserRefreshTokenWriteRepository, UserRefreshTokenWriteRepository>();
             #endregion
 
-            #region Department
-            services.AddScoped<IDepartmentReadRepository, DepartmentReadRepository>();
-            services.AddScoped<IDepartmentWriteRepository, DepartmentWriteRepository>();
-            #endregion
 
+            //#region Country
+            //services.AddScoped<ICountryReadRepository, CountryReadRepository>();
+            //services.AddScoped<ICountryWriteRepository, CountryWriteRepository>();
+            //#endregion
 
-            #region Department User
-            services.AddScoped<IDepartmentUserReadRepository, DepartmentUserReadRepository>();
-            services.AddScoped<IDepartmentUserWriteRepository, DepartmentUserWriteRepository>();
-            #endregion
-
-            #region Country
-            services.AddScoped<ICountryReadRepository, CountryReadRepository>();
-            services.AddScoped<ICountryWriteRepository, CountryWriteRepository>();
-            #endregion
 
             #region logRepo
             services.AddScoped<ILogUserPageVisitActionReadRepository, LogUserPageVisitActionReadRepository>();
@@ -123,6 +150,7 @@ namespace Persistence
             services.AddScoped<ILogSuccessedLoginReadRepository, LogSuccessedLoginReadRepository>();
             services.AddScoped<ILogSuccessedLoginWriteRepository, LogSuccessedLoginWriteRepository>();
             #endregion
+
 
             #region Auth Repo
             services.AddScoped<IAuthPageReadRepository, AuthPageReadRepository>();
@@ -143,6 +171,7 @@ namespace Persistence
             services.AddScoped<IPortalParameterReadRepository, PortalParameterReadRepository>();
             services.AddScoped<IPortalParameterWriteRepository, PortalParameterWriteRepository>();
             #endregion
+
 
             #region Portal Text
             services.AddScoped<IPortalTextReadRepository, PortalTextReadRepository>();
@@ -205,17 +234,33 @@ namespace Persistence
             services.AddScoped<IPersonnelDocumentReadRepository, PersonnelDocumentReadRepository>();
             services.AddScoped<IPersonnelDocumentWriteRepository, PersonnelDocumentWriteRepository>();
             #endregion
-            #region City
-            services.AddScoped<ICityReadRepository, CityReadRepository>();
-            services.AddScoped<ICityWriteRepository, CityWriteRepository>();
-            #endregion
-
 
             #region Permit Type
             services.AddScoped<IPermitTypeReadRepository, PermitTypeReadRepository>();
             services.AddScoped<IPermitTypeWriteRepository, PermitTypeWriteRepository>();
             #endregion
 
+
+
+
+            #region City
+            services.AddScoped<ICityReadRepository, CityReadRepository>();
+            services.AddScoped<ICityWriteRepository, CityWriteRepository>();
+            #endregion
+
+
+
+
+            #region Department
+            services.AddScoped<IDepartmentReadRepository, DepartmentReadRepository>();
+            services.AddScoped<IDepartmentWriteRepository, DepartmentWriteRepository>();
+            #endregion
+
+
+            #region Department User
+            services.AddScoped<IDepartmentUserReadRepository, DepartmentUserReadRepository>();
+            services.AddScoped<IDepartmentUserWriteRepository, DepartmentUserWriteRepository>();
+            #endregion
 
             #region Foreign Language
             services.AddScoped<IForeignLanguageReadRepository, ForeignLanguageReadRepository>();
@@ -240,6 +285,9 @@ namespace Persistence
             services.AddScoped<IJobTypeWriteRepository, JobTypeWriteRepository>();
             #endregion
 
+
+
+
             #region Oto Brand
             services.AddScoped<IOtoBrandReadRepository, OtoBrandReadRepository>();
             services.AddScoped<IOtoBrandWriteRepository, OtoBrandWriteRepository>();
@@ -256,13 +304,106 @@ namespace Persistence
             services.AddScoped<IMeasureTypeReadRepository, MeasureTypeReadRepository>();
             services.AddScoped<IMeasureTypeWriteRepository, MeasureTypeWriteRepository>();
             #endregion
+            #region Stock Card
+            services.AddScoped<IStockCardReadRepository, StockCardReadRepository>();
+            services.AddScoped<IStockCardWriteRepository, StockCardWriteRepository>();
+            #endregion
+
+            #region Stock Card Image
+            services.AddScoped<IStockCardImageReadRepository, StockCardImageReadRepository>();
+            services.AddScoped<IStockCardImageWriteRepository, StockCardImageWriteRepository>();
+            #endregion
 
 
+            #region Stock Movement
+            services.AddScoped<IStockMovementReadRepository, StockMovementReadRepository>();
+            services.AddScoped<IStockMovementWriteRepository, StockMovementWriteRepository>();
+            #endregion
+
+            #region Support Request
+            services.AddScoped<ISupportRequestReadRepository, SupportRequestReadRepository>();
+            services.AddScoped<ISupportRequestWriteRepository, SupportRequestWriteRepository>();
+            #endregion
+
+
+            #region Support Message
+            services.AddScoped<ISupportMessageReadRepository, SupportMessageReadRepository>();
+            services.AddScoped<ISupportMessageWriteRepository, SupportMessageWriteRepository>();
+            #endregion
+
+
+            #region Support Message Detail
+            services.AddScoped<ISupportMessageDetailReadRepository, SupportMessageDetailReadRepository>();
+            services.AddScoped<ISupportMessageDetailWriteRepository, SupportMessageDetailWriteRepository>();
+            #endregion
+
+
+            #region Task Manager
+            services.AddScoped<ITaskManagerReadRepository, TaskManagerReadRepository>();
+            services.AddScoped<ITaskManagerWriteRepository, TaskManagerWriteRepository>();
+            #endregion
+
+
+            #region Task Group
+            services.AddScoped<ITaskGroupReadRepository, TaskGroupReadRepository>();
+            services.AddScoped<ITaskGroupWriteRepository, TaskGroupWriteRepository>();
+            #endregion
+
+
+            #region Task Group User
+            services.AddScoped<ITaskGroupUserReadRepository, TaskGroupUserReadRepository>();
+            services.AddScoped<ITaskGroupUserWriteRepository, TaskGroupUserWriteRepository>();
+            #endregion
+
+
+            #region Task
+            services.AddScoped<ITaskReadRepository, TaskReadRepository>();
+            services.AddScoped<ITaskWriteRepository, TaskWriteRepository>();
+            #endregion
+
+
+            #region Task User
+            services.AddScoped<ITaskUserReadRepository, TaskUserReadRepository>();
+            services.AddScoped<ITaskUserWriteRepository, TaskUserWriteRepository>();
+            #endregion
+
+
+            #region Task Comment
+            services.AddScoped<ITaskCommentReadRepository, TaskCommentReadRepository>();
+            services.AddScoped<ITaskCommentWriteRepository, TaskCommentWriteRepository>();
+            #endregion
+
+
+            #region Task File
+            services.AddScoped<ITaskFileReadRepository, TaskFileReadRepository>();
+            services.AddScoped<ITaskFileWriteRepository, TaskFileWriteRepository>();
+            #endregion
+
+            #region Announcement
+            services.AddScoped<IAnnouncementReadRepository, AnnouncementReadRepository>();
+            services.AddScoped<IAnnouncementWriteRepository, AnnouncementWriteRepository>();
+            #endregion
+
+
+            #region Announcement Recipient
+            services.AddScoped<IAnnouncementRecipientReadRepository, AnnouncementRecipientReadRepository>();
+            services.AddScoped<IAnnouncementRecipientWriteRepository, AnnouncementRecipientWriteRepository>();
+            #endregion
+
+            #region Usershort cut
+            services.AddScoped<IUserShortCutReadRepository, UserShortCutReadRepository>();
+            services.AddScoped<IUserShortCutWriteRepository, UserShortCutWriteRepository>();
+            #endregion
+
+            services.AddScoped<IWarehouseReadRepository, WarehouseReadRepository>();
+            services.AddScoped<IWarehouseWriteRepository, WarehouseWriteRepository>();
+            services.AddScoped<ICountryReadRepository, CountryReadRepository>();
+            services.AddScoped<ICountryWriteRepository, CountryWriteRepository>();
 
             services.AddScoped<C.Context, Emasist2024Context>();
             services.AddScoped<IDatabaseService, DatabaseService>();
             services.AddScoped<ILogService, LogService>();
-
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         }
     }

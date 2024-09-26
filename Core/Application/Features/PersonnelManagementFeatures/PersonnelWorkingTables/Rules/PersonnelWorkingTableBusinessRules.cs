@@ -1,8 +1,8 @@
+using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Constants;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Constants;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
-using Domain.Entities.GeneralManagements;
 using X = Domain.Entities.PersonnelManagements;
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Rules;
@@ -22,11 +22,10 @@ public class PersonnelWorkingTableBusinessRules : BaseBusinessRules
             throw new BusinessException(PersonnelWorkingTablesBusinessMessages.PersonnelWorkingTableNotExists);
     }
 
-    public async Task PersonnelShouldExistWhenSelected(Guid userGid)
+    public async Task UserShouldExistWhenSelected(Guid gidPersonelFK)
     {
-        User user = await _userReadRepository.GetAsync(predicate: x => x.Gid == userGid);
-
+        var user = await _userReadRepository.GetAsync(predicate: x => x.Gid == gidPersonelFK);
         if (user == null)
-            throw new BusinessException(PersonnelWorkingTablesBusinessMessages.PersonnelNotExists);
+            throw new BusinessException(PersonnelResidenceInfosBusinessMessages.UserNotExists);
     }
 }

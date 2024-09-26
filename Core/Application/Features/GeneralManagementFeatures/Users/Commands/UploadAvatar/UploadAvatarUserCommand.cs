@@ -1,12 +1,12 @@
 using Application.Abstractions.Storage;
-using Application.Features.GeneralManagementFeatures.Users.Constants;
-using Application.Features.GeneralManagementFeatures.Users.Rules;
-using Application.Repositories.GeneralManagementRepos.UserRepo;
 using AutoMapper;
-using Domain.Entities.GeneralManagements;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Application.Features.GeneralManagementFeatures.Users.Constants;
+using Application.Features.GeneralManagementFeatures.Users.Rules;
+using Application.Repositories.GeneralManagementRepos.UserRepo;
+using Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatar
 {
@@ -47,14 +47,14 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.UploadAv
 
                 _storageService.FileCopy(request.FileName, "Files/0temp", "Files/user-avatars");
 
-                user.ProfilResmi = "\\Files\\user-avatars\\" + request.FileName;
+                user.Avatar = "\\Files\\user-avatars\\" + request.FileName;
 
                 _userWriteRepository.Update(user);
                 await _userWriteRepository.SaveAsync();
 
                 return new()
                 {
-                    FullPath = user.ProfilResmi,
+                    FullPath = user.Avatar,
                     Title = UsersBusinessMessages.ProcessCompleted,
                     Message = UsersBusinessMessages.SucessUploadAvatarImagesMessage,
                     IsValid = true

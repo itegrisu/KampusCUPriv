@@ -34,19 +34,18 @@ public class GetListPersonnelResidenceInfoQuery : IRequest<GetListResponse<GetLi
             if (request.PageRequest.PageIndex == -1)
             {
                 return await _noPagination.NoPaginationData(cancellationToken,
-                  includes: new Expression<Func<PersonnelResidenceInfo, object>>[]
-                  {
+                    includes: new Expression<Func<PersonnelResidenceInfo, object>>[]
+                    {
                        x => x.UserFK,
-                  });
+                    });
             }
 
 
-            IPaginate<X.PersonnelResidenceInfo> personnelResidenceInfos = await _personnelResidenceInfoReadRepository.GetListAsync(
+            IPaginate<X.PersonnelResidenceInfo> personnelResidenceInfos = await _personnelResidenceInfoReadRepository.GetListAllAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.UserFK)
-            );
+                include: x => x.Include(x => x.UserFK));
 
             GetListResponse<GetListPersonnelResidenceInfoListItemDto> response = _mapper.Map<GetListResponse<GetListPersonnelResidenceInfoListItemDto>>(personnelResidenceInfos);
             return response;

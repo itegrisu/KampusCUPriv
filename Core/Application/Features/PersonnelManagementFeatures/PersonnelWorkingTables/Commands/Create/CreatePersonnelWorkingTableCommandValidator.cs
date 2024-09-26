@@ -8,7 +8,7 @@ public class CreatePersonnelWorkingTableCommandValidator : AbstractValidator<Cre
     {
         RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
 
-RuleFor(c => c.IseBaslamaTarihi).NotNull().NotEmpty();
+        RuleFor(c => c.IseBaslamaTarihi).NotNull().NotEmpty();
 
 
     }

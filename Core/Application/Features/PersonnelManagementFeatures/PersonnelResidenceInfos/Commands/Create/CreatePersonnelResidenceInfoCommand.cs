@@ -4,7 +4,10 @@ using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.R
 using Application.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRepo;
 using AutoMapper;
 using MediatR;
+
+using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.PersonnelManagements;
+
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Create;
 
@@ -16,7 +19,6 @@ public class CreatePersonnelResidenceInfoCommand : IRequest<CreatedPersonnelResi
     public DateTime GecerlilikTarihi { get; set; }
     public string? Belge { get; set; }
     public string? Aciklama { get; set; }
-
     public class CreatePersonnelResidenceInfoCommandHandler : IRequestHandler<CreatePersonnelResidenceInfoCommand, CreatedPersonnelResidenceInfoResponse>
     {
         private readonly IMapper _mapper;
@@ -35,14 +37,20 @@ public class CreatePersonnelResidenceInfoCommand : IRequest<CreatedPersonnelResi
 
         public async Task<CreatedPersonnelResidenceInfoResponse> Handle(CreatePersonnelResidenceInfoCommand request, CancellationToken cancellationToken)
         {
-            await _personnelResidenceInfoBusinessRules.PersonnelShouldExistWhenSelected(request.GidPersonelFK);
+
+            await _personnelResidenceInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+
 
             X.PersonnelResidenceInfo personnelResidenceInfo = _mapper.Map<X.PersonnelResidenceInfo>(request);
 
             await _personnelResidenceInfoWriteRepository.AddAsync(personnelResidenceInfo);
             await _personnelResidenceInfoWriteRepository.SaveAsync();
 
-            X.PersonnelResidenceInfo savedPersonnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: x => x.Gid == personnelResidenceInfo.Gid);
+
+
+
+            X.PersonnelResidenceInfo savedPersonnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: x => x.Gid == personnelResidenceInfo.Gid, include: x => x.Include(x => x.UserFK));
+
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

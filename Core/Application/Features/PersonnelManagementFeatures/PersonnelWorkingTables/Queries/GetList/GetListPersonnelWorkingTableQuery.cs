@@ -34,14 +34,14 @@ public class GetListPersonnelWorkingTableQuery : IRequest<GetListResponse<GetLis
             if (request.PageRequest.PageIndex == -1)
             {
                 return await _noPagination.NoPaginationData(cancellationToken,
-                 includes: new Expression<Func<PersonnelWorkingTable, object>>[]
-                 {
-                       x => x.UserFK,
-                 });
+                     includes: new Expression<Func<PersonnelWorkingTable, object>>[]
+                   {
+                        x => x.UserFK,
+                   });
             }
 
 
-            IPaginate<X.PersonnelWorkingTable> personnelWorkingTables = await _personnelWorkingTableReadRepository.GetListAsync(
+            IPaginate<X.PersonnelWorkingTable> personnelWorkingTables = await _personnelWorkingTableReadRepository.GetListAllAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,

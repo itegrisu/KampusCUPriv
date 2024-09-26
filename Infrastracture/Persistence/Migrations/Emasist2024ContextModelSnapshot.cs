@@ -22,6 +22,93 @@ namespace Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Domain.Entities.AnnouncementManagements.Announcement", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<string>("Link")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<int>("RowNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShowType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.HasKey("Gid");
+
+                    b.ToTable("Announcements");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AnnouncementManagements.AnnouncementRecipient", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("Confirm")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidAnnouncementFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidRecipientFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ReadDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ReadIpAddress")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidAnnouncementFK");
+
+                    b.HasIndex("GidRecipientFK");
+
+                    b.ToTable("AnnouncementRecipients");
+                });
+
             modelBuilder.Entity("Domain.Entities.AuthManagements.AuthPage", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -435,6 +522,33 @@ namespace Persistence.Migrations
                     b.ToTable("RoomTypes");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.Warehouse", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<string>("WarehouseName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.ToTable("Warehouses");
+                });
+
             modelBuilder.Entity("Domain.Entities.GeneralManagements.Department", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -511,6 +625,10 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("AktifHesapMi")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Avatar")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<int>("Cinsiyet")
                         .HasColumnType("int");
@@ -642,6 +760,41 @@ namespace Persistence.Migrations
                     b.HasIndex("GidUserFK");
 
                     b.ToTable("UserRefreshTokens");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GeneralManagements.UserShortCut", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PageName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("PageUrl")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<int>("RowNo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("UserShortCuts");
                 });
 
             modelBuilder.Entity("Domain.Entities.LogManagements.LogAuthorizationError", b =>
@@ -1252,6 +1405,468 @@ namespace Persistence.Migrations
                     b.ToTable("PortalTexts");
                 });
 
+            modelBuilder.Entity("Domain.Entities.StockManagements.StockCard", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1500)
+                        .HasColumnType("varchar(1500)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("StockCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("StockName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("TaxRate")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.ToTable("StockCards");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StockManagements.StockCardImage", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidStockCardFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<int>("RowNo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidStockCardFK");
+
+                    b.ToTable("StockCardImages");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StockManagements.StockMovement", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid?>("GidNextWarehouseFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidPreviousWarehouseFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidStockCardFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("MovementType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OperationType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidNextWarehouseFK");
+
+                    b.HasIndex("GidPreviousWarehouseFK");
+
+                    b.HasIndex("GidStockCardFK");
+
+                    b.ToTable("StockMovements");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessage", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidSenderUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidSupportFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<int>("MessageType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidSenderUserFK");
+
+                    b.HasIndex("GidSupportFK");
+
+                    b.ToTable("SupportMessages");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessageDetail", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidMessageFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidReadUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ReadDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("ReadIp")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidMessageFK");
+
+                    b.HasIndex("GidReadUserFK");
+
+                    b.ToTable("SupportMessageDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportRequest", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriorityType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupportStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupportType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("CreatedUserFK");
+
+                    b.ToTable("SupportRequests");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.Task", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("GidTaskAssignerUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PriorityType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidTaskAssignerUserFK");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskComment", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidTaskFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidTaskFK");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("TaskComments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskFile", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileDescription")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("FileTitle")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("GidFileUploadUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidTaskFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UploadedFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidFileUploadUserFK");
+
+                    b.HasIndex("GidTaskFK");
+
+                    b.ToTable("TaskFiles");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskGroup", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.ToTable("TaskGroups");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskGroupUser", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidTaskGroupFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidTaskGroupFK");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("TaskGroupUsers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskManager", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("TaskManagers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskUser", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidTaskFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StatusNote")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<int>("TaskState")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidTaskFK");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("TaskUsers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AnnouncementManagements.AnnouncementRecipient", b =>
+                {
+                    b.HasOne("Domain.Entities.AnnouncementManagements.Announcement", "Announcement")
+                        .WithMany("AnnouncementRecipients")
+                        .HasForeignKey("GidAnnouncementFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("AnnouncementRecipients")
+                        .HasForeignKey("GidRecipientFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Announcement");
+
+                    b.Navigation("UserFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.AuthManagements.AuthRolePage", b =>
                 {
                     b.HasOne("Domain.Entities.AuthManagements.AuthPage", "AuthPageFK")
@@ -1357,6 +1972,17 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("UserRefreshTokens")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GeneralManagements.UserShortCut", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("UserShortCuts")
                         .HasForeignKey("GidUserFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1538,6 +2164,191 @@ namespace Persistence.Migrations
                     b.Navigation("UserFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.StockManagements.StockCardImage", b =>
+                {
+                    b.HasOne("Domain.Entities.StockManagements.StockCard", "StockCardFK")
+                        .WithMany("StockCardImages")
+                        .HasForeignKey("GidStockCardFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("StockCardFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StockManagements.StockMovement", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.Warehouse", "NextWarehouseFK")
+                        .WithMany("NextStockMovements")
+                        .HasForeignKey("GidNextWarehouseFK");
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.Warehouse", "PreviousWarehouseFK")
+                        .WithMany("PreviousStockMovements")
+                        .HasForeignKey("GidPreviousWarehouseFK");
+
+                    b.HasOne("Domain.Entities.StockManagements.StockCard", "StockCardFK")
+                        .WithMany("StockMovements")
+                        .HasForeignKey("GidStockCardFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("NextWarehouseFK");
+
+                    b.Navigation("PreviousWarehouseFK");
+
+                    b.Navigation("StockCardFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessage", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("SupportMessages")
+                        .HasForeignKey("GidSenderUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SupportManagements.SupportRequest", "SupportRequestFK")
+                        .WithMany("SupportMessages")
+                        .HasForeignKey("GidSupportFK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("SupportRequestFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessageDetail", b =>
+                {
+                    b.HasOne("Domain.Entities.SupportManagements.SupportMessage", "SupportMessageFK")
+                        .WithMany("SupportMessageDetails")
+                        .HasForeignKey("GidMessageFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("SupportMessageDetails")
+                        .HasForeignKey("GidReadUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SupportMessageFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportRequest", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("SupportRequests")
+                        .HasForeignKey("CreatedUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.Task", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("Tasks")
+                        .HasForeignKey("GidTaskAssignerUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskComment", b =>
+                {
+                    b.HasOne("Domain.Entities.TaskManagements.Task", "TaskFK")
+                        .WithMany("TaskComments")
+                        .HasForeignKey("GidTaskFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("TaskComments")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TaskFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskFile", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("TaskFiles")
+                        .HasForeignKey("GidFileUploadUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TaskManagements.Task", "TaskFK")
+                        .WithMany("TaskFiles")
+                        .HasForeignKey("GidTaskFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TaskFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskGroupUser", b =>
+                {
+                    b.HasOne("Domain.Entities.TaskManagements.TaskGroup", "TaskGroupFK")
+                        .WithMany("TaskGroupUsers")
+                        .HasForeignKey("GidTaskGroupFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("TaskGroupUsers")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TaskGroupFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskManager", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("TaskManagers")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskUser", b =>
+                {
+                    b.HasOne("Domain.Entities.TaskManagements.Task", "TaskFK")
+                        .WithMany("TaskUsers")
+                        .HasForeignKey("GidTaskFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("TaskUsers")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TaskFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AnnouncementManagements.Announcement", b =>
+                {
+                    b.Navigation("AnnouncementRecipients");
+                });
+
             modelBuilder.Entity("Domain.Entities.AuthManagements.AuthPage", b =>
                 {
                     b.Navigation("AuthRolePages");
@@ -1579,6 +2390,13 @@ namespace Persistence.Migrations
                     b.Navigation("PersonnelPermitInfos");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.Warehouse", b =>
+                {
+                    b.Navigation("NextStockMovements");
+
+                    b.Navigation("PreviousStockMovements");
+                });
+
             modelBuilder.Entity("Domain.Entities.GeneralManagements.Department", b =>
                 {
                     b.Navigation("DepartmentUsers");
@@ -1586,6 +2404,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.User", b =>
                 {
+                    b.Navigation("AnnouncementRecipients");
+
                     b.Navigation("AsilYonetilenDepartmants");
 
                     b.Navigation("AuthUserRoles");
@@ -1618,9 +2438,60 @@ namespace Persistence.Migrations
 
                     b.Navigation("PersonnelWorkingTables");
 
+                    b.Navigation("SupportMessageDetails");
+
+                    b.Navigation("SupportMessages");
+
+                    b.Navigation("SupportRequests");
+
+                    b.Navigation("TaskComments");
+
+                    b.Navigation("TaskFiles");
+
+                    b.Navigation("TaskGroupUsers");
+
+                    b.Navigation("TaskManagers");
+
+                    b.Navigation("TaskUsers");
+
+                    b.Navigation("Tasks");
+
                     b.Navigation("UserRefreshTokens");
 
+                    b.Navigation("UserShortCuts");
+
                     b.Navigation("YedekYonetilenDepartmants");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StockManagements.StockCard", b =>
+                {
+                    b.Navigation("StockCardImages");
+
+                    b.Navigation("StockMovements");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessage", b =>
+                {
+                    b.Navigation("SupportMessageDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupportManagements.SupportRequest", b =>
+                {
+                    b.Navigation("SupportMessages");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.Task", b =>
+                {
+                    b.Navigation("TaskComments");
+
+                    b.Navigation("TaskFiles");
+
+                    b.Navigation("TaskUsers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TaskManagements.TaskGroup", b =>
+                {
+                    b.Navigation("TaskGroupUsers");
                 });
 #pragma warning restore 612, 618
         }

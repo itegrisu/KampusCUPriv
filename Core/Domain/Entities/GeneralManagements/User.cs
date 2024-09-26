@@ -1,10 +1,13 @@
 using Core.Entities;
+using Domain.Entities.AnnouncementManagements;
 using Domain.Entities.AuthManagements;
 using Domain.Entities.DefinitionManagements;
 using Domain.Entities.LogManagements;
 using Domain.Entities.PersonnelManagements;
+using Domain.Entities.SupportManagements;
 using Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+using T = Domain.Entities.TaskManagements;
 
 namespace Domain.Entities.GeneralManagements
 {
@@ -15,6 +18,7 @@ namespace Domain.Entities.GeneralManagements
         public string Adi { get; set; } = string.Empty;
         public string Soyadi { get; set; } = string.Empty;
         public string EPosta { get; set; } = string.Empty;
+        public string? Avatar { get; set; } = string.Empty;
         public string? Unvani { get; set; }
         public string Sifre { get; set; } = string.Empty;
         public string SifreHash { get; set; } = string.Empty;
@@ -54,6 +58,17 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<PersonnelPassportInfo> PersonnelPassportInfos { get; set; }
         public ICollection<PersonnelResidenceInfo> PersonnelResidenceInfos { get; set; }
         public ICollection<PersonnelDocument> PersonnelDocuments { get; set; }
+        public ICollection<T.Task> Tasks { get; set; }
+        public ICollection<T.TaskComment> TaskComments { get; set; }
+        public ICollection<T.TaskFile> TaskFiles { get; set; }
+        public ICollection<T.TaskGroupUser> TaskGroupUsers { get; set; }
+        public ICollection<T.TaskUser> TaskUsers { get; set; }
+        public ICollection<T.TaskManager> TaskManagers { get; set; }
+        public ICollection<AnnouncementRecipient> AnnouncementRecipients { get; set; }
+        public ICollection<SupportMessage> SupportMessages { get; set; }
+        public ICollection<SupportMessageDetail> SupportMessageDetails { get; set; }
+        public ICollection<UserShortCut> UserShortCuts { get; set; }
+        public ICollection<SupportRequest> SupportRequests { get; set; }
 
 
         #region NotMapped alanlar 

@@ -4,7 +4,10 @@ using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.R
 using Application.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRepo;
 using AutoMapper;
 using MediatR;
+
+using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.PersonnelManagements;
+
 
 namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Update;
 
@@ -41,12 +44,18 @@ public class UpdatePersonnelResidenceInfoCommand : IRequest<UpdatedPersonnelResi
             X.PersonnelResidenceInfo? personnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelResidenceInfoBusinessRules.PersonnelResidenceInfoShouldExistWhenSelected(personnelResidenceInfo);
-            await _personnelResidenceInfoBusinessRules.PersonnelShouldExistWhenSelected(request.GidPersonelFK);
+
+            await _personnelResidenceInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+
             personnelResidenceInfo = _mapper.Map(request, personnelResidenceInfo);
 
             _personnelResidenceInfoWriteRepository.Update(personnelResidenceInfo!);
             await _personnelResidenceInfoWriteRepository.SaveAsync();
-            GetByGidPersonnelResidenceInfoResponse obj = _mapper.Map<GetByGidPersonnelResidenceInfoResponse>(personnelResidenceInfo);
+
+            X.PersonnelResidenceInfo updatedPersonnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: x => x.Gid == personnelResidenceInfo.Gid, include: x => x.Include(x => x.UserFK));
+
+
+            GetByGidPersonnelResidenceInfoResponse obj = _mapper.Map<GetByGidPersonnelResidenceInfoResponse>(updatedPersonnelResidenceInfo);
 
             return new()
             {
