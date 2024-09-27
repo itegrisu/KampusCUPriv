@@ -1,11 +1,6 @@
 using Domain.Entities.DefinitionManagements;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfiguration.DefinitionManagements
 {
@@ -22,6 +17,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.Property(y => y.PlakaKodu).IsRequired(false).HasColumnType("varchar").HasMaxLength(5);
 
             builder.HasMany(u => u.PersonnelAddresses).WithOne(y => y.CityFK).HasForeignKey(y => y.GidSehirFK);
+            builder.HasMany(u => u.SCAddresses).WithOne(y => y.CityFK).HasForeignKey(y => y.GidCityFK);
 
         }
     }

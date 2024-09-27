@@ -1,9 +1,5 @@
 using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities.SupplierCustomerManagements;
 
 namespace Domain.Entities.DefinitionManagements
 {
@@ -12,5 +8,6 @@ namespace Domain.Entities.DefinitionManagements
         public string DovizAdi { get; set; } = string.Empty;
         public string? DovizKodu { get; set; }
         public string? DovizSimgesi { get; set; }
+        public ICollection<SCBank>? SCBanks { get; set; }
     }
 }

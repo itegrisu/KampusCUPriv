@@ -51,9 +51,6 @@ public class CreatePersonnelResidenceInfoCommand : IRequest<CreatedPersonnelResi
 
             X.PersonnelResidenceInfo savedPersonnelResidenceInfo = await _personnelResidenceInfoReadRepository.GetAsync(predicate: x => x.Gid == personnelResidenceInfo.Gid, include: x => x.Include(x => x.UserFK));
 
-            //INCLUDES Buraya Gelecek include varsa eklenecek
-            //include: x => x.Include(x => x.UserFK));
-
             GetByGidPersonnelResidenceInfoResponse obj = _mapper.Map<GetByGidPersonnelResidenceInfoResponse>(savedPersonnelResidenceInfo);
             return new()
             {
