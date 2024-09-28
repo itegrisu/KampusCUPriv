@@ -71,6 +71,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasMany(u => u.SupportMessageDetails).WithOne(y => y.UserFK).HasForeignKey(y => y.GidReadUserFK);
             builder.HasMany(u => u.UserShortCuts).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
             builder.HasMany(u => u.SupportRequests).WithOne(y => y.UserFK).HasForeignKey(y => y.CreatedUserFK);
+            builder.HasMany(u => u.UserModuleAuths).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
 
 
 

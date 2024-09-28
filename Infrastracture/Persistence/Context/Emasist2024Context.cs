@@ -51,6 +51,7 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
             modelBuilder.ApplyConfiguration(new DepartmentUserConfiguration());
             modelBuilder.ApplyConfiguration(new UserShortCutConfiguration());
+            modelBuilder.ApplyConfiguration(new UserModuleAuthConfiguration());
 
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CityConfiguration());
@@ -214,5 +215,6 @@ namespace Persistence.Context
         public DbSet<SCBank> SCBanks { get; set; }
         public DbSet<SCEmployer> SCEmployers { get; set; }
         public DbSet<SCWorkHistory> SCWorkHistories { get; set; }
+        public DbSet<UserModuleAuth> UserModuleAuths { get; set; }
     }
 }

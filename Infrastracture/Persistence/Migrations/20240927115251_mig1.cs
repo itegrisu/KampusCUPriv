@@ -260,6 +260,35 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SCCompanies",
+                columns: table => new
+                {
+                    Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CompanyName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Phone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    WebSite = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    Password = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    WebLoginStatus = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    SpecialNote = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    TaxOffice = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    TaxNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    Keywords = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    PartnerType = table.Column<int>(type: "int", nullable: false),
+                    SupplierRank = table.Column<int>(type: "int", nullable: true),
+                    CustomerRank = table.Column<int>(type: "int", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataState = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SCCompanies", x => x.Gid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StockCards",
                 columns: table => new
                 {
@@ -402,6 +431,88 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SCBanks",
+                columns: table => new
+                {
+                    Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidSCCompanyFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidCurrencyFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Bank = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: false),
+                    BranchName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    BranchCode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    AccountNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    IbanNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    SwiftNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataState = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SCBanks", x => x.Gid);
+                    table.ForeignKey(
+                        name: "FK_SCBanks_Currencies_GidCurrencyFK",
+                        column: x => x.GidCurrencyFK,
+                        principalTable: "Currencies",
+                        principalColumn: "Gid",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SCBanks_SCCompanies_GidSCCompanyFK",
+                        column: x => x.GidSCCompanyFK,
+                        principalTable: "SCCompanies",
+                        principalColumn: "Gid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SCEmployers",
+                columns: table => new
+                {
+                    Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidSCCompanyFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FullName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Duty = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    SpecialNote = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataState = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SCEmployers", x => x.Gid);
+                    table.ForeignKey(
+                        name: "FK_SCEmployers_SCCompanies_GidSCCompanyFK",
+                        column: x => x.GidSCCompanyFK,
+                        principalTable: "SCCompanies",
+                        principalColumn: "Gid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SCWorkHistories",
+                columns: table => new
+                {
+                    Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidSCCompanyFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Detail = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    WorkDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    WorkFile = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataState = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SCWorkHistories", x => x.Gid);
+                    table.ForeignKey(
+                        name: "FK_SCWorkHistories_SCCompanies_GidSCCompanyFK",
+                        column: x => x.GidSCCompanyFK,
+                        principalTable: "SCCompanies",
+                        principalColumn: "Gid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StockCardImages",
                 columns: table => new
                 {
@@ -460,6 +571,37 @@ namespace Persistence.Migrations
                         column: x => x.GidPreviousWarehouseFK,
                         principalTable: "Warehouses",
                         principalColumn: "Gid");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SCAddresses",
+                columns: table => new
+                {
+                    Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidSCCompanyFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidCityFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    District = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    PostalCode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    Address = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataState = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SCAddresses", x => x.Gid);
+                    table.ForeignKey(
+                        name: "FK_SCAddresses_Cities_GidCityFK",
+                        column: x => x.GidCityFK,
+                        principalTable: "Cities",
+                        principalColumn: "Gid",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SCAddresses_SCCompanies_GidSCCompanyFK",
+                        column: x => x.GidSCCompanyFK,
+                        principalTable: "SCCompanies",
+                        principalColumn: "Gid",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1349,6 +1491,36 @@ namespace Persistence.Migrations
                 column: "GidPersonelFK");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SCAddresses_GidCityFK",
+                table: "SCAddresses",
+                column: "GidCityFK");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SCAddresses_GidSCCompanyFK",
+                table: "SCAddresses",
+                column: "GidSCCompanyFK");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SCBanks_GidCurrencyFK",
+                table: "SCBanks",
+                column: "GidCurrencyFK");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SCBanks_GidSCCompanyFK",
+                table: "SCBanks",
+                column: "GidSCCompanyFK");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SCEmployers_GidSCCompanyFK",
+                table: "SCEmployers",
+                column: "GidSCCompanyFK");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SCWorkHistories_GidSCCompanyFK",
+                table: "SCWorkHistories",
+                column: "GidSCCompanyFK");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StockCardImages_GidStockCardFK",
                 table: "StockCardImages",
                 column: "GidStockCardFK");
@@ -1471,9 +1643,6 @@ namespace Persistence.Migrations
                 name: "AuthUserRoles");
 
             migrationBuilder.DropTable(
-                name: "Currencies");
-
-            migrationBuilder.DropTable(
                 name: "DepartmentUsers");
 
             migrationBuilder.DropTable(
@@ -1537,6 +1706,18 @@ namespace Persistence.Migrations
                 name: "RoomTypes");
 
             migrationBuilder.DropTable(
+                name: "SCAddresses");
+
+            migrationBuilder.DropTable(
+                name: "SCBanks");
+
+            migrationBuilder.DropTable(
+                name: "SCEmployers");
+
+            migrationBuilder.DropTable(
+                name: "SCWorkHistories");
+
+            migrationBuilder.DropTable(
                 name: "StockCardImages");
 
             migrationBuilder.DropTable(
@@ -1579,9 +1760,6 @@ namespace Persistence.Migrations
                 name: "Departments");
 
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
                 name: "DocumentTypes");
 
             migrationBuilder.DropTable(
@@ -1589,6 +1767,15 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "PermitTypes");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
+
+            migrationBuilder.DropTable(
+                name: "SCCompanies");
 
             migrationBuilder.DropTable(
                 name: "StockCards");
