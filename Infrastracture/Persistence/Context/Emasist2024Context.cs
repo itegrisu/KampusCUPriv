@@ -7,6 +7,7 @@ using Domain.Entities.LogManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.PortalManagements;
 using Domain.Entities.StockManagements;
+using Domain.Entities.SupplierCustomerManagements;
 using Domain.Entities.SupportManagements;
 using Domain.Entities.TaskManagements;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ using Persistence.EntityConfiguration.LogManagements;
 using Persistence.EntityConfiguration.PersonnelManagements;
 using Persistence.EntityConfiguration.PortalManagements;
 using Persistence.EntityConfiguration.StockManagements;
+using Persistence.EntityConfiguration.SupplierManagements;
 using Persistence.EntityConfiguration.SupportManagements;
 using Persistence.EntityConfiguration.TaskManagements;
 using C = Core.Context;
@@ -49,6 +51,7 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
             modelBuilder.ApplyConfiguration(new DepartmentUserConfiguration());
             modelBuilder.ApplyConfiguration(new UserShortCutConfiguration());
+            modelBuilder.ApplyConfiguration(new UserModuleAuthConfiguration());
 
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CityConfiguration());
@@ -107,7 +110,11 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new PersonnelResidenceInfoConfiguration());
             modelBuilder.ApplyConfiguration(new PersonnelDocumentConfiguration());
 
-
+            modelBuilder.ApplyConfiguration(new SCCompanyConfiguration());
+            modelBuilder.ApplyConfiguration(new SCAddressConfiguration());
+            modelBuilder.ApplyConfiguration(new SCBankConfiguration());
+            modelBuilder.ApplyConfiguration(new SCEmployerConfiguration());
+            modelBuilder.ApplyConfiguration(new SCWorkHistoryConfiguration());
 
 
             base.OnModelCreating(modelBuilder);
@@ -203,5 +210,11 @@ namespace Persistence.Context
         public DbSet<OtoBrand> OtoBrands { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<MeasureType> MeasureTypes { get; set; }
+        public DbSet<SCCompany> SCCompanies { get; set; }
+        public DbSet<SCAddress> SCAddresses { get; set; }
+        public DbSet<SCBank> SCBanks { get; set; }
+        public DbSet<SCEmployer> SCEmployers { get; set; }
+        public DbSet<SCWorkHistory> SCWorkHistories { get; set; }
+        public DbSet<UserModuleAuth> UserModuleAuths { get; set; }
     }
 }

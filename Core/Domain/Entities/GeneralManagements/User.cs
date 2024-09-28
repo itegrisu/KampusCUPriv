@@ -69,6 +69,7 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<SupportMessageDetail> SupportMessageDetails { get; set; }
         public ICollection<UserShortCut> UserShortCuts { get; set; }
         public ICollection<SupportRequest> SupportRequests { get; set; }
+        public ICollection<UserModuleAuth> UserModuleAuths { get; set; }
 
 
         #region NotMapped alanlar 

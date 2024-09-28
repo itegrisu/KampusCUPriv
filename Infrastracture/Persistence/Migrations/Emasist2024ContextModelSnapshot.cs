@@ -1527,6 +1527,263 @@ namespace Persistence.Migrations
                     b.ToTable("StockMovements");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCAddress", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("District")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<Guid>("GidCityFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidSCCompanyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PostalCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidCityFK");
+
+                    b.HasIndex("GidSCCompanyFK");
+
+                    b.ToTable("SCAddresses");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCBank", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Bank")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<string>("BranchCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("BranchName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidCurrencyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidSCCompanyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IbanNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("SwiftNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidCurrencyFK");
+
+                    b.HasIndex("GidSCCompanyFK");
+
+                    b.ToTable("SCBanks");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCCompany", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CustomerRank")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Keywords")
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar(300)");
+
+                    b.Property<int>("PartnerType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("SpecialNote")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SupplierRank")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TaxNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("TaxOffice")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("WebLoginStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("WebSite")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.ToTable("SCCompanies");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCEmployer", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Duty")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("GidSCCompanyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("SpecialNote")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidSCCompanyFK");
+
+                    b.ToTable("SCEmployers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCWorkHistory", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Detail")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<Guid>("GidSCCompanyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime?>("WorkDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("WorkFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidSCCompanyFK");
+
+                    b.ToTable("SCWorkHistories");
+                });
+
             modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessage", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -2198,6 +2455,66 @@ namespace Persistence.Migrations
                     b.Navigation("StockCardFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCAddress", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.City", "CityFK")
+                        .WithMany("SCAddresses")
+                        .HasForeignKey("GidCityFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("SCAddresses")
+                        .HasForeignKey("GidSCCompanyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CityFK");
+
+                    b.Navigation("SCCompanyFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCBank", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "CurrencyFK")
+                        .WithMany("SCBanks")
+                        .HasForeignKey("GidCurrencyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("SCBanks")
+                        .HasForeignKey("GidSCCompanyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CurrencyFK");
+
+                    b.Navigation("SCCompanyFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCEmployer", b =>
+                {
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("SCEmployers")
+                        .HasForeignKey("GidSCCompanyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SCCompanyFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCWorkHistory", b =>
+                {
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("SCWorkHistories")
+                        .HasForeignKey("GidSCCompanyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SCCompanyFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessage", b =>
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
@@ -2366,6 +2683,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.City", b =>
                 {
                     b.Navigation("PersonnelAddresses");
+
+                    b.Navigation("SCAddresses");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Country", b =>
@@ -2373,6 +2692,11 @@ namespace Persistence.Migrations
                     b.Navigation("Cities");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.Currency", b =>
+                {
+                    b.Navigation("SCBanks");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.DocumentType", b =>
@@ -2468,6 +2792,17 @@ namespace Persistence.Migrations
                     b.Navigation("StockCardImages");
 
                     b.Navigation("StockMovements");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCCompany", b =>
+                {
+                    b.Navigation("SCAddresses");
+
+                    b.Navigation("SCBanks");
+
+                    b.Navigation("SCEmployers");
+
+                    b.Navigation("SCWorkHistories");
                 });
 
             modelBuilder.Entity("Domain.Entities.SupportManagements.SupportMessage", b =>

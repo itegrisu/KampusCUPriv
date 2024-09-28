@@ -1,5 +1,6 @@
 using Core.Entities;
 using Domain.Entities.PersonnelManagements;
+using Domain.Entities.SupplierCustomerManagements;
 
 namespace Domain.Entities.DefinitionManagements
 {
@@ -13,6 +14,7 @@ namespace Domain.Entities.DefinitionManagements
         public string? PlakaKodu { get; set; }
 
         public ICollection<PersonnelAddress>? PersonnelAddresses { get; set; }
+        public ICollection<SCAddress>? SCAddresses { get; set; }
 
 
     }

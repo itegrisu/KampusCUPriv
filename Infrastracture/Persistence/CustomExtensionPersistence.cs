@@ -19,6 +19,7 @@ using Application.Repositories.DefinitionManagementRepos.RoomTypeRepo;
 using Application.Repositories.DefinitonManagementRepos.WarehouseRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentUserRepo;
+using Application.Repositories.GeneralManagementRepos.UserModuleAuthRepo;
 using Application.Repositories.GeneralManagementRepos.UserRefreshTokenRepo;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
 using Application.Repositories.GeneralManagementRepos.UserShortCutRepo;
@@ -41,6 +42,11 @@ using Application.Repositories.PortalManagementRepos.PortalTextRepo;
 using Application.Repositories.StockManagementRepos.StockCardImageRepo;
 using Application.Repositories.StockManagementRepos.StockCardRepo;
 using Application.Repositories.StockManagementRepos.StockMovementRepo;
+using Application.Repositories.SupplierManagementRepos.SCAddressRepo;
+using Application.Repositories.SupplierManagementRepos.SCBankRepo;
+using Application.Repositories.SupplierManagementRepos.SCCompanyRepo;
+using Application.Repositories.SupplierManagementRepos.SCEmployerRepo;
+using Application.Repositories.SupplierManagementRepos.SCWorkHistoryRepo;
 using Application.Repositories.SupportManagementRepos.SupportMessageDetailRepo;
 using Application.Repositories.SupportManagementRepos.SupportMessageRepo;
 using Application.Repositories.SupportManagementRepos.SupportRequestRepo;
@@ -74,6 +80,7 @@ using Persistence.Repositories.DefinitionManagementRepos.RoomTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.WarehouseRepo;
 using Persistence.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Persistence.Repositories.GeneralManagementRepos.DepartmentUserRepo;
+using Persistence.Repositories.GeneralManagementRepos.UserModuleAuthRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserRefreshTokenRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserShortCutRepo;
@@ -96,6 +103,11 @@ using Persistence.Repositories.PortalManagementRepos.PortalTextRepo;
 using Persistence.Repositories.StockManagementsRepos.StockCardImageRepo;
 using Persistence.Repositories.StockManagementsRepos.StockCardRepo;
 using Persistence.Repositories.StockManagementsRepos.StockMovementRepo;
+using Persistence.Repositories.SupplierManagementRepos.SCAddressRepo;
+using Persistence.Repositories.SupplierManagementRepos.SCBankRepo;
+using Persistence.Repositories.SupplierManagementRepos.SCCompanyRepo;
+using Persistence.Repositories.SupplierManagementRepos.SCEmployerRepo;
+using Persistence.Repositories.SupplierManagementRepos.SCWorkHistoryRepo;
 using Persistence.Repositories.SupportManagementRepos.SupportMessageDetailRepo;
 using Persistence.Repositories.SupportManagementRepos.SupportMessageRepo;
 using Persistence.Repositories.SupportManagementRepos.SupportRequestRepo;
@@ -399,6 +411,40 @@ namespace Persistence
             services.AddScoped<IWarehouseWriteRepository, WarehouseWriteRepository>();
             services.AddScoped<ICountryReadRepository, CountryReadRepository>();
             services.AddScoped<ICountryWriteRepository, CountryWriteRepository>();
+
+            #region SC Company
+            services.AddScoped<ISCCompanyReadRepository, SCCompanyReadRepository>();
+            services.AddScoped<ISCCompanyWriteRepository, SCCompanyWriteRepository>();
+            #endregion
+
+
+            #region SC Address
+            services.AddScoped<ISCAddressReadRepository, SCAddressReadRepository>();
+            services.AddScoped<ISCAddressWriteRepository, SCAddressWriteRepository>();
+            #endregion
+
+
+            #region SC Bank
+            services.AddScoped<ISCBankReadRepository, SCBankReadRepository>();
+            services.AddScoped<ISCBankWriteRepository, SCBankWriteRepository>();
+            #endregion
+
+
+            #region SC Employer
+            services.AddScoped<ISCEmployerReadRepository, SCEmployerReadRepository>();
+            services.AddScoped<ISCEmployerWriteRepository, SCEmployerWriteRepository>();
+            #endregion
+
+
+            #region SC Work History
+            services.AddScoped<ISCWorkHistoryReadRepository, SCWorkHistoryReadRepository>();
+            services.AddScoped<ISCWorkHistoryWriteRepository, SCWorkHistoryWriteRepository>();
+            #endregion
+
+            #region User Module Auth
+            services.AddScoped<IUserModuleAuthReadRepository, UserModuleAuthReadRepository>();
+            services.AddScoped<IUserModuleAuthWriteRepository, UserModuleAuthWriteRepository>();
+            #endregion
 
             services.AddScoped<C.Context, Emasist2024Context>();
             services.AddScoped<IDatabaseService, DatabaseService>();
