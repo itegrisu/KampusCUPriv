@@ -13,13 +13,13 @@ public class UpdatePersonnelDocumentCommand : IRequest<UpdatedPersonnelDocumentR
 {
     public Guid Gid { get; set; }
 
-    public Guid GidPersonelFK { get; set; }
-    public Guid GidBelgeTuru { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public Guid GidDocumentType { get; set; }
 
-    public string BelgeAdi { get; set; }
-    public DateTime? GecerlilikTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public string Name { get; set; }
+    public DateTime? ValidityDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -44,6 +44,8 @@ public class UpdatePersonnelDocumentCommand : IRequest<UpdatedPersonnelDocumentR
             X.PersonnelDocument? personnelDocument = await _personnelDocumentReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelDocumentBusinessRules.PersonnelDocumentShouldExistWhenSelected(personnelDocument);
+            await _personnelDocumentBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
+            await _personnelDocumentBusinessRules.DocumentTypeShouldExistWhenSelected(request.GidDocumentType);
             personnelDocument = _mapper.Map(request, personnelDocument);
 
             _personnelDocumentWriteRepository.Update(personnelDocument!);

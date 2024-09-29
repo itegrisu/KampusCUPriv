@@ -6,13 +6,13 @@ namespace Domain.Entities.PersonnelManagements
     public class PersonnelResidenceInfo : BaseEntity
     {
 
-        public Guid GidPersonelFK { get; set; }
+        public Guid GidPersonnelFK { get; set; }
         public User UserFK { get; set; }
-        public string OturumSeriNo { get; set; } = string.Empty;
-        public DateTime VerilisTarihi { get; set; }
-        public DateTime GecerlilikTarihi { get; set; }
-        public string? Belge { get; set; }
-        public string? Aciklama { get; set; }
+        public string SessionSerialNo { get; set; } = string.Empty;
+        public DateTime DateOfIssue { get; set; }
+        public DateTime ValidityDate { get; set; }
+        public string? Document { get; set; }
+        public string? Description { get; set; }
 
     }
 }

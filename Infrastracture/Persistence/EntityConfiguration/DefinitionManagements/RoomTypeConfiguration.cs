@@ -11,10 +11,11 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.Property(y => y.OdaTuru).IsRequired().HasColumnType("varchar").HasMaxLength(50);
-            builder.Property(y => y.OdaKodu).IsRequired().HasColumnType("varchar").HasMaxLength(10);
-            builder.Property(y => y.KisiSayisi).IsRequired().HasColumnType("int");
-            builder.Property(y => y.Aciklama).IsRequired(false).HasColumnType("varchar").HasMaxLength(100);
+
+            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
+            builder.Property(y => y.Code).IsRequired().HasColumnType("varchar").HasMaxLength(10);
+            builder.Property(y => y.Capacity).IsRequired().HasColumnType("int");
+            builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(100);
         }
     }
 }

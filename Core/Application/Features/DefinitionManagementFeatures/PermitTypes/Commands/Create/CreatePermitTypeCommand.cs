@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.PermitTypes.Commands
 public class CreatePermitTypeCommand : IRequest<CreatedPermitTypeResponse>
 {
 
-    public string IzinAdi { get; set; }
+    public string Name { get; set; }
 
     public class CreatePermitTypeCommandHandler : IRequestHandler<CreatePermitTypeCommand, CreatedPermitTypeResponse>
     {
@@ -31,7 +31,7 @@ public class CreatePermitTypeCommand : IRequest<CreatedPermitTypeResponse>
 
         public async Task<CreatedPermitTypeResponse> Handle(CreatePermitTypeCommand request, CancellationToken cancellationToken)
         {
-            await _permitTypeBusinessRules.CheckPermitTypeNameIsUnique(request.IzinAdi);
+            await _permitTypeBusinessRules.CheckPermitTypeNameIsUnique(request.Name);
 
             X.PermitType permitType = _mapper.Map<X.PermitType>(request);
 

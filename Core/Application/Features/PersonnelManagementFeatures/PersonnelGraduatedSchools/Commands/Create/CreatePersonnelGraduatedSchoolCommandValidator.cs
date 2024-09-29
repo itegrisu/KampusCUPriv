@@ -6,14 +6,14 @@ public class CreatePersonnelGraduatedSchoolCommandValidator : AbstractValidator<
 {
     public CreatePersonnelGraduatedSchoolCommandValidator()
     {
-        RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidPersonnelFK).NotNull().NotEmpty();
 
-RuleFor(c => c.EgitimKurumuTuru).NotNull().NotEmpty();
-RuleFor(c => c.OkulBilgisi).NotNull().NotEmpty().MaximumLength(100);
-RuleFor(c => c.BolumBilgisi).NotNull().NotEmpty().MaximumLength(100);
-RuleFor(c => c.BaslamaYili).NotNull().NotEmpty();
-RuleFor(c => c.Belge).MaximumLength(150);
-RuleFor(c => c.Aciklama).MaximumLength(250);
+        RuleFor(c => c.EducationalInstitutionType).NotNull().NotEmpty();
+        RuleFor(c => c.SchoolInfo).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(c => c.DepartmentInfo).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(c => c.StartYear).NotNull().NotEmpty();
+        RuleFor(c => c.Document).MaximumLength(150);
+        RuleFor(c => c.Description).MaximumLength(250);
 
 
     }

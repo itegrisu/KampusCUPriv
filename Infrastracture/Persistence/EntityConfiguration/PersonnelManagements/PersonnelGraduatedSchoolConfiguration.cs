@@ -8,17 +8,18 @@ namespace Persistence.EntityConfiguration.PersonnelManagements
     {
         public void Configure(EntityTypeBuilder<PersonnelGraduatedSchool> builder)
         {
+
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelGraduatedSchools).HasForeignKey(y => y.GidPersonelFK);
+            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelGraduatedSchools).HasForeignKey(y => y.GidPersonnelFK);
 
-            builder.Property(y => y.OkulBilgisi).IsRequired().HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(y => y.BolumBilgisi).IsRequired().HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(y => y.BaslamaYili).IsRequired().HasColumnType("int");
-            builder.Property(y => y.MezuniyetTarihi).IsRequired(false).HasColumnType("datetime");
-            builder.Property(y => y.Belge).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
-            builder.Property(y => y.Aciklama).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(y => y.SchoolInfo).IsRequired().HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(y => y.DepartmentInfo).IsRequired().HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(y => y.StartYear).IsRequired().HasColumnType("int");
+            builder.Property(y => y.GraduationDate).IsRequired(false).HasColumnType("datetime");
+            builder.Property(y => y.Document).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
+            builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
         }
     }
 }

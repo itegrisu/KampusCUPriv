@@ -6,15 +6,15 @@ namespace Domain.Entities.PersonnelManagements
 {
     public class PersonnelGraduatedSchool : BaseEntity
     {
-        public Guid GidPersonelFK { get; set; }
+        public Guid GidPersonnelFK { get; set; }
         public User UserFK { get; set; }
-        public EnumEgitimKurumuTuru EgitimKurumuTuru { get; set; }
-        public string OkulBilgisi { get; set; } = string.Empty;
-        public string BolumBilgisi { get; set; } = string.Empty;
-        public int BaslamaYili { get; set; }
-        public DateTime? MezuniyetTarihi { get; set; }
-        public string? Belge { get; set; }
-        public string? Aciklama { get; set; }
+        public EnumEducationalInstitutionType EducationalInstitutionType { get; set; }
+        public string SchoolInfo { get; set; } = string.Empty;
+        public string DepartmentInfo { get; set; } = string.Empty;
+        public int StartYear { get; set; }
+        public DateTime? GraduationDate { get; set; }
+        public string? Document { get; set; }
+        public string? Description { get; set; }
 
 
     }

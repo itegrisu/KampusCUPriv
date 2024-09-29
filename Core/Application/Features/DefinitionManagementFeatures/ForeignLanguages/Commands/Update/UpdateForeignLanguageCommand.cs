@@ -11,8 +11,8 @@ namespace Application.Features.DefinitionManagementFeatures.ForeignLanguages.Com
 public class UpdateForeignLanguageCommand : IRequest<UpdatedForeignLanguageResponse>
 {
     public Guid Gid { get; set; }
-    public string DilAdi { get; set; }
-    public string? DilKodu { get; set; }
+    public string Name { get; set; }
+    public string? LanguageCode { get; set; }
 
 
     public class UpdateForeignLanguageCommandHandler : IRequestHandler<UpdateForeignLanguageCommand, UpdatedForeignLanguageResponse>
@@ -36,8 +36,8 @@ public class UpdateForeignLanguageCommand : IRequest<UpdatedForeignLanguageRespo
             X.ForeignLanguage? foreignLanguage = await _foreignLanguageReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _foreignLanguageBusinessRules.ForeignLanguageShouldExistWhenSelected(foreignLanguage);
-            await _foreignLanguageBusinessRules.CheckForeignLanguageNameIsUnique(request.DilAdi, request.Gid);
-            await _foreignLanguageBusinessRules.CheckForeignLanguageCodeIsUnique(request.DilKodu, request.Gid);
+            await _foreignLanguageBusinessRules.CheckForeignLanguageNameIsUnique(request.Name, request.Gid);
+            await _foreignLanguageBusinessRules.CheckForeignLanguageCodeIsUnique(request.LanguageCode, request.Gid);
             foreignLanguage = _mapper.Map(request, foreignLanguage);
 
             _foreignLanguageWriteRepository.Update(foreignLanguage!);

@@ -5,7 +5,7 @@ namespace Domain.Entities.DefinitionManagements
 {
     public class DocumentType : BaseEntity
     {
-        public string BelgeAdi { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public ICollection<PersonnelDocument>? PersonnelDocuments { get; set; }
 
     }

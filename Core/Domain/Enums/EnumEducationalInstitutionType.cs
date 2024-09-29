@@ -1,6 +1,6 @@
 namespace Domain.Enums
 {
-    public enum EnumEgitimKurumuTuru
+    public enum EnumEducationalInstitutionType
     {
         IlkOgretim = 1,
         OrtaOkul = 2,

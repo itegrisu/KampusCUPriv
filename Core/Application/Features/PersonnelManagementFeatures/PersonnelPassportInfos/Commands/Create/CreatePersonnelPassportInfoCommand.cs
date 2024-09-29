@@ -11,12 +11,12 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelPassportInfo
 
 public class CreatePersonnelPassportInfoCommand : IRequest<CreatedPersonnelPassportInfoResponse>
 {
-    public Guid GidPersonelFK { get; set; }
-    public string PasaportNo { get; set; }
-    public DateTime VerilisTarihi { get; set; }
-    public DateTime GecerlilikTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public string PassportNo { get; set; }
+    public DateTime DateOfIssue { get; set; }
+    public DateTime ValidityDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 
     public class CreatePersonnelPassportInfoCommandHandler : IRequestHandler<CreatePersonnelPassportInfoCommand, CreatedPersonnelPassportInfoResponse>
@@ -37,6 +37,7 @@ public class CreatePersonnelPassportInfoCommand : IRequest<CreatedPersonnelPassp
 
         public async Task<CreatedPersonnelPassportInfoResponse> Handle(CreatePersonnelPassportInfoCommand request, CancellationToken cancellationToken)
         {
+            await _personnelPassportInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
             X.PersonnelPassportInfo personnelPassportInfo = _mapper.Map<X.PersonnelPassportInfo>(request);
 
             await _personnelPassportInfoWriteRepository.AddAsync(personnelPassportInfo);

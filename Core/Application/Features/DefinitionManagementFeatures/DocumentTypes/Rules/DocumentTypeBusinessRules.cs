@@ -20,7 +20,7 @@ public class DocumentTypeBusinessRules : BaseBusinessRules
     public async Task DocumentNameIsUnique(string documentName, Guid? documentGid = null)
     {
         var documentType = await _documentTypeReadRepository.GetAsync(
-                       predicate: x => x.BelgeAdi == documentName && (documentGid == null || x.Gid != documentGid));
+                       predicate: x => x.Name == documentName && (documentGid == null || x.Gid != documentGid));
 
         if (documentType != null)
         {

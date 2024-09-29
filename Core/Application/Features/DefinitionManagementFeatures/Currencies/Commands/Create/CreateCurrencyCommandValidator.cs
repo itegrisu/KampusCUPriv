@@ -6,10 +6,10 @@ public class CreateCurrencyCommandValidator : AbstractValidator<CreateCurrencyCo
 {
     public CreateCurrencyCommandValidator()
     {
-        
-RuleFor(c => c.DovizAdi).NotNull().NotEmpty().MaximumLength(50);
-RuleFor(c => c.DovizKodu).MaximumLength(20);
-RuleFor(c => c.DovizSimgesi).MaximumLength(5);
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(c => c.Code).MaximumLength(20);
+        RuleFor(c => c.Symbol).MaximumLength(5);
 
 
     }

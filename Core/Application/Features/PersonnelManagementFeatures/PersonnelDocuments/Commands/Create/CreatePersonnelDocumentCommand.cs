@@ -11,12 +11,13 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Co
 
 public class CreatePersonnelDocumentCommand : IRequest<CreatedPersonnelDocumentResponse>
 {
-    public Guid GidPersonelFK { get; set; }
-    public Guid GidBelgeTuru { get; set; }
-    public string BelgeAdi { get; set; }
-    public DateTime? GecerlilikTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public Guid GidDocumentType { get; set; }
+
+    public string Name { get; set; }
+    public DateTime? ValidityDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -38,8 +39,8 @@ public class CreatePersonnelDocumentCommand : IRequest<CreatedPersonnelDocumentR
 
         public async Task<CreatedPersonnelDocumentResponse> Handle(CreatePersonnelDocumentCommand request, CancellationToken cancellationToken)
         {
-            await _personnelDocumentBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
-            await _personnelDocumentBusinessRules.DocumentTypeShouldExistWhenSelected(request.GidBelgeTuru);
+            await _personnelDocumentBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
+            await _personnelDocumentBusinessRules.DocumentTypeShouldExistWhenSelected(request.GidDocumentType);
 
             X.PersonnelDocument personnelDocument = _mapper.Map<X.PersonnelDocument>(request);
 

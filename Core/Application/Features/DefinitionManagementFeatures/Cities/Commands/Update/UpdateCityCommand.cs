@@ -12,9 +12,9 @@ namespace Application.Features.DefinitionManagementFeatures.Cities.Commands.Upda
 public class UpdateCityCommand : IRequest<UpdatedCityResponse>
 {
     public Guid Gid { get; set; }
-    public Guid GidUlkeFK { get; set; }
-    public string SehirAdi { get; set; }
-    public string? PlakaKodu { get; set; }
+    public Guid GidCountryFK { get; set; }
+    public string Name { get; set; }
+    public string? PlateCode { get; set; }
 
     public class UpdateCityCommandHandler : IRequestHandler<UpdateCityCommand, UpdatedCityResponse>
     {
@@ -36,8 +36,8 @@ public class UpdateCityCommand : IRequest<UpdatedCityResponse>
         {
             X.City? city = await _cityReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             await _cityBusinessRules.CityShouldExistWhenSelected(city);
-            await _cityBusinessRules.CountryShouldExistWhenSelected(request.GidUlkeFK);
-            await _cityBusinessRules.CheckCityNameIsUnique(request.SehirAdi, request.Gid);
+            await _cityBusinessRules.CountryShouldExistWhenSelected(request.GidCountryFK);
+            await _cityBusinessRules.CheckCityNameIsUnique(request.Name, request.Gid);
 
             city = _mapper.Map(request, city);
 

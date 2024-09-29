@@ -11,9 +11,9 @@ namespace Application.Features.DefinitionManagementFeatures.Currencies.Commands.
 public class CreateCurrencyCommand : IRequest<CreatedCurrencyResponse>
 {
 
-    public string DovizAdi { get; set; }
-    public string? DovizKodu { get; set; }
-    public string? DovizSimgesi { get; set; }
+    public string Name { get; set; }
+    public string? Code { get; set; }
+    public string? Symbol { get; set; }
 
     public class CreateCurrencyCommandHandler : IRequestHandler<CreateCurrencyCommand, CreatedCurrencyResponse>
     {
@@ -33,9 +33,9 @@ public class CreateCurrencyCommand : IRequest<CreatedCurrencyResponse>
 
         public async Task<CreatedCurrencyResponse> Handle(CreateCurrencyCommand request, CancellationToken cancellationToken)
         {
-            await _currencyBusinessRules.CheckCurrencyNameIsUnique(request.DovizAdi);
-            await _currencyBusinessRules.CheckCurrencyCodeIsUnique(request.DovizKodu);
-            await _currencyBusinessRules.CheckCurrencySymbolIsUnique(request.DovizSimgesi);
+            await _currencyBusinessRules.CheckCurrencyNameIsUnique(request.Name);
+            await _currencyBusinessRules.CheckCurrencyCodeIsUnique(request.Code);
+            await _currencyBusinessRules.CheckCurrencySymbolIsUnique(request.Symbol);
 
             X.Currency currency = _mapper.Map<X.Currency>(request);
 

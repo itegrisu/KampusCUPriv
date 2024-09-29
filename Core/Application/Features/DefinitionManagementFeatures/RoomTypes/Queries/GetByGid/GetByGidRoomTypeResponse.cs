@@ -6,10 +6,10 @@ namespace Application.Features.DefinitionManagementFeatures.RoomTypes.Queries.Ge
     {
         public Guid Gid { get; set; }
 
-public string OdaTuru { get; set; }
-public string OdaKodu { get; set; }
-public int KisiSayisi { get; set; }
-public string? Aciklama { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public int Capacity { get; set; }
+        public string? Description { get; set; }
 
     }
 }

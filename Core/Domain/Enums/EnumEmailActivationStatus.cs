@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums
 {
-    public enum EnumEMailAktivasyonDurumu
+    public enum EnumEmailActivationStatus
     {
         Tamamlandi = 1,
         Beklemede = 2,

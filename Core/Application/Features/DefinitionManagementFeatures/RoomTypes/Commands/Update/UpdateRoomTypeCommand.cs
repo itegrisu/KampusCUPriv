@@ -13,10 +13,10 @@ public class UpdateRoomTypeCommand : IRequest<UpdatedRoomTypeResponse>
     public Guid Gid { get; set; }
 
 
-    public string OdaTuru { get; set; }
-    public string OdaKodu { get; set; }
-    public int KisiSayisi { get; set; }
-    public string? Aciklama { get; set; }
+    public string Name { get; set; }
+    public string Code { get; set; }
+    public int Capacity { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -41,8 +41,8 @@ public class UpdateRoomTypeCommand : IRequest<UpdatedRoomTypeResponse>
             X.RoomType? roomType = await _roomTypeReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _roomTypeBusinessRules.RoomTypeShouldExistWhenSelected(roomType);
-            await _roomTypeBusinessRules.CheckRoomTypeNameIsUnique(request.OdaTuru, request.Gid);
-            await _roomTypeBusinessRules.CheckRoomTypeCodeIsUnique(request.OdaKodu, request.Gid);
+            await _roomTypeBusinessRules.CheckRoomTypeNameIsUnique(request.Name, request.Gid);
+            await _roomTypeBusinessRules.CheckRoomTypeCodeIsUnique(request.Code, request.Gid);
             roomType = _mapper.Map(request, roomType);
 
             _roomTypeWriteRepository.Update(roomType!);

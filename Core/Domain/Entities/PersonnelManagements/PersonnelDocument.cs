@@ -6,15 +6,14 @@ namespace Domain.Entities.PersonnelManagements
 {
     public class PersonnelDocument : BaseEntity
     {
-        public Guid GidPersonelFK { get; set; }
+        public Guid GidPersonnelFK { get; set; }
         public User UserFK { get; set; }
-        public Guid GidBelgeTuru { get; set; }
+        public Guid GidDocumentType { get; set; }
         public DocumentType DocumentTypeFK { get; set; }
-        public string BelgeAdi { get; set; } = string.Empty;
-        public DateTime? GecerlilikTarihi { get; set; }
-        public string? Belge { get; set; }
-        public string? Aciklama { get; set; }
-
+        public string Name { get; set; } = string.Empty;
+        public DateTime? ValidityDate { get; set; }
+        public string? Document { get; set; }
+        public string? Description { get; set; }
 
     }
 }

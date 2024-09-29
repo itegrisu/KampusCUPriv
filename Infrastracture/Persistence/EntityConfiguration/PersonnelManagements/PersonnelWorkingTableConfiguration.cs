@@ -8,13 +8,14 @@ namespace Persistence.EntityConfiguration.PersonnelManagements
     {
         public void Configure(EntityTypeBuilder<PersonnelWorkingTable> builder)
         {
+
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelWorkingTables).HasForeignKey(y => y.GidPersonelFK);
+            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelWorkingTables).HasForeignKey(y => y.GidPersonnelFK);
 
-            builder.Property(y => y.IseBaslamaTarihi).IsRequired().HasColumnType("datetime");
-            builder.Property(y => y.IstenCikisTarihi).IsRequired(false).HasColumnType("datetime");
+            builder.Property(y => y.StartDate).IsRequired().HasColumnType("datetime");
+            builder.Property(y => y.ExitDate).IsRequired(false).HasColumnType("datetime");
 
 
         }

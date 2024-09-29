@@ -32,7 +32,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetSystem
                 {
                     return await _noPagination.NoPaginationAllData(
                         cancellationToken,
-                        predicate: u => u.SistemAdminMi == true || u.DataState == Core.Enum.DataState.None,
+                        predicate: u => u.IsSystemAdmin == true || u.DataState == Core.Enum.DataState.None,
                         includes: new Expression<Func<User, object>>[]
                         {
                          x => x.CountryFK,
@@ -43,7 +43,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetSystem
                     index: request.PageRequest.PageIndex,
                     size: request.PageRequest.PageSize,
                     cancellationToken: cancellationToken,
-                    predicate: u => u.SistemAdminMi == true || u.DataState == Core.Enum.DataState.None
+                    predicate: u => u.IsSystemAdmin == true || u.DataState == Core.Enum.DataState.None
 
                 );
 

@@ -11,7 +11,7 @@ namespace Persistence.EntityConfiguration.PersonnelManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelForeignLanguages).HasForeignKey(y => y.GidPersonelFK);
+            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelForeignLanguages).HasForeignKey(y => y.GidPersonnelFK);
             builder.HasOne(y => y.ForeignLanguageFK).WithMany(u => u.PersonnelForeignLanguages).HasForeignKey(y => y.GidLanguageFK);
 
         }

@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.PermitTypes.Commands
 public class UpdatePermitTypeCommand : IRequest<UpdatedPermitTypeResponse>
 {
     public Guid Gid { get; set; }
-    public string IzinAdi { get; set; }
+    public string Name { get; set; }
 
 
 
@@ -36,7 +36,7 @@ public class UpdatePermitTypeCommand : IRequest<UpdatedPermitTypeResponse>
             X.PermitType? permitType = await _permitTypeReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _permitTypeBusinessRules.PermitTypeShouldExistWhenSelected(permitType);
-            await _permitTypeBusinessRules.CheckPermitTypeNameIsUnique(request.IzinAdi);
+            await _permitTypeBusinessRules.CheckPermitTypeNameIsUnique(request.Name);
             permitType = _mapper.Map(request, permitType);
 
             _permitTypeWriteRepository.Update(permitType!);

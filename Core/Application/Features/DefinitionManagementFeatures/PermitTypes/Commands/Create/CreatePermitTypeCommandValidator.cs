@@ -6,8 +6,8 @@ public class CreatePermitTypeCommandValidator : AbstractValidator<CreatePermitTy
 {
     public CreatePermitTypeCommandValidator()
     {
-        
-RuleFor(c => c.IzinAdi).NotNull().NotEmpty().MaximumLength(100);
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

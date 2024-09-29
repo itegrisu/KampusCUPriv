@@ -7,8 +7,8 @@ public class UpdateMeasureTypeCommandValidator : AbstractValidator<UpdateMeasure
     public UpdateMeasureTypeCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        
-RuleFor(c => c.OlcuAdi).NotNull().NotEmpty().MaximumLength(100);
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

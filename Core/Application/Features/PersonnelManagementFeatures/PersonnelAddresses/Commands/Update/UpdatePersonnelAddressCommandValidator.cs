@@ -7,12 +7,13 @@ public class UpdatePersonnelAddressCommandValidator : AbstractValidator<UpdatePe
     public UpdatePersonnelAddressCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-RuleFor(c => c.GidSehirFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidPersonnelFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidCityFK).NotNull().NotEmpty();
 
-RuleFor(c => c.AdresBasligi).NotNull().NotEmpty().MaximumLength(50);
-RuleFor(c => c.Adres).NotNull().NotEmpty().MaximumLength(150);
-RuleFor(c => c.Aciklama).MaximumLength(250);
+        RuleFor(c => c.AddressTitle).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(c => c.Address).NotNull().NotEmpty().MaximumLength(150);
+        RuleFor(c => c.Description).MaximumLength(250);
+
 
 
     }

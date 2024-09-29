@@ -14,12 +14,11 @@ public class UpdatePersonnelForeignLanguageCommand : IRequest<UpdatedPersonnelFo
 {
     public Guid Gid { get; set; }
 
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
     public Guid GidLanguageFK { get; set; }
 
-
-    public EnumLanguageLevel KonusmaDuzeyi { get; set; }
-    public EnumLanguageLevel OkumaDuzeyi { get; set; }
+    public EnumLanguageLevel SpeakingLevel { get; set; }
+    public EnumLanguageLevel ReadLevel { get; set; }
 
 
 
@@ -45,6 +44,8 @@ public class UpdatePersonnelForeignLanguageCommand : IRequest<UpdatedPersonnelFo
             X.PersonnelForeignLanguage? personnelForeignLanguage = await _personnelForeignLanguageReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelForeignLanguageBusinessRules.PersonnelForeignLanguageShouldExistWhenSelected(personnelForeignLanguage);
+            await _personnelForeignLanguageBusinessRules.PersonnelShouldExistWhenSelected(request.GidPersonnelFK);
+            await _personnelForeignLanguageBusinessRules.LanguageShouldExistWhenSelected(request.GidLanguageFK);
             personnelForeignLanguage = _mapper.Map(request, personnelForeignLanguage);
 
             _personnelForeignLanguageWriteRepository.Update(personnelForeignLanguage!);

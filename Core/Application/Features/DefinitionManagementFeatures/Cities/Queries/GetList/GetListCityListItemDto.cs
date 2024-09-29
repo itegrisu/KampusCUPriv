@@ -5,8 +5,8 @@ namespace Application.Features.DefinitionManagementFeatures.Cities.Queries.GetLi
 public class GetListCityListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public Guid GidUlkeFK { get; set; }
-    public string CountryFKUlkeAdi { get; set; }
-    public string SehirAdi { get; set; }
-    public string? PlakaKodu { get; set; }
+    public Guid GidCountryFK { get; set; }
+    public string CountryFKName { get; set; }
+    public string Name { get; set; }
+    public string? PlateCode { get; set; }
 }

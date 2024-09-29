@@ -7,13 +7,13 @@ public class UpdatePersonnelPermitInfoCommandValidator : AbstractValidator<Updat
     public UpdatePersonnelPermitInfoCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-RuleFor(c => c.GidPermitFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidPersonnelFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidPermitFK).NotNull().NotEmpty();
 
-RuleFor(c => c.IzinBaslamaTarihi).NotNull().NotEmpty();
-RuleFor(c => c.IzinBitisTarihi).NotNull().NotEmpty();
-RuleFor(c => c.Belge).MaximumLength(150);
-RuleFor(c => c.Aciklama).MaximumLength(250);
+        RuleFor(c => c.PermitStartDate).NotNull().NotEmpty();
+        RuleFor(c => c.PermitEndDate).NotNull().NotEmpty();
+        RuleFor(c => c.Document).MaximumLength(150);
+        RuleFor(c => c.Description).MaximumLength(250);
 
 
     }

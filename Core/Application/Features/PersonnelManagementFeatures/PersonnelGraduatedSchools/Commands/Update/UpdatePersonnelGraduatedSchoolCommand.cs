@@ -13,16 +13,14 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelGraduatedSch
 public class UpdatePersonnelGraduatedSchoolCommand : IRequest<UpdatedPersonnelGraduatedSchoolResponse>
 {
     public Guid Gid { get; set; }
-
-    public Guid GidPersonelFK { get; set; }
-
-    public EnumEgitimKurumuTuru EgitimKurumuTuru { get; set; }
-    public string OkulBilgisi { get; set; }
-    public string BolumBilgisi { get; set; }
-    public int BaslamaYili { get; set; }
-    public DateTime? MezuniyetTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public EnumEducationalInstitutionType EducationalInstitutionType { get; set; }
+    public string SchoolInfo { get; set; }
+    public string DepartmentInfo { get; set; }
+    public int StartYear { get; set; }
+    public DateTime? GraduationDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -48,7 +46,7 @@ public class UpdatePersonnelGraduatedSchoolCommand : IRequest<UpdatedPersonnelGr
             X.PersonnelGraduatedSchool? personnelGraduatedSchool = await _personnelGraduatedSchoolReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _personnelGraduatedSchoolBusinessRules.PersonnelGraduatedSchoolShouldExistWhenSelected(personnelGraduatedSchool);
-            await _personnelGraduatedSchoolBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelGraduatedSchoolBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
             personnelGraduatedSchool = _mapper.Map(request, personnelGraduatedSchool);
 
             _personnelGraduatedSchoolWriteRepository.Update(personnelGraduatedSchool!);

@@ -11,12 +11,12 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.CountryFK).WithMany(u => u.Cities).HasForeignKey(y => y.GidUlkeFK);
+            builder.HasOne(y => y.CountryFK).WithMany(u => u.Cities).HasForeignKey(y => y.GidCountryFK);
 
-            builder.Property(y => y.SehirAdi).IsRequired().HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(y => y.PlakaKodu).IsRequired(false).HasColumnType("varchar").HasMaxLength(5);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(y => y.PlateCode).IsRequired(false).HasColumnType("varchar").HasMaxLength(5);
 
-            builder.HasMany(u => u.PersonnelAddresses).WithOne(y => y.CityFK).HasForeignKey(y => y.GidSehirFK);
+            builder.HasMany(u => u.PersonnelAddresses).WithOne(y => y.CityFK).HasForeignKey(y => y.GidCityFK);
             builder.HasMany(u => u.SCAddresses).WithOne(y => y.CityFK).HasForeignKey(y => y.GidCityFK);
 
         }

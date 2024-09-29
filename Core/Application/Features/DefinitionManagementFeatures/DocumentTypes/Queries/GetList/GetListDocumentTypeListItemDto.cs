@@ -5,7 +5,7 @@ namespace Application.Features.DefinitionManagementFeatures.DocumentTypes.Querie
 public class GetListDocumentTypeListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public string BelgeAdi { get; set; }
+    public string Name { get; set; }
 
 
 }

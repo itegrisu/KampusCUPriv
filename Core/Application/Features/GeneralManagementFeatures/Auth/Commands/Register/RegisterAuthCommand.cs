@@ -6,11 +6,11 @@ namespace Application.Features.GeneralManagementFeatures.Auth.Commands.Register
     public class RegisterAuthCommand : IRequest<RegisterAuthResponse>
     {
 
-        public string Adi { get; set; } = string.Empty;
-        public string Soyadi { get; set; } = string.Empty;
-        public string EPosta { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Surname { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         public string Gsm { get; set; } = string.Empty;
-        public string Sifre { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
 
 
         public class RegisterAuthCommandHandler : IRequestHandler<RegisterAuthCommand, RegisterAuthResponse>

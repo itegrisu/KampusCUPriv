@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.DocumentTypes.Comman
 public class CreateDocumentTypeCommand : IRequest<CreatedDocumentTypeResponse>
 {
 
-    public string BelgeAdi { get; set; }
+    public string Name { get; set; }
 
     public class CreateDocumentTypeCommandHandler : IRequestHandler<CreateDocumentTypeCommand, CreatedDocumentTypeResponse>
     {
@@ -32,7 +32,7 @@ public class CreateDocumentTypeCommand : IRequest<CreatedDocumentTypeResponse>
         public async Task<CreatedDocumentTypeResponse> Handle(CreateDocumentTypeCommand request, CancellationToken cancellationToken)
         {
 
-            await _documentTypeBusinessRules.DocumentNameIsUnique(request.BelgeAdi);
+            await _documentTypeBusinessRules.DocumentNameIsUnique(request.Name);
 
             X.DocumentType documentType = _mapper.Map<X.DocumentType>(request);
 

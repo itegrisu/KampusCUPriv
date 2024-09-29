@@ -27,7 +27,7 @@ namespace Application.Features.GeneralManagementFeatures.Departments.Queries.Get
             public async Task<GetByGidDepartmentResponse> Handle(GetByGidDepartmentQuery request, CancellationToken cancellationToken)
             {
                 X.Department? department = await _departmentReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.YedekYoneticiFK).Include(x => x.AsilYoneticFK));
+                    include: x => x.Include(x => x.CoAdminFK).Include(x => x.MainAdminFK));
 
                 await _departmentBusinessRules.DepartmentShouldExistWhenSelected(department);
 

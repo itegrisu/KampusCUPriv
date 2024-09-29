@@ -5,14 +5,15 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Qu
     public class GetByGidPersonnelDocumentResponse : IResponse
     {
         public Guid Gid { get; set; }
-        public Guid GidPersonelFK { get; set; }
-        public string UserFKTamAd { get; set; }
-        public Guid GidBelgeTuru { get; set; }
-        public string DocumentTypeFKBelgeAdi { get; set; }
-        public string BelgeAdi { get; set; }
-        public DateTime GecerlilikTarihi { get; set; }
-        public string? Belge { get; set; }
-        public string? Aciklama { get; set; }
+        public Guid GidPersonnelFK { get; set; }
+        public string UserFKFullName { get; set; }
+        public Guid GidDocumentType { get; set; }
+        public string DocumentTypeFKName { get; set; }
+
+        public string Name { get; set; }
+        public DateTime ValidityDate { get; set; }
+        public string? Document { get; set; }
+        public string? Description { get; set; }
 
     }
 }

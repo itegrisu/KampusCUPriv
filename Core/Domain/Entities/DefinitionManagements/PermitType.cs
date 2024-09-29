@@ -5,7 +5,7 @@ namespace Domain.Entities.DefinitionManagements
 {
     public class PermitType : BaseEntity
     {
-        public string IzinAdi { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public ICollection<PersonnelPermitInfo>? PersonnelPermitInfos { get; set; }
 
     }

@@ -5,9 +5,9 @@ namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries
 public class GetListDepartmentUserListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public Guid GidDepartmanFK { get; set; }
-    public string DepartmentFKDepartmanAdi { get; set; }
-    public Guid GidPersonelFK { get; set; }
-    public string UserFKTamAd { get; set; }
+    public Guid GidDepartmentFK { get; set; }
+    public string DepartmentFKName { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public string UserFKFullName { get; set; }
 
 }

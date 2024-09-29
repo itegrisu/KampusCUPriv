@@ -7,10 +7,8 @@ public class UpdateDepartmentUserCommandValidator : AbstractValidator<UpdateDepa
     public UpdateDepartmentUserCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.GidDepartmanFK).NotNull().NotEmpty();
-RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-
-
+        RuleFor(c => c.GidDepartmentFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidPersonnelFK).NotNull().NotEmpty();
 
     }
 }

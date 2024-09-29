@@ -11,8 +11,8 @@ namespace Application.Features.DefinitionManagementFeatures.ForeignLanguages.Com
 public class CreateForeignLanguageCommand : IRequest<CreatedForeignLanguageResponse>
 {
 
-    public string DilAdi { get; set; }
-    public string? DilKodu { get; set; }
+    public string Name { get; set; }
+    public string? LanguageCode { get; set; }
 
     public class CreateForeignLanguageCommandHandler : IRequestHandler<CreateForeignLanguageCommand, CreatedForeignLanguageResponse>
     {
@@ -32,8 +32,8 @@ public class CreateForeignLanguageCommand : IRequest<CreatedForeignLanguageRespo
 
         public async Task<CreatedForeignLanguageResponse> Handle(CreateForeignLanguageCommand request, CancellationToken cancellationToken)
         {
-            await _foreignLanguageBusinessRules.CheckForeignLanguageNameIsUnique(request.DilAdi);
-            await _foreignLanguageBusinessRules.CheckForeignLanguageCodeIsUnique(request.DilKodu);
+            await _foreignLanguageBusinessRules.CheckForeignLanguageNameIsUnique(request.Name);
+            await _foreignLanguageBusinessRules.CheckForeignLanguageCodeIsUnique(request.LanguageCode);
             X.ForeignLanguage foreignLanguage = _mapper.Map<X.ForeignLanguage>(request);
 
 

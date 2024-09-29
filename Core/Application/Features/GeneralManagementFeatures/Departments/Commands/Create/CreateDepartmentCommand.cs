@@ -11,10 +11,11 @@ namespace Application.Features.GeneralManagementFeatures.Departments.Commands.Cr
 
 public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
 {
-    public Guid GidAsilYoneticiFK { get; set; }
-    public Guid GidYedekYoneticiFK { get; set; }
-    public string DepartmanAdi { get; set; }
-    public string? Detay { get; set; }
+    public Guid GidMainAdminFK { get; set; }
+    public Guid GidCoAdminFK { get; set; }
+    public string Name { get; set; }
+    public string? Detail { get; set; }
+
 
 
 
@@ -36,16 +37,16 @@ public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
 
         public async Task<CreatedDepartmentResponse> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
         {
-            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidAsilYoneticiFK);
-            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidYedekYoneticiFK);
-            await _departmentBusinessRules.CheckDepartmentName(request.DepartmanAdi);
+            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidMainAdminFK);
+            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidCoAdminFK);
+            await _departmentBusinessRules.CheckDepartmentName(request.Name);
 
             X.Department department = _mapper.Map<X.Department>(request);
 
             await _departmentWriteRepository.AddAsync(department);
             await _departmentWriteRepository.SaveAsync();
 
-            X.Department savedDepartment = await _departmentReadRepository.GetAsync(predicate: x => x.Gid == department.Gid, include: x => x.Include(x => x.AsilYoneticFK).Include(x => x.YedekYoneticiFK));
+            X.Department savedDepartment = await _departmentReadRepository.GetAsync(predicate: x => x.Gid == department.Gid, include: x => x.Include(x => x.MainAdminFK).Include(x => x.CoAdminFK));
 
 
 

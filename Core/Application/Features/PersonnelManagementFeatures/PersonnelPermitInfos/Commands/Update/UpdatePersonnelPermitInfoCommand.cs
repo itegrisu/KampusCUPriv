@@ -13,13 +13,13 @@ public class UpdatePersonnelPermitInfoCommand : IRequest<UpdatedPersonnelPermitI
 {
     public Guid Gid { get; set; }
 
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
     public Guid GidPermitFK { get; set; }
 
-    public DateTime IzinBaslamaTarihi { get; set; }
-    public DateTime IzinBitisTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public DateTime PermitStartDate { get; set; }
+    public DateTime PermitEndDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -44,7 +44,7 @@ public class UpdatePersonnelPermitInfoCommand : IRequest<UpdatedPersonnelPermitI
             X.PersonnelPermitInfo? personnelPermitInfo = await _personnelPermitInfoReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelPermitInfoBusinessRules.PersonnelPermitInfoShouldExistWhenSelected(personnelPermitInfo);
-            await _personnelPermitInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelPermitInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
             await _personnelPermitInfoBusinessRules.PermitTypeShouldExistWhenSelected(request.GidPermitFK);
             personnelPermitInfo = _mapper.Map(request, personnelPermitInfo);
 

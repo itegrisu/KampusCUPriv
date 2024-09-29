@@ -5,13 +5,13 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Qu
     public class GetByGidPersonnelAddressResponse : IResponse
     {
         public Guid Gid { get; set; }
-        public Guid GidPersonelFK { get; set; }
-        public string UserFKTamAd { get; set; }
-        public Guid GidSehirFK { get; set; }
-        public string CityFKSehirAdi { get; set; }
-        public string AdresBasligi { get; set; }
-        public string Adres { get; set; }
-        public string? Aciklama { get; set; }
+        public Guid GidPersonnelFK { get; set; }
+        public string UserFKFullName { get; set; }
+        public Guid GidCityFK { get; set; }
+        public string CityFKName { get; set; }
+        public string AddressTitle { get; set; }
+        public string Address { get; set; }
+        public string? Description { get; set; }
 
     }
 }

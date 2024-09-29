@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.OtoBrands.Commands.U
 public class UpdateOtoBrandCommand : IRequest<UpdatedOtoBrandResponse>
 {
     public Guid Gid { get; set; }
-    public string AracMarkaAdi { get; set; }
+    public string Name { get; set; }
 
 
     public class UpdateOtoBrandCommandHandler : IRequestHandler<UpdateOtoBrandCommand, UpdatedOtoBrandResponse>
@@ -35,7 +35,7 @@ public class UpdateOtoBrandCommand : IRequest<UpdatedOtoBrandResponse>
             X.OtoBrand? otoBrand = await _otoBrandReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _otoBrandBusinessRules.OtoBrandShouldExistWhenSelected(otoBrand);
-            await _otoBrandBusinessRules.OtoBrandNameIsUnique(request.AracMarkaAdi, request.Gid);
+            await _otoBrandBusinessRules.OtoBrandNameIsUnique(request.Name, request.Gid);
             otoBrand = _mapper.Map(request, otoBrand);
 
             _otoBrandWriteRepository.Update(otoBrand!);

@@ -8,8 +8,7 @@ namespace Application.Features.DefinitionManagementFeatures.RoomTypes.Rules;
 
 public class RoomTypeBusinessRules : BaseBusinessRules
 {
-    public string OdaTuru { get; set; }
-    public string OdaKodu { get; set; }
+
 
     private readonly IRoomTypeReadRepository _roomTypeReadRepository;
 
@@ -26,14 +25,14 @@ public class RoomTypeBusinessRules : BaseBusinessRules
 
     public async Task CheckRoomTypeNameIsUnique(string roomTypeName, Guid? roomTypeGuid = null)
     {
-        var roomType = await _roomTypeReadRepository.GetAsync(predicate: x => x.OdaTuru.ToLower() == roomTypeName.ToLower() && (roomTypeGuid == null || x.Gid != roomTypeGuid));
+        var roomType = await _roomTypeReadRepository.GetAsync(predicate: x => x.Name.ToLower() == roomTypeName.ToLower() && (roomTypeGuid == null || x.Gid != roomTypeGuid));
         if (roomType != null)
             throw new BusinessException(RoomTypesBusinessMessages.RoomTypeIsAlreadyExists);
     }
 
     public async Task CheckRoomTypeCodeIsUnique(string roomTypeCode, Guid? roomTypeGuid = null)
     {
-        var roomType = await _roomTypeReadRepository.GetAsync(predicate: x => x.OdaKodu.ToLower() == roomTypeCode.ToLower() && (roomTypeGuid == null || x.Gid != roomTypeGuid));
+        var roomType = await _roomTypeReadRepository.GetAsync(predicate: x => x.Code.ToLower() == roomTypeCode.ToLower() && (roomTypeGuid == null || x.Gid != roomTypeGuid));
         if (roomType != null)
             throw new BusinessException(RoomTypesBusinessMessages.RoomTypeCodeIsAlreadyExists);
     }

@@ -5,7 +5,7 @@ namespace Application.Features.DefinitionManagementFeatures.PermitTypes.Queries.
 public class GetListPermitTypeListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public string IzinAdi { get; set; }
+    public string Name { get; set; }
 
 
 }

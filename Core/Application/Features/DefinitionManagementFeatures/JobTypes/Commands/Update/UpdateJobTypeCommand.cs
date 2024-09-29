@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.JobTypes.Commands.Up
 public class UpdateJobTypeCommand : IRequest<UpdatedJobTypeResponse>
 {
     public Guid Gid { get; set; }
-    public string GorevAdi { get; set; }
+    public string Name { get; set; }
 
     public class UpdateJobTypeCommandHandler : IRequestHandler<UpdateJobTypeCommand, UpdatedJobTypeResponse>
     {
@@ -34,7 +34,7 @@ public class UpdateJobTypeCommand : IRequest<UpdatedJobTypeResponse>
             X.JobType? jobType = await _jobTypeReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _jobTypeBusinessRules.JobTypeShouldExistWhenSelected(jobType);
-            await _jobTypeBusinessRules.CheckJobTypeNameIsUnique(request.GorevAdi, request.Gid);
+            await _jobTypeBusinessRules.CheckJobTypeNameIsUnique(request.Name, request.Gid);
 
             jobType = _mapper.Map(request, jobType);
 

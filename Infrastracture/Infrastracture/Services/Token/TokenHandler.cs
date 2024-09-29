@@ -39,9 +39,9 @@ namespace Infrastracture.Services.Token
                   //new Claim("http://schemas.yourdomain.com/claims/isSystemAdmin", user.IsSystemAdmin.ToString()),
                   //new Claim("http://schemas.yourdomain.com/claims/isLoginStatus", user.IsLoginStatus.ToString())
 
-                  new Claim(ClaimTypes.Email,user.EPosta),
-                  new Claim("isSystemAdmin",user.SistemAdminMi.ToString()),
-                  new Claim("isLoginStatus",user.SistemAdminMi.ToString())
+                  new Claim(ClaimTypes.Email,user.Email),
+                  new Claim("isSystemAdmin",user.IsSystemAdmin.ToString()),
+                  new Claim("isLoginStatus",user.IsSystemAdmin.ToString())
             };
 
 

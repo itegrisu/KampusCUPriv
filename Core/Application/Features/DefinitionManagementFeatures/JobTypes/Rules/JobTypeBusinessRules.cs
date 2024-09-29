@@ -24,7 +24,7 @@ public class JobTypeBusinessRules : BaseBusinessRules
 
     public async Task CheckJobTypeNameIsUnique(string jobTypeName, Guid? jobTypeGuid = null)
     {
-        var jobType = await _jobTypeReadRepository.GetAsync(predicate: x => x.GorevAdi.ToLower() == jobTypeName.ToLower() && (jobTypeGuid == null || x.Gid != jobTypeGuid));
+        var jobType = await _jobTypeReadRepository.GetAsync(predicate: x => x.Name.ToLower() == jobTypeName.ToLower() && (jobTypeGuid == null || x.Gid != jobTypeGuid));
         if (jobType != null)
             throw new BusinessException(JobTypesBusinessMessages.JobTypeIsAlreadyExists);
     }

@@ -11,14 +11,13 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.
 
 public class CreatePersonnelPermitInfoCommand : IRequest<CreatedPersonnelPermitInfoResponse>
 {
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
     public Guid GidPermitFK { get; set; }
 
-    public DateTime IzinBaslamaTarihi { get; set; }
-    public DateTime IzinBitisTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
-
+    public DateTime PermitStartDate { get; set; }
+    public DateTime PermitEndDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 
     public class CreatePersonnelPermitInfoCommandHandler : IRequestHandler<CreatePersonnelPermitInfoCommand, CreatedPersonnelPermitInfoResponse>
@@ -39,7 +38,7 @@ public class CreatePersonnelPermitInfoCommand : IRequest<CreatedPersonnelPermitI
 
         public async Task<CreatedPersonnelPermitInfoResponse> Handle(CreatePersonnelPermitInfoCommand request, CancellationToken cancellationToken)
         {
-            await _personnelPermitInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelPermitInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
             await _personnelPermitInfoBusinessRules.PermitTypeShouldExistWhenSelected(request.GidPermitFK);
 
             X.PersonnelPermitInfo personnelPermitInfo = _mapper.Map<X.PersonnelPermitInfo>(request);

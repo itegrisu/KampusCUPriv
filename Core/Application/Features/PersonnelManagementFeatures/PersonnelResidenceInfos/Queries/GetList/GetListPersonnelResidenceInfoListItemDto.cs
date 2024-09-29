@@ -5,13 +5,13 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInf
 public class GetListPersonnelResidenceInfoListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public Guid GidPersonelFK { get; set; }
-    public string UserFKTamAd { get; set; }
-    public string OturumSeriNo { get; set; }
-    public DateTime VerilisTarihi { get; set; }
-    public DateTime GecerlilikTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public string UserFKFullName { get; set; }
 
+    public string SessionSerialNo { get; set; }
+    public DateTime DateOfIssue { get; set; }
+    public DateTime ValidityDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 }

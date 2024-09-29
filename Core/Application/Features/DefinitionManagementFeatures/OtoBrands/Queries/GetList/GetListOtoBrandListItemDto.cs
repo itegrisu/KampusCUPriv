@@ -5,7 +5,7 @@ namespace Application.Features.DefinitionManagementFeatures.OtoBrands.Queries.Ge
 public class GetListOtoBrandListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public string AracMarkaAdi { get; set; }
+    public string Name { get; set; }
 
 
 }

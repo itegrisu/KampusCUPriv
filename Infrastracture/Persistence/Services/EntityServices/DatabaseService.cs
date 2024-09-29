@@ -64,7 +64,7 @@ namespace Persistence.Services.EntityServices
                     Title = "Update Data"
                 };
             }
-            if (!user.SistemAdminMi)
+            if (!user.IsSystemAdmin)
             {
                 return new()
                 {

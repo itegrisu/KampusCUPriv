@@ -11,9 +11,11 @@ namespace Application.Features.DefinitionManagementFeatures.Countries.Commands.U
 public class UpdateCountryCommand : IRequest<UpdatedCountryResponse>
 {
     public Guid Gid { get; set; }
-    public string UlkeAdi { get; set; }
-    public string UlkeKodu { get; set; }
-    public string? TelefonKodu { get; set; }
+
+
+    public string Name { get; set; }
+    public string CountryCode { get; set; }
+    public string? PhoneCode { get; set; }
 
 
     public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand, UpdatedCountryResponse>
@@ -37,7 +39,7 @@ public class UpdateCountryCommand : IRequest<UpdatedCountryResponse>
             X.Country? country = await _countryReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _countryBusinessRules.CountryShouldExistWhenSelected(country);
-            await _countryBusinessRules.CountryNameIsUnique(request.UlkeAdi, request.Gid);
+            await _countryBusinessRules.CountryNameIsUnique(request.Name, request.Gid);
             country = _mapper.Map(request, country);
 
             _countryWriteRepository.Update(country!);

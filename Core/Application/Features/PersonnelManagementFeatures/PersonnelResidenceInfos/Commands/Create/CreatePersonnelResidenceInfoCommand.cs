@@ -13,12 +13,12 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelResidenceInf
 
 public class CreatePersonnelResidenceInfoCommand : IRequest<CreatedPersonnelResidenceInfoResponse>
 {
-    public Guid GidPersonelFK { get; set; }
-    public string OturumSeriNo { get; set; }
-    public DateTime VerilisTarihi { get; set; }
-    public DateTime GecerlilikTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public string SessionSerialNo { get; set; }
+    public DateTime DateOfIssue { get; set; }
+    public DateTime ValidityDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
     public class CreatePersonnelResidenceInfoCommandHandler : IRequestHandler<CreatePersonnelResidenceInfoCommand, CreatedPersonnelResidenceInfoResponse>
     {
         private readonly IMapper _mapper;
@@ -38,7 +38,7 @@ public class CreatePersonnelResidenceInfoCommand : IRequest<CreatedPersonnelResi
         public async Task<CreatedPersonnelResidenceInfoResponse> Handle(CreatePersonnelResidenceInfoCommand request, CancellationToken cancellationToken)
         {
 
-            await _personnelResidenceInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelResidenceInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
 
 
             X.PersonnelResidenceInfo personnelResidenceInfo = _mapper.Map<X.PersonnelResidenceInfo>(request);

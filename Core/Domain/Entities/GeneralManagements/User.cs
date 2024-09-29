@@ -13,33 +13,34 @@ namespace Domain.Entities.GeneralManagements
 {
     public class User : BaseEntity
     {
-        public Guid? GidUyrukFK { get; set; }
+        public Guid? GidNationalityFK { get; set; }
         public Country? CountryFK { get; set; }
-        public string Adi { get; set; } = string.Empty;
-        public string Soyadi { get; set; } = string.Empty;
-        public string EPosta { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Surname { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         public string? Avatar { get; set; } = string.Empty;
-        public string? Unvani { get; set; }
-        public string Sifre { get; set; } = string.Empty;
-        public string SifreHash { get; set; } = string.Empty;
-        public string SifreGuncellemeToken { get; set; } = string.Empty;
-        public DateTime? TokenGecerlilikSuresi { get; set; }
-        public string? ProfilResmi { get; set; }
-        public bool AktifHesapMi { get; set; }
-        public bool SistemAdminMi { get; set; }
+        public string? Title { get; set; }
+        public string Password { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
+        public string UpdatePasswordToken { get; set; } = string.Empty;
+        public DateTime? TokenExpiredDate { get; set; }
+        public bool IsLoginStatus { get; set; }
+        public bool IsSystemAdmin { get; set; }
         public string Gsm { get; set; } = string.Empty;
-        public string? DogumYeri { get; set; }
-        public DateTime? DogumTarihi { get; set; }
-        public string? KimlikNo { get; set; }
-        public string? PasaportNo { get; set; }
+        public string? Birthplace { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string? IdentityNo { get; set; }
+        public string? PassportNo { get; set; }
         public string? SGKNo { get; set; }
-        public string? EhliyetNo { get; set; }
-        public string? Not { get; set; }
-        public EnumMedeniDurumu? MedeniDurumu { get; set; }
-        public EnumKanGrubu? KanGrubu { get; set; }
-        public EnumCinsiyet Cinsiyet { get; set; }
-        public EnumEMailAktivasyonDurumu EMailAktivasyonDurumu { get; set; }
-        public EnumSmsAktivasyonDurumu SmsAktivasyonDurumu { get; set; }
+        public string? DrivingLicenseNo { get; set; }
+        public string? Note { get; set; }
+        public EnumMaritalStatus? MaritalStatus { get; set; }
+        public EnumBloodGroup? BloodGroup { get; set; }
+        public EnumGender Gender { get; set; }
+        //public EnumWorkType WorkType { get; set; }
+        public EnumEmailActivationStatus EmailActivationStatus { get; set; }
+        public EnumSmsActivationStatus SmsActivationStatus { get; set; }
+        public string? PersonnelSpecialNote { get; set; }
         public ICollection<LogSuccessedLogin>? LogSuccessedLogins { get; set; }
         public ICollection<LogAuthorizationError>? LogAuthorizationErrors { get; set; }
         public ICollection<LogUserPageVisit>? LogUserPageActions { get; set; }
@@ -74,11 +75,11 @@ namespace Domain.Entities.GeneralManagements
 
         #region NotMapped alanlar 
         [NotMapped]
-        public string TamAd
+        public string FullName
         {
             get
             {
-                return Adi + " " + Soyadi;
+                return Name + " " + Surname;
             }
         }
 

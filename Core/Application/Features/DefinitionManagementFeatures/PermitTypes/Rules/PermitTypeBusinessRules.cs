@@ -24,7 +24,7 @@ public class PermitTypeBusinessRules : BaseBusinessRules
 
     public async Task CheckPermitTypeNameIsUnique(string permitTypeName, Guid? permitTypeGuid = null)
     {
-        var permitType = await _permitTypeReadRepository.GetAsync(predicate: x => x.IzinAdi.ToLower() == permitTypeName.ToLower() && (permitTypeGuid == null || x.Gid != permitTypeGuid));
+        var permitType = await _permitTypeReadRepository.GetAsync(predicate: x => x.Name.ToLower() == permitTypeName.ToLower() && (permitTypeGuid == null || x.Gid != permitTypeGuid));
         if (permitType != null)
             throw new BusinessException(PermitTypesBusinessMessages.PermitTypeIsAlreadyExists);
     }

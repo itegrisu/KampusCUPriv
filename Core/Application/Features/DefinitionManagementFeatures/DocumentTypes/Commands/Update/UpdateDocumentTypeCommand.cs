@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.DocumentTypes.Comman
 public class UpdateDocumentTypeCommand : IRequest<UpdatedDocumentTypeResponse>
 {
     public Guid Gid { get; set; }
-    public string BelgeAdi { get; set; }
+    public string Name { get; set; }
 
     public class UpdateDocumentTypeCommandHandler : IRequestHandler<UpdateDocumentTypeCommand, UpdatedDocumentTypeResponse>
     {
@@ -34,7 +34,7 @@ public class UpdateDocumentTypeCommand : IRequest<UpdatedDocumentTypeResponse>
             X.DocumentType? documentType = await _documentTypeReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _documentTypeBusinessRules.DocumentTypeShouldExistWhenSelected(documentType);
-            await _documentTypeBusinessRules.DocumentNameIsUnique(request.BelgeAdi, request.Gid);
+            await _documentTypeBusinessRules.DocumentNameIsUnique(request.Name, request.Gid);
             documentType = _mapper.Map(request, documentType);
 
             _documentTypeWriteRepository.Update(documentType!);

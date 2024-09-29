@@ -7,11 +7,10 @@ public class UpdateDepartmentCommandValidator : AbstractValidator<UpdateDepartme
     public UpdateDepartmentCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.GidAsilYoneticiFK).NotNull().NotEmpty();
-        //RuleFor(c => c.GidYedekYoneticiFK);//
-
-        RuleFor(c => c.DepartmanAdi).NotNull().NotEmpty().MaximumLength(50);
-        RuleFor(c => c.Detay).MaximumLength(250);
+        RuleFor(c => c.GidMainAdminFK).NotNull().NotEmpty();
+        //RuleFor(c => c.GidCoAdminFK);//
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(c => c.Detail).MaximumLength(250);
 
 
     }

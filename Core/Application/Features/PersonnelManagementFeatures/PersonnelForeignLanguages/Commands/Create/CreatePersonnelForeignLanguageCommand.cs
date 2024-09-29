@@ -12,10 +12,11 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelForeignLangu
 
 public class CreatePersonnelForeignLanguageCommand : IRequest<CreatedPersonnelForeignLanguageResponse>
 {
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
     public Guid GidLanguageFK { get; set; }
-    public EnumLanguageLevel KonusmaDuzeyi { get; set; }
-    public EnumLanguageLevel OkumaDuzeyi { get; set; }
+
+    public EnumLanguageLevel SpeakingLevel { get; set; }
+    public EnumLanguageLevel ReadLevel { get; set; }
 
 
 
@@ -37,7 +38,7 @@ public class CreatePersonnelForeignLanguageCommand : IRequest<CreatedPersonnelFo
 
         public async Task<CreatedPersonnelForeignLanguageResponse> Handle(CreatePersonnelForeignLanguageCommand request, CancellationToken cancellationToken)
         {
-            await _personnelForeignLanguageBusinessRules.PersonnelShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelForeignLanguageBusinessRules.PersonnelShouldExistWhenSelected(request.GidPersonnelFK);
             await _personnelForeignLanguageBusinessRules.LanguageShouldExistWhenSelected(request.GidLanguageFK);
 
             X.PersonnelForeignLanguage personnelForeignLanguage = _mapper.Map<X.PersonnelForeignLanguage>(request);

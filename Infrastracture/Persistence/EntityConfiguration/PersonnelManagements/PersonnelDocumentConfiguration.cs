@@ -11,13 +11,13 @@ namespace Persistence.EntityConfiguration.PersonnelManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelDocuments).HasForeignKey(y => y.GidPersonelFK);
-            builder.HasOne(y => y.DocumentTypeFK).WithMany(u => u.PersonnelDocuments).HasForeignKey(y => y.GidBelgeTuru);
+            builder.HasOne(y => y.UserFK).WithMany(u => u.PersonnelDocuments).HasForeignKey(y => y.GidPersonnelFK);
+            builder.HasOne(y => y.DocumentTypeFK).WithMany(u => u.PersonnelDocuments).HasForeignKey(y => y.GidDocumentType);
 
-            builder.Property(y => y.BelgeAdi).IsRequired().HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(y => y.GecerlilikTarihi).IsRequired(false).HasColumnType("datetime");
-            builder.Property(y => y.Belge).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
-            builder.Property(y => y.Aciklama).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(y => y.ValidityDate).IsRequired(false).HasColumnType("datetime");
+            builder.Property(y => y.Document).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
+            builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
 
 
         }

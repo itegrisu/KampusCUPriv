@@ -11,10 +11,10 @@ namespace Application.Features.DefinitionManagementFeatures.RoomTypes.Commands.C
 public class CreateRoomTypeCommand : IRequest<CreatedRoomTypeResponse>
 {
 
-    public string OdaTuru { get; set; }
-    public string OdaKodu { get; set; }
-    public int KisiSayisi { get; set; }
-    public string? Aciklama { get; set; }
+    public string Name { get; set; }
+    public string Code { get; set; }
+    public int Capacity { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -36,8 +36,8 @@ public class CreateRoomTypeCommand : IRequest<CreatedRoomTypeResponse>
 
         public async Task<CreatedRoomTypeResponse> Handle(CreateRoomTypeCommand request, CancellationToken cancellationToken)
         {
-            await _roomTypeBusinessRules.CheckRoomTypeNameIsUnique(request.OdaTuru);
-            await _roomTypeBusinessRules.CheckRoomTypeCodeIsUnique(request.OdaKodu);
+            await _roomTypeBusinessRules.CheckRoomTypeNameIsUnique(request.Name);
+            await _roomTypeBusinessRules.CheckRoomTypeCodeIsUnique(request.Code);
 
             X.RoomType roomType = _mapper.Map<X.RoomType>(request);
 

@@ -22,8 +22,8 @@ namespace Application.Features.GeneralManagementFeatures.Auth.Commands.Login
 
             public async Task<LoginAuthResponse> Handle(LoginAuthCommand request, CancellationToken cancellationToken)
             {
-                var user = await _userReadRepository.GetSingleAsync(x => x.EPosta == request.Email);
-                if (user != null && user.AktifHesapMi == true)
+                var user = await _userReadRepository.GetSingleAsync(x => x.Email == request.Email);
+                if (user != null && user.IsLoginStatus == true)
                 {
                     LoginAuthResponse response = await _authService.Login(request);
                     return response;
