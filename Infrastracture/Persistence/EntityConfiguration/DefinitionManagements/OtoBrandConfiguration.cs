@@ -12,7 +12,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
 
-            builder.Property(y => y.AracMarkaAdi).IsRequired().HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
 
         }
     }

@@ -51,7 +51,7 @@ namespace Application.Features.TaskManagementFeatures.TaskUsers.Queries.GetTaskC
                     var dto = new GetTaskCountListTaskUserListItemDto
                     {
                         GidUserFK = group.Key,
-                        UserFKFullName = group.First().UserFK.TamAd,
+                        UserFKFullName = group.First().UserFK.FullName,
                         ActiveTaskCount = activeTaskCount,
                         DelayedTaskCount = delayedTaskCount,
                         CompletedTaskCount = completedTaskCount

@@ -11,10 +11,10 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelWorkingTable
 
 public class CreatePersonnelWorkingTableCommand : IRequest<CreatedPersonnelWorkingTableResponse>
 {
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
 
-    public DateTime IseBaslamaTarihi { get; set; }
-    public DateTime? IstenCikisTarihi { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime? ExitDate { get; set; }
 
 
 
@@ -37,7 +37,7 @@ public class CreatePersonnelWorkingTableCommand : IRequest<CreatedPersonnelWorki
         public async Task<CreatedPersonnelWorkingTableResponse> Handle(CreatePersonnelWorkingTableCommand request, CancellationToken cancellationToken)
         {
 
-            await _personnelWorkingTableBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelWorkingTableBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
 
             X.PersonnelWorkingTable personnelWorkingTable = _mapper.Map<X.PersonnelWorkingTable>(request);
 

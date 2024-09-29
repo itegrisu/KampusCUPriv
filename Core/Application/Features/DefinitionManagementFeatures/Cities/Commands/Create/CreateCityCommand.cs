@@ -11,9 +11,10 @@ namespace Application.Features.DefinitionManagementFeatures.Cities.Commands.Crea
 
 public class CreateCityCommand : IRequest<CreatedCityResponse>
 {
-    public Guid GidUlkeFK { get; set; }
-    public string SehirAdi { get; set; }
-    public string? PlakaKodu { get; set; }
+    public Guid GidCountryFK { get; set; }
+
+    public string Name { get; set; }
+    public string? PlateCode { get; set; }
 
 
 
@@ -36,8 +37,8 @@ public class CreateCityCommand : IRequest<CreatedCityResponse>
         public async Task<CreatedCityResponse> Handle(CreateCityCommand request, CancellationToken cancellationToken)
         {
 
-            await _cityBusinessRules.CountryShouldExistWhenSelected(request.GidUlkeFK);
-            await _cityBusinessRules.CheckCityNameIsUnique(request.SehirAdi);
+            await _cityBusinessRules.CountryShouldExistWhenSelected(request.GidCountryFK);
+            await _cityBusinessRules.CheckCityNameIsUnique(request.Name);
 
             X.City city = _mapper.Map<X.City>(request);
 

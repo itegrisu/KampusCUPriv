@@ -25,7 +25,7 @@ public class MeasureTypeBusinessRules : BaseBusinessRules
 
     public async Task CheckMeasureTypeNameIsUnique(string measureTypeName, Guid? measureTypeGuid = null)
     {
-        var measureType = await _measureTypeReadRepository.GetAsync(predicate: x => x.OlcuAdi.ToLower() == measureTypeName.ToLower() && (measureTypeGuid == null || x.Gid != measureTypeGuid));
+        var measureType = await _measureTypeReadRepository.GetAsync(predicate: x => x.Name.ToLower() == measureTypeName.ToLower() && (measureTypeGuid == null || x.Gid != measureTypeGuid));
         if (measureType != null)
             throw new BusinessException(MeasureTypesBusinessMessages.MeasureTypeIsAlreadyExists);
     }

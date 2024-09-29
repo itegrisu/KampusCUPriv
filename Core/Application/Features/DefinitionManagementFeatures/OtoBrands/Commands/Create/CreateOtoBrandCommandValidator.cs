@@ -7,7 +7,7 @@ public class CreateOtoBrandCommandValidator : AbstractValidator<CreateOtoBrandCo
     public CreateOtoBrandCommandValidator()
     {
         
-RuleFor(c => c.AracMarkaAdi).NotNull().NotEmpty().MaximumLength(100);
+RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

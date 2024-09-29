@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.MeasureTypes.Command
 public class UpdateMeasureTypeCommand : IRequest<UpdatedMeasureTypeResponse>
 {
     public Guid Gid { get; set; }
-    public string OlcuAdi { get; set; }
+    public string Name { get; set; }
 
 
     public class UpdateMeasureTypeCommandHandler : IRequestHandler<UpdateMeasureTypeCommand, UpdatedMeasureTypeResponse>
@@ -35,7 +35,7 @@ public class UpdateMeasureTypeCommand : IRequest<UpdatedMeasureTypeResponse>
             X.MeasureType? measureType = await _measureTypeReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _measureTypeBusinessRules.MeasureTypeShouldExistWhenSelected(measureType);
-            await _measureTypeBusinessRules.CheckMeasureTypeNameIsUnique(request.OlcuAdi, request.Gid);
+            await _measureTypeBusinessRules.CheckMeasureTypeNameIsUnique(request.Name, request.Gid);
             measureType = _mapper.Map(request, measureType);
 
             _measureTypeWriteRepository.Update(measureType!);

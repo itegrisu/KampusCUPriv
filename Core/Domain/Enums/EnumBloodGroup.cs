@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums
 {
-    public enum EnumKanGrubu
+    public enum EnumBloodGroup
     {
         APozitif = 1,
         BPozitif = 2,

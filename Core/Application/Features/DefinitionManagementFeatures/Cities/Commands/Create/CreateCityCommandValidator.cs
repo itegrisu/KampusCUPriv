@@ -6,9 +6,10 @@ public class CreateCityCommandValidator : AbstractValidator<CreateCityCommand>
 {
     public CreateCityCommandValidator()
     {
-        RuleFor(c => c.GidUlkeFK).NotNull().NotEmpty();
-        RuleFor(c => c.SehirAdi).NotNull().NotEmpty().MaximumLength(100);
-        RuleFor(c => c.PlakaKodu).MaximumLength(5);
+        RuleFor(c => c.GidCountryFK).NotNull().NotEmpty();
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(c => c.PlateCode).MaximumLength(5);
 
 
     }

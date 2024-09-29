@@ -7,9 +7,8 @@ public class UpdatePersonnelWorkingTableCommandValidator : AbstractValidator<Upd
     public UpdatePersonnelWorkingTableCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-
-RuleFor(c => c.IseBaslamaTarihi).NotNull().NotEmpty();
+        RuleFor(c => c.GidPersonnelFK).NotNull().NotEmpty();
+        RuleFor(c => c.StartDate).NotNull().NotEmpty();
 
 
     }

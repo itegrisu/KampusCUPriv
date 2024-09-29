@@ -36,15 +36,15 @@ public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartment
                 return await _noPagination.NoPaginationData(cancellationToken,
                    includes: new Expression<Func<Department, object>>[]
                    {
-                       x => x.YedekYoneticiFK,
-                       x => x.AsilYoneticFK,
+                       x => x.CoAdminFK,
+                       x => x.MainAdminFK,
                    });
             }
             IPaginate<X.Department> departments = await _departmentReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: X => X.Include(x => x.YedekYoneticiFK).Include(x => x.AsilYoneticFK)
+                include: X => X.Include(x => x.CoAdminFK).Include(x => x.MainAdminFK)
             );
 
             GetListResponse<GetListDepartmentListItemDto> response = _mapper.Map<GetListResponse<GetListDepartmentListItemDto>>(departments);

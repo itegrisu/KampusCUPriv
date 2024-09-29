@@ -6,11 +6,11 @@ public class CreatePersonnelForeignLanguageCommandValidator : AbstractValidator<
 {
     public CreatePersonnelForeignLanguageCommandValidator()
     {
-        RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-RuleFor(c => c.GidLanguageFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidPersonnelFK).NotNull().NotEmpty();
+        RuleFor(c => c.GidLanguageFK).NotNull().NotEmpty();
 
-RuleFor(c => c.KonusmaDuzeyi).NotNull().NotEmpty();
-RuleFor(c => c.OkumaDuzeyi).NotNull().NotEmpty();
+        RuleFor(c => c.SpeakingLevel).NotNull().NotEmpty();
+        RuleFor(c => c.ReadLevel).NotNull().NotEmpty();
 
 
     }

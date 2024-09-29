@@ -35,7 +35,7 @@ public class DepartmentBusinessRules : BaseBusinessRules
     {
         // Eğer departmentId null değilse, güncelleme işlemi yapıldığını anlıyoruz ve departmanın kendisini hariç tutuyoruz
         var department = await _departmendReadRepository.GetAsync(
-            predicate: x => x.DepartmanAdi == departmentName && (departmentGid == null || x.Gid != departmentGid));
+            predicate: x => x.Name == departmentName && (departmentGid == null || x.Gid != departmentGid));
 
         if (department != null)
         {

@@ -7,12 +7,11 @@ public class UpdatePersonnelPassportInfoCommandValidator : AbstractValidator<Upd
     public UpdatePersonnelPassportInfoCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.GidPersonelFK).NotNull().NotEmpty();
-        RuleFor(c => c.PasaportNo).NotNull().NotEmpty().MaximumLength(100);
-        RuleFor(c => c.VerilisTarihi).NotNull().NotEmpty();
-        RuleFor(c => c.GecerlilikTarihi).NotNull().NotEmpty();
-        RuleFor(c => c.Belge).MaximumLength(150);
-        RuleFor(c => c.Aciklama).MaximumLength(250);
+        RuleFor(c => c.GidPersonnelFK).NotNull().NotEmpty();
+        RuleFor(c => c.PassportNo).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(c => c.DateOfIssue).NotNull().NotEmpty();
+        RuleFor(c => c.ValidityDate).NotNull().NotEmpty();
+        RuleFor(c => c.Document).MaximumLength(150);
 
 
     }

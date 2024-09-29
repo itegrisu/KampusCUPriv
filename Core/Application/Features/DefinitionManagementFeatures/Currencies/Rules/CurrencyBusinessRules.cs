@@ -23,7 +23,7 @@ public class CurrencyBusinessRules : BaseBusinessRules
 
     public async Task CheckCurrencyNameIsUnique(string currencyName, Guid? currencyGuid = null)
     {
-        var currency = await _currencyReadRepository.GetAsync(predicate: x => x.DovizAdi.ToLower() == currencyName.ToLower() && (currencyGuid == null || x.Gid != currencyGuid));
+        var currency = await _currencyReadRepository.GetAsync(predicate: x => x.Name.ToLower() == currencyName.ToLower() && (currencyGuid == null || x.Gid != currencyGuid));
         if (currency != null)
             throw new BusinessException(CurrenciesBusinessMessages.CurrencyIsAlreadyExists);
     }
@@ -32,7 +32,7 @@ public class CurrencyBusinessRules : BaseBusinessRules
     {
         if (string.IsNullOrEmpty(currencyCode))
             return;
-        var currency = await _currencyReadRepository.GetAsync(predicate: x => x.DovizKodu.ToLower() == currencyCode.ToLower() && (currencyGuid == null || x.Gid != currencyGuid));
+        var currency = await _currencyReadRepository.GetAsync(predicate: x => x.Code.ToLower() == currencyCode.ToLower() && (currencyGuid == null || x.Gid != currencyGuid));
         if (currency != null)
             throw new BusinessException(CurrenciesBusinessMessages.CurrencyCodeIsAlreadyExists);
     }
@@ -41,7 +41,7 @@ public class CurrencyBusinessRules : BaseBusinessRules
     {
         if (string.IsNullOrEmpty(currencySymbol))
             return;
-        var currency = await _currencyReadRepository.GetAsync(predicate: x => x.DovizSimgesi.ToLower() == currencySymbol.ToLower() && (currencyGuid == null || x.Gid != currencyGuid));
+        var currency = await _currencyReadRepository.GetAsync(predicate: x => x.Symbol.ToLower() == currencySymbol.ToLower() && (currencyGuid == null || x.Gid != currencyGuid));
         if (currency != null)
             throw new BusinessException(CurrenciesBusinessMessages.CurrencySymbolIsAlreadyExists);
     }

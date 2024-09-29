@@ -11,9 +11,11 @@ namespace Application.Features.DefinitionManagementFeatures.Currencies.Commands.
 public class UpdateCurrencyCommand : IRequest<UpdatedCurrencyResponse>
 {
     public Guid Gid { get; set; }
-    public string DovizAdi { get; set; }
-    public string? DovizKodu { get; set; }
-    public string? DovizSimgesi { get; set; }
+
+
+    public string Name { get; set; }
+    public string? Code { get; set; }
+    public string? Symbol { get; set; }
 
 
     public class UpdateCurrencyCommandHandler : IRequestHandler<UpdateCurrencyCommand, UpdatedCurrencyResponse>
@@ -37,9 +39,9 @@ public class UpdateCurrencyCommand : IRequest<UpdatedCurrencyResponse>
             X.Currency? currency = await _currencyReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _currencyBusinessRules.CurrencyShouldExistWhenSelected(currency);
-            await _currencyBusinessRules.CheckCurrencyNameIsUnique(request.DovizAdi, request.Gid);
-            await _currencyBusinessRules.CheckCurrencyCodeIsUnique(request.DovizKodu, request.Gid);
-            await _currencyBusinessRules.CheckCurrencySymbolIsUnique(request.DovizSimgesi, request.Gid);
+            await _currencyBusinessRules.CheckCurrencyNameIsUnique(request.Name, request.Gid);
+            await _currencyBusinessRules.CheckCurrencyCodeIsUnique(request.Code, request.Gid);
+            await _currencyBusinessRules.CheckCurrencySymbolIsUnique(request.Symbol, request.Gid);
             currency = _mapper.Map(request, currency);
 
             _currencyWriteRepository.Update(currency!);

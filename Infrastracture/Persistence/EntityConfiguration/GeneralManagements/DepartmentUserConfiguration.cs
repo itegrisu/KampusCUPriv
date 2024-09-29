@@ -11,8 +11,8 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.DepartmentFK).WithMany(u => u.DepartmentUsers).HasForeignKey(y => y.GidDepartmanFK);
-            builder.HasOne(y => y.UserFK).WithMany(u => u.DepartmentUsers).HasForeignKey(y => y.GidPersonelFK);
+            builder.HasOne(y => y.DepartmentFK).WithMany(u => u.DepartmentUsers).HasForeignKey(y => y.GidDepartmentFK);
+            builder.HasOne(y => y.UserFK).WithMany(u => u.DepartmentUsers).HasForeignKey(y => y.GidPersonnelFK);
         }
     }
 }

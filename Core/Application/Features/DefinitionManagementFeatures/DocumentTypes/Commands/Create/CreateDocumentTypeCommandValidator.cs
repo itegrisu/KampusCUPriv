@@ -7,7 +7,7 @@ public class CreateDocumentTypeCommandValidator : AbstractValidator<CreateDocume
     public CreateDocumentTypeCommandValidator()
     {
 
-        RuleFor(c => c.BelgeAdi).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

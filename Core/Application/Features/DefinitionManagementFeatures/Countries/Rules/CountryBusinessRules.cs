@@ -24,7 +24,7 @@ public class CountryBusinessRules : BaseBusinessRules
 
     public async Task CountryNameIsUnique(string countryName, Guid? countryGuid = null)
     {
-        var country = await _countryReadRepository.GetAsync(predicate: x => x.UlkeAdi.ToLower() == countryName.ToLower() && (countryGuid == null || x.Gid != countryGuid));
+        var country = await _countryReadRepository.GetAsync(predicate: x => x.Name.ToLower() == countryName.ToLower() && (countryGuid == null || x.Gid != countryGuid));
         if (country != null)
             throw new BusinessException(CountriesBusinessMessages.CountryIsAlreadyExists);
     }

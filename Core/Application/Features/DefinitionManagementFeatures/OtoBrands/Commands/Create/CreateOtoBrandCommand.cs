@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.OtoBrands.Commands.C
 public class CreateOtoBrandCommand : IRequest<CreatedOtoBrandResponse>
 {
 
-    public string AracMarkaAdi { get; set; }
+    public string Name { get; set; }
 
 
 
@@ -34,7 +34,7 @@ public class CreateOtoBrandCommand : IRequest<CreatedOtoBrandResponse>
         public async Task<CreatedOtoBrandResponse> Handle(CreateOtoBrandCommand request, CancellationToken cancellationToken)
         {
 
-            await _otoBrandBusinessRules.OtoBrandNameIsUnique(request.AracMarkaAdi);
+            await _otoBrandBusinessRules.OtoBrandNameIsUnique(request.Name);
             X.OtoBrand otoBrand = _mapper.Map<X.OtoBrand>(request);
 
 

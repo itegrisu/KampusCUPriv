@@ -26,7 +26,7 @@ public class CityBusinessRules : BaseBusinessRules
 
     public async Task CheckCityNameIsUnique(string cityName, Guid? cityGuid = null)
     {
-        var city = await _cityReadRepository.GetAsync(predicate: x => x.SehirAdi.ToLower() == cityName.ToLower() && (cityGuid == null || x.Gid != cityGuid));
+        var city = await _cityReadRepository.GetAsync(predicate: x => x.Name.ToLower() == cityName.ToLower() && (cityGuid == null || x.Gid != cityGuid));
         if (city != null)
             throw new BusinessException(CitiesBusinessMessages.CityIsAlreadyExists);
     }

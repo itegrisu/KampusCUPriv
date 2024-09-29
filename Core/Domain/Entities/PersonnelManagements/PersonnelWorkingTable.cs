@@ -6,9 +6,9 @@ namespace Domain.Entities.PersonnelManagements
     public class PersonnelWorkingTable : BaseEntity
     {
 
-        public Guid GidPersonelFK { get; set; }
+        public Guid GidPersonnelFK { get; set; }
         public User UserFK { get; set; }
-        public DateTime IseBaslamaTarihi { get; set; }
-        public DateTime? IstenCikisTarihi { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? ExitDate { get; set; }
     }
 }

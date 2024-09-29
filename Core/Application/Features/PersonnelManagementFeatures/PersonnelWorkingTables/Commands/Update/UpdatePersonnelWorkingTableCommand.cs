@@ -13,10 +13,11 @@ public class UpdatePersonnelWorkingTableCommand : IRequest<UpdatedPersonnelWorki
 {
     public Guid Gid { get; set; }
 
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
 
-    public DateTime IseBaslamaTarihi { get; set; }
-    public DateTime? IstenCikisTarihi { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime? ExitDate { get; set; }
+
 
 
 
@@ -41,7 +42,7 @@ public class UpdatePersonnelWorkingTableCommand : IRequest<UpdatedPersonnelWorki
             X.PersonnelWorkingTable? personnelWorkingTable = await _personnelWorkingTableReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelWorkingTableBusinessRules.PersonnelWorkingTableShouldExistWhenSelected(personnelWorkingTable);
-            await _personnelWorkingTableBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelWorkingTableBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
             personnelWorkingTable = _mapper.Map(request, personnelWorkingTable);
 
             _personnelWorkingTableWriteRepository.Update(personnelWorkingTable!);

@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.JobTypes.Commands.Cr
 public class CreateJobTypeCommand : IRequest<CreatedJobTypeResponse>
 {
 
-    public string GorevAdi { get; set; }
+    public string Name { get; set; }
 
     public class CreateJobTypeCommandHandler : IRequestHandler<CreateJobTypeCommand, CreatedJobTypeResponse>
     {
@@ -31,7 +31,7 @@ public class CreateJobTypeCommand : IRequest<CreatedJobTypeResponse>
 
         public async Task<CreatedJobTypeResponse> Handle(CreateJobTypeCommand request, CancellationToken cancellationToken)
         {
-            await _jobTypeBusinessRules.CheckJobTypeNameIsUnique(request.GorevAdi);
+            await _jobTypeBusinessRules.CheckJobTypeNameIsUnique(request.Name);
             X.JobType jobType = _mapper.Map<X.JobType>(request);
 
             await _jobTypeWriteRepository.AddAsync(jobType);

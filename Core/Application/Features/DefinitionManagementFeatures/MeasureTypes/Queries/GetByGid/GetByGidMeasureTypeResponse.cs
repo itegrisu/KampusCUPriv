@@ -5,7 +5,7 @@ namespace Application.Features.DefinitionManagementFeatures.MeasureTypes.Queries
     public class GetByGidMeasureTypeResponse : IResponse
     {
         public Guid Gid { get; set; }
-        public string OlcuAdi { get; set; }
+        public string Name { get; set; }
 
     }
 }

@@ -24,7 +24,7 @@ public class OtoBrandBusinessRules : BaseBusinessRules
 
     public async Task OtoBrandNameIsUnique(string otoBrandName, Guid? otoBrandGuid = null)
     {
-        var otoBrand = await _otoBrandReadRepository.GetAsync(predicate: x => x.AracMarkaAdi.ToLower() == otoBrandName.ToLower() && (otoBrandGuid == null || x.Gid != otoBrandGuid));
+        var otoBrand = await _otoBrandReadRepository.GetAsync(predicate: x => x.Name.ToLower() == otoBrandName.ToLower() && (otoBrandGuid == null || x.Gid != otoBrandGuid));
         if (otoBrand != null)
             throw new BusinessException(OtoBrandsBusinessMessages.OtoBrandIsAlreadyExists);
     }

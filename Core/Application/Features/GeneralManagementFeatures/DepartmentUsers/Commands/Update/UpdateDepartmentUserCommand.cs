@@ -11,9 +11,8 @@ namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Command
 public class UpdateDepartmentUserCommand : IRequest<UpdatedDepartmentUserResponse>
 {
     public Guid Gid { get; set; }
-
-    public Guid GidDepartmanFK { get; set; }
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidDepartmentFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
 
     public class UpdateDepartmentUserCommandHandler : IRequestHandler<UpdateDepartmentUserCommand, UpdatedDepartmentUserResponse>
     {
@@ -36,8 +35,8 @@ public class UpdateDepartmentUserCommand : IRequest<UpdatedDepartmentUserRespons
             X.DepartmentUser? departmentUser = await _departmentUserReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _departmentUserBusinessRules.DepartmentUserShouldExistWhenSelected(departmentUser);
-            await _departmentUserBusinessRules.DepartmantShouldExistWhenSelected(request.GidDepartmanFK);
-            await _departmentUserBusinessRules.PersonelShouldExistWhenSelected(request.GidPersonelFK);
+            await _departmentUserBusinessRules.DepartmantShouldExistWhenSelected(request.GidDepartmentFK);
+            await _departmentUserBusinessRules.PersonelShouldExistWhenSelected(request.GidPersonnelFK);
             departmentUser = _mapper.Map(request, departmentUser);
 
             _departmentUserWriteRepository.Update(departmentUser!);

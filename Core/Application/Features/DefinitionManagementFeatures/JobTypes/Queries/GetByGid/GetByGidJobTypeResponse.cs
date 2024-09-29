@@ -5,7 +5,7 @@ namespace Application.Features.DefinitionManagementFeatures.JobTypes.Queries.Get
     public class GetByGidJobTypeResponse : IResponse
     {
         public Guid Gid { get; set; }
-        public string GorevAdi { get; set; }
+        public string Name { get; set; }
 
     }
 }

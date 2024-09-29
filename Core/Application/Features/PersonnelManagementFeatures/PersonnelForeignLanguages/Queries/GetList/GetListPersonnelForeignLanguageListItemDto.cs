@@ -6,12 +6,12 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelForeignLangu
 public class GetListPersonnelForeignLanguageListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public Guid GidPersonelFK { get; set; }
-    public string UserFKTamAd { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public string UserFKFullName { get; set; }
     public Guid GidLanguageFK { get; set; }
-    public string ForeignLanguageFKDilAdi { get; set; }
-    public EnumLanguageLevel KonusmaDuzeyi { get; set; }
-    public EnumLanguageLevel OkumaDuzeyi { get; set; }
+    public string ForeignLanguageFKName { get; set; }
+    public EnumLanguageLevel SpeakingLevel { get; set; }
+    public EnumLanguageLevel ReadLevel { get; set; }
 
 
 }

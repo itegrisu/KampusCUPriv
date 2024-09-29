@@ -7,7 +7,7 @@ public class CreateMeasureTypeCommandValidator : AbstractValidator<CreateMeasure
     public CreateMeasureTypeCommandValidator()
     {
         
-RuleFor(c => c.OlcuAdi).NotNull().NotEmpty().MaximumLength(100);
+RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

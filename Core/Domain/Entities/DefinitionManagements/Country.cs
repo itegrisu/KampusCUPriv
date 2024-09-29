@@ -6,9 +6,9 @@ namespace Domain.Entities.DefinitionManagements
     public class Country : BaseEntity, IHasRowNo
     {
 
-        public string UlkeAdi { get; set; } = string.Empty;
-        public string UlkeKodu { get; set; } = string.Empty;
-        public string? TelefonKodu { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string CountryCode { get; set; } = string.Empty;
+        public string? PhoneCode { get; set; }
         public int RowNo { get; set; }
 
         public ICollection<User>? Users { get; set; }

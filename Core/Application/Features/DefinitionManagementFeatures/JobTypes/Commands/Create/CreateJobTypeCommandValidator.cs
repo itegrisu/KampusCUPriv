@@ -7,7 +7,7 @@ public class CreateJobTypeCommandValidator : AbstractValidator<CreateJobTypeComm
     public CreateJobTypeCommandValidator()
     {
         
-RuleFor(c => c.GorevAdi).NotNull().NotEmpty().MaximumLength(100);
+RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

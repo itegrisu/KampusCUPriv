@@ -11,13 +11,13 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.AsilYoneticFK).WithMany(u => u.AsilYonetilenDepartmants).HasForeignKey(y => y.GidAsilYoneticiFK);
-            builder.HasOne(y => y.YedekYoneticiFK).WithMany(u => u.YedekYonetilenDepartmants).HasForeignKey(y => y.GidYedekYoneticiFK).IsRequired(false);
+            builder.HasOne(y => y.MainAdminFK).WithMany(u => u.AsilYonetilenDepartmants).HasForeignKey(y => y.GidMainAdminFK);
+            builder.HasOne(y => y.CoAdminFK).WithMany(u => u.YedekYonetilenDepartmants).HasForeignKey(y => y.GidCoAdminFK).IsRequired(false);
 
-            builder.Property(y => y.DepartmanAdi).IsRequired().HasColumnType("varchar").HasMaxLength(50);
-            builder.Property(y => y.Detay).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
+            builder.Property(y => y.Details).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
 
-            builder.HasMany(u => u.DepartmentUsers).WithOne(y => y.DepartmentFK).HasForeignKey(y => y.GidDepartmanFK);
+            builder.HasMany(u => u.DepartmentUsers).WithOne(y => y.DepartmentFK).HasForeignKey(y => y.GidDepartmentFK);
 
         }
     }

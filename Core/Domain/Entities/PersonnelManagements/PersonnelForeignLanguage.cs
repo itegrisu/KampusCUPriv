@@ -9,13 +9,13 @@ namespace Domain.Entities.PersonnelManagements
     public class PersonnelForeignLanguage : BaseEntity
     {
 
-        public Guid GidPersonelFK { get; set; }
+        public Guid GidPersonnelFK { get; set; }
         public User UserFK { get; set; }
         public Guid GidLanguageFK { get; set; }
         public ForeignLanguage ForeignLanguageFK { get; set; }
-        public EnumLanguageLevel KonusmaDuzeyi { get; set; }
-        public EnumLanguageLevel OkumaDuzeyi { get; set; }
 
+        public EnumLanguageLevel SpeakingLevel { get; set; }
+        public EnumLanguageLevel ReadLevel { get; set; }
 
     }
 

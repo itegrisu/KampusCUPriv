@@ -5,8 +5,8 @@ namespace Application.Features.DefinitionManagementFeatures.ForeignLanguages.Que
 public class GetListForeignLanguageListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public string DilAdi { get; set; }
-    public string? DilKodu { get; set; }
+    public string Name { get; set; }
+    public string? LanguageCode { get; set; }
 
 
 }

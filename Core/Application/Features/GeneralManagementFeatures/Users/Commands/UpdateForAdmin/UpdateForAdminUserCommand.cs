@@ -13,30 +13,34 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.UpdateFo
 {
     public class UpdateForAdminUserCommand : IRequest<UpdateForAdminUserResponse>
     {
-        public Guid Gid { get; set; }
-        public Guid GidUyrukFK { get; set; }
-        public string Adi { get; set; }
-        public string Soyadi { get; set; }
-        public string EPosta { get; set; }
-        public string? Unvani { get; set; }
+        public Guid Gid { get; set; } //TODO buraya bir de admin gid eklenecek
+        public Guid GidNationalityFK { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string? Title { get; set; }
+        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public string SifreGuncellemeToken { get; set; }
-        public DateTime? TokenGecerlilikSuresi { get; set; }
-        public string? ProfilResmi { get; set; }
-        public bool AktifHesapMi { get; set; }
-        public bool SistemAdminMi { get; set; }
+        public DateTime? TokenExpiredDate { get; set; }
+        public string? Avatar { get; set; }
+        public bool IsLoginStatus { get; set; }
+        public bool IsSystemAdmin { get; set; }
         public string Gsm { get; set; }
-        public string? DogumYeri { get; set; }
-        public DateTime? DogumTarihi { get; set; }
-        public string? KimlikNo { get; set; }
-        public string? PasaportNo { get; set; }
+        public string? Birthplace { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string? IdentityNo { get; set; }
+        public string? PassportNo { get; set; }
         public string? SGKNo { get; set; }
-        public string? EhliyetNo { get; set; }
-        public string? Not { get; set; }
-        public EnumMedeniDurumu? MedeniDurumu { get; set; }
-        public EnumKanGrubu? KanGrubu { get; set; }
-        public EnumCinsiyet Cinsiyet { get; set; }
-        public EnumEMailAktivasyonDurumu EMailAktivasyonDurumu { get; set; }
-        public EnumSmsAktivasyonDurumu SmsAktivasyonDurumu { get; set; }
+        public string? DrivingLicenseNo { get; set; }
+        public string? Note { get; set; }
+        public EnumMaritalStatus? MaritalStatus { get; set; }
+        public EnumBloodGroup? BloodGroup { get; set; }
+        public EnumGender Gender { get; set; }
+        public EnumWorkType WorkType { get; set; }
+        public EnumEmailActivationStatus EmailActivationStatus { get; set; }
+        public EnumSmsActivationStatus SmsActivationStatus { get; set; }
+        public string? PersonnelSpecialNote { get; set; }
 
         public class UpdateForAdminUserCommandHandler : IRequestHandler<UpdateForAdminUserCommand, UpdateForAdminUserResponse>
         {
@@ -62,8 +66,8 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.UpdateFo
 
                 user = _mapper.Map(request, user);
 
-                user.Adi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.Adi.Trim().ToLower());
-                user.Soyadi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.Soyadi.Trim().ToLower());
+                user.Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.Name.Trim().ToLower());
+                user.Surname = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(request.Surname.Trim().ToLower());
 
                 GetByGidUserResponse obj = _mapper.Map<GetByGidUserResponse>(user);
                 _userWriteRepository.Update(user!);

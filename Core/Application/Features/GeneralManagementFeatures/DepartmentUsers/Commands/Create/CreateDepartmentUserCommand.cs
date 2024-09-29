@@ -11,8 +11,8 @@ namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Command
 
 public class CreateDepartmentUserCommand : IRequest<CreatedDepartmentUserResponse>
 {
-    public Guid GidDepartmanFK { get; set; }
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidDepartmentFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
 
     public class CreateDepartmentUserCommandHandler : IRequestHandler<CreateDepartmentUserCommand, CreatedDepartmentUserResponse>
     {
@@ -32,8 +32,8 @@ public class CreateDepartmentUserCommand : IRequest<CreatedDepartmentUserRespons
 
         public async Task<CreatedDepartmentUserResponse> Handle(CreateDepartmentUserCommand request, CancellationToken cancellationToken)
         {
-            await _departmentUserBusinessRules.DepartmantShouldExistWhenSelected(request.GidDepartmanFK);
-            await _departmentUserBusinessRules.PersonelShouldExistWhenSelected(request.GidPersonelFK);
+            await _departmentUserBusinessRules.DepartmantShouldExistWhenSelected(request.GidDepartmentFK);
+            await _departmentUserBusinessRules.PersonelShouldExistWhenSelected(request.GidPersonnelFK);
 
             X.DepartmentUser departmentUser = _mapper.Map<X.DepartmentUser>(request);
 

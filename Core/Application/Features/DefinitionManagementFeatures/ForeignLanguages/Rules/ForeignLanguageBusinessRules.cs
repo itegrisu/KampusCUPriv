@@ -23,7 +23,7 @@ public class ForeignLanguageBusinessRules : BaseBusinessRules
 
     public async Task CheckForeignLanguageNameIsUnique(string foreignLanguageName, Guid? foreignLanguageGuid = null)
     {
-        var foreignLanguage = await _foreignLanguageReadRepository.GetAsync(predicate: x => x.DilAdi.ToLower() == foreignLanguageName.ToLower() && (foreignLanguageGuid == null || x.Gid != foreignLanguageGuid));
+        var foreignLanguage = await _foreignLanguageReadRepository.GetAsync(predicate: x => x.Name.ToLower() == foreignLanguageName.ToLower() && (foreignLanguageGuid == null || x.Gid != foreignLanguageGuid));
         if (foreignLanguage != null)
             throw new BusinessException(ForeignLanguagesBusinessMessages.ForeignLanguageIsAlreadyExists);
     }
@@ -33,7 +33,7 @@ public class ForeignLanguageBusinessRules : BaseBusinessRules
         if (string.IsNullOrEmpty(foreignLanguageCode))
             return;
 
-        var foreignLanguage = await _foreignLanguageReadRepository.GetAsync(predicate: x => x.DilKodu.ToLower() == foreignLanguageCode.ToLower() && (foreignLanguageGuid == null || x.Gid != foreignLanguageGuid));
+        var foreignLanguage = await _foreignLanguageReadRepository.GetAsync(predicate: x => x.LanguageCode.ToLower() == foreignLanguageCode.ToLower() && (foreignLanguageGuid == null || x.Gid != foreignLanguageGuid));
         if (foreignLanguage != null)
             throw new BusinessException(ForeignLanguagesBusinessMessages.ForeignLanguageCodeIsAlreadyExists);
     }

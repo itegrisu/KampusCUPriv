@@ -5,13 +5,13 @@ namespace Domain.Entities.GeneralManagements
 
     public class Department : BaseEntity
     {
-        public Guid GidAsilYoneticiFK { get; set; }
-        public User AsilYoneticFK { get; set; }
-        public Guid? GidYedekYoneticiFK { get; set; }
-        public User? YedekYoneticiFK { get; set; }
+        public Guid GidMainAdminFK { get; set; }
+        public User MainAdminFK { get; set; }
+        public Guid? GidCoAdminFK { get; set; }
+        public User? CoAdminFK { get; set; }
 
-        public string DepartmanAdi { get; set; } = string.Empty;
-        public string? Detay { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Details { get; set; }
 
         public ICollection<DepartmentUser>? DepartmentUsers { get; set; }
     }

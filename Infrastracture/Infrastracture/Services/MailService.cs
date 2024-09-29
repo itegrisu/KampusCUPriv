@@ -40,7 +40,7 @@ namespace Infrastracture.Services
             {
                 mail.To.Add(item);
 
-                User user = await _userReadRepository.GetAsync(predicate: x => x.EPosta == item);
+                User user = await _userReadRepository.GetAsync(predicate: x => x.Email == item);
                 if (user != null)
                 {
                     await _logEmailSendWriteRepository.AddAsync(new LogEmailSend

@@ -3,6 +3,7 @@ using Application.Features.GeneralManagementFeatures.UserModuleAuths.Queries.Get
 using Application.Features.GeneralManagementFeatures.UserModuleAuths.Rules;
 using Application.Repositories.GeneralManagementRepos.UserModuleAuthRepo;
 using AutoMapper;
+using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.GeneralManagements;

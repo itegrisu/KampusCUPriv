@@ -4,10 +4,11 @@ namespace Application.Features.DefinitionManagementFeatures.Currencies.Queries.G
 
 public class GetListCurrencyListItemDto : IDto
 {
+
     public Guid Gid { get; set; }
-    public string DovizAdi { get; set; }
-    public string? DovizKodu { get; set; }
-    public string? DovizSimgesi { get; set; }
+    public string Name { get; set; }
+    public string? Code { get; set; }
+    public string? Symbol { get; set; }
 
 
 }

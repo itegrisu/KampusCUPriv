@@ -74,9 +74,9 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UlkeAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    UlkeKodu = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false),
-                    TelefonKodu = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    CountryCode = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false),
+                    PhoneCode = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
                     RowNo = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
@@ -91,9 +91,9 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DovizAdi = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    DovizKodu = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    DovizSimgesi = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Code = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    Symbol = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -107,7 +107,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BelgeAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -121,8 +121,8 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DilAdi = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    DilKodu = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    LanguageCode = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -136,7 +136,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GorevAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -167,7 +167,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OlcuAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -181,7 +181,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AracMarkaAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -195,7 +195,7 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IzinAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -247,10 +247,10 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OdaTuru = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    OdaKodu = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
-                    KisiSayisi = table.Column<int>(type: "int", nullable: false),
-                    Aciklama = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Code = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -368,9 +368,9 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidUlkeFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SehirAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    PlakaKodu = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
+                    GidCountryFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    PlateCode = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -378,8 +378,8 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Cities", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_Cities_Countries_GidUlkeFK",
-                        column: x => x.GidUlkeFK,
+                        name: "FK_Cities_Countries_GidCountryFK",
+                        column: x => x.GidCountryFK,
                         principalTable: "Countries",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -390,32 +390,32 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidUyrukFK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Adi = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Soyadi = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    EPosta = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    GidNationalityFK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Surname = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Avatar = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Unvani = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: true),
-                    Sifre = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
-                    SifreHash = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
-                    SifreGuncellemeToken = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    TokenGecerlilikSuresi = table.Column<DateTime>(type: "datetime", nullable: true),
-                    ProfilResmi = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    AktifHesapMi = table.Column<bool>(type: "bit", nullable: false),
-                    SistemAdminMi = table.Column<bool>(type: "bit", nullable: false),
+                    Title = table.Column<string>(type: "varchar(60)", maxLength: 60, nullable: true),
+                    Password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
+                    PasswordHash = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
+                    UpdatePasswordToken = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    TokenExpiredDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    IsLoginStatus = table.Column<bool>(type: "bit", nullable: false),
+                    IsSystemAdmin = table.Column<bool>(type: "bit", nullable: false),
                     Gsm = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    DogumYeri = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    DogumTarihi = table.Column<DateTime>(type: "datetime", nullable: true),
-                    KimlikNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    PasaportNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    Birthplace = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    IdentityNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    PassportNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
                     SGKNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    EhliyetNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    Not = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
-                    MedeniDurumu = table.Column<int>(type: "int", nullable: true),
-                    KanGrubu = table.Column<int>(type: "int", nullable: true),
-                    Cinsiyet = table.Column<int>(type: "int", nullable: false),
-                    EMailAktivasyonDurumu = table.Column<int>(type: "int", nullable: false),
-                    SmsAktivasyonDurumu = table.Column<int>(type: "int", nullable: false),
+                    DrivingLicenseNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    Note = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    MaritalStatus = table.Column<int>(type: "int", nullable: true),
+                    BloodGroup = table.Column<int>(type: "int", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    EmailActivationStatus = table.Column<int>(type: "int", nullable: false),
+                    SmsActivationStatus = table.Column<int>(type: "int", nullable: false),
+                    PersonnelSpecialNote = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -423,8 +423,8 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_Users_Countries_GidUyrukFK",
-                        column: x => x.GidUyrukFK,
+                        name: "FK_Users_Countries_GidNationalityFK",
+                        column: x => x.GidNationalityFK,
                         principalTable: "Countries",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -674,10 +674,10 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidAsilYoneticiFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidYedekYoneticiFK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DepartmanAdi = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Detay = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    GidMainAdminFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidCoAdminFK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Details = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -685,16 +685,16 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Departments", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_Departments_Users_GidAsilYoneticiFK",
-                        column: x => x.GidAsilYoneticiFK,
+                        name: "FK_Departments_Users_GidCoAdminFK",
+                        column: x => x.GidCoAdminFK,
+                        principalTable: "Users",
+                        principalColumn: "Gid");
+                    table.ForeignKey(
+                        name: "FK_Departments_Users_GidMainAdminFK",
+                        column: x => x.GidMainAdminFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Departments_Users_GidYedekYoneticiFK",
-                        column: x => x.GidYedekYoneticiFK,
-                        principalTable: "Users",
-                        principalColumn: "Gid");
                 });
 
             migrationBuilder.CreateTable(
@@ -818,11 +818,11 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidSehirFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AdresBasligi = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Adres = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
-                    Aciklama = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidCityFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AddressTitle = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Address = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -830,14 +830,14 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_PersonnelAddresses", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_PersonnelAddresses_Cities_GidSehirFK",
-                        column: x => x.GidSehirFK,
+                        name: "FK_PersonnelAddresses_Cities_GidCityFK",
+                        column: x => x.GidCityFK,
                         principalTable: "Cities",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PersonnelAddresses_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelAddresses_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -848,12 +848,12 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidBelgeTuru = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BelgeAdi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    GecerlilikTarihi = table.Column<DateTime>(type: "datetime", nullable: true),
-                    Belge = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Aciklama = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidDocumentType = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    ValidityDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Document = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -861,14 +861,14 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_PersonnelDocuments", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_PersonnelDocuments_DocumentTypes_GidBelgeTuru",
-                        column: x => x.GidBelgeTuru,
+                        name: "FK_PersonnelDocuments_DocumentTypes_GidDocumentType",
+                        column: x => x.GidDocumentType,
                         principalTable: "DocumentTypes",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PersonnelDocuments_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelDocuments_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -879,10 +879,10 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GidLanguageFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    KonusmaDuzeyi = table.Column<int>(type: "int", nullable: false),
-                    OkumaDuzeyi = table.Column<int>(type: "int", nullable: false),
+                    SpeakingLevel = table.Column<int>(type: "int", nullable: false),
+                    ReadLevel = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -896,8 +896,8 @@ namespace Persistence.Migrations
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PersonnelForeignLanguages_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelForeignLanguages_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -908,14 +908,14 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EgitimKurumuTuru = table.Column<int>(type: "int", nullable: false),
-                    OkulBilgisi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    BolumBilgisi = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    BaslamaYili = table.Column<int>(type: "int", nullable: false),
-                    MezuniyetTarihi = table.Column<DateTime>(type: "datetime", nullable: true),
-                    Belge = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Aciklama = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EducationalInstitutionType = table.Column<int>(type: "int", nullable: false),
+                    SchoolInfo = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    DepartmentInfo = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    StartYear = table.Column<int>(type: "int", nullable: false),
+                    GraduationDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Document = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -923,8 +923,8 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_PersonnelGraduatedSchools", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_PersonnelGraduatedSchools_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelGraduatedSchools_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -935,12 +935,12 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PasaportNo = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    VerilisTarihi = table.Column<DateTime>(type: "datetime", nullable: false),
-                    GecerlilikTarihi = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Belge = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Aciklama = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PassportNo = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    DateOfIssue = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ValidityDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Document = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -948,8 +948,8 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_PersonnelPassportInfos", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_PersonnelPassportInfos_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelPassportInfos_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -960,12 +960,12 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GidPermitFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IzinBaslamaTarihi = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IzinBitisTarihi = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Belge = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Aciklama = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    PermitStartDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    PermitEndDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Document = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -979,8 +979,8 @@ namespace Persistence.Migrations
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PersonnelPermitInfos_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelPermitInfos_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -991,12 +991,12 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OturumSeriNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    VerilisTarihi = table.Column<DateTime>(type: "datetime", nullable: false),
-                    GecerlilikTarihi = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Belge = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Aciklama = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SessionSerialNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    DateOfIssue = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ValidityDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Document = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -1004,8 +1004,8 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_PersonnelResidenceInfos", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_PersonnelResidenceInfos_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelResidenceInfos_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -1016,9 +1016,9 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IseBaslamaTarihi = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IstenCikisTarihi = table.Column<DateTime>(type: "datetime", nullable: true),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ExitDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -1026,8 +1026,8 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_PersonnelWorkingTables", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_PersonnelWorkingTables_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_PersonnelWorkingTables_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -1129,6 +1129,27 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserModuleAuths",
+                columns: table => new
+                {
+                    Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidUserFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ModuleType = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataState = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserModuleAuths", x => x.Gid);
+                    table.ForeignKey(
+                        name: "FK_UserModuleAuths_Users_GidUserFK",
+                        column: x => x.GidUserFK,
+                        principalTable: "Users",
+                        principalColumn: "Gid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserRefreshTokens",
                 columns: table => new
                 {
@@ -1178,8 +1199,8 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Gid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidDepartmanFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GidPersonelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidDepartmentFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GidPersonnelFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)
                 },
@@ -1187,14 +1208,14 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_DepartmentUsers", x => x.Gid);
                     table.ForeignKey(
-                        name: "FK_DepartmentUsers_Departments_GidDepartmanFK",
-                        column: x => x.GidDepartmanFK,
+                        name: "FK_DepartmentUsers_Departments_GidDepartmentFK",
+                        column: x => x.GidDepartmentFK,
                         principalTable: "Departments",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_DepartmentUsers_Users_GidPersonelFK",
-                        column: x => x.GidPersonelFK,
+                        name: "FK_DepartmentUsers_Users_GidPersonnelFK",
+                        column: x => x.GidPersonnelFK,
                         principalTable: "Users",
                         principalColumn: "Gid",
                         onDelete: ReferentialAction.Restrict);
@@ -1381,29 +1402,29 @@ namespace Persistence.Migrations
                 column: "GidUserFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_GidUlkeFK",
+                name: "IX_Cities_GidCountryFK",
                 table: "Cities",
-                column: "GidUlkeFK");
+                column: "GidCountryFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departments_GidAsilYoneticiFK",
+                name: "IX_Departments_GidCoAdminFK",
                 table: "Departments",
-                column: "GidAsilYoneticiFK");
+                column: "GidCoAdminFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departments_GidYedekYoneticiFK",
+                name: "IX_Departments_GidMainAdminFK",
                 table: "Departments",
-                column: "GidYedekYoneticiFK");
+                column: "GidMainAdminFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentUsers_GidDepartmanFK",
+                name: "IX_DepartmentUsers_GidDepartmentFK",
                 table: "DepartmentUsers",
-                column: "GidDepartmanFK");
+                column: "GidDepartmentFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentUsers_GidPersonelFK",
+                name: "IX_DepartmentUsers_GidPersonnelFK",
                 table: "DepartmentUsers",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LogAuthorizationErrors_GidUserFK",
@@ -1431,24 +1452,24 @@ namespace Persistence.Migrations
                 column: "GidUserFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelAddresses_GidPersonelFK",
+                name: "IX_PersonnelAddresses_GidCityFK",
                 table: "PersonnelAddresses",
-                column: "GidPersonelFK");
+                column: "GidCityFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelAddresses_GidSehirFK",
+                name: "IX_PersonnelAddresses_GidPersonnelFK",
                 table: "PersonnelAddresses",
-                column: "GidSehirFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelDocuments_GidBelgeTuru",
+                name: "IX_PersonnelDocuments_GidDocumentType",
                 table: "PersonnelDocuments",
-                column: "GidBelgeTuru");
+                column: "GidDocumentType");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelDocuments_GidPersonelFK",
+                name: "IX_PersonnelDocuments_GidPersonnelFK",
                 table: "PersonnelDocuments",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonnelForeignLanguages_GidLanguageFK",
@@ -1456,19 +1477,19 @@ namespace Persistence.Migrations
                 column: "GidLanguageFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelForeignLanguages_GidPersonelFK",
+                name: "IX_PersonnelForeignLanguages_GidPersonnelFK",
                 table: "PersonnelForeignLanguages",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelGraduatedSchools_GidPersonelFK",
+                name: "IX_PersonnelGraduatedSchools_GidPersonnelFK",
                 table: "PersonnelGraduatedSchools",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelPassportInfos_GidPersonelFK",
+                name: "IX_PersonnelPassportInfos_GidPersonnelFK",
                 table: "PersonnelPassportInfos",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonnelPermitInfos_GidPermitFK",
@@ -1476,19 +1497,19 @@ namespace Persistence.Migrations
                 column: "GidPermitFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelPermitInfos_GidPersonelFK",
+                name: "IX_PersonnelPermitInfos_GidPersonnelFK",
                 table: "PersonnelPermitInfos",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelResidenceInfos_GidPersonelFK",
+                name: "IX_PersonnelResidenceInfos_GidPersonnelFK",
                 table: "PersonnelResidenceInfos",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonnelWorkingTables_GidPersonelFK",
+                name: "IX_PersonnelWorkingTables_GidPersonnelFK",
                 table: "PersonnelWorkingTables",
-                column: "GidPersonelFK");
+                column: "GidPersonnelFK");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SCAddresses_GidCityFK",
@@ -1616,14 +1637,19 @@ namespace Persistence.Migrations
                 column: "GidUserFK");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserModuleAuths_GidUserFK",
+                table: "UserModuleAuths",
+                column: "GidUserFK");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRefreshTokens_GidUserFK",
                 table: "UserRefreshTokens",
                 column: "GidUserFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_GidUyrukFK",
+                name: "IX_Users_GidNationalityFK",
                 table: "Users",
-                column: "GidUyrukFK");
+                column: "GidNationalityFK");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserShortCuts_GidUserFK",
@@ -1740,6 +1766,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "TaskUsers");
+
+            migrationBuilder.DropTable(
+                name: "UserModuleAuths");
 
             migrationBuilder.DropTable(
                 name: "UserRefreshTokens");

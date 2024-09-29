@@ -59,7 +59,7 @@ namespace Infrastracture.Services.Auth
 
         public async Task<RegisterAuthResponse> Register(RegisterAuthCommand registerAuthCommand)
         {
-            var result = await UserExists(registerAuthCommand.EPosta);
+            var result = await UserExists(registerAuthCommand.Email);
             if (result == true)
             {
                 throw new Exception(AuthBussinessMessages.EmailAlreadyExist);
@@ -72,18 +72,18 @@ namespace Infrastracture.Services.Auth
             //þifre güncelleme token ve þifre güncelleme token süresine bakýlacak.
 
             string passwordHash, passwordSalt;
-            HashingHelperForAuth.CreatePasswordHash(registerAuthCommand.Sifre, out passwordHash, out passwordSalt);
+            HashingHelperForAuth.CreatePasswordHash(registerAuthCommand.Password, out passwordHash, out passwordSalt);
             var user = new User
             {
-                Adi = registerAuthCommand.Adi,
-                Soyadi = registerAuthCommand.Soyadi,
-                EPosta = registerAuthCommand.EPosta,
+                Name = registerAuthCommand.Name,
+                Surname = registerAuthCommand.Surname,
+                Email = registerAuthCommand.Email,
                 Gsm = registerAuthCommand.Gsm,
-                Sifre = passwordHash,
-                SifreHash = passwordSalt,
-                AktifHesapMi = true,
-                SistemAdminMi = false,
-                SifreGuncellemeToken = "elma",
+                Password = passwordHash,
+                PasswordHash = passwordSalt,
+                IsLoginStatus = true,
+                IsSystemAdmin = false,
+                UpdatePasswordToken = "gececi token",
             };
 
             await _userWriteRepository.AddAsync(user);
@@ -119,11 +119,11 @@ namespace Infrastracture.Services.Auth
 
             #endregion
 
-            var userToCheck = await _userReadRepository.GetSingleAsync(u => u.EPosta == loginAuthCommand.Email);
+            var userToCheck = await _userReadRepository.GetSingleAsync(u => u.Email == loginAuthCommand.Email);
 
             #region Is Pasif User
 
-            if (userToCheck != null && !userToCheck.AktifHesapMi)
+            if (userToCheck != null && !userToCheck.IsLoginStatus)
             {
                 return new LoginAuthResponse()
                 {
@@ -164,7 +164,7 @@ namespace Infrastracture.Services.Auth
 
 
 
-            if (!HashingHelperForAuth.VeriFyPasswordHash(loginAuthCommand.Password, userToCheck.Sifre, userToCheck.SifreHash))
+            if (!HashingHelperForAuth.VeriFyPasswordHash(loginAuthCommand.Password, userToCheck.Password, userToCheck.PasswordHash))
             {
                 #region LogFailedLogin
 
@@ -243,7 +243,7 @@ namespace Infrastracture.Services.Auth
 
         private async Task<bool> UserExists(string email)
         {
-            var query = await _userReadRepository.GetListAllAsync(user => user.EPosta == email);
+            var query = await _userReadRepository.GetListAllAsync(user => user.Email == email);
             if (query.Count <= 0)
             {
                 return false;
@@ -252,7 +252,7 @@ namespace Infrastracture.Services.Auth
         }
         private async Task IdNumberCheched(string idNumber)
         {
-            var query = await _userReadRepository.GetAll().Where(x => x.KimlikNo == idNumber).ToListAsync();
+            var query = await _userReadRepository.GetAll().Where(x => x.IdentityNo == idNumber).ToListAsync();
             if (!idNumber.IsNullOrEmpty() && query.Count > 0)
             {
                 throw new Exception(AuthBussinessMessages.IdNumberAlreadyExist);
@@ -269,14 +269,14 @@ namespace Infrastracture.Services.Auth
 
         public async Task<UpdatePasswordAuthResponse> UpdatePassword(UpdatePasswordAuthCommand updatePasswordAuthCommand)
         {
-            User userToCheck = await _userReadRepository.GetSingleAsync(u => u.EPosta == updatePasswordAuthCommand.Email, false);
+            User userToCheck = await _userReadRepository.GetSingleAsync(u => u.Email == updatePasswordAuthCommand.Email, false);
 
             if (userToCheck == null)
             {
                 throw new Exception(AuthBussinessMessages.UserNotExists);
             }
 
-            if (!HashingHelperForAuth.VeriFyPasswordHash(updatePasswordAuthCommand.OldPassword, userToCheck.Sifre, userToCheck.SifreHash))
+            if (!HashingHelperForAuth.VeriFyPasswordHash(updatePasswordAuthCommand.OldPassword, userToCheck.Password, userToCheck.PasswordHash))
             {
                 return new UpdatePasswordAuthResponse()
                 {
@@ -291,8 +291,8 @@ namespace Infrastracture.Services.Auth
             string passwordHash, passwordSalt;
             HashingHelperForAuth.CreatePasswordHash(updatePasswordAuthCommand.NewPassword, out passwordHash, out passwordSalt);
 
-            userToCheck.Sifre = passwordHash;
-            userToCheck.SifreHash = passwordSalt;
+            userToCheck.Password = passwordHash;
+            userToCheck.PasswordHash = passwordSalt;
 
             _userWriteRepository.Update(userToCheck);
 
@@ -362,7 +362,7 @@ namespace Infrastracture.Services.Auth
                 throw new BusinessException("Admin not found, please check");
             }
 
-            if (adminToCheck.SistemAdminMi == false)
+            if (adminToCheck.IsSystemAdmin == false)
             {
                 throw new BusinessException("You are not system admin");
             }
@@ -459,7 +459,7 @@ namespace Infrastracture.Services.Auth
             {
                 throw new Exception(AuthBussinessMessages.UserNotExists);
             }
-            if (systemAdmin.SistemAdminMi == false)
+            if (systemAdmin.IsSystemAdmin == false)
             {
                 throw new BusinessException("You are not allowed to change password");
             }
@@ -470,8 +470,8 @@ namespace Infrastracture.Services.Auth
 
             HashingHelperForAuth.CreatePasswordHash(updatePasswordAuthBySystemAdminCommand.NewPassword, out passwordHash, out passwordSalt);
 
-            changedUser.Sifre = passwordHash;
-            changedUser.SifreHash = passwordSalt;
+            changedUser.Password = passwordHash;
+            changedUser.PasswordHash = passwordSalt;
 
             _userWriteRepository.Update(changedUser);
 
@@ -490,7 +490,7 @@ namespace Infrastracture.Services.Auth
 
         public async Task ChangeForgottenPassword(string email)
         {
-            var userToCheck = await _userReadRepository.GetSingleAsync(u => u.EPosta == email);
+            var userToCheck = await _userReadRepository.GetSingleAsync(u => u.Email == email);
             // TODO: lazým olduðunda yazýlacak þuan lazým deðil. RESETTOKEN oluþturulacak ve mail atýlacak.
 
             if (userToCheck != null)

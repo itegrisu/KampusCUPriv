@@ -8,7 +8,7 @@ public class UpdateJobTypeCommandValidator : AbstractValidator<UpdateJobTypeComm
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
         
-RuleFor(c => c.GorevAdi).NotNull().NotEmpty().MaximumLength(100);
+RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

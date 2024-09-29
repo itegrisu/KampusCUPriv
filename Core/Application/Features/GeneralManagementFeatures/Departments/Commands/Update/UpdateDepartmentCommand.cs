@@ -11,10 +11,10 @@ namespace Application.Features.GeneralManagementFeatures.Departments.Commands.Up
 public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>
 {
     public Guid Gid { get; set; }
-    public Guid GidAsilYoneticiFK { get; set; }
-    public Guid GidYedekYoneticiFK { get; set; }
-    public string DepartmanAdi { get; set; }
-    public string? Detay { get; set; }
+    public Guid GidMainAdminFK { get; set; }
+    public Guid GidCoAdminFK { get; set; }
+    public string Name { get; set; }
+    public string? Detail { get; set; }
 
 
 
@@ -39,9 +39,9 @@ public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>
             X.Department? department = await _departmentReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _departmentBusinessRules.DepartmentShouldExistWhenSelected(department);
-            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidAsilYoneticiFK);
-            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidYedekYoneticiFK);
-            await _departmentBusinessRules.CheckDepartmentName(request.DepartmanAdi);
+            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidMainAdminFK);
+            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidCoAdminFK);
+            await _departmentBusinessRules.CheckDepartmentName(request.Name, request.Gid);
 
 
             department = _mapper.Map(request, department);

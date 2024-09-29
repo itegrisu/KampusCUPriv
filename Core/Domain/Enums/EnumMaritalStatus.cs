@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums
 {
-    public enum EnumMedeniDurumu
+    public enum EnumMaritalStatus
     {
         Bekar = 1,
         Evli = 2,

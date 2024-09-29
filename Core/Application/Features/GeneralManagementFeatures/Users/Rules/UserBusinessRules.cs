@@ -30,7 +30,7 @@ public class UserBusinessRules : BaseBusinessRules
     public async Task IdNumberAlreadyExists(string IdNumber)
     {
         List<User> users = _userReadRepository.GetAll().ToList();
-        if (users.Any(u => u.KimlikNo == IdNumber))
+        if (users.Any(u => u.IdentityNo == IdNumber))
             throw new BusinessException(UsersBusinessMessages.IdNumberAlreadyExists);
     }
 
@@ -46,9 +46,9 @@ public class UserBusinessRules : BaseBusinessRules
 
     public async Task<bool> UpdatedIdNumberAlreadyExists(string idNumber, string gid, User? user)
     {
-        if (user.KimlikNo != idNumber)
+        if (user.IdentityNo != idNumber)
         {
-            bool idNumberExists = await _userReadRepository.GetAll().AnyAsync(uc => uc.KimlikNo == idNumber && uc.Gid.ToString() != gid);
+            bool idNumberExists = await _userReadRepository.GetAll().AnyAsync(uc => uc.IdentityNo == idNumber && uc.Gid.ToString() != gid);
             if (idNumberExists)
             {
                 return false;

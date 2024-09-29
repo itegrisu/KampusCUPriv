@@ -7,9 +7,10 @@ public class UpdateCountryCommandValidator : AbstractValidator<UpdateCountryComm
     public UpdateCountryCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.UlkeAdi).NotNull().NotEmpty().MaximumLength(100);
-        RuleFor(c => c.UlkeKodu).NotNull().NotEmpty().MaximumLength(5);
-        RuleFor(c => c.TelefonKodu).MaximumLength(5);
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(c => c.CountryCode).NotNull().NotEmpty().MaximumLength(5);
+        RuleFor(c => c.PhoneCode).MaximumLength(5);
 
 
     }

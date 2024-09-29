@@ -1,11 +1,6 @@
 using Domain.Entities.DefinitionManagements;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfiguration.DefinitionManagements
 {
@@ -17,7 +12,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
 
-            builder.Property(y => y.IzinAdi).IsRequired().HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
 
             builder.HasMany(u => u.PersonnelPermitInfos).WithOne(y => y.PermitTypeFK).HasForeignKey(y => y.GidPermitFK);
         }

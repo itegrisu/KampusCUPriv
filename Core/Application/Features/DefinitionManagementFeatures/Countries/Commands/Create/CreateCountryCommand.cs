@@ -12,9 +12,10 @@ namespace Application.Features.DefinitionManagementFeatures.Countries.Commands.C
 public class CreateCountryCommand : IRequest<CreatedCountryResponse>
 {
 
-    public string UlkeAdi { get; set; }
-    public string UlkeKodu { get; set; }
-    public string? TelefonKodu { get; set; }
+    public string Name { get; set; }
+    public string CountryCode { get; set; }
+    public string? PhoneCode { get; set; }
+
     public class CreateCountryCommandHandler : IRequestHandler<CreateCountryCommand, CreatedCountryResponse>
     {
         private readonly IMapper _mapper;
@@ -33,7 +34,7 @@ public class CreateCountryCommand : IRequest<CreatedCountryResponse>
 
         public async Task<CreatedCountryResponse> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
         {
-            await _countryBusinessRules.CountryNameIsUnique(request.UlkeAdi);
+            await _countryBusinessRules.CountryNameIsUnique(request.Name);
             int maxRowNo = await _countryReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.Country country = _mapper.Map<X.Country>(request);
             country.RowNo = maxRowNo + 1;

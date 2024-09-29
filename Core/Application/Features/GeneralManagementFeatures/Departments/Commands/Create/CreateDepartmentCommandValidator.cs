@@ -6,11 +6,11 @@ public class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartme
 {
     public CreateDepartmentCommandValidator()
     {
-        RuleFor(c => c.GidAsilYoneticiFK).NotNull().NotEmpty();
-//RuleFor(c => c.GidYedekYoneticiFK);//
+        RuleFor(c => c.GidMainAdminFK).NotNull().NotEmpty();
+        //RuleFor(c => c.GidCoAdminFK);//
 
-RuleFor(c => c.DepartmanAdi).NotNull().NotEmpty().MaximumLength(50);
-RuleFor(c => c.Detay).MaximumLength(250);
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(c => c.Detail).MaximumLength(250);
 
 
     }

@@ -12,7 +12,7 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Emasist2024Context))]
-    [Migration("20240927115251_mig1")]
+    [Migration("20240929152056_mig1")]
     partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -271,21 +271,21 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("GidUlkeFK")
+                    b.Property<Guid>("GidCountryFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PlakaKodu")
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
-
-                    b.Property<string>("SehirAdi")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("PlateCode")
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar(5)");
+
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidUlkeFK");
+                    b.HasIndex("GidCountryFK");
 
                     b.ToTable("Cities");
                 });
@@ -296,28 +296,28 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar(5)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<int>("RowNo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TelefonKodu")
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
-
-                    b.Property<string>("UlkeAdi")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("UlkeKodu")
-                        .IsRequired()
+                    b.Property<string>("PhoneCode")
                         .HasMaxLength(5)
                         .HasColumnType("varchar(5)");
+
+                    b.Property<int>("RowNo")
+                        .HasColumnType("int");
 
                     b.HasKey("Gid");
 
@@ -330,22 +330,22 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<string>("DovizAdi")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("DovizKodu")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("DovizSimgesi")
+                    b.Property<string>("Symbol")
                         .HasMaxLength(5)
                         .HasColumnType("varchar(5)");
 
@@ -360,16 +360,16 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BelgeAdi")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Gid");
 
@@ -388,14 +388,14 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<string>("DilAdi")
+                    b.Property<string>("LanguageCode")
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
-
-                    b.Property<string>("DilKodu")
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
 
                     b.HasKey("Gid");
 
@@ -414,7 +414,7 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<string>("GorevAdi")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -436,7 +436,7 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<string>("OlcuAdi")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -452,16 +452,16 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AracMarkaAdi")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Gid");
 
@@ -480,7 +480,7 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<string>("IzinAdi")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -496,9 +496,13 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Aciklama")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -506,15 +510,11 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<int>("KisiSayisi")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
-                    b.Property<string>("OdaKodu")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("OdaTuru")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
@@ -563,26 +563,26 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<string>("DepartmanAdi")
+                    b.Property<string>("Details")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<Guid?>("GidCoAdminFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidMainAdminFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Detay")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<Guid>("GidAsilYoneticiFK")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("GidYedekYoneticiFK")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidAsilYoneticiFK");
+                    b.HasIndex("GidCoAdminFK");
 
-                    b.HasIndex("GidYedekYoneticiFK");
+                    b.HasIndex("GidMainAdminFK");
 
                     b.ToTable("Departments");
                 });
@@ -599,17 +599,17 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("GidDepartmanFK")
+                    b.Property<Guid>("GidDepartmentFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GidPersonelFK")
+                    b.Property<Guid>("GidPersonnelFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidDepartmanFK");
+                    b.HasIndex("GidDepartmentFK");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("DepartmentUsers");
                 });
@@ -620,19 +620,18 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Adi")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<bool>("AktifHesapMi")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Avatar")
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("Cinsiyet")
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Birthplace")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int?>("BloodGroup")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -641,26 +640,22 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DogumTarihi")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("DogumYeri")
+                    b.Property<string>("DrivingLicenseNo")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("EMailAktivasyonDurumu")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EPosta")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("EhliyetNo")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                    b.Property<int>("EmailActivationStatus")
+                        .HasColumnType("int");
 
-                    b.Property<Guid?>("GidUyrukFK")
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("GidNationalityFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Gsm")
@@ -668,70 +663,99 @@ namespace Persistence.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int?>("KanGrubu")
-                        .HasColumnType("int");
-
-                    b.Property<string>("KimlikNo")
+                    b.Property<string>("IdentityNo")
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int?>("MedeniDurumu")
+                    b.Property<bool>("IsLoginStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSystemAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MaritalStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("Not")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Note")
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)");
 
-                    b.Property<string>("PasaportNo")
+                    b.Property<string>("PassportNo")
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("ProfilResmi")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PersonnelSpecialNote")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SGKNo")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Sifre")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("SifreGuncellemeToken")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("SifreHash")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<bool>("SistemAdminMi")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SmsAktivasyonDurumu")
+                    b.Property<int>("SmsActivationStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("Soyadi")
+                    b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTime?>("TokenGecerlilikSuresi")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Unvani")
+                    b.Property<string>("Title")
                         .HasMaxLength(60)
                         .HasColumnType("varchar(60)");
 
+                    b.Property<DateTime?>("TokenExpiredDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("UpdatePasswordToken")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidUyrukFK");
+                    b.HasIndex("GidNationalityFK");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GeneralManagements.UserModuleAuth", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ModuleType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("UserModuleAuths");
                 });
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.UserRefreshToken", b =>
@@ -1022,16 +1046,12 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Aciklama")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Adres")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<string>("AdresBasligi")
+                    b.Property<string>("AddressTitle")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
@@ -1042,17 +1062,21 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("GidPersonelFK")
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<Guid>("GidCityFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GidSehirFK")
+                    b.Property<Guid>("GidPersonnelFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidCityFK");
 
-                    b.HasIndex("GidSehirFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelAddresses");
                 });
@@ -1063,39 +1087,39 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Aciklama")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Belge")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("BelgeAdi")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("GecerlilikTarihi")
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid>("GidDocumentType")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidPersonnelFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime?>("ValidityDate")
                         .HasColumnType("datetime");
-
-                    b.Property<Guid>("GidBelgeTuru")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GidPersonelFK")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidBelgeTuru");
+                    b.HasIndex("GidDocumentType");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelDocuments");
                 });
@@ -1115,20 +1139,20 @@ namespace Persistence.Migrations
                     b.Property<Guid>("GidLanguageFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GidPersonelFK")
+                    b.Property<Guid>("GidPersonnelFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("KonusmaDuzeyi")
+                    b.Property<int>("ReadLevel")
                         .HasColumnType("int");
 
-                    b.Property<int>("OkumaDuzeyi")
+                    b.Property<int>("SpeakingLevel")
                         .HasColumnType("int");
 
                     b.HasKey("Gid");
 
                     b.HasIndex("GidLanguageFK");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelForeignLanguages");
                 });
@@ -1139,45 +1163,45 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Aciklama")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<int>("BaslamaYili")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Belge")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("BolumBilgisi")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<int>("EgitimKurumuTuru")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("GidPersonelFK")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("MezuniyetTarihi")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("OkulBilgisi")
+                    b.Property<string>("DepartmentInfo")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<int>("EducationalInstitutionType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidPersonnelFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("GraduationDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("SchoolInfo")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("StartYear")
+                        .HasColumnType("int");
+
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelGraduatedSchools");
                 });
@@ -1188,37 +1212,37 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Aciklama")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Belge")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("GecerlilikTarihi")
+                    b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("GidPersonelFK")
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid>("GidPersonnelFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PasaportNo")
+                    b.Property<string>("PassportNo")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime>("VerilisTarihi")
+                    b.Property<DateTime>("ValidityDate")
                         .HasColumnType("datetime");
 
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelPassportInfos");
                 });
@@ -1229,37 +1253,37 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Aciklama")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Belge")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
                     b.Property<Guid>("GidPermitFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GidPersonelFK")
+                    b.Property<Guid>("GidPersonnelFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("IzinBaslamaTarihi")
+                    b.Property<DateTime>("PermitEndDate")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("IzinBitisTarihi")
+                    b.Property<DateTime>("PermitStartDate")
                         .HasColumnType("datetime");
 
                     b.HasKey("Gid");
 
                     b.HasIndex("GidPermitFK");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelPermitInfos");
                 });
@@ -1270,37 +1294,37 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Aciklama")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Belge")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("GecerlilikTarihi")
+                    b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("GidPersonelFK")
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid>("GidPersonnelFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("OturumSeriNo")
+                    b.Property<string>("SessionSerialNo")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTime>("VerilisTarihi")
+                    b.Property<DateTime>("ValidityDate")
                         .HasColumnType("datetime");
 
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelResidenceInfos");
                 });
@@ -1317,18 +1341,18 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("GidPersonelFK")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("IseBaslamaTarihi")
+                    b.Property<DateTime?>("ExitDate")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime?>("IstenCikisTarihi")
+                    b.Property<Guid>("GidPersonnelFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime");
 
                     b.HasKey("Gid");
 
-                    b.HasIndex("GidPersonelFK");
+                    b.HasIndex("GidPersonnelFK");
 
                     b.ToTable("PersonnelWorkingTables");
                 });
@@ -2174,7 +2198,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.DefinitionManagements.Country", "CountryFK")
                         .WithMany("Cities")
-                        .HasForeignKey("GidUlkeFK")
+                        .HasForeignKey("GidCountryFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2183,32 +2207,32 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.Department", b =>
                 {
-                    b.HasOne("Domain.Entities.GeneralManagements.User", "AsilYoneticFK")
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "CoAdminFK")
+                        .WithMany("YedekYonetilenDepartmants")
+                        .HasForeignKey("GidCoAdminFK");
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "MainAdminFK")
                         .WithMany("AsilYonetilenDepartmants")
-                        .HasForeignKey("GidAsilYoneticiFK")
+                        .HasForeignKey("GidMainAdminFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.GeneralManagements.User", "YedekYoneticiFK")
-                        .WithMany("YedekYonetilenDepartmants")
-                        .HasForeignKey("GidYedekYoneticiFK");
+                    b.Navigation("CoAdminFK");
 
-                    b.Navigation("AsilYoneticFK");
-
-                    b.Navigation("YedekYoneticiFK");
+                    b.Navigation("MainAdminFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.DepartmentUser", b =>
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.Department", "DepartmentFK")
                         .WithMany("DepartmentUsers")
-                        .HasForeignKey("GidDepartmanFK")
+                        .HasForeignKey("GidDepartmentFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("DepartmentUsers")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2221,10 +2245,21 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.DefinitionManagements.Country", "CountryFK")
                         .WithMany("Users")
-                        .HasForeignKey("GidUyrukFK")
+                        .HasForeignKey("GidNationalityFK")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CountryFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.GeneralManagements.UserModuleAuth", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("UserModuleAuths")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UserFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.UserRefreshToken", b =>
@@ -2305,15 +2340,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.PersonnelManagements.PersonnelAddress", b =>
                 {
-                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                    b.HasOne("Domain.Entities.DefinitionManagements.City", "CityFK")
                         .WithMany("PersonnelAddresses")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidCityFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.DefinitionManagements.City", "CityFK")
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelAddresses")
-                        .HasForeignKey("GidSehirFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2326,13 +2361,13 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.DefinitionManagements.DocumentType", "DocumentTypeFK")
                         .WithMany("PersonnelDocuments")
-                        .HasForeignKey("GidBelgeTuru")
+                        .HasForeignKey("GidDocumentType")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelDocuments")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2351,7 +2386,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelForeignLanguages")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2364,7 +2399,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelGraduatedSchools")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2375,7 +2410,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelPassportInfos")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2392,7 +2427,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelPermitInfos")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2405,7 +2440,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelResidenceInfos")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2416,7 +2451,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("PersonnelWorkingTables")
-                        .HasForeignKey("GidPersonelFK")
+                        .HasForeignKey("GidPersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2781,6 +2816,8 @@ namespace Persistence.Migrations
                     b.Navigation("TaskUsers");
 
                     b.Navigation("Tasks");
+
+                    b.Navigation("UserModuleAuths");
 
                     b.Navigation("UserRefreshTokens");
 

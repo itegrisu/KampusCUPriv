@@ -12,11 +12,11 @@ namespace Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Co
 public class UpdatePersonnelAddressCommand : IRequest<UpdatedPersonnelAddressResponse>
 {
     public Guid Gid { get; set; }
-    public Guid GidPersonelFK { get; set; }
-    public Guid GidSehirFK { get; set; }
-    public string AdresBasligi { get; set; }
-    public string Adres { get; set; }
-    public string? Aciklama { get; set; }
+    public Guid GidPersonnelFK { get; set; }
+    public Guid GidCityFK { get; set; }
+    public string AddressTitle { get; set; }
+    public string Address { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -41,8 +41,8 @@ public class UpdatePersonnelAddressCommand : IRequest<UpdatedPersonnelAddressRes
             X.PersonnelAddress? personnelAddress = await _personnelAddressReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
 
             await _personnelAddressBusinessRules.PersonnelAddressShouldExistWhenSelected(personnelAddress);
-            await _personnelAddressBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
-            await _personnelAddressBusinessRules.CityShouldExistWhenSelected(request.GidSehirFK);
+            await _personnelAddressBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
+            await _personnelAddressBusinessRules.CityShouldExistWhenSelected(request.GidCityFK);
 
             personnelAddress = _mapper.Map(request, personnelAddress);
 

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enums
 {
-    public enum EnumCinsiyet
+    public enum EnumGender
     {
         Erkek = 1,
         Kadin = 2,

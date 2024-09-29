@@ -7,10 +7,10 @@ public class UpdateRoomTypeCommandValidator : AbstractValidator<UpdateRoomTypeCo
     public UpdateRoomTypeCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.OdaTuru).NotNull().NotEmpty().MaximumLength(50);
-        RuleFor(c => c.OdaKodu).NotNull().NotEmpty().MaximumLength(10);
-        RuleFor(c => c.KisiSayisi).NotNull().NotEmpty();
-        RuleFor(c => c.Aciklama).MaximumLength(100);
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(c => c.Code).NotNull().NotEmpty().MaximumLength(10);
+        RuleFor(c => c.Capacity).NotNull().NotEmpty();
+        RuleFor(c => c.Description).MaximumLength(100);
 
 
     }

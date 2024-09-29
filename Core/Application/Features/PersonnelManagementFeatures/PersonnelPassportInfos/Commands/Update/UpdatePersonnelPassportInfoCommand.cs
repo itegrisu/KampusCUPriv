@@ -13,13 +13,13 @@ public class UpdatePersonnelPassportInfoCommand : IRequest<UpdatedPersonnelPassp
 {
     public Guid Gid { get; set; }
 
-    public Guid GidPersonelFK { get; set; }
+    public Guid GidPersonnelFK { get; set; }
 
-    public string PasaportNo { get; set; }
-    public DateTime VerilisTarihi { get; set; }
-    public DateTime GecerlilikTarihi { get; set; }
-    public string? Belge { get; set; }
-    public string? Aciklama { get; set; }
+    public string PassportNo { get; set; }
+    public DateTime DateOfIssue { get; set; }
+    public DateTime ValidityDate { get; set; }
+    public string? Document { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -44,7 +44,7 @@ public class UpdatePersonnelPassportInfoCommand : IRequest<UpdatedPersonnelPassp
             X.PersonnelPassportInfo? personnelPassportInfo = await _personnelPassportInfoReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _personnelPassportInfoBusinessRules.PersonnelPassportInfoShouldExistWhenSelected(personnelPassportInfo);
-            await _personnelPassportInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonelFK);
+            await _personnelPassportInfoBusinessRules.UserShouldExistWhenSelected(request.GidPersonnelFK);
             personnelPassportInfo = _mapper.Map(request, personnelPassportInfo);
 
             _personnelPassportInfoWriteRepository.Update(personnelPassportInfo!);

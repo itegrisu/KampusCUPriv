@@ -5,12 +5,12 @@ namespace Application.Features.GeneralManagementFeatures.Departments.Queries.Get
 public class GetListDepartmentListItemDto : IDto
 {
     public Guid Gid { get; set; }
-    public Guid GidAsilYoneticiFK { get; set; }
-    public string AsilYoneticiFKTamAd { get; set; }
-    public Guid? GidYedekYoneticiFK { get; set; }
-    public string YedekYoneticiTamAd { get; set; }
-    public string DepartmanAdi { get; set; }
-    public string? Detay { get; set; }
+    public Guid GidMainAdminFK { get; set; }
+    public string MainAdminFKFullName { get; set; }
+    public Guid? GidCoAdminFK { get; set; }
+    public string CoAdminFKFullName { get; set; }
+    public string Name { get; set; }
+    public string? Detail { get; set; }
 
 
 }

@@ -7,6 +7,6 @@ public class UpdateDocumentTypeCommandValidator : AbstractValidator<UpdateDocume
     public UpdateDocumentTypeCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        RuleFor(c => c.BelgeAdi).NotNull().NotEmpty().MaximumLength(100);
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
     }
 }

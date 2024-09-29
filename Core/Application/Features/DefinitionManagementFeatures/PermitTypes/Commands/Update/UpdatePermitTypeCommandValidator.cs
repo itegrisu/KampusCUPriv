@@ -7,8 +7,8 @@ public class UpdatePermitTypeCommandValidator : AbstractValidator<UpdatePermitTy
     public UpdatePermitTypeCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        
-RuleFor(c => c.IzinAdi).NotNull().NotEmpty().MaximumLength(100);
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 
 
     }

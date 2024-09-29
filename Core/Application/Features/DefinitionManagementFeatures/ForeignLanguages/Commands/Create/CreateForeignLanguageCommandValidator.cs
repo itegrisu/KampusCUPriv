@@ -6,9 +6,9 @@ public class CreateForeignLanguageCommandValidator : AbstractValidator<CreateFor
 {
     public CreateForeignLanguageCommandValidator()
     {
-        
-RuleFor(c => c.DilAdi).NotNull().NotEmpty().MaximumLength(50);
-RuleFor(c => c.DilKodu).MaximumLength(5);
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(c => c.LanguageCode).MaximumLength(5);
 
 
     }

@@ -11,7 +11,7 @@ namespace Application.Features.DefinitionManagementFeatures.MeasureTypes.Command
 public class CreateMeasureTypeCommand : IRequest<CreatedMeasureTypeResponse>
 {
 
-    public string OlcuAdi { get; set; }
+    public string Name { get; set; }
 
 
     public class CreateMeasureTypeCommandHandler : IRequestHandler<CreateMeasureTypeCommand, CreatedMeasureTypeResponse>
@@ -32,7 +32,7 @@ public class CreateMeasureTypeCommand : IRequest<CreatedMeasureTypeResponse>
 
         public async Task<CreatedMeasureTypeResponse> Handle(CreateMeasureTypeCommand request, CancellationToken cancellationToken)
         {
-            await _measureTypeBusinessRules.CheckMeasureTypeNameIsUnique(request.OlcuAdi);
+            await _measureTypeBusinessRules.CheckMeasureTypeNameIsUnique(request.Name);
             X.MeasureType measureType = _mapper.Map<X.MeasureType>(request);
 
             await _measureTypeWriteRepository.AddAsync(measureType);

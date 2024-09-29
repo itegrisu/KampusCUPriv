@@ -26,11 +26,11 @@ namespace Application.Dtos.GeneralDtos.UserDtos
         public string? SGKNo { get; set; }
         public string? EhliyetNo { get; set; }
         public string? Not { get; set; }
-        public EnumMedeniDurumu? MedeniDurumu { get; set; }
-        public EnumKanGrubu? KanGrubu { get; set; }
-        public EnumCinsiyet Cinsiyet { get; set; }
-        public EnumEMailAktivasyonDurumu EMailAktivasyonDurumu { get; set; }
-        public EnumSmsAktivasyonDurumu SmsAktivasyonDurumu { get; set; }
+        public EnumMaritalStatus? MedeniDurumu { get; set; }
+        public EnumBloodGroup? KanGrubu { get; set; }
+        public EnumGender Cinsiyet { get; set; }
+        public EnumEmailActivationStatus EMailAktivasyonDurumu { get; set; }
+        public EnumSmsActivationStatus SmsAktivasyonDurumu { get; set; }
 
     }
 }

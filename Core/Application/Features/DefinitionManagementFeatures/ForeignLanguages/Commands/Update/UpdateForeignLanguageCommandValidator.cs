@@ -7,9 +7,9 @@ public class UpdateForeignLanguageCommandValidator : AbstractValidator<UpdateFor
     public UpdateForeignLanguageCommandValidator()
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
-        
-RuleFor(c => c.DilAdi).NotNull().NotEmpty().MaximumLength(50);
-RuleFor(c => c.DilKodu).MaximumLength(5);
+
+        RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(50);
+        RuleFor(c => c.LanguageCode).MaximumLength(5);
 
 
     }
