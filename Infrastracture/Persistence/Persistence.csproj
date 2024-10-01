@@ -30,6 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="EntityConfiguration\StockManagements\" />
 	  <Folder Include="Services\EntityServices\DefinationManagements\" />
 	</ItemGroup>
 

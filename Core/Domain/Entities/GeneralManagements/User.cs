@@ -2,7 +2,9 @@ using Core.Entities;
 using Domain.Entities.AnnouncementManagements;
 using Domain.Entities.AuthManagements;
 using Domain.Entities.DefinitionManagements;
+using Domain.Entities.FinanceManagements;
 using Domain.Entities.LogManagements;
+using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.SupportManagements;
 using Domain.Enums;
@@ -71,6 +73,16 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<UserShortCut> UserShortCuts { get; set; }
         public ICollection<SupportRequest> SupportRequests { get; set; }
         public ICollection<UserModuleAuth> UserModuleAuths { get; set; }
+        public ICollection<FinanceExpense> SendedFinanceExpenses { get; set; }
+        public ICollection<FinanceExpense> ReceivedFinanceExpenses { get; set; }
+        public ICollection<FinanceExpense> ApprovedFinanceExpenses { get; set; }
+        public ICollection<FinanceExpenseDetail> SpendedFinanceExpenseDetails { get; set; }
+        public ICollection<FinanceExpenseDetail> ControlledFinanceExpenseDetails { get; set; }
+
+        public ICollection<Organization> Organizations { get; set; }
+        public ICollection<OrganizationItem> OrganizationItems { get; set; }
+
+
 
 
         #region NotMapped alanlar 

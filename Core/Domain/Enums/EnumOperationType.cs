@@ -8,8 +8,9 @@ namespace Domain.Enums
 {
     public enum EnumOperationType
     {
-        StockEntry = 1,
-        StockOut = 2,
-        StockMovement = 3,
+        StokGirisi = 1,
+        StokCikisi = 2,
+        StokHareketi = 3,
     }
 }
+ 

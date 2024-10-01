@@ -13,10 +13,16 @@ using Application.Repositories.DefinitionManagementRepos.DocumentTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.ForeignLanguageRepo;
 using Application.Repositories.DefinitionManagementRepos.JopTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.MeasureTypeRepo;
+using Application.Repositories.DefinitionManagementRepos.OrganizationTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.OtoBrandRepo;
 using Application.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.RoomTypeRepo;
-using Application.Repositories.DefinitonManagementRepos.WarehouseRepo;
+using Application.Repositories.DefinitionManagementRepos.StockCategoryRepo;
+using Application.Repositories.FinanceManagementRepos.FinanceExpenseDetailRepo;
+using Application.Repositories.FinanceManagementRepos.FinanceExpenseGroupRepo;
+using Application.Repositories.FinanceManagementRepos.FinanceExpenseRepo;
+using Application.Repositories.FinanceManagementRepos.FinanceIncomeGroupRepo;
+using Application.Repositories.FinanceManagementRepos.FinanceIncomeRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using Application.Repositories.GeneralManagementRepos.UserModuleAuthRepo;
@@ -29,6 +35,12 @@ using Application.Repositories.LogManagementRepos.LogFailedLoginRepo;
 using Application.Repositories.LogManagementRepos.LogSuccessedLoginRepo;
 using Application.Repositories.LogManagementRepos.LogUserPageVisitActionRepo;
 using Application.Repositories.LogManagementRepos.LogUserPageVisitRepo;
+using Application.Repositories.OfferManagementRepos.OfferFileRepo;
+using Application.Repositories.OfferManagementRepos.OfferRepo;
+using Application.Repositories.OfferManagementRepos.OfferTransactionRepo;
+using Application.Repositories.OrganizationManagementRepos.OrganizationGroupRepo;
+using Application.Repositories.OrganizationManagementRepos.OrganizationItemRepo;
+using Application.Repositories.OrganizationManagementRepos.OrganizationRepo;
 using Application.Repositories.PersonnelManagementRepos.PersonnelAddressRepo;
 using Application.Repositories.PersonnelManagementRepos.PersonnelDocumentRepo;
 using Application.Repositories.PersonnelManagementRepos.PersonnelForeignLanguageRepo;
@@ -39,9 +51,6 @@ using Application.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRe
 using Application.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
 using Application.Repositories.PortalManagementRepos.PortalParameterRepo;
 using Application.Repositories.PortalManagementRepos.PortalTextRepo;
-using Application.Repositories.StockManagementRepos.StockCardImageRepo;
-using Application.Repositories.StockManagementRepos.StockCardRepo;
-using Application.Repositories.StockManagementRepos.StockMovementRepo;
 using Application.Repositories.SupplierManagementRepos.SCAddressRepo;
 using Application.Repositories.SupplierManagementRepos.SCBankRepo;
 using Application.Repositories.SupplierManagementRepos.SCCompanyRepo;
@@ -57,6 +66,10 @@ using Application.Repositories.TaskManagementRepos.TaskGroupUserRepo;
 using Application.Repositories.TaskManagementRepos.TaskManagerRepo;
 using Application.Repositories.TaskManagementRepos.TaskRepo;
 using Application.Repositories.TaskManagementRepos.TaskUserRepo;
+using Application.Repositories.WarehouseManagementRepos.StockCardImageRepo;
+using Application.Repositories.WarehouseManagementRepos.StockCardRepo;
+using Application.Repositories.WarehouseManagementRepos.StockMovementRepo;
+using Application.Repositories.WarehouseManagementRepos.WarehouseRepo;
 using Core.Repositories.Abstracts;
 using Core.Repositories.Concretes;
 using Microsoft.Extensions.DependencyInjection;
@@ -74,10 +87,16 @@ using Persistence.Repositories.DefinitionManagementRepos.DocumentTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.ForeignLanguageRepo;
 using Persistence.Repositories.DefinitionManagementRepos.JopTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.MeasureTypeRepo;
+using Persistence.Repositories.DefinitionManagementRepos.OrganizationTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.OtoBrandRepo;
 using Persistence.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.RoomTypeRepo;
-using Persistence.Repositories.DefinitionManagementRepos.WarehouseRepo;
+using Persistence.Repositories.DefinitionManagementRepos.StockCategoryRepo;
+using Persistence.Repositories.FinanceManagementRepos.FinanceExpenceDetailRepo;
+using Persistence.Repositories.FinanceManagementRepos.FinanceExpenseGroupRepo;
+using Persistence.Repositories.FinanceManagementRepos.FinanceExpenseRepo;
+using Persistence.Repositories.FinanceManagementRepos.FinanceIncomeGroupRepo;
+using Persistence.Repositories.FinanceManagementRepos.FinanceIncomeRepo;
 using Persistence.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Persistence.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserModuleAuthRepo;
@@ -90,6 +109,12 @@ using Persistence.Repositories.LogManagementRepos.LogFailedLoginRepo;
 using Persistence.Repositories.LogManagementRepos.LogSuccessedLoginRepo;
 using Persistence.Repositories.LogManagementRepos.LogUserPageVisitActionRepo;
 using Persistence.Repositories.LogManagementRepos.LogUserPageVisitRepo;
+using Persistence.Repositories.OfferManagementRepos.OfferFileRepo;
+using Persistence.Repositories.OfferManagementRepos.OfferRepo;
+using Persistence.Repositories.OfferManagementRepos.OfferTransactionRepo;
+using Persistence.Repositories.OrganizationManagementRepos.OrganizationGroupRepo;
+using Persistence.Repositories.OrganizationManagementRepos.OrganizationItemRepo;
+using Persistence.Repositories.OrganizationManagementRepos.OrganizationRepo;
 using Persistence.Repositories.PersonnelManagementRepos.PersonelGraduatedSchoolRepo;
 using Persistence.Repositories.PersonnelManagementRepos.PersonnelAddressRepo;
 using Persistence.Repositories.PersonnelManagementRepos.PersonnelDocumentRepo;
@@ -100,9 +125,6 @@ using Persistence.Repositories.PersonnelManagementRepos.PersonnelResidenceInfoRe
 using Persistence.Repositories.PersonnelManagementRepos.PersonnelWorkingTableRepo;
 using Persistence.Repositories.PortalManagementRepos.PortalParameterRepo;
 using Persistence.Repositories.PortalManagementRepos.PortalTextRepo;
-using Persistence.Repositories.StockManagementsRepos.StockCardImageRepo;
-using Persistence.Repositories.StockManagementsRepos.StockCardRepo;
-using Persistence.Repositories.StockManagementsRepos.StockMovementRepo;
 using Persistence.Repositories.SupplierManagementRepos.SCAddressRepo;
 using Persistence.Repositories.SupplierManagementRepos.SCBankRepo;
 using Persistence.Repositories.SupplierManagementRepos.SCCompanyRepo;
@@ -118,6 +140,10 @@ using Persistence.Repositories.TaskManagementRepos.TaskGroupUserRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskManagerRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskUserRepo;
+using Persistence.Repositories.WarehouseManagementRepos.StockCardImageRepo;
+using Persistence.Repositories.WarehouseManagementRepos.StockCardRepo;
+using Persistence.Repositories.WarehouseManagementRepos.StockMovementRepo;
+using Persistence.Repositories.WarehouseManagementRepos.WarehouseRepo;
 using Persistence.Services.EntityServices;
 using Persistence.Services.UnitOfWork;
 using C = Core.Context;
@@ -444,6 +470,79 @@ namespace Persistence
             #region User Module Auth
             services.AddScoped<IUserModuleAuthReadRepository, UserModuleAuthReadRepository>();
             services.AddScoped<IUserModuleAuthWriteRepository, UserModuleAuthWriteRepository>();
+            #endregion
+            #region Offer
+            services.AddScoped<IOfferReadRepository, OfferReadRepository>();
+            services.AddScoped<IOfferWriteRepository, OfferWriteRepository>();
+            #endregion
+
+
+            #region Offer File
+            services.AddScoped<IOfferFileReadRepository, OfferFileReadRepository>();
+            services.AddScoped<IOfferFileWriteRepository, OfferFileWriteRepository>();
+            #endregion
+
+
+            #region Offer Transaction
+            services.AddScoped<IOfferTransactionReadRepository, OfferTransactionReadRepository>();
+            services.AddScoped<IOfferTransactionWriteRepository, OfferTransactionWriteRepository>();
+            #endregion
+
+
+            #region Organization Type
+            services.AddScoped<IOrganizationTypeReadRepository, OrganizationTypeReadRepository>();
+            services.AddScoped<IOrganizationTypeWriteRepository, OrganizationTypeWriteRepository>();
+            #endregion
+
+
+            #region Organization Item
+            services.AddScoped<IOrganizationItemReadRepository, OrganizationItemReadRepository>();
+            services.AddScoped<IOrganizationItemWriteRepository, OrganizationItemWriteRepository>();
+            #endregion
+
+            #region Finance Income Group
+            services.AddScoped<IFinanceIncomeGroupReadRepository, FinanceIncomeGroupReadRepository>();
+            services.AddScoped<IFinanceIncomeGroupWriteRepository, FinanceIncomeGroupWriteRepository>();
+            #endregion
+
+
+            #region Finance Income
+            services.AddScoped<IFinanceIncomeReadRepository, FinanceIncomeReadRepository>();
+            services.AddScoped<IFinanceIncomeWriteRepository, FinanceIncomeWriteRepository>();
+            #endregion
+
+
+            #region Finance Expense Group
+            services.AddScoped<IFinanceExpenseGroupReadRepository, FinanceExpenseGroupReadRepository>();
+            services.AddScoped<IFinanceExpenseGroupWriteRepository, FinanceExpenseGroupWriteRepository>();
+            #endregion
+
+
+            #region Finance Expense
+            services.AddScoped<IFinanceExpenseReadRepository, FinanceExpenseReadRepository>();
+            services.AddScoped<IFinanceExpenseWriteRepository, FinanceExpenseWriteRepository>();
+            #endregion
+
+
+            #region Finance Expense Detail
+            services.AddScoped<IFinanceExpenseDetailReadRepository, FinanceExpenseDetailReadRepository>();
+            services.AddScoped<IFinanceExpenseDetailWriteRepository, FinanceExpenseDetailWriteRepository>();
+            #endregion
+
+            #region Organization
+            services.AddScoped<IOrganizationReadRepository, OrganizationReadRepository>();
+            services.AddScoped<IOrganizationWriteRepository, OrganizationWriteRepository>();
+            #endregion
+
+
+            #region Organization Group
+            services.AddScoped<IOrganizationGroupReadRepository, OrganizationGroupReadRepository>();
+            services.AddScoped<IOrganizationGroupWriteRepository, OrganizationGroupWriteRepository>();
+            #endregion
+
+            #region Stock Category
+            services.AddScoped<IStockCategoryReadRepository, StockCategoryReadRepository>();
+            services.AddScoped<IStockCategoryWriteRepository, StockCategoryWriteRepository>();
             #endregion
 
             services.AddScoped<C.Context, Emasist2024Context>();

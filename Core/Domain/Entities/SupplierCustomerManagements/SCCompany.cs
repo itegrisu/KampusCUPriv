@@ -1,4 +1,5 @@
 using Core.Entities;
+using Domain.Entities.OrganizationManagements;
 using Domain.Enums;
 
 namespace Domain.Entities.SupplierCustomerManagements
@@ -27,6 +28,7 @@ namespace Domain.Entities.SupplierCustomerManagements
         public ICollection<SCBank>? SCBanks { get; set; }
         public ICollection<SCEmployer>? SCEmployers { get; set; }
         public ICollection<SCWorkHistory>? SCWorkHistories { get; set; }
+        public ICollection<Organization> Organizations { get; set; }
 
     }
 }

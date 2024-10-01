@@ -17,10 +17,10 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.Property(y => y.Symbol).IsRequired(false).HasColumnType("varchar").HasMaxLength(5);
 
             builder.HasMany(u => u.SCBanks).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
-            //builder.HasMany(u => u.FinanceIncomes).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
-            //builder.HasMany(u => u.FinanceExpenses).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
-            //builder.HasMany(u => u.FinanceExpenseDetails).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
-            //builder.HasMany(u => u.OfferTransactions).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
+            builder.HasMany(u => u.FinanceIncomes).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
+            builder.HasMany(u => u.FinanceExpenses).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
+            builder.HasMany(u => u.FinanceExpenseDetails).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
+            builder.HasMany(u => u.OfferTransactions).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
 
         }
     }

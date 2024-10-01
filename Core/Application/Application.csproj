@@ -23,6 +23,7 @@
 	<ItemGroup>
 	  <Folder Include="Abstractions\EntityServices\DefinationManagement\" />
 	  <Folder Include="Dtos\DefinitionManagerDtos\" />
+	  <Folder Include="Features\StockManagementFeatures\" />
 	</ItemGroup>
 	
 	

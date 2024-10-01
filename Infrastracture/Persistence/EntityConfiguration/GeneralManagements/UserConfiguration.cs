@@ -70,11 +70,20 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasMany(u => u.UserShortCuts).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
             builder.HasMany(u => u.SupportRequests).WithOne(y => y.UserFK).HasForeignKey(y => y.CreatedUserFK);
 
+            builder.HasMany(u => u.Organizations).WithOne(y => y.ResponsibleUserFK).HasForeignKey(y => y.GidResponsibleUserFK);
 
+            builder.HasMany(u => u.SendedFinanceExpenses).WithOne(y => y.MoneySenderPersonnelFK).HasForeignKey(y => y.GidMoneySenderPersonnelFK);
+            builder.HasMany(u => u.ReceivedFinanceExpenses).WithOne(y => y.MoneyReceivePersonnelFK).HasForeignKey(y => y.GidMoneyReceivePersonnelFK);
+            builder.HasMany(u => u.ApprovedFinanceExpenses).WithOne(y => y.ApprovalReceiverFK).HasForeignKey(y => y.GidApprovalReceiverFK);
 
+            builder.HasMany(u => u.SpendedFinanceExpenseDetails).WithOne(y => y.SpendPersonnelFK).HasForeignKey(y => y.GidSpendPersonnelFK);
+            builder.HasMany(u => u.ControlledFinanceExpenseDetails).WithOne(y => y.ControlPersonnelFK).HasForeignKey(y => y.GidControlPersonnelFK);
 
+            builder.HasMany(u => u.UserModuleAuths).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
 
+            builder.Property(y => y.CreatedDate).IsRequired().HasColumnType("datetime");
 
+            builder.HasMany(y => y.OrganizationItems).WithOne(y => y.MainResponsibleUserFK).HasForeignKey(y => y.GidMainResponsibleUserFK);
 
         }
     }
