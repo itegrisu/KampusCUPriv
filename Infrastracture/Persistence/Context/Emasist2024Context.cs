@@ -2,26 +2,32 @@ using Core.Entities;
 using Domain.Entities.AnnouncementManagements;
 using Domain.Entities.AuthManagements;
 using Domain.Entities.DefinitionManagements;
+using Domain.Entities.FinanceManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.LogManagements;
+using Domain.Entities.OfferManagements;
+using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.PortalManagements;
-using Domain.Entities.StockManagements;
 using Domain.Entities.SupplierCustomerManagements;
 using Domain.Entities.SupportManagements;
 using Domain.Entities.TaskManagements;
+using Domain.Entities.WarehouseManagements;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfiguration.AnnouncementManagements;
 using Persistence.EntityConfiguration.AuthManagements;
 using Persistence.EntityConfiguration.DefinitionManagements;
+using Persistence.EntityConfiguration.FinanceManagements;
 using Persistence.EntityConfiguration.GeneralManagements;
 using Persistence.EntityConfiguration.LogManagements;
+using Persistence.EntityConfiguration.OfferManagements;
+using Persistence.EntityConfiguration.OrganisationManagements;
 using Persistence.EntityConfiguration.PersonnelManagements;
 using Persistence.EntityConfiguration.PortalManagements;
-using Persistence.EntityConfiguration.StockManagements;
 using Persistence.EntityConfiguration.SupplierManagements;
 using Persistence.EntityConfiguration.SupportManagements;
 using Persistence.EntityConfiguration.TaskManagements;
+using Persistence.EntityConfiguration.WareHouseManagements;
 using C = Core.Context;
 using T = Domain.Entities.TaskManagements;
 
@@ -63,6 +69,8 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new OtoBrandConfiguration());
             modelBuilder.ApplyConfiguration(new RoomTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MeasureTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new StockCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new OrganizationTypeConfiguration());
 
 
             modelBuilder.ApplyConfiguration(new AuthUserRoleConfiguration());
@@ -116,6 +124,20 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new SCEmployerConfiguration());
             modelBuilder.ApplyConfiguration(new SCWorkHistoryConfiguration());
 
+            modelBuilder.ApplyConfiguration(new OfferConfiguration());
+            modelBuilder.ApplyConfiguration(new OfferFileConfiguration());
+            modelBuilder.ApplyConfiguration(new OfferTransactionConfiguration());
+
+
+            modelBuilder.ApplyConfiguration(new OrganizationItemConfiguration());
+            modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
+            modelBuilder.ApplyConfiguration(new OrganizationGroupConfiguration());
+
+            modelBuilder.ApplyConfiguration(new FinanceIncomeGroupConfiguration());
+            modelBuilder.ApplyConfiguration(new FinanceIncomeConfiguration());
+            modelBuilder.ApplyConfiguration(new FinanceExpenseGroupConfiguration());
+            modelBuilder.ApplyConfiguration(new FinanceExpenseConfiguration());
+            modelBuilder.ApplyConfiguration(new FinanceExpenseDetailConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -216,5 +238,18 @@ namespace Persistence.Context
         public DbSet<SCEmployer> SCEmployers { get; set; }
         public DbSet<SCWorkHistory> SCWorkHistories { get; set; }
         public DbSet<UserModuleAuth> UserModuleAuths { get; set; }
+        public DbSet<Offer> Offers { get; set; }
+        public DbSet<OfferFile> OfferFiles { get; set; }
+        public DbSet<OfferTransaction> OfferTransactions { get; set; }
+        public DbSet<OrganizationType> OrganizationTypes { get; set; }
+        public DbSet<OrganizationItem> OrganizationItems { get; set; }
+        public DbSet<FinanceIncomeGroup> FinanceIncomeGroups { get; set; }
+        public DbSet<FinanceIncome> FinanceIncomes { get; set; }
+        public DbSet<FinanceExpenseGroup> FinanceExpenseGroups { get; set; }
+        public DbSet<FinanceExpense> FinanceExpenses { get; set; }
+        public DbSet<FinanceExpenseDetail> FinanceExpenseDetails { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<OrganizationGroup> OrganizationGroups { get; set; }
+        public DbSet<StockCategory> StockCategories { get; set; }
     }
 }

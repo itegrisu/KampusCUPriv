@@ -10,8 +10,4 @@
     <ProjectReference Include="..\..\Infrastracture\Core\Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\OrganizationManagements\" />
-  </ItemGroup>
-
 </Project>

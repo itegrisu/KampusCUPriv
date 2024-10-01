@@ -1,4 +1,6 @@
 using Core.Entities;
+using Domain.Entities.FinanceManagements;
+using Domain.Entities.OfferManagements;
 using Domain.Entities.SupplierCustomerManagements;
 
 namespace Domain.Entities.DefinitionManagements
@@ -10,9 +12,10 @@ namespace Domain.Entities.DefinitionManagements
         public string? Symbol { get; set; }
 
         public ICollection<SCBank>? SCBanks { get; set; }
-        //public ICollection<FinanceIncome>? FinanceIncomes { get; set; }
-        //public ICollection<FinanceExpense>? FinanceExpenses { get; set; }
-        //public ICollection<FinanceExpenseDetail>? FinanceExpenseDetails { get; set; }
-        //public ICollection<OfferTransaction>? OfferTransactions { get; set; }
+        public ICollection<FinanceExpense> FinanceExpenses { get; set; }
+        public ICollection<FinanceExpenseDetail> FinanceExpenseDetails { get; set; }
+        public ICollection<FinanceIncome> FinanceIncomes { get; set; }
+        public ICollection<OfferTransaction> OfferTransactions { get; set; }
+
     }
 }

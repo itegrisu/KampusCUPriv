@@ -1,11 +1,6 @@
 using Domain.Entities.SupplierCustomerManagements;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfiguration.SupplierManagements
 {
@@ -35,7 +30,9 @@ namespace Persistence.EntityConfiguration.SupplierManagements
             builder.HasMany(u => u.SCBanks).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
             builder.HasMany(u => u.SCEmployers).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
             builder.HasMany(u => u.SCWorkHistories).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
+            builder.HasMany(u => u.Organizations).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidCustomerFK);
 
         }
+
     }
 }

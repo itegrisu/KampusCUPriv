@@ -13,6 +13,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
 
             builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
 
+            builder.HasMany(u => u.StockCards).WithOne(y => y.MeasureTypeFK).HasForeignKey(y => y.GidMeasureFK);
         }
     }
 }
