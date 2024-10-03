@@ -91,9 +91,6 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new AnnouncementConfiguration());
             modelBuilder.ApplyConfiguration(new AnnouncementRecipientConfiguration());
 
-            modelBuilder.ApplyConfiguration(new TaskManagerConfiguration());
-            modelBuilder.ApplyConfiguration(new TaskGroupConfiguration());
-            modelBuilder.ApplyConfiguration(new TaskGroupUserConfiguration());
             modelBuilder.ApplyConfiguration(new TaskConfiguration());
             modelBuilder.ApplyConfiguration(new TaskUserConfiguration());
             modelBuilder.ApplyConfiguration(new TaskCommentConfiguration());
@@ -204,9 +201,6 @@ namespace Persistence.Context
         public DbSet<TaskComment> TaskComments { get; set; }
         public DbSet<TaskFile> TaskFiles { get; set; }
         public DbSet<StockMovement> StockMovements { get; set; }
-        public DbSet<TaskManager> TaskManagers { get; set; }
-        public DbSet<TaskGroup> TaskGroups { get; set; }
-        public DbSet<TaskGroupUser> TaskGroupUsers { get; set; }
         public DbSet<T.Task> Tasks { get; set; }
         public DbSet<TaskUser> TaskUsers { get; set; }
         public DbSet<Announcement> Announcements { get; set; }

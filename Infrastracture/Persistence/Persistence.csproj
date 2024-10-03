@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="EntityConfiguration\StockManagements\**" />
+    <EmbeddedResource Remove="EntityConfiguration\StockManagements\**" />
+    <None Remove="EntityConfiguration\StockManagements\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 
 		<PackageReference Include="Google.Apis.Auth" Version="1.62.1" />
@@ -30,7 +36,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="EntityConfiguration\StockManagements\" />
 	  <Folder Include="Services\EntityServices\DefinationManagements\" />
 	</ItemGroup>
 

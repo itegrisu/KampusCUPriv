@@ -1,6 +1,7 @@
 ﻿using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Commands.Create;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Commands.Delete;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Commands.Update;
+using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Commands.UploadDocumentFile;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Queries.GetByGid;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Queries.GetList;
 using Core.Application.Request;
@@ -28,6 +29,12 @@ namespace API.Controllers.FinanceManagementControllers
             return Ok(response);
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadDetailDocument([FromBody] UploadDetailDocumentCommand command)
+        {
+            UploadDetailDocumentResponse response = await Mediator.Send(command);
+            return Ok(response);
+        }
 
     }
 }

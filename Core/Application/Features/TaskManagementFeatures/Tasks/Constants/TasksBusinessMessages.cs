@@ -17,6 +17,8 @@ public static class TasksBusinessMessages
 
     public const string TechnicalError = "Technical Error";
     public const string UserNotExists = "User Not Exists";
-        public const string SuccessArchivedTaskMessage = "Task Successfully Archived";
-    
+    public const string SuccessArchivedTaskMessage = "Task Successfully Archived";
+    public const string UserNotAuthorized = "Kullanýcýnýn Görev Yetkisi Yok";
+
+
 }

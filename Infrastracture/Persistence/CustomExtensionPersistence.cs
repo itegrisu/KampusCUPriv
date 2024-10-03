@@ -61,9 +61,6 @@ using Application.Repositories.SupportManagementRepos.SupportMessageRepo;
 using Application.Repositories.SupportManagementRepos.SupportRequestRepo;
 using Application.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Application.Repositories.TaskManagementRepos.TaskFileRepo;
-using Application.Repositories.TaskManagementRepos.TaskGroupRepo;
-using Application.Repositories.TaskManagementRepos.TaskGroupUserRepo;
-using Application.Repositories.TaskManagementRepos.TaskManagerRepo;
 using Application.Repositories.TaskManagementRepos.TaskRepo;
 using Application.Repositories.TaskManagementRepos.TaskUserRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardImageRepo;
@@ -135,9 +132,6 @@ using Persistence.Repositories.SupportManagementRepos.SupportMessageRepo;
 using Persistence.Repositories.SupportManagementRepos.SupportRequestRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskFileRepo;
-using Persistence.Repositories.TaskManagementRepos.TaskGroupRepo;
-using Persistence.Repositories.TaskManagementRepos.TaskGroupUserRepo;
-using Persistence.Repositories.TaskManagementRepos.TaskManagerRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskUserRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardImageRepo;
@@ -373,24 +367,6 @@ namespace Persistence
             #region Support Message Detail
             services.AddScoped<ISupportMessageDetailReadRepository, SupportMessageDetailReadRepository>();
             services.AddScoped<ISupportMessageDetailWriteRepository, SupportMessageDetailWriteRepository>();
-            #endregion
-
-
-            #region Task Manager
-            services.AddScoped<ITaskManagerReadRepository, TaskManagerReadRepository>();
-            services.AddScoped<ITaskManagerWriteRepository, TaskManagerWriteRepository>();
-            #endregion
-
-
-            #region Task Group
-            services.AddScoped<ITaskGroupReadRepository, TaskGroupReadRepository>();
-            services.AddScoped<ITaskGroupWriteRepository, TaskGroupWriteRepository>();
-            #endregion
-
-
-            #region Task Group User
-            services.AddScoped<ITaskGroupUserReadRepository, TaskGroupUserReadRepository>();
-            services.AddScoped<ITaskGroupUserWriteRepository, TaskGroupUserWriteRepository>();
             #endregion
 
 

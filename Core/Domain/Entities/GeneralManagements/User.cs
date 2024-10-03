@@ -64,9 +64,7 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<T.Task> Tasks { get; set; }
         public ICollection<T.TaskComment> TaskComments { get; set; }
         public ICollection<T.TaskFile> TaskFiles { get; set; }
-        public ICollection<T.TaskGroupUser> TaskGroupUsers { get; set; }
         public ICollection<T.TaskUser> TaskUsers { get; set; }
-        public ICollection<T.TaskManager> TaskManagers { get; set; }
         public ICollection<AnnouncementRecipient> AnnouncementRecipients { get; set; }
         public ICollection<SupportMessage> SupportMessages { get; set; }
         public ICollection<SupportMessageDetail> SupportMessageDetails { get; set; }

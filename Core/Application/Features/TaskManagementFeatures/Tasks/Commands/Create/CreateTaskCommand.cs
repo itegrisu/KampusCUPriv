@@ -1,13 +1,12 @@
-using Application.Repositories.TaskManagementRepos.TaskRepo;
-using AutoMapper;
-using T = Domain.Entities.TaskManagements;
-using Domain.Enums;
-using MediatR;
-using Application.Features.TaskManagementFeatures.Tasks.Rules;
 using Application.Features.TaskManagementFeatures.Tasks.Constants;
 using Application.Features.TaskManagementFeatures.Tasks.Queries.GetByGid;
+using Application.Features.TaskManagementFeatures.Tasks.Rules;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
-using Domain.Entities.GeneralManagements;
+using Application.Repositories.TaskManagementRepos.TaskRepo;
+using AutoMapper;
+using Domain.Enums;
+using MediatR;
+using T = Domain.Entities.TaskManagements;
 
 namespace Application.Features.TaskManagementFeatures.Tasks.Commands.Create;
 
@@ -38,7 +37,7 @@ public class CreateTaskCommand : IRequest<CreatedTaskResponse>
         public async Task<CreatedTaskResponse> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         {
             await _taskBusinessRules.UserShouldExistWhenSelected(request.TaskAssignerUserGid);
-            await _taskBusinessRules.isTaskManager(request.TaskAssignerUserGid);
+            await _taskBusinessRules.IsTaskModuleAuth(request.TaskAssignerUserGid);
 
             T.Task task = _mapper.Map<T.Task>(request);
             task.GidTaskAssignerUserFK = request.TaskAssignerUserGid;
