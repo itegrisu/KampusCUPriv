@@ -1,13 +1,12 @@
-using Application.Features.TaskManagementFeatures.Tasks.Rules;
-using Application.Repositories.TaskManagementRepos.TaskRepo;
-using AutoMapper;
-using T = Domain.Entities.TaskManagements;
-using Domain.Enums;
-using MediatR;
 using Application.Features.TaskManagementFeatures.Tasks.Constants;
 using Application.Features.TaskManagementFeatures.Tasks.Queries.GetByGid;
+using Application.Features.TaskManagementFeatures.Tasks.Rules;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
-using Domain.Entities.GeneralManagements;
+using Application.Repositories.TaskManagementRepos.TaskRepo;
+using AutoMapper;
+using Domain.Enums;
+using MediatR;
+using T = Domain.Entities.TaskManagements;
 
 namespace Application.Features.TaskManagementFeatures.Tasks.Commands.Update;
 
@@ -42,7 +41,7 @@ public class UpdateTaskCommand : IRequest<UpdatedTaskResponse>
         {
             await _taskBusinessRules.TaskShouldExistWhenSelected(request.Gid);
             await _taskBusinessRules.UserShouldExistWhenSelected(request.TaskAssignerUserGid);
-            await _taskBusinessRules.isTaskManager(request.TaskAssignerUserGid);
+            await _taskBusinessRules.IsTaskModuleAuth(request.TaskAssignerUserGid);
 
 
             T.Task? task = await _taskReadRepository.GetAsync(predicate: t => t.Gid == request.Gid, cancellationToken: cancellationToken);

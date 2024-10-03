@@ -1,13 +1,9 @@
-﻿using Application.Features.TaskManagementFeatures.Tasks.Rules;
+﻿using Application.Features.TaskManagementFeatures.Tasks.Constants;
+using Application.Features.TaskManagementFeatures.Tasks.Rules;
 using Application.Repositories.TaskManagementRepos.TaskRepo;
 using AutoMapper;
-using T = Domain.Entities.TaskManagements;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Application.Features.TaskManagementFeatures.Tasks.Constants;
+using T = Domain.Entities.TaskManagements;
 
 
 namespace Application.Features.TaskManagementFeatures.Tasks.Commands.Archive

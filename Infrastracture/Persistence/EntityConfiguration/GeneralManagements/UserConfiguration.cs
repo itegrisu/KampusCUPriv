@@ -60,9 +60,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasMany(u => u.Tasks).WithOne(y => y.UserFK).HasForeignKey(y => y.GidTaskAssignerUserFK);
             builder.HasMany(u => u.TaskComments).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
             builder.HasMany(u => u.TaskFiles).WithOne(y => y.UserFK).HasForeignKey(y => y.GidFileUploadUserFK);
-            builder.HasMany(u => u.TaskGroupUsers).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
             builder.HasMany(u => u.TaskUsers).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
-            builder.HasMany(u => u.TaskManagers).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
 
             builder.HasMany(u => u.AnnouncementRecipients).WithOne(y => y.UserFK).HasForeignKey(y => y.GidRecipientFK);
             builder.HasMany(u => u.SupportMessages).WithOne(y => y.UserFK).HasForeignKey(y => y.GidSenderUserFK);

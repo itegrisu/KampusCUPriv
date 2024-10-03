@@ -1,8 +1,8 @@
 using Core.Application.Dtos;
 
-namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetList;
+namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetListByDepartmentGid;
 
-public class GetListDepartmentUserListItemDto : IDto
+public class GetByDepartmentGidDepartmentUserListItemDto : IDto
 {
     public Guid Gid { get; set; }
     public Guid GidDepartmentFK { get; set; }
