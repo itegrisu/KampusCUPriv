@@ -34,6 +34,7 @@ public class CreateUserModuleAuthCommand : IRequest<CreatedUserModuleAuthRespons
         public async Task<CreatedUserModuleAuthResponse> Handle(CreateUserModuleAuthCommand request, CancellationToken cancellationToken)
         {
             await _userModuleAuthBusinessRules.UserShouldExistWhenSelected(request.GidUserFK);
+            await _userModuleAuthBusinessRules.UserAllreadyAssignedAuthorities(request.GidUserFK, request.ModuleType);
             X.UserModuleAuth userModuleAuth = _mapper.Map<X.UserModuleAuth>(request);
 
 

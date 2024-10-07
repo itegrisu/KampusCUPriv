@@ -2,6 +2,7 @@
 using Application.Features.OfferManagementFeatures.OfferFiles.Commands.Delete;
 using Application.Features.OfferManagementFeatures.OfferFiles.Commands.Update;
 using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetByGid;
+using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetByOfferGid;
 using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -25,6 +26,14 @@ namespace API.Controllers.OfferManagementControllers
         {
             GetListOfferFileQuery getListOfferFileQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListOfferFileListItemDto> response = await Mediator.Send(getListOfferFileQuery);
+            return Ok(response);
+        }
+
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByOfferGid([FromQuery] GetByOfferGidListOfferFileQuery getByOfferGidListOfferFileQuery)
+        {
+            GetListResponse<GetByOfferGidListOfferFileListItemDto> response = await Mediator.Send(getByOfferGidListOfferFileQuery);
             return Ok(response);
         }
 
