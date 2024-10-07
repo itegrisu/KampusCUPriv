@@ -21,4 +21,5 @@ public static class UserModuleAuthsBusinessMessages
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
 
     public const string UserNotExists = "Ýlgili Kullanýcý Bulunamadý";
+    public const string UserAllreadyAssignedAuthorities = "Kullanýcýya Zaten Yetki Atanmýþ";
 }

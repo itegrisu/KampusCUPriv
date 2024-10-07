@@ -7,7 +7,7 @@ namespace Application.Features.GeneralManagementFeatures.UserModuleAuths.Queries
     {
         public Guid Gid { get; set; }
         public Guid GidUserFK { get; set; }
-        public string UserFKTamAd { get; set; }
+        public string UserFKFullName { get; set; }
         public EnumModuleType ModuleType { get; set; }
 
     }
