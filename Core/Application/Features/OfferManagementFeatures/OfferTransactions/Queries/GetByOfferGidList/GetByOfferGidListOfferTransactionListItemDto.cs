@@ -9,6 +9,7 @@ namespace Application.Features.OfferManagementFeatures.OfferTransactions.Queries
         public string OfferFKTitle { get; set; }
         public Guid GidCurrencyFK { get; set; }
         public string CurrencyFKName { get; set; }
+        public string CurrencyFKSymbol { get; set; }
         public string OfferId { get; set; }
         public decimal Total { get; set; }
         public DateTime OfferDeadline { get; set; }

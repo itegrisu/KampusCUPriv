@@ -1,6 +1,7 @@
 ﻿using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Create;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Delete;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Update;
+using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.UploadFile;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetByGid;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetByOfferGidList;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetList;
@@ -36,7 +37,12 @@ namespace API.Controllers.OfferManagementControllers
             return Ok(response);
         }
 
-
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadOfferTransactionFile([FromBody] UploadOfferFileTransactionCommand uploadOfferFileTransactionCommand)
+        {
+            UploadOfferTransactionFileResponse response = await Mediator.Send(uploadOfferFileTransactionCommand);
+            return Ok(response);
+        }
 
     }
 }

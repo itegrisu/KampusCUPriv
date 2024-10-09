@@ -22,4 +22,6 @@ public static class OfferTransactionsBusinessMessages
 
     public const string OfferNotExists = "Ýlgili Teklif Bulunamadý";
     public const string CurrencyNotExists = "Ýlgili Para Birimi Bulunamadý";
+
+    public const string SucessUploadFile = "Dosya Yükleme Baþarýlý";
 }

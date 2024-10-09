@@ -72,7 +72,7 @@ public class CreateOfferTransactionCommand : IRequest<CreatedOfferTransactionRes
     static string GenerateDocumentNumber(List<OfferTransaction> requests)
     {
         int currentYear = DateTime.Now.Year;
-        string prefix = "T" + currentYear.ToString().Substring(2) + "- ";
+        string prefix = "T" + currentYear.ToString().Substring(2) + "-";
         int maxSuffix = 0;
 
         foreach (var request in requests)

@@ -6,7 +6,6 @@ using Core.Persistence.Paging;
 using Domain.Entities.OfferManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetByOfferGidList
 {
@@ -31,23 +30,26 @@ namespace Application.Features.OfferManagementFeatures.OfferTransactions.Queries
 
             public async Task<GetListResponse<GetByOfferGidListOfferTransactionListItemDto>> Handle(GetByOfferGidListOfferTransactionQuery request, CancellationToken cancellationToken)
             {
-                if (request.PageIndex == -1)
-                {
-                    return await _noPagination.NoPaginationData(cancellationToken,
-                       predicate: x => x.OfferFK.Gid == request.offerGid,
-                       includes: new Expression<Func<OfferTransaction, object>>[]
-                       {
-                           x=>x.CurrencyFK,
-                           x=>x.OfferFK
-                       });
-                }
+                //if (request.PageIndex == -1)
+                //{
+
+                //    return await _noPagination.NoPaginationData(cancellationToken,
+                //       predicate: x => x.OfferFK.Gid == request.offerGid,
+                //       orderBy: x => x.CreatedDate,
+                //       includes: new Expression<Func<OfferTransaction, object>>[]
+                //       {
+                //           x=>x.CurrencyFK,
+                //           x=>x.OfferFK
+                //       });
+                //}
 
                 IPaginate<OfferTransaction> offerTransactions = await _offerTransactionReadRepository.GetListAsync(
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
                     include: x => x.Include(x => x.CurrencyFK).Include(x => x.OfferFK),
-                    predicate: x => x.OfferFK.Gid == request.offerGid
+                    predicate: x => x.OfferFK.Gid == request.offerGid,
+                     orderBy: x => x.OrderByDescending(x => x.CreatedDate)
                 );
 
                 GetListResponse<GetByOfferGidListOfferTransactionListItemDto> response = _mapper.Map<GetListResponse<GetByOfferGidListOfferTransactionListItemDto>>(offerTransactions);
