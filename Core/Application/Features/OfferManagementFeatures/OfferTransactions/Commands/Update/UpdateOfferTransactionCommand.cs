@@ -15,7 +15,6 @@ public class UpdateOfferTransactionCommand : IRequest<UpdatedOfferTransactionRes
 
     public Guid GidOfferFK { get; set; }
     public Guid GidCurrencyFK { get; set; }
-    public string OfferId { get; set; }
     public decimal Total { get; set; }
     public DateTime? OfferDeadline { get; set; }
     public string? Document { get; set; }
@@ -58,7 +57,7 @@ public class UpdateOfferTransactionCommand : IRequest<UpdatedOfferTransactionRes
             return new()
             {
                 Title = OfferTransactionsBusinessMessages.ProcessCompleted,
-                Message = OfferTransactionsBusinessMessages.SuccessCreatedOfferTransactionMessage,
+                Message = OfferTransactionsBusinessMessages.SuccessUpdatedOfferTransactionMessage,
                 IsValid = true,
                 Obj = obj
             };

@@ -3,6 +3,7 @@ using Application.Features.OfferManagementFeatures.Offers.Commands.Delete;
 using Application.Features.OfferManagementFeatures.Offers.Commands.Update;
 using Application.Features.OfferManagementFeatures.Offers.Queries.GetByGid;
 using Application.Features.OfferManagementFeatures.Offers.Queries.GetList;
+using Application.Features.OfferManagementFeatures.Offers.Queries.GetNotArchieveOfferList;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -21,9 +22,12 @@ public class MappingProfiles : Profile
         CreateMap<X.Offer, DeleteOfferCommand>().ReverseMap();
         CreateMap<X.Offer, DeletedOfferResponse>().ReverseMap();
 
-		CreateMap<X.Offer, GetByGidOfferResponse>().ReverseMap();
+        CreateMap<X.Offer, GetByGidOfferResponse>().ReverseMap();
 
         CreateMap<X.Offer, GetListOfferListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Offer>, GetListResponse<GetListOfferListItemDto>>().ReverseMap();
+
+        CreateMap<X.Offer, GetNotArchieveListOfferListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.Offer>, GetListResponse<GetNotArchieveListOfferListItemDto>>().ReverseMap();
     }
 }

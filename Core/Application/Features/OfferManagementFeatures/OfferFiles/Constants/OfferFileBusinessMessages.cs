@@ -22,4 +22,6 @@ public static class OfferFilesBusinessMessages
 
     public const string OfferNotExists = "Ýlgili Teklif Bulunamadý";
 
+    public const string SucessUploadFile = "Dosya Yükleme Ýþlemi Baþarýlý";
+
 }

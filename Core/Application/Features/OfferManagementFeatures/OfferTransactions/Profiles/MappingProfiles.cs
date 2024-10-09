@@ -2,6 +2,7 @@ using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Cr
 using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Delete;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Update;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetByGid;
+using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetByOfferGidList;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -21,9 +22,12 @@ public class MappingProfiles : Profile
         CreateMap<X.OfferTransaction, DeleteOfferTransactionCommand>().ReverseMap();
         CreateMap<X.OfferTransaction, DeletedOfferTransactionResponse>().ReverseMap();
 
-		CreateMap<X.OfferTransaction, GetByGidOfferTransactionResponse>().ReverseMap();
+        CreateMap<X.OfferTransaction, GetByGidOfferTransactionResponse>().ReverseMap();
 
         CreateMap<X.OfferTransaction, GetListOfferTransactionListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.OfferTransaction>, GetListResponse<GetListOfferTransactionListItemDto>>().ReverseMap();
+
+        CreateMap<X.OfferTransaction, GetByOfferGidListOfferTransactionListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.OfferTransaction>, GetListResponse<GetByOfferGidListOfferTransactionListItemDto>>().ReverseMap();
     }
 }
