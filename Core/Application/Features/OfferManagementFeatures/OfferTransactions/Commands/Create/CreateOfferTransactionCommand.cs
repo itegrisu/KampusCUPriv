@@ -3,6 +3,7 @@ using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.Get
 using Application.Features.OfferManagementFeatures.OfferTransactions.Rules;
 using Application.Repositories.OfferManagementRepos.OfferTransactionRepo;
 using AutoMapper;
+using Domain.Entities.OfferManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.OfferManagements;
@@ -13,7 +14,6 @@ public class CreateOfferTransactionCommand : IRequest<CreatedOfferTransactionRes
 {
     public Guid GidOfferFK { get; set; }
     public Guid GidCurrencyFK { get; set; }
-    public string OfferId { get; set; }
     public decimal Total { get; set; }
     public DateTime? OfferDeadline { get; set; }
     public string? Document { get; set; }
@@ -42,8 +42,14 @@ public class CreateOfferTransactionCommand : IRequest<CreatedOfferTransactionRes
             await _offerTransactionBusinessRules.OfferShouldExistWhenSelected(request.GidOfferFK);
             await _offerTransactionBusinessRules.CurrencyShouldExistWhenSelected(request.GidCurrencyFK);
 
+
+
             X.OfferTransaction offerTransaction = _mapper.Map<X.OfferTransaction>(request);
 
+            List<OfferTransaction> requests = _offerTransactionReadRepository.GetAll().OrderByDescending(x => x.CreatedDate).ToList();
+
+            string number = GenerateDocumentNumber(requests);
+            offerTransaction.OfferId = number;
 
             await _offerTransactionWriteRepository.AddAsync(offerTransaction);
             await _offerTransactionWriteRepository.SaveAsync();
@@ -62,4 +68,30 @@ public class CreateOfferTransactionCommand : IRequest<CreatedOfferTransactionRes
             };
         }
     }
+
+    static string GenerateDocumentNumber(List<OfferTransaction> requests)
+    {
+        int currentYear = DateTime.Now.Year;
+        string prefix = "T" + currentYear.ToString().Substring(2) + "- ";
+        int maxSuffix = 0;
+
+        foreach (var request in requests)
+        {
+            if (request.OfferId.StartsWith(prefix))
+            {
+                string suffixString = request.OfferId.Substring(prefix.Length);
+                if (int.TryParse(suffixString, out int suffix))
+                {
+                    if (suffix > maxSuffix)
+                    {
+                        maxSuffix = suffix;
+                    }
+                }
+            }
+        }
+
+        int newSuffix = maxSuffix + 1;
+        return prefix + newSuffix.ToString("D4"); // D4 formatý 4 haneli sýfýrlarla doldurulmuþ sayý oluþturur
+    }
+
 }

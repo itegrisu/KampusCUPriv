@@ -12,7 +12,6 @@ namespace Application.Features.OfferManagementFeatures.OfferFiles.Commands.Creat
 public class CreateOfferFileCommand : IRequest<CreatedOfferFileResponse>
 {
     public Guid GidOfferFK { get; set; }
-
     public string Title { get; set; }
     public string? Document { get; set; }
     public string? Description { get; set; }

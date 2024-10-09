@@ -2,6 +2,7 @@
 using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Delete;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Commands.Update;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetByGid;
+using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetByOfferGidList;
 using Application.Features.OfferManagementFeatures.OfferTransactions.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -27,6 +28,14 @@ namespace API.Controllers.OfferManagementControllers
             GetListResponse<GetListOfferTransactionListItemDto> response = await Mediator.Send(getListOfferTransactionQuery);
             return Ok(response);
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByOfferGid([FromQuery] GetByOfferGidListOfferTransactionQuery getByOfferGidListOfferTransactionQuery)
+        {
+            GetListResponse<GetByOfferGidListOfferTransactionListItemDto> response = await Mediator.Send(getByOfferGidListOfferTransactionQuery);
+            return Ok(response);
+        }
+
 
 
     }

@@ -3,6 +3,7 @@ using Application.Features.OfferManagementFeatures.Offers.Commands.Delete;
 using Application.Features.OfferManagementFeatures.Offers.Commands.Update;
 using Application.Features.OfferManagementFeatures.Offers.Queries.GetByGid;
 using Application.Features.OfferManagementFeatures.Offers.Queries.GetList;
+using Application.Features.OfferManagementFeatures.Offers.Queries.GetNotArchieveOfferList;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -25,6 +26,14 @@ namespace API.Controllers.OfferManagementControllers
         {
             GetListOfferQuery getListOfferQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListOfferListItemDto> response = await Mediator.Send(getListOfferQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetNotArchieveListOfferList([FromQuery] PageRequest pageRequest)
+        {
+            GetNotArchieveListOfferQuery getNotArchieveListOfferQuery = new() { PageRequest = pageRequest };
+            GetListResponse<GetNotArchieveListOfferListItemDto> response = await Mediator.Send(getNotArchieveListOfferQuery);
             return Ok(response);
         }
     }

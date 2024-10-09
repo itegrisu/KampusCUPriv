@@ -44,8 +44,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Cofiguration\" />
-		<Folder Include="wwwroot\Files\0BYedekler\" />
-		<Folder Include="wwwroot\Files\user-avatars\" />
+		<Folder Include="wwwroot\" />
 	</ItemGroup>
 
 </Project>
