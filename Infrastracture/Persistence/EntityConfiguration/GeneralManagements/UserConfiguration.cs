@@ -49,6 +49,8 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasMany(u => u.PersonnelResidenceInfos).WithOne(y => y.UserFK).HasForeignKey(y => y.GidPersonnelFK);
             builder.HasMany(u => u.PersonnelDocuments).WithOne(y => y.UserFK).HasForeignKey(y => y.GidPersonnelFK);
 
+            builder.HasMany(u => u.MarketingVisitPlans).WithOne(y => y.UserFK).HasForeignKey(y => y.GidPersonnelFK);
+
             builder.HasMany(u => u.LogSuccessedLogins).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
             builder.HasMany(u => u.LogAuthorizationErrors).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
             builder.HasMany(u => u.LogUserPageActions).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);

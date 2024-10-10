@@ -5,6 +5,7 @@ using Domain.Entities.DefinitionManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.LogManagements;
+using Domain.Entities.MarketingManagements;
 using Domain.Entities.OfferManagements;
 using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
@@ -20,6 +21,7 @@ using Persistence.EntityConfiguration.DefinitionManagements;
 using Persistence.EntityConfiguration.FinanceManagements;
 using Persistence.EntityConfiguration.GeneralManagements;
 using Persistence.EntityConfiguration.LogManagements;
+using Persistence.EntityConfiguration.MarketingManagements;
 using Persistence.EntityConfiguration.OfferManagements;
 using Persistence.EntityConfiguration.OrganisationManagements;
 using Persistence.EntityConfiguration.PersonnelManagements;
@@ -87,6 +89,9 @@ namespace Persistence.Context
 
             modelBuilder.ApplyConfiguration(new PortalParameterConfiguration());
             modelBuilder.ApplyConfiguration(new PortalTextConfiguration());
+
+            modelBuilder.ApplyConfiguration(new MarketingCustomerConfiguration());
+            modelBuilder.ApplyConfiguration(new MarketingVisitPlanConfiguration());
 
             modelBuilder.ApplyConfiguration(new AnnouncementConfiguration());
             modelBuilder.ApplyConfiguration(new AnnouncementRecipientConfiguration());
@@ -192,6 +197,8 @@ namespace Persistence.Context
         public DbSet<AuthRolePage> AuthRolePages { get; set; }
         public DbSet<AuthPage> AuthPages { get; set; }
         public DbSet<PortalParameter> PortalParameters { get; set; }
+        public DbSet<MarketingCustomer> MarketingCustomers { get; set; }
+        public DbSet<MarketingVisitPlan> MarketingVisitPlans { get; set; }
         public DbSet<PortalText> PortalTexts { get; set; }
         public DbSet<SupportRequest> SupportRequests { get; set; }
         public DbSet<SupportMessage> SupportMessages { get; set; }
