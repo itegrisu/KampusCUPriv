@@ -4,6 +4,7 @@ using Domain.Entities.AuthManagements;
 using Domain.Entities.DefinitionManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.LogManagements;
+using Domain.Entities.MarketingManagements;
 using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.SupportManagements;
@@ -61,6 +62,7 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<PersonnelPassportInfo> PersonnelPassportInfos { get; set; }
         public ICollection<PersonnelResidenceInfo> PersonnelResidenceInfos { get; set; }
         public ICollection<PersonnelDocument> PersonnelDocuments { get; set; }
+        public ICollection<MarketingVisitPlan>? MarketingVisitPlans { get; set; }
         public ICollection<T.Task> Tasks { get; set; }
         public ICollection<T.TaskComment> TaskComments { get; set; }
         public ICollection<T.TaskFile> TaskFiles { get; set; }

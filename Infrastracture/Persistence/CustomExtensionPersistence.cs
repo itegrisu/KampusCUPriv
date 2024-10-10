@@ -35,6 +35,8 @@ using Application.Repositories.LogManagementRepos.LogFailedLoginRepo;
 using Application.Repositories.LogManagementRepos.LogSuccessedLoginRepo;
 using Application.Repositories.LogManagementRepos.LogUserPageVisitActionRepo;
 using Application.Repositories.LogManagementRepos.LogUserPageVisitRepo;
+using Application.Repositories.MarketingManagementsRepos.MarketingCustomerRepo;
+using Application.Repositories.MarketingManagementsRepos.MerketingVisitPlanRepo;
 using Application.Repositories.OfferManagementRepos.OfferFileRepo;
 using Application.Repositories.OfferManagementRepos.OfferRepo;
 using Application.Repositories.OfferManagementRepos.OfferTransactionRepo;
@@ -106,6 +108,8 @@ using Persistence.Repositories.LogManagementRepos.LogFailedLoginRepo;
 using Persistence.Repositories.LogManagementRepos.LogSuccessedLoginRepo;
 using Persistence.Repositories.LogManagementRepos.LogUserPageVisitActionRepo;
 using Persistence.Repositories.LogManagementRepos.LogUserPageVisitRepo;
+using Persistence.Repositories.MarketingManagementRepos.MarketingCustomerRepo;
+using Persistence.Repositories.MarketingManagementRepos.MarketingVisitPlanRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferFileRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferTransactionRepo;
@@ -199,6 +203,7 @@ namespace Persistence
 
             #endregion
 
+
             #region Portal Parameter 
             services.AddScoped<IPortalParameterReadRepository, PortalParameterReadRepository>();
             services.AddScoped<IPortalParameterWriteRepository, PortalParameterWriteRepository>();
@@ -209,6 +214,20 @@ namespace Persistence
             services.AddScoped<IPortalTextReadRepository, PortalTextReadRepository>();
             services.AddScoped<IPortalTextWriteRepository, PortalTextWriteRepository>();
             #endregion
+
+
+            #region Marketing Customer
+            services.AddScoped<IMarketingCustomerReadRepository, MarketingCustomerReadRepository>();
+            services.AddScoped<IMarketingCustomerWriteRepository, MarketingCustomerWriteRepository>();
+            #endregion
+
+
+            #region Marketing Visit Plan
+            services.AddScoped<IMarketingVisitPlanReadRepository, MarketingVisitPlanReadRepository>();
+            services.AddScoped<IMarketingVisitPlanWriteRepository, MarketingVisitPlanWriteRepository>();
+            #endregion
+
+
 
             #region Base
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
