@@ -10,7 +10,7 @@ public class GetListDepartmentListItemDto : IDto
     public Guid? GidCoAdminFK { get; set; }
     public string CoAdminFKFullName { get; set; }
     public string Name { get; set; }
-    public string? Detail { get; set; }
+    public string? Details { get; set; }
 
 
 }

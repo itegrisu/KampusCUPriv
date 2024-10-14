@@ -3,6 +3,7 @@ using Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.De
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.Update;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetByGid;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetList;
+using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetListByDepartmentGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -27,6 +28,15 @@ namespace API.Controllers.GeneralManagementControllers
             GetListResponse<GetListDepartmentUserListItemDto> response = await Mediator.Send(getListDepartmentUserQuery);
             return Ok(response);
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByDepartmentGid([FromQuery] GetByDepartmentGidDepartmentUserQuery getByDepartmentGidDepartmentUserQuery)
+        {
+            GetListResponse<GetByDepartmentGidDepartmentUserListItemDto> response = await Mediator.Send(getByDepartmentGidDepartmentUserQuery);
+            return Ok(response);
+        }
+
+
 
 
     }

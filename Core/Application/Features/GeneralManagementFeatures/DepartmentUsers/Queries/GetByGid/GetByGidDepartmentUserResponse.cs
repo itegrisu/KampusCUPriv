@@ -9,5 +9,6 @@ namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries
         public string DepartmentFKName { get; set; }
         public Guid GidPersonnelFK { get; set; }
         public string UserFKFullName { get; set; }
+        public string UserFKAvatar { get; set; }
     }
 }

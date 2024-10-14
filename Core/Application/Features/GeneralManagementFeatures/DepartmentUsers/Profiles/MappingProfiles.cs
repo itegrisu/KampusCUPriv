@@ -3,6 +3,7 @@ using Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.De
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.Update;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetByGid;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetList;
+using Application.Features.GeneralManagementFeatures.DepartmentUsers.Queries.GetListByDepartmentGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +26,10 @@ public class MappingProfiles : Profile
 
         CreateMap<X.DepartmentUser, GetListDepartmentUserListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.DepartmentUser>, GetListResponse<GetListDepartmentUserListItemDto>>().ReverseMap();
+
+        CreateMap<X.DepartmentUser, GetByDepartmentGidDepartmentUserListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.DepartmentUser>, GetListResponse<GetByDepartmentGidDepartmentUserListItemDto>>().ReverseMap();
+
+
     }
 }

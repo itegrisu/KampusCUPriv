@@ -2,14 +2,14 @@ using Application.Features.GeneralManagementFeatures.DepartmentUsers.Constants;
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Rules;
 using Application.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using AutoMapper;
-using X = Domain.Entities.GeneralManagements;
 using MediatR;
+using X = Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralManagementFeatures.DepartmentUsers.Commands.Delete;
 
 public class DeleteDepartmentUserCommand : IRequest<DeletedDepartmentUserResponse>
 {
-	public Guid Gid { get; set; }
+    public Guid Gid { get; set; }
 
     public class DeleteDepartmentUserCommandHandler : IRequestHandler<DeleteDepartmentUserCommand, DeletedDepartmentUserResponse>
     {
@@ -29,6 +29,18 @@ public class DeleteDepartmentUserCommand : IRequest<DeletedDepartmentUserRespons
 
         public async Task<DeletedDepartmentUserResponse> Handle(DeleteDepartmentUserCommand request, CancellationToken cancellationToken)
         {
+            var ex = _departmentUserBusinessRules.CheckIfUserCanBeDeleted(request.Gid);
+
+            if (ex.IsFaulted)
+            {
+                return new()
+                {
+                    Title = DepartmentUsersBusinessMessages.SectionName,
+                    Message = DepartmentUsersBusinessMessages.HasAdminUser,
+                    IsValid = false
+                };
+            }
+
             X.DepartmentUser? departmentUser = await _departmentUserReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             await _departmentUserBusinessRules.DepartmentUserShouldExistWhenSelected(departmentUser);
             departmentUser.DataState = Core.Enum.DataState.Deleted;

@@ -12,9 +12,9 @@ namespace Application.Features.GeneralManagementFeatures.Departments.Commands.Cr
 public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
 {
     public Guid GidMainAdminFK { get; set; }
-    public Guid GidCoAdminFK { get; set; }
+    public Guid? GidCoAdminFK { get; set; }
     public string Name { get; set; }
-    public string? Detail { get; set; }
+    public string? Details { get; set; }
 
 
 
@@ -38,7 +38,11 @@ public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
         public async Task<CreatedDepartmentResponse> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
         {
             await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidMainAdminFK);
-            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidCoAdminFK);
+            if (request.GidCoAdminFK != null)
+            {
+                await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidCoAdminFK);
+                await _departmentBusinessRules.CheckMainAdminAndCoAdminSameUser(request.GidMainAdminFK, request.GidCoAdminFK);
+            }
             await _departmentBusinessRules.CheckDepartmentName(request.Name);
 
             X.Department department = _mapper.Map<X.Department>(request);
