@@ -10,7 +10,7 @@ public class UpdateDepartmentCommandValidator : AbstractValidator<UpdateDepartme
         RuleFor(c => c.GidMainAdminFK).NotNull().NotEmpty();
         //RuleFor(c => c.GidCoAdminFK);//
         RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(50);
-        RuleFor(c => c.Detail).MaximumLength(250);
+        RuleFor(c => c.Details).MaximumLength(250);
 
 
     }

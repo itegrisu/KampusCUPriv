@@ -5,6 +5,7 @@ using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities.GeneralManagements;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using X = Domain.Entities.GeneralManagements;
 
@@ -38,7 +39,7 @@ public class GetByDepartmentGidDepartmentUserQuery : IRequest<GetListResponse<Ge
                     includes: new Expression<Func<DepartmentUser, object>>[]
                     {
                        x => x.UserFK,
-                       x=> x.DepartmentFK,
+                       x => x.DepartmentFK,
                     },
                     predicate: x => x.GidDepartmentFK == request.GidDepartmentFK
                     );
@@ -48,6 +49,7 @@ public class GetByDepartmentGidDepartmentUserQuery : IRequest<GetListResponse<Ge
                 index: request.PageIndex,
                 size: request.PageSize,
                 cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.UserFK).Include(x => x.DepartmentFK),
                 predicate: x => x.GidDepartmentFK == request.GidDepartmentFK
             );
 

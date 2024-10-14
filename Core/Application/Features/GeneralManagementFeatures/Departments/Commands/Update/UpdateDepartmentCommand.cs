@@ -12,9 +12,9 @@ public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>
 {
     public Guid Gid { get; set; }
     public Guid GidMainAdminFK { get; set; }
-    public Guid GidCoAdminFK { get; set; }
+    public Guid? GidCoAdminFK { get; set; }
     public string Name { get; set; }
-    public string? Detail { get; set; }
+    public string? Details { get; set; }
 
 
 
@@ -40,7 +40,11 @@ public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>
 
             await _departmentBusinessRules.DepartmentShouldExistWhenSelected(department);
             await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidMainAdminFK);
-            await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidCoAdminFK);
+
+            if (request.GidCoAdminFK != null)
+            {
+                await _departmentBusinessRules.UserShouldExistWhenSelected(request.GidCoAdminFK);
+            }
             await _departmentBusinessRules.CheckDepartmentName(request.Name, request.Gid);
 
 

@@ -22,4 +22,6 @@ public static class DepartmentUsersBusinessMessages
 
     public const string DepartmentNotExists = "ÝLgili Departman bulunamadý";
     public const string PersonelNotExists = "Ýlgili Personel bulunamadý";
+    public const string PersonelAlreadyAddedToDepartment = "Personel zaten bu departmana eklenmiþ";
+    public const string HasAdminUser = "Departman Asýl veya Yedek yönetici silinemez. Öncelikle silmek istediðiniz personeli Asýl veya Yedek yöneticiden çýkarýnýz";
 }

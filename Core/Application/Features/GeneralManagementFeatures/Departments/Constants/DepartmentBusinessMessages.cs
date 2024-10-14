@@ -22,4 +22,5 @@ public static class DepartmentsBusinessMessages
 
     public const string DepartmentAlreadyExists = "Ýlgili Departman Zaten Ekli";
     public const string UserNotExists = "Kullanýcý bulunamadý";
+    public const string MainAdminAndCoAdminCannotBeSameUser = "Main Admin ve Co Admin ayný kullanýcý olamaz";
 }

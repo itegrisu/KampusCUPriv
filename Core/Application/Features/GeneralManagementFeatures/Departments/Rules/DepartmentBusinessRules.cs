@@ -24,7 +24,7 @@ public class DepartmentBusinessRules : BaseBusinessRules
             throw new BusinessException(DepartmentsBusinessMessages.DepartmentNotExists);
     }
 
-    public async Task UserShouldExistWhenSelected(Guid gid)
+    public async Task UserShouldExistWhenSelected(Guid? gid)
     {
         var user = await _userReadRepository.GetAsync(predicate: x => x.Gid == gid);
         if (user == null)
@@ -40,6 +40,14 @@ public class DepartmentBusinessRules : BaseBusinessRules
         if (department != null)
         {
             throw new BusinessException(DepartmentsBusinessMessages.DepartmentAlreadyExists);
+        }
+    }
+
+    public async Task CheckMainAdminAndCoAdminSameUser(Guid mainAdminGid, Guid? coAdminGid)
+    {
+        if (mainAdminGid == coAdminGid)
+        {
+            throw new BusinessException(DepartmentsBusinessMessages.MainAdminAndCoAdminCannotBeSameUser);
         }
     }
 

@@ -1,5 +1,6 @@
 using Application.Features.GeneralManagementFeatures.DepartmentUsers.Constants;
 using Application.Repositories.GeneralManagementRepos.DepartmentRepo;
+using Application.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
@@ -13,11 +14,13 @@ public class DepartmentUserBusinessRules : BaseBusinessRules
 
     private readonly IUserReadRepository _userReadRepository;
     private readonly IDepartmentReadRepository _departmentReadRepository;
+    private readonly IDepartmentUserReadRepository _departmentUserReadRepository;
 
-    public DepartmentUserBusinessRules(IUserReadRepository userReadRepository, IDepartmentReadRepository departmentReadRepository)
+    public DepartmentUserBusinessRules(IUserReadRepository userReadRepository, IDepartmentReadRepository departmentReadRepository, IDepartmentUserReadRepository departmentUserReadRepository)
     {
         _userReadRepository = userReadRepository;
         _departmentReadRepository = departmentReadRepository;
+        _departmentUserReadRepository = departmentUserReadRepository;
     }
 
     public async Task DepartmentUserShouldExistWhenSelected(X.DepartmentUser? item)
@@ -41,5 +44,33 @@ public class DepartmentUserBusinessRules : BaseBusinessRules
         if (item == null)
             throw new BusinessException(DepartmentUsersBusinessMessages.PersonelNotExists);
     }
+
+    public async Task PersonelShouldNotBeAssignedToDepartmentBefore(Guid personelGid, Guid departmentGid)
+    {
+        var existingDepartmentUser = await _departmentUserReadRepository.GetAsync(predicate: x => x.GidPersonnelFK == personelGid && x.GidDepartmentFK == departmentGid);
+
+        if (existingDepartmentUser != null)
+        {
+            throw new BusinessException(DepartmentUsersBusinessMessages.PersonelAlreadyAddedToDepartment);
+        }
+    }
+    public async Task CheckIfUserCanBeDeleted(Guid gid)
+    {
+        // Ýlk olarak departmentUser'ý getiriyoruz.
+        var departmentUser = _departmentUserReadRepository.GetByGid(gid);
+
+        if (departmentUser != null)
+        {
+            var adminUser = _departmentReadRepository.GetByGid(departmentUser.GidDepartmentFK);
+
+            if (adminUser.GidMainAdminFK == departmentUser.GidPersonnelFK || adminUser.GidCoAdminFK == departmentUser.GidPersonnelFK)
+            {
+                throw new BusinessException(DepartmentUsersBusinessMessages.HasAdminUser);
+            }
+        }
+    }
+
+
+
 
 }

@@ -35,6 +35,8 @@ public class CreateDepartmentUserCommand : IRequest<CreatedDepartmentUserRespons
             await _departmentUserBusinessRules.DepartmantShouldExistWhenSelected(request.GidDepartmentFK);
             await _departmentUserBusinessRules.PersonelShouldExistWhenSelected(request.GidPersonnelFK);
 
+            await _departmentUserBusinessRules.PersonelShouldNotBeAssignedToDepartmentBefore(request.GidPersonnelFK, request.GidDepartmentFK);
+
             X.DepartmentUser departmentUser = _mapper.Map<X.DepartmentUser>(request);
 
             await _departmentUserWriteRepository.AddAsync(departmentUser);
