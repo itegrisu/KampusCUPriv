@@ -1,5 +1,4 @@
-﻿using Application.Features.GeneralManagementFeatures.Departments.Queries.GetList;
-using Application.Helpers.PaginationHelpers;
+﻿using Application.Helpers.PaginationHelpers;
 using Application.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using AutoMapper;
@@ -9,12 +8,7 @@ using Core.Persistence.Paging;
 using Domain.Entities.GeneralManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using X = Domain.Entities.GeneralManagements;
 
 
@@ -41,52 +35,27 @@ namespace Application.Features.GeneralManagementFeatures.Departments.Queries.Get
 
             public async Task<GetListResponse<GetListWithUserDepartmentListItemDto>> Handle(GetListWithUserDepartmentQuery request, CancellationToken cancellationToken)
             {
-                // DepartmentUser listesini alıyoruz
-                List<DepartmentUser> departmentUsers = await _departmentUserReadRepository.GetAll()
-                    .Include(x => x.UserFK)
-                    .Include(x => x.DepartmentFK)
-                    .ToListAsync(cancellationToken);
-
-                // DTO listesi oluşturuluyor
-                var departmentUserListItems = new List<GetListWithUserDepartmentListItemDto>();
-
-                // Kullanıcıları departmanlarına göre grupluyoruz
-                var groupedDepartmentUsers = departmentUsers
-                    .GroupBy(x => x.GidDepartmentFK)
-                    .ToList();
-
-                foreach (var group in groupedDepartmentUsers)
+                if (request.PageRequest.PageIndex == -1)
                 {
-                    // Her departman için kullanıcı sayısını hesaplıyoruz
-                    var userCount = group.Count();
-
-                    // DTO oluşturuyoruz
-                    var dto = new GetListWithUserDepartmentListItemDto
-                    {
-                        Gid = group.Key,
-                        Name = group.First().DepartmentFK.Name, // Departman adı
-                        UserCount = userCount, // Kullanıcı sayısı
-                        MainAdminFKFullName = group.First().DepartmentFK.MainAdminFK?.FullName ?? "",
-                        GidMainAdminFK = group.First().DepartmentFK.MainAdminFK?.Gid ?? Guid.Empty,
-                        CoAdminFKFullName = group.First().DepartmentFK.CoAdminFK?.FullName ?? "",
-                        GidCoAdminFK = group.First().DepartmentFK.CoAdminFK?.Gid
-                    };
-
-                    // DTO'yu listeye ekliyoruz
-                    departmentUserListItems.Add(dto);
+                    return await _noPagination.NoPaginationData(cancellationToken,
+                                       includes: new Expression<Func<Department, object>>[]
+                                           {
+                            x => x.CoAdminFK,
+                            x => x.MainAdminFK,
+                            x => x.DepartmentUsers
+                                       });
                 }
 
-                // Response'yi manuel olarak oluşturuyoruz
-                return new GetListResponse<GetListWithUserDepartmentListItemDto>
-                {
-                    Items = departmentUserListItems,  // Hesaplanan liste
-                    Count = departmentUserListItems.Count,
-                    HasNext = false,   // Bu örnekte sayfalama yoksa
-                    HasPrevious = false,
-                    Index = 0,   // Eğer -1 gelirse tüm liste
-                    Pages = 1,   // Sayfa sayısı
-                    Size = departmentUserListItems.Count // Sayfa boyutu (hepsi için tek sayfa)
-                };
+                IPaginate<X.Department> departments = await _departmentReadRepository.GetListAsync(
+                                       index: request.PageRequest.PageIndex,
+                                       size: request.PageRequest.PageSize,
+                                       cancellationToken: cancellationToken,
+                                      include: X => X.Include(x => x.CoAdminFK).Include(x => x.MainAdminFK).Include(x => x.DepartmentUsers));
+
+                GetListResponse<GetListWithUserDepartmentListItemDto> response = _mapper.Map<GetListResponse<GetListWithUserDepartmentListItemDto>>(departments);
+
+                return response;
+
             }
 
         }

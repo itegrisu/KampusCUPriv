@@ -27,7 +27,7 @@ public class MappingProfiles : Profile
         CreateMap<X.Department, GetListDepartmentListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Department>, GetListResponse<GetListDepartmentListItemDto>>().ReverseMap();
 
-        CreateMap<X.Department, GetListWithUserDepartmentListItemDto>().ReverseMap();
+        CreateMap<X.Department, GetListWithUserDepartmentListItemDto>().ForMember(dest => dest.UserCount, opt => opt.MapFrom(src => src.DepartmentUsers.Where(t => t.DataState == Core.Enum.DataState.Active).Count())).ReverseMap();
         CreateMap<IPaginate<X.Department>, GetListResponse<GetListWithUserDepartmentListItemDto>>().ReverseMap();
     }
 }

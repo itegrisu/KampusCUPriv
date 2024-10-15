@@ -4,7 +4,6 @@ using Application.Features.GeneralManagementFeatures.Departments.Commands.Update
 using Application.Features.GeneralManagementFeatures.Departments.Queries.GetByGid;
 using Application.Features.GeneralManagementFeatures.Departments.Queries.GetList;
 using Application.Features.GeneralManagementFeatures.Departments.Queries.GetListWithUser;
-using Application.Features.TaskManagementFeatures.TaskUsers.Queries.GetTaskCountList;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -32,8 +31,9 @@ namespace API.Controllers.GeneralManagementControllers
 
         [HttpGet("[action]")]
 
-        public async Task<IActionResult> GetListWithUser([FromQuery] GetListWithUserDepartmentQuery request)
+        public async Task<IActionResult> GetListWithUser([FromQuery] PageRequest pageRequest)
         {
+            GetListWithUserDepartmentQuery request = new() { PageRequest = pageRequest };
             GetListResponse<GetListWithUserDepartmentListItemDto> response = await Mediator.Send(request);
 
             return Ok(response);
