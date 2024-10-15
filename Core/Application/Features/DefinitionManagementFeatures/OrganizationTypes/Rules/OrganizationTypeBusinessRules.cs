@@ -1,4 +1,6 @@
+using Application.Features.DefinitionManagementFeatures.Currencies.Constants;
 using Application.Features.DefinitionManagementFeatures.OrganizationTypes.Constants;
+using Application.Repositories.DefinitionManagementRepos.CurrencyRepo;
 using Application.Repositories.DefinitionManagementRepos.OrganizationTypeRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
@@ -20,10 +22,16 @@ public class OrganizationTypeBusinessRules : BaseBusinessRules
         if (item == null)
             throw new BusinessException(OrganizationTypesBusinessMessages.OrganizationTypeNotExists);
     }
-
     public async Task OrganizationNameShouldBeUnique(string name, Guid? gid = null)
     {
-        if (await _organizationTypeReadRepository.GetAsync(x => x.Name == name && x.Gid != gid) == null)
+        var currency = await _organizationTypeReadRepository.GetAsync(predicate: x => x.Name.ToLower() == name.ToLower() && (gid == null || x.Gid != gid));
+        if (currency != null)
             throw new BusinessException(OrganizationTypesBusinessMessages.OrganizationTypeNameShouldBeUnique);
     }
+
+    //public async Task OrganizationNameShouldBeUnique(string name, Guid? gid = null)
+    //{
+    //    if (await _organizationTypeReadRepository.GetAsync(x => x.Name == name && x.Gid != gid) == null)
+    //        throw new BusinessException(OrganizationTypesBusinessMessages.OrganizationTypeNameShouldBeUnique);
+    //}
 }

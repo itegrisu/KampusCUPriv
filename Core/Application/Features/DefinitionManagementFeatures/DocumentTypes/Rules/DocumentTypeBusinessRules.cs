@@ -11,6 +11,12 @@ public class DocumentTypeBusinessRules : BaseBusinessRules
     public string BelgeAdi { get; set; } = string.Empty;
 
     private readonly IDocumentTypeReadRepository _documentTypeReadRepository;
+
+    public DocumentTypeBusinessRules(IDocumentTypeReadRepository documentTypeReadRepository)
+    {
+        _documentTypeReadRepository = documentTypeReadRepository;
+    }
+
     public async Task DocumentTypeShouldExistWhenSelected(X.DocumentType? item)
     {
         if (item == null)

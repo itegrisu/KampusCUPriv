@@ -35,7 +35,11 @@ public class CreateStockCategoryCommand : IRequest<CreatedStockCategoryResponse>
         public async Task<CreatedStockCategoryResponse> Handle(CreateStockCategoryCommand request, CancellationToken cancellationToken)
         {
             await _stockCategoryBusinessRules.StockNameShouldBeUnique(request.Name);
-            await _stockCategoryBusinessRules.StockCodeShouldBeUniqe(request.Code);
+            
+            if(request.Code != "")
+            {
+                await _stockCategoryBusinessRules.StockCodeShouldBeUniqe(request.Code);
+            }
 
             X.StockCategory stockCategory = _mapper.Map<X.StockCategory>(request);
 

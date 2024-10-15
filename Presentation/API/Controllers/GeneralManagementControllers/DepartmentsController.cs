@@ -3,6 +3,7 @@ using Application.Features.GeneralManagementFeatures.Departments.Commands.Delete
 using Application.Features.GeneralManagementFeatures.Departments.Commands.Update;
 using Application.Features.GeneralManagementFeatures.Departments.Queries.GetByGid;
 using Application.Features.GeneralManagementFeatures.Departments.Queries.GetList;
+using Application.Features.GeneralManagementFeatures.Departments.Queries.GetListWithUser;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -28,6 +29,13 @@ namespace API.Controllers.GeneralManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetListWithUser([FromQuery] PageRequest pageRequest)
+        {
+            GetListWithUserDepartmentQuery getListWithUserDepartmentQuery = new() { PageRequest = pageRequest };
+            GetListResponse<GetListWithUserDepartmentListItemDto> response = await Mediator.Send(getListWithUserDepartmentQuery);
+            return Ok(response);
+        }
 
     }
 }
