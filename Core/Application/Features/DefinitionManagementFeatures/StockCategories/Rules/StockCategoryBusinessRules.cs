@@ -11,6 +11,12 @@ public class StockCategoryBusinessRules : BaseBusinessRules
     //public string Name { get; set; } Name should be unique
     //public string? Code { get; set; } Code should be unique
     private readonly IStockCategoryReadRepository _stockCategoryRepository;
+
+    public StockCategoryBusinessRules(IStockCategoryReadRepository stockCategoryRepository)
+    {
+        _stockCategoryRepository = stockCategoryRepository;
+    }
+
     public async Task StockCategoryShouldExistWhenSelected(X.StockCategory? item)
     {
         if (item == null)

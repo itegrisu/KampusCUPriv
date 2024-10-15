@@ -40,7 +40,10 @@ public class UpdateStockCategoryCommand : IRequest<UpdatedStockCategoryResponse>
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _stockCategoryBusinessRules.StockCategoryShouldExistWhenSelected(stockCategory);
             await _stockCategoryBusinessRules.StockNameShouldBeUnique(request.Name, request.Gid);
-            await _stockCategoryBusinessRules.StockCodeShouldBeUniqe(request.Code, request.Gid);
+            if (request.Code != "")
+            {
+                await _stockCategoryBusinessRules.StockCodeShouldBeUniqe(request.Code, request.Gid);
+            }
             stockCategory = _mapper.Map(request, stockCategory);
 
             _stockCategoryWriteRepository.Update(stockCategory!);
