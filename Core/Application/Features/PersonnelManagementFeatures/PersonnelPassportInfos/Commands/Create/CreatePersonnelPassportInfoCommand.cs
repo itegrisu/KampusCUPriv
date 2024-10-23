@@ -16,8 +16,6 @@ public class CreatePersonnelPassportInfoCommand : IRequest<CreatedPersonnelPassp
     public DateTime DateOfIssue { get; set; }
     public DateTime ValidityDate { get; set; }
     public string? Document { get; set; }
-    public string? Description { get; set; }
-
 
     public class CreatePersonnelPassportInfoCommandHandler : IRequestHandler<CreatePersonnelPassportInfoCommand, CreatedPersonnelPassportInfoResponse>
     {

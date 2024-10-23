@@ -1,4 +1,5 @@
-﻿using Application.Features.GeneralManagementFeatures.Users.Commands.Create;
+﻿using Application.Features.GeneralManagementFeatures.Users.Commands.ChangeIsActive;
+using Application.Features.GeneralManagementFeatures.Users.Commands.Create;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Delete;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Update;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UpdateForAdmin;
@@ -101,6 +102,15 @@ namespace API.Controllers.GeneralManagementControllers
             UpdateForAdminUserResponse response = await Mediator.Send(updateForAdminUserCommand);
             return Ok(response);
         }
+
+        [HttpDelete("[action]/{Gid}")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> ChangeIsActiveUser([FromRoute] ChangeIsActiveUserCommand changeIsActiveUserCommand)
+        {
+            ChangeIsActiveUserResponse response = await Mediator.Send(changeIsActiveUserCommand);
+            return Ok(response);
+        }
+
 
 
     }

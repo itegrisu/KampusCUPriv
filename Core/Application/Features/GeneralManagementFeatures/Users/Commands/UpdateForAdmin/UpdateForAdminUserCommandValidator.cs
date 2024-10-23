@@ -30,6 +30,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.UpdateFo
             RuleFor(c => c.EmailActivationStatus).NotNull().NotEmpty();
             RuleFor(c => c.SmsActivationStatus).NotNull().NotEmpty();
             RuleFor(c => c.PersonnelSpecialNote).MaximumLength(250);
+            RuleFor(c => c.IsActive).NotNull().NotEmpty();
 
         }
     }

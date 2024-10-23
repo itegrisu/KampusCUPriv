@@ -950,6 +950,9 @@ namespace Persistence.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsLoginStatus")
                         .HasColumnType("bit");
 
@@ -1008,6 +1011,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
+
+                    b.Property<int>("WorkType")
+                        .HasColumnType("int");
 
                     b.HasKey("Gid");
 
@@ -1845,10 +1851,6 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
-
                     b.Property<string>("Document")
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
@@ -1926,10 +1928,6 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("datetime");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("Document")
                         .HasMaxLength(150)

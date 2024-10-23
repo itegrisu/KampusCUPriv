@@ -11,9 +11,6 @@ namespace Domain.Entities.PersonnelManagements
         public DateTime DateOfIssue { get; set; }
         public DateTime ValidityDate { get; set; }
         public string? Document { get; set; }
-        public string? Description { get; set; }
-
-
 
     }
 }

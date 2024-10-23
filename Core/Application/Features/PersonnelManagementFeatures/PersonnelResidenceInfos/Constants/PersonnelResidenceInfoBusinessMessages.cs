@@ -22,5 +22,7 @@ public static class PersonnelResidenceInfosBusinessMessages
 
 
     public const string UserNotExists = "User Not Exists";
+    //SucessUploadFile
+    public const string SucessUploadFile = "File Successfully Uploaded";
 
 }

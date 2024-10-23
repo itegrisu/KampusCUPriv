@@ -22,4 +22,6 @@ public static class PersonnelDocumentsBusinessMessages
 
     public const string UserNotExists = "Ýlgili Kullanýcý Bulunamadý";
     public const string DocumentTypeNotExists = "Ýlgili Belge Türü Bulunamadý";
+    //SucessUploadFile
+    public const string SucessUploadFile = "Dosya Baþarýyla Yüklendi";
 }

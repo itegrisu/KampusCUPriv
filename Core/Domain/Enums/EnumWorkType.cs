@@ -11,5 +11,6 @@ namespace Domain.Enums
         FirmaCalisani = 1,
         KismiSureliCalisan = 2,
         TedarikciCalisani = 3,
+        UlasimPersoneli = 4
     }
 }

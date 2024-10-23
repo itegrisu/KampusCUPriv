@@ -17,9 +17,6 @@ namespace Persistence.EntityConfiguration.PersonnelManagements
             builder.Property(y => y.DateOfIssue).IsRequired().HasColumnType("datetime");
             builder.Property(y => y.ValidityDate).IsRequired().HasColumnType("datetime");
             builder.Property(y => y.Document).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
-            builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
-
-
 
         }
     }

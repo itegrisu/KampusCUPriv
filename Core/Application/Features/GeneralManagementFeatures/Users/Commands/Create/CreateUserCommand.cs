@@ -13,7 +13,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.Create;
 
 public class CreateUserCommand : IRequest<CreatedUserResponse>
 {
-    public Guid GidNationalityFK { get; set; }
+    public Guid? GidNationalityFK { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
     public string Email { get; set; }
@@ -40,6 +40,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
     public EnumEmailActivationStatus EmailActivationStatus { get; set; }
     public EnumSmsActivationStatus SmsActivationStatus { get; set; }
     public string? PersonnelSpecialNote { get; set; }
+    public bool IsActive { get; set; }
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserResponse>
     {
@@ -58,7 +59,11 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
 
         public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            if(request.IdentityNo != null)
+            {
             await _userCustomBusinessRules.IdNumberAlreadyExists(request.IdentityNo);
+            }
+
             await _userCustomBusinessRules.PhoneNumberAlreadyExists(request.Gsm);
 
             User userCustom = _mapper.Map<User>(request);

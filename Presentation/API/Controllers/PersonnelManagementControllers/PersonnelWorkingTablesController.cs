@@ -1,7 +1,9 @@
-﻿using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Create;
+﻿using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetByUserGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Create;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelWorkingTables.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -28,6 +30,12 @@ namespace API.Controllers.PersonnelManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListPersonnelWorkingTableQuery getByUserGidListPersonnelWorkingTableQuery)
+        {
+            GetListResponse<GetByUserGidListPersonnelWorkingTableListItemDto> response = await Mediator.Send(getByUserGidListPersonnelWorkingTableQuery);
+            return Ok(response);
+        }
 
     }
 }

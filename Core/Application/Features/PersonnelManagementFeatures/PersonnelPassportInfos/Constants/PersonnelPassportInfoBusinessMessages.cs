@@ -21,4 +21,6 @@ public static class PersonnelPassportInfosBusinessMessages
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
 
     public const string UserNotExists = "Ýlgili Kullanýcý Bulunamadý";
+    //SucessUploadFile
+    public const string SucessUploadFile = "Dosya Yükleme Ýþlemi Baþarýlý";
 }

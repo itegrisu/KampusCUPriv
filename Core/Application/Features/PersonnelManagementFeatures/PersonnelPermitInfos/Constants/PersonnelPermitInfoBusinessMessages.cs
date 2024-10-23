@@ -22,4 +22,6 @@ public static class PersonnelPermitInfosBusinessMessages
 
     public const string UserNotExists = "Ýlgili Personel Bulunamadý";
     public const string PermitTypeNotExists = "Ýlgili Ýzin Tipi Bulunamadý";
+    //SucessUploadFile
+    public const string SucessUploadFile = "Dosya Yükleme Ýþlemi Baþarýlý";
 }

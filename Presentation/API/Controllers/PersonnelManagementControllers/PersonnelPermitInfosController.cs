@@ -1,7 +1,11 @@
-﻿using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Commands.Create;
+﻿using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.UploadFile;
+using Application.Features.PersonnelManagementFeatures.PersonnelPassportInfos.Queries.GetByUserGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Commands.Create;
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Commands.Update;
+using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Commands.UploadFile;
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -29,5 +33,18 @@ namespace API.Controllers.PersonnelManagementControllers
         }
 
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListPersonnelPermitInfoQuery getByUserGidListPersonnelPermitInfoQuery)
+        {
+            GetListResponse<GetByUserGidListPersonnelPermitInfoListItemDto> response = await Mediator.Send(getByUserGidListPersonnelPermitInfoQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadPermitInfoFile([FromBody] UploadPermitInfoFileCommand uploadPermitInfoFileCommand)
+        {
+            UploadPermitInfoFileResponse response = await Mediator.Send(uploadPermitInfoFileCommand);
+            return Ok(response);
+        }
     }
 }

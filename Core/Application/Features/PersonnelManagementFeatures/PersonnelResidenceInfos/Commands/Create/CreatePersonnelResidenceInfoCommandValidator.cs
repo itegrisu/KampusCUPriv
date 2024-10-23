@@ -12,7 +12,6 @@ public class CreatePersonnelResidenceInfoCommandValidator : AbstractValidator<Cr
         RuleFor(c => c.DateOfIssue).NotNull().NotEmpty();
         RuleFor(c => c.ValidityDate).NotNull().NotEmpty();
         RuleFor(c => c.Document).MaximumLength(150);
-        RuleFor(c => c.Description).MaximumLength(250);
 
 
     }

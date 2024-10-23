@@ -40,10 +40,12 @@ namespace Domain.Entities.GeneralManagements
         public EnumMaritalStatus? MaritalStatus { get; set; }
         public EnumBloodGroup? BloodGroup { get; set; }
         public EnumGender Gender { get; set; }
-        //public EnumWorkType WorkType { get; set; }
+        public EnumWorkType WorkType { get; set; }
         public EnumEmailActivationStatus EmailActivationStatus { get; set; }
         public EnumSmsActivationStatus SmsActivationStatus { get; set; }
         public string? PersonnelSpecialNote { get; set; }
+        public bool IsActive { get; set; }
+
         public ICollection<LogSuccessedLogin>? LogSuccessedLogins { get; set; }
         public ICollection<LogAuthorizationError>? LogAuthorizationErrors { get; set; }
         public ICollection<LogUserPageVisit>? LogUserPageActions { get; set; }

@@ -22,6 +22,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.Property(y => y.UpdatePasswordToken).IsRequired().HasColumnType("varchar").HasMaxLength(150);
             builder.Property(y => y.TokenExpiredDate).IsRequired(false).HasColumnType("datetime");
             builder.Property(y => y.IsSystemAdmin).IsRequired().HasColumnType("bit");
+            builder.Property(y => y.IsActive).IsRequired().HasColumnType("bit");
             builder.Property(y => y.Gsm).IsRequired().HasColumnType("varchar").HasMaxLength(20);
             builder.Property(y => y.Birthplace).IsRequired(false).HasColumnType("varchar").HasMaxLength(50);
             builder.Property(y => y.BirthDate).IsRequired(false).HasColumnType("datetime");
@@ -36,6 +37,8 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.Property(builder => builder.EmailActivationStatus).IsRequired().HasColumnType("int");
             builder.Property(builder => builder.SmsActivationStatus).IsRequired().HasColumnType("int");
             builder.Property(builder => builder.Avatar).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
+
+
 
             builder.HasMany(u => u.AsilYonetilenDepartmants).WithOne(y => y.MainAdminFK).HasForeignKey(y => y.GidMainAdminFK);
             builder.HasMany(u => u.YedekYonetilenDepartmants).WithOne(y => y.CoAdminFK).HasForeignKey(y => y.GidCoAdminFK);

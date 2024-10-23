@@ -2,6 +2,7 @@ using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.C
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.PersonnelResidenceInfo, GetListPersonnelResidenceInfoListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.PersonnelResidenceInfo>, GetListResponse<GetListPersonnelResidenceInfoListItemDto>>().ReverseMap();
+
+        CreateMap<X.PersonnelResidenceInfo, GetByUserGidListPersonnelResidenceInfoListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.PersonnelResidenceInfo>, GetListResponse<GetByUserGidListPersonnelResidenceInfoListItemDto>>().ReverseMap();
     }
 }

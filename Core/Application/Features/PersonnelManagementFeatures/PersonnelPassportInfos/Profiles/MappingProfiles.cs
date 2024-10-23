@@ -2,6 +2,7 @@ using Application.Features.PersonnelManagementFeatures.PersonnelPassportInfos.Co
 using Application.Features.PersonnelManagementFeatures.PersonnelPassportInfos.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelPassportInfos.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelPassportInfos.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelPassportInfos.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelPassportInfos.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.PersonnelPassportInfo, GetListPersonnelPassportInfoListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.PersonnelPassportInfo>, GetListResponse<GetListPersonnelPassportInfoListItemDto>>().ReverseMap();
+
+        CreateMap<X.PersonnelPassportInfo, GetByUserGidListPersonnelPassportInfoListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.PersonnelPassportInfo>, GetListResponse<GetByUserGidListPersonnelPassportInfoListItemDto>>().ReverseMap();
     }
 }
