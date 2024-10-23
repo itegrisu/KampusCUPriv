@@ -8,9 +8,10 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
 
         public Guid Gid { get; set; }
         public Guid? GidNationalityFK { get; set; }
-        public string CountryFKName { get; set; }
+        public string NationalityFKName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
         public string? Title { get; set; }
         public string Password { get; set; }
@@ -22,7 +23,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
         public bool IsSystemAdmin { get; set; }
         public string Gsm { get; set; }
         public string? Birthplace { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string? IdentityNo { get; set; }
         public string? PassportNo { get; set; }
         public string? SGKNo { get; set; }
@@ -35,5 +36,6 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
         public EnumEmailActivationStatus EmailActivationStatus { get; set; }
         public EnumSmsActivationStatus SmsActivationStatus { get; set; }
         public string? PersonnelSpecialNote { get; set; }
+        public bool IsActive { get; set; }
     }
 }

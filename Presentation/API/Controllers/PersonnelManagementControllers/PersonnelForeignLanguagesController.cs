@@ -1,7 +1,9 @@
-﻿using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Commands.Create;
+﻿using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Queries.GetByUserGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Commands.Create;
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -28,6 +30,12 @@ namespace API.Controllers.PersonnelManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListPersonnelForeignLanguageQuery getByUserGidListPersonnelForeignLanguageQuery)
+        {
+            GetListResponse<GetByUserGidListPersonnelForeignLanguageListItemDto> response = await Mediator.Send(getByUserGidListPersonnelForeignLanguageQuery);
+            return Ok(response);
+        }
 
     }
 }

@@ -1,7 +1,9 @@
-﻿using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Commands.Create;
+﻿using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetByOfferGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Commands.Create;
 using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -25,6 +27,13 @@ namespace API.Controllers.PersonnelManagementControllers
         {
             GetListPersonnelAddressQuery getListPersonnelAddressQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListPersonnelAddressListItemDto> response = await Mediator.Send(getListPersonnelAddressQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListPersonnelAddressQuery getByUserGidListPersonnelAddressQuery)
+        {
+            GetListResponse<GetByUserGidListPersonnelAddressListItemDto> response = await Mediator.Send(getByUserGidListPersonnelAddressQuery);
             return Ok(response);
         }
 

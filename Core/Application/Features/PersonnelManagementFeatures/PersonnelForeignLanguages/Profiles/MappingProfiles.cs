@@ -2,6 +2,7 @@ using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Commands.Update;
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelForeignLanguages.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.PersonnelForeignLanguage, GetListPersonnelForeignLanguageListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.PersonnelForeignLanguage>, GetListResponse<GetListPersonnelForeignLanguageListItemDto>>().ReverseMap();
+
+        CreateMap<X.PersonnelForeignLanguage, GetByUserGidListPersonnelForeignLanguageListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.PersonnelForeignLanguage>, GetListResponse<GetByUserGidListPersonnelForeignLanguageListItemDto>>().ReverseMap();
     }
 }

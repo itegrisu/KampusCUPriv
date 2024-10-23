@@ -19,8 +19,6 @@ public class UpdatePersonnelPassportInfoCommand : IRequest<UpdatedPersonnelPassp
     public DateTime DateOfIssue { get; set; }
     public DateTime ValidityDate { get; set; }
     public string? Document { get; set; }
-    public string? Description { get; set; }
-
 
 
     public class UpdatePersonnelPassportInfoCommandHandler : IRequestHandler<UpdatePersonnelPassportInfoCommand, UpdatedPersonnelPassportInfoResponse>

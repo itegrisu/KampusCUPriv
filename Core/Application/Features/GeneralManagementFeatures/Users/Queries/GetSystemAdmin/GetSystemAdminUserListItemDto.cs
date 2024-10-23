@@ -34,5 +34,6 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetSystem
         public EnumEmailActivationStatus EmailActivationStatus { get; set; }
         public EnumSmsActivationStatus SmsActivationStatus { get; set; }
         public string? PersonnelSpecialNote { get; set; }
+        public bool IsActive { get; set; }
     }
 }

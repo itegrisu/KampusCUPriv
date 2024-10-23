@@ -18,7 +18,6 @@ public class CreatePersonnelResidenceInfoCommand : IRequest<CreatedPersonnelResi
     public DateTime DateOfIssue { get; set; }
     public DateTime ValidityDate { get; set; }
     public string? Document { get; set; }
-    public string? Description { get; set; }
     public class CreatePersonnelResidenceInfoCommandHandler : IRequestHandler<CreatePersonnelResidenceInfoCommand, CreatedPersonnelResidenceInfoResponse>
     {
         private readonly IMapper _mapper;

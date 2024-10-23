@@ -14,8 +14,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.Update;
 public class UpdateUserCommand : IRequest<UpdatedUserResponse>
 {
     public Guid Gid { get; set; }
-
-    public Guid GidNationalityFK { get; set; }
+    public Guid? GidNationalityFK { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
     public string Email { get; set; }
@@ -42,6 +41,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>
     public EnumEmailActivationStatus EmailActivationStatus { get; set; }
     public EnumSmsActivationStatus SmsActivationStatus { get; set; }
     public string? PersonnelSpecialNote { get; set; }
+    public bool IsActive { get; set; }
 
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>

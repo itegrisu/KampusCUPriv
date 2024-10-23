@@ -41,6 +41,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.UpdateFo
         public EnumEmailActivationStatus EmailActivationStatus { get; set; }
         public EnumSmsActivationStatus SmsActivationStatus { get; set; }
         public string? PersonnelSpecialNote { get; set; }
+        public bool IsActive { get; set; }
 
         public class UpdateForAdminUserCommandHandler : IRequestHandler<UpdateForAdminUserCommand, UpdateForAdminUserResponse>
         {

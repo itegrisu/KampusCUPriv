@@ -1,7 +1,10 @@
-﻿using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.Create;
+﻿using Application.Features.OfferManagementFeatures.OfferFiles.Commands.UploadFile;
+using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.Create;
 using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.Update;
+using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.UploadFile;
 using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -25,6 +28,20 @@ namespace API.Controllers.PersonnelManagementControllers
         {
             GetListPersonnelDocumentQuery getListPersonnelDocumentQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListPersonnelDocumentListItemDto> response = await Mediator.Send(getListPersonnelDocumentQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListPersonnelDocumentQuery getByUserGidListPersonnelDocumentQuery)
+        {
+            GetListResponse<GetByUserGidListPersonnelDocumentListItemDto> response = await Mediator.Send(getByUserGidListPersonnelDocumentQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadPersonnelFile([FromBody] UploadPersonnelFileCommand uploadPersonnelFileCommand)
+        {
+            UploadPersonnelFileResponse response = await Mediator.Send(uploadPersonnelFileCommand);
             return Ok(response);
         }
 

@@ -1,7 +1,11 @@
-﻿using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Create;
+﻿using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.UploadFile;
+using Application.Features.PersonnelManagementFeatures.PersonnelPermitInfos.Queries.GetByUserGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Create;
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Delete;
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.Update;
+using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Commands.UploadFile;
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetByGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetByUserGid;
 using Application.Features.PersonnelManagementFeatures.PersonnelResidenceInfos.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -29,5 +33,18 @@ namespace API.Controllers.PersonnelManagementControllers
         }
 
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListPersonnelResidenceInfoQuery getByUserGidListPersonnelResidenceInfoQuery)
+        {
+            GetListResponse<GetByUserGidListPersonnelResidenceInfoListItemDto> response = await Mediator.Send(getByUserGidListPersonnelResidenceInfoQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadResidenceFile([FromBody] UploadResidenceFileCommand uploadResidenceFileCommand)
+        {
+            UploadResidenceFileResponse response = await Mediator.Send(uploadResidenceFileCommand);
+            return Ok(response);
+        }
     }
 }
