@@ -3,6 +3,7 @@ using Application.Features.GeneralManagementFeatures.Users.Commands.Create;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Delete;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Update;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UpdateForAdmin;
+using Application.Features.GeneralManagementFeatures.Users.Commands.UpdatePersonnelSpecialNote;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatar;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatarTemp;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid;
@@ -110,6 +111,15 @@ namespace API.Controllers.GeneralManagementControllers
             ChangeIsActiveUserResponse response = await Mediator.Send(changeIsActiveUserCommand);
             return Ok(response);
         }
+
+        [HttpPut("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> UpdatePersonnelSpecialNoteUser([FromBody] UpdatePersonnelSpecialNoteUserCommand updatePersonnelSpecialNoteUserCommand)
+        {
+            UpdatePersonnelSpecialNoteUserResponse response = await Mediator.Send(updatePersonnelSpecialNoteUserCommand);
+            return Ok(response);
+        }
+
 
 
 
