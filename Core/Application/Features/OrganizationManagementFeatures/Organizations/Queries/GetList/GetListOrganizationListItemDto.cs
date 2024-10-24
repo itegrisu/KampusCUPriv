@@ -9,7 +9,7 @@ public class GetListOrganizationListItemDto : IDto
     public Guid GidCustomerFK { get; set; }
     public string SCCompanyFKCompanyName { get; set; }
     public Guid GidResponsibleUserFK { get; set; }
-    public string UserFKFullName { get; set; }
+    public string ResponsibleUserFKFullName { get; set; }
     public Guid GidOrganizationTypeFK { get; set; }
     public string OrganizationTypeFKName { get; set; }
     public string OrganizationName { get; set; }
