@@ -1,4 +1,5 @@
 ﻿using Core.Application.Responses;
+using Core.Enum;
 using Domain.Enums;
 
 namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
@@ -7,10 +8,13 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
     {
 
         public Guid Gid { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DataState DataState { get; set; }
         public Guid? GidNationalityFK { get; set; }
         public string CountryFKName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
         public string? Title { get; set; }
         public string Password { get; set; }
