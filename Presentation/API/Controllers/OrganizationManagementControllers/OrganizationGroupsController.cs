@@ -1,8 +1,10 @@
-﻿using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Commands.Create;
+﻿using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetByOfferGid;
+using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Commands.Create;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Commands.Delete;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Commands.Update;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Commands.UpdateRowNo;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetByGid;
+using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetByOrganizationGid;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -38,5 +40,11 @@ namespace API.Controllers.OrganizationManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByOrganizationGid([FromQuery] GetByOrganizationGidListOrganizationGroupQuery getByOrganizationGidListOrganizationGroupQuery)
+        {
+            GetListResponse<GetByOrganizationGidListOrganizationGroupListItemDto> response = await Mediator.Send(getByOrganizationGidListOrganizationGroupQuery);
+            return Ok(response);
+        }
     }
 }

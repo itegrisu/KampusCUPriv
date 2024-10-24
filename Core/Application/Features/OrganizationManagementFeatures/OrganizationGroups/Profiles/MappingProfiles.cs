@@ -2,6 +2,7 @@ using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Com
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Commands.Delete;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Commands.Update;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetByGid;
+using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetByOrganizationGid;
 using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -25,5 +26,9 @@ public class MappingProfiles : Profile
 
         CreateMap<X.OrganizationGroup, GetListOrganizationGroupListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.OrganizationGroup>, GetListResponse<GetListOrganizationGroupListItemDto>>().ReverseMap();
+
+
+        CreateMap<X.OrganizationGroup, GetByOrganizationGidListOrganizationGroupListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.OrganizationGroup>, GetListResponse<GetByOrganizationGidListOrganizationGroupListItemDto>>().ReverseMap();
     }
 }
