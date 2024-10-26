@@ -87,6 +87,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.Property(y => y.CreatedDate).IsRequired().HasColumnType("datetime");
 
             builder.HasMany(y => y.OrganizationItems).WithOne(y => y.MainResponsibleUserFK).HasForeignKey(y => y.GidMainResponsibleUserFK);
+            builder.HasMany(u => u.UserReminders).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
 
         }
     }
