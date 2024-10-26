@@ -10,6 +10,7 @@ namespace Application.Features.FinanceManagementFeatures.FinanceIncomes.Queries.
         public string FinanceIncomeGroupFKIncomeGroupName { get; set; }
         public Guid GidCurrencyFK { get; set; }
         public string CurrencyFKName { get; set; }
+        public string CurrencyFKSymbol { get; set; }
         public string Title { get; set; }
         public decimal Fee { get; set; }
         public DateTime MaturityDate { get; set; }

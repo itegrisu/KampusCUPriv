@@ -22,4 +22,5 @@ public static class FinanceIncomesBusinessMessages
 
     public const string FinanceIncomeGroupNotExists = "Ýlgili Gelir Grubu Bulunamadý";
     public const string CurrencyNotExists = "Ýlgili Para Birimi Bulunamadý";
+    public const string SucessUploadFile = "Dosya Baþarýyla Yüklendi";
 }
