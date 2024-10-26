@@ -27,6 +27,7 @@ namespace Domain.Entities.OrganizationManagements
         public ICollection<Warehouse>? Warehouses { get; set; }
         public ICollection<FinanceExpense>? FinanceExpenses { get; set; }
         public ICollection<OrganizationGroup>? OrganizationGroups { get; set; }
+        public ICollection<OrganizationFile>? OrganizationFiles { get; set; }
 
     }
 }
