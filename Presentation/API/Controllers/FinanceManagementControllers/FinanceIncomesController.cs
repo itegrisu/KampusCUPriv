@@ -1,8 +1,10 @@
 ﻿using Application.Features.FinanceManagementFeatures.FinanceIncomes.Commands.Create;
 using Application.Features.FinanceManagementFeatures.FinanceIncomes.Commands.Delete;
 using Application.Features.FinanceManagementFeatures.FinanceIncomes.Commands.Update;
+using Application.Features.FinanceManagementFeatures.FinanceIncomes.Commands.UploadFile;
 using Application.Features.FinanceManagementFeatures.FinanceIncomes.Queries.GetByGid;
 using Application.Features.FinanceManagementFeatures.FinanceIncomes.Queries.GetList;
+using Application.Features.OfferManagementFeatures.OfferFiles.Commands.UploadFile;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -28,6 +30,11 @@ namespace API.Controllers.FinanceManagementControllers
             return Ok(response);
         }
 
-
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadFinanceIncome([FromBody] UploadFinanceIncomeCommand uploadFinanceIncomeCommand)
+        {
+            UploadFinanceIncomeResponse response = await Mediator.Send(uploadFinanceIncomeCommand);
+            return Ok(response);
+        }
     }
 }
