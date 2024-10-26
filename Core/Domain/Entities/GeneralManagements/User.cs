@@ -80,9 +80,10 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<FinanceExpense> ApprovedFinanceExpenses { get; set; }
         public ICollection<FinanceExpenseDetail> SpendedFinanceExpenseDetails { get; set; }
         public ICollection<FinanceExpenseDetail> ControlledFinanceExpenseDetails { get; set; }
-
         public ICollection<Organization> Organizations { get; set; }
         public ICollection<OrganizationItem> OrganizationItems { get; set; }
+        public ICollection<UserReminder>? UserReminders { get; set; }
+
 
 
 

@@ -27,6 +27,7 @@ using Application.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Application.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using Application.Repositories.GeneralManagementRepos.UserModuleAuthRepo;
 using Application.Repositories.GeneralManagementRepos.UserRefreshTokenRepo;
+using Application.Repositories.GeneralManagementRepos.UserReminderRepo;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
 using Application.Repositories.GeneralManagementRepos.UserShortCutRepo;
 using Application.Repositories.LogManagementRepos.LogAuthorizationErrorRepo;
@@ -101,6 +102,7 @@ using Persistence.Repositories.GeneralManagementRepos.DepartmentRepo;
 using Persistence.Repositories.GeneralManagementRepos.DepartmentUserRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserModuleAuthRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserRefreshTokenRepo;
+using Persistence.Repositories.GeneralManagementRepos.UserReminderRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserRepo;
 using Persistence.Repositories.GeneralManagementRepos.UserShortCutRepo;
 using Persistence.Repositories.LogManagementRepos.LogAuthorizationErrorRepo;
@@ -531,7 +533,6 @@ namespace Persistence
             services.AddScoped<IOrganizationWriteRepository, OrganizationWriteRepository>();
             #endregion
 
-
             #region Organization Group
             services.AddScoped<IOrganizationGroupReadRepository, OrganizationGroupReadRepository>();
             services.AddScoped<IOrganizationGroupWriteRepository, OrganizationGroupWriteRepository>();
@@ -542,11 +543,17 @@ namespace Persistence
             services.AddScoped<IStockCategoryWriteRepository, StockCategoryWriteRepository>();
             #endregion
 
-
             #region Organization File
             services.AddScoped<IOrganizationFileReadRepository, OrganizationFileReadRepository>();
             services.AddScoped<IOrganizationFileWriteRepository, OrganizationFileWriteRepository>();
             #endregion
+
+            #region User Reminder
+            services.AddScoped<IUserReminderReadRepository, UserReminderReadRepository>();
+            services.AddScoped<IUserReminderWriteRepository, UserReminderWriteRepository>();
+            #endregion
+
+
 
             services.AddScoped<C.Context, Emasist2024Context>();
             services.AddScoped<IDatabaseService, DatabaseService>();
