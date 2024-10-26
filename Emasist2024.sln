@@ -10,18 +10,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{63DE7DB4-9A40-48C8-8AC6-E2F4CC3657FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{DC898C00-8B47-413C-97B4-CAE77C354DAF}"
+	ProjectSection(SolutionItems) = preProject
+		todo.txt = todo.txt
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Core\Application\Application.csproj", "{591BC51F-0D44-4F0A-A357-7AF066135C83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Core\Application\Application.csproj", "{591BC51F-0D44-4F0A-A357-7AF066135C83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Core\Domain\Domain.csproj", "{82E261DF-E294-4CB1-83C0-C983C21D95F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Core\Domain\Domain.csproj", "{82E261DF-E294-4CB1-83C0-C983C21D95F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Infrastracture\Core\Core.csproj", "{4D0C0E76-5798-40AC-AAF3-CDF790691D95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Infrastracture\Core\Core.csproj", "{4D0C0E76-5798-40AC-AAF3-CDF790691D95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastracture", "Infrastracture\Infrastracture\Infrastracture.csproj", "{B8A04BC1-FD46-4895-9F01-9D6ECB6E7243}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastracture", "Infrastracture\Infrastracture\Infrastracture.csproj", "{B8A04BC1-FD46-4895-9F01-9D6ECB6E7243}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Infrastracture\Persistence\Persistence.csproj", "{F19AF52C-B70E-4E94-8BA6-8020AA956B70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Infrastracture\Persistence\Persistence.csproj", "{F19AF52C-B70E-4E94-8BA6-8020AA956B70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "Presentation\API\API.csproj", "{E9EB3065-F8C6-4AA3-AA54-389553288099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "Presentation\API\API.csproj", "{E9EB3065-F8C6-4AA3-AA54-389553288099}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

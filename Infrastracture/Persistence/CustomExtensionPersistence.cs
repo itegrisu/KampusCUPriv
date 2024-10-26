@@ -40,6 +40,7 @@ using Application.Repositories.MarketingManagementsRepos.MerketingVisitPlanRepo;
 using Application.Repositories.OfferManagementRepos.OfferFileRepo;
 using Application.Repositories.OfferManagementRepos.OfferRepo;
 using Application.Repositories.OfferManagementRepos.OfferTransactionRepo;
+using Application.Repositories.OrganizationManagementRepos.OrganizationFileRepo;
 using Application.Repositories.OrganizationManagementRepos.OrganizationGroupRepo;
 using Application.Repositories.OrganizationManagementRepos.OrganizationItemRepo;
 using Application.Repositories.OrganizationManagementRepos.OrganizationRepo;
@@ -113,6 +114,7 @@ using Persistence.Repositories.MarketingManagementRepos.MarketingVisitPlanRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferFileRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferTransactionRepo;
+using Persistence.Repositories.OrganizationManagementRepos.OrganizationFileRepo;
 using Persistence.Repositories.OrganizationManagementRepos.OrganizationGroupRepo;
 using Persistence.Repositories.OrganizationManagementRepos.OrganizationItemRepo;
 using Persistence.Repositories.OrganizationManagementRepos.OrganizationRepo;
@@ -538,6 +540,12 @@ namespace Persistence
             #region Stock Category
             services.AddScoped<IStockCategoryReadRepository, StockCategoryReadRepository>();
             services.AddScoped<IStockCategoryWriteRepository, StockCategoryWriteRepository>();
+            #endregion
+
+
+            #region Organization File
+            services.AddScoped<IOrganizationFileReadRepository, OrganizationFileReadRepository>();
+            services.AddScoped<IOrganizationFileWriteRepository, OrganizationFileWriteRepository>();
             #endregion
 
             services.AddScoped<C.Context, Emasist2024Context>();

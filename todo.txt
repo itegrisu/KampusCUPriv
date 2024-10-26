@@ -1,0 +1,1 @@
+sortta en alttaki veriyi yukarı taşımak istediğimizde zaten en üstte hatası veriyor

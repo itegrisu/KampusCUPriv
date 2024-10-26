@@ -8,8 +8,9 @@ namespace Domain.Enums
 {
     public enum EnumIncomeStatus
     {
-        Beklemede = 1,
-        Tamamlandi = 2,
-        IptalEdildi = 3,
+        BekleyenTahsilatlar = 1,
+        TamamlananTahsilatlar = 2,
+        IptalEdilenTahsilatlar = 3,
+        BelirsizDurumdakiTahsilatlar = 4,
     }
 }
