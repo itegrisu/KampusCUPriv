@@ -26,5 +26,7 @@ public static class FinanceExpensesBusinessMessages
     public const string CurrencyNotExists = "Para Birimi Bulunamadý";
     public const string ApprovalReceiverNotExists = "Onaylayan Kullanýcý Bulunamadý";
     public const string OrganizationNotExists = "Ýlgili Kurum Bulunamadý";
+    //SucessUploadFile
+    public const string SucessUploadFile = "Dosya Yükleme Baþarýlý";
 
 }

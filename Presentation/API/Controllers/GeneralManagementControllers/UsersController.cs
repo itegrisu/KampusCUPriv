@@ -7,6 +7,7 @@ using Application.Features.GeneralManagementFeatures.Users.Commands.UpdatePerson
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatar;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatarTemp;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid;
+using Application.Features.GeneralManagementFeatures.Users.Queries.GetCompanyEmployee;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetList;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetListDeleted;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetSystemAdmin;
@@ -120,7 +121,14 @@ namespace API.Controllers.GeneralManagementControllers
             return Ok(response);
         }
 
-
+        [HttpGet("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> GetCompanyEmployee([FromQuery] PageRequest pageRequest)
+        {
+            GetCompanyEmployeeUserQuery getCompanyEmployeeUserQuery = new() { PageRequest = pageRequest };
+            GetListResponse<GetCompanyEmployeeUserListItemDto> response = await Mediator.Send(getCompanyEmployeeUserQuery);
+            return Ok(response);
+        }
 
 
     }
