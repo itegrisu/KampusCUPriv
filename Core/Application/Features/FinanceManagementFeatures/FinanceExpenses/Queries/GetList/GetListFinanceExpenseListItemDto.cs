@@ -28,6 +28,4 @@ public class GetListFinanceExpenseListItemDto : IDto
     public DateTime ReceiverAcceptDate { get; set; }
     public DateTime ReceiverRejectDate { get; set; }
     public string? ReceiverIpAddress { get; set; }
-
-
 }

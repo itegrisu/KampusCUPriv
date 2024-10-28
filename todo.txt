@@ -1,1 +1,3 @@
 sortta en alttaki veriyi yukarý taþýmak istediðimizde zaten en üstte hatasý veriyor
+
+GetListFinanceExpenseQuerya bak optiðmize edilmesi lazým

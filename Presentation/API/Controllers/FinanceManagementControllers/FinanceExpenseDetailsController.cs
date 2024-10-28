@@ -2,8 +2,10 @@
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Commands.Delete;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Commands.Update;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Commands.UploadDocumentFile;
+using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Queries.GetByFinanceExpenseGid;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Queries.GetByGid;
 using Application.Features.FinanceManagementFeatures.FinanceExpenseDetails.Queries.GetList;
+using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetByUserGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -35,6 +37,15 @@ namespace API.Controllers.FinanceManagementControllers
             UploadDetailDocumentResponse response = await Mediator.Send(command);
             return Ok(response);
         }
+
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByFinanceExpenseGid([FromHeader] GetByFinanceExpenseGidListFinanceExpenseDetailQuery getByFinanceExpenseGidListFinanceExpenseDetailQuery)
+        {
+            GetListResponse<GetByFinanceExpenseGidListFinanceExpenseDetailListItemDto> response = await Mediator.Send(getByFinanceExpenseGidListFinanceExpenseDetailQuery);
+            return Ok(response);
+        }
+
 
     }
 }

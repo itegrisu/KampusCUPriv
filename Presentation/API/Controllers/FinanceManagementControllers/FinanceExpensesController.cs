@@ -1,8 +1,12 @@
 ﻿using Application.Features.FinanceManagementFeatures.FinanceExpenses.Commands.Create;
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Commands.Delete;
+using Application.Features.FinanceManagementFeatures.FinanceExpenses.Commands.FileUpload;
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Commands.Update;
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetByGid;
+using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetByUserGid;
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetList;
+using Application.Features.OfferManagementFeatures.OfferFiles.Commands.UploadFile;
+using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetByOfferGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -28,6 +32,26 @@ namespace API.Controllers.FinanceManagementControllers
             return Ok(response);
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> GetByUserGidWithDateRange([FromBody] GetByUserGidWithDateRangeListFinanceExpenseQuery getByUserGidListFinanceExpenseQuery)
+        {
+            GetListResponse<GetByUserGidListWithDateRangeFinanceExpenseListItemDto> response = await Mediator.Send(getByUserGidListFinanceExpenseQuery);
+            return Ok(response);
+        }
 
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadFinanceExpense([FromBody] UploadFinanceExpenseCommand uploadFinanceExpenseCommand)
+        {
+            UploadFinanceExpenseResponse response = await Mediator.Send(uploadFinanceExpenseCommand);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListFinanceExpenseQuery getByUserGidListFinanceExpenseQuery)
+        {
+            GetListResponse<GetByUserGidListFinanceExpenseListItemDto> response = await Mediator.Send(getByUserGidListFinanceExpenseQuery);
+            return Ok(response);
+        }
     }
 }

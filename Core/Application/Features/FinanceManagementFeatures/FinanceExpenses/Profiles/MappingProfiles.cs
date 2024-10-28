@@ -2,6 +2,7 @@ using Application.Features.FinanceManagementFeatures.FinanceExpenses.Commands.Cr
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Commands.Delete;
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Commands.Update;
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetByGid;
+using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetByUserGid;
 using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -25,5 +26,11 @@ public class MappingProfiles : Profile
 
         CreateMap<X.FinanceExpense, GetListFinanceExpenseListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.FinanceExpense>, GetListResponse<GetListFinanceExpenseListItemDto>>().ReverseMap();
+
+        CreateMap<X.FinanceExpense, GetByUserGidListWithDateRangeFinanceExpenseListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.FinanceExpense>, GetListResponse<GetByUserGidListWithDateRangeFinanceExpenseListItemDto>>().ReverseMap();
+
+        CreateMap<X.FinanceExpense, GetByUserGidListFinanceExpenseListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.FinanceExpense>, GetListResponse<GetByUserGidListFinanceExpenseListItemDto>>().ReverseMap();
     }
 }
