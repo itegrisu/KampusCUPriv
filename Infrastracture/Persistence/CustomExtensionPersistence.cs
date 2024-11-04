@@ -59,6 +59,7 @@ using Application.Repositories.SupplierManagementRepos.SCAddressRepo;
 using Application.Repositories.SupplierManagementRepos.SCBankRepo;
 using Application.Repositories.SupplierManagementRepos.SCCompanyRepo;
 using Application.Repositories.SupplierManagementRepos.SCEmployerRepo;
+using Application.Repositories.SupplierManagementRepos.SCPersonnelRepo;
 using Application.Repositories.SupplierManagementRepos.SCWorkHistoryRepo;
 using Application.Repositories.SupportManagementRepos.SupportMessageDetailRepo;
 using Application.Repositories.SupportManagementRepos.SupportMessageRepo;
@@ -134,6 +135,7 @@ using Persistence.Repositories.SupplierManagementRepos.SCAddressRepo;
 using Persistence.Repositories.SupplierManagementRepos.SCBankRepo;
 using Persistence.Repositories.SupplierManagementRepos.SCCompanyRepo;
 using Persistence.Repositories.SupplierManagementRepos.SCEmployerRepo;
+using Persistence.Repositories.SupplierManagementRepos.SCPersonnelRepo;
 using Persistence.Repositories.SupplierManagementRepos.SCWorkHistoryRepo;
 using Persistence.Repositories.SupportManagementRepos.SupportMessageDetailRepo;
 using Persistence.Repositories.SupportManagementRepos.SupportMessageRepo;
@@ -551,6 +553,11 @@ namespace Persistence
             #region User Reminder
             services.AddScoped<IUserReminderReadRepository, UserReminderReadRepository>();
             services.AddScoped<IUserReminderWriteRepository, UserReminderWriteRepository>();
+            #endregion
+
+            #region SC Personnel
+            services.AddScoped<ISCPersonnelReadRepository, SCPersonnelReadRepository>();
+            services.AddScoped<ISCPersonnelWriteRepository, SCPersonnelWriteRepository>();
             #endregion
 
 

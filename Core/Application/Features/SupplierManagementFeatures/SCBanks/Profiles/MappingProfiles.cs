@@ -3,6 +3,7 @@ using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Commands.D
 using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Commands.Update;
 using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Queries.GetByGid;
 using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Queries.GetList;
+using Application.Features.SupplierManagementFeatures.SCBanks.Queries.GetByCompanyGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.SCBank, GetListSCBankListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.SCBank>, GetListResponse<GetListSCBankListItemDto>>().ReverseMap();
+
+        CreateMap<X.SCBank, GetByCompanyGidListSCBankListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.SCBank>, GetListResponse<GetByCompanyGidListSCBankListItemDto>>().ReverseMap();
     }
 }

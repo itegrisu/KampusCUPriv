@@ -1,4 +1,5 @@
-﻿using Application.Features.GeneralManagementFeatures.Users.Commands.ChangeIsActive;
+﻿using Application.Features.GeneralManagementFeatures.UserReminders.Queries.GetByUserGid;
+using Application.Features.GeneralManagementFeatures.Users.Commands.ChangeIsActive;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Create;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Delete;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Update;
@@ -6,6 +7,7 @@ using Application.Features.GeneralManagementFeatures.Users.Commands.UpdateForAdm
 using Application.Features.GeneralManagementFeatures.Users.Commands.UpdatePersonnelSpecialNote;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatar;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatarTemp;
+using Application.Features.GeneralManagementFeatures.Users.Queries.GetByEnum;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetCompanyEmployee;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetList;
@@ -130,6 +132,12 @@ namespace API.Controllers.GeneralManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByEnumUser([FromQuery] GetByEnumUserQuery getByEnumUserQuery)
+        {
+            GetListResponse<GetByEnumUserListItemDto> response = await Mediator.Send(getByEnumUserQuery);
+            return Ok(response);
+        }
 
     }
 }

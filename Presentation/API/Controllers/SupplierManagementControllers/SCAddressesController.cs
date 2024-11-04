@@ -1,8 +1,10 @@
-﻿using Application.Features.SupplierCustomerManagementFeatures.SCAddresses.Commands.Create;
+﻿using Application.Features.PersonnelManagementFeatures.PersonnelAddresses.Queries.GetByUserGid;
+using Application.Features.SupplierCustomerManagementFeatures.SCAddresses.Commands.Create;
 using Application.Features.SupplierCustomerManagementFeatures.SCAddresses.Commands.Delete;
 using Application.Features.SupplierCustomerManagementFeatures.SCAddresses.Commands.Update;
 using Application.Features.SupplierCustomerManagementFeatures.SCAddresses.Queries.GetByGid;
 using Application.Features.SupplierCustomerManagementFeatures.SCAddresses.Queries.GetList;
+using Application.Features.SupplierManagementFeatures.SCAddresses.Queries.GetByCompanyGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -25,6 +27,13 @@ namespace API.Controllers.SupplierManagementControllers
         {
             GetListSCAddressQuery getListSCAddressQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListSCAddressListItemDto> response = await Mediator.Send(getListSCAddressQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByCompanyGid([FromQuery] GetByCompanyGidListSCAddressQuery getByCompanyGidListSCAddressQuery)
+        {
+            GetListResponse<GetByCompanyGidListSCAddressListItemDto> response = await Mediator.Send(getByCompanyGidListSCAddressQuery);
             return Ok(response);
         }
 

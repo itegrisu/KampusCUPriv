@@ -3,6 +3,7 @@ using Application.Features.SupplierCustomerManagementFeatures.SCEmployers.Comman
 using Application.Features.SupplierCustomerManagementFeatures.SCEmployers.Commands.Update;
 using Application.Features.SupplierCustomerManagementFeatures.SCEmployers.Queries.GetByGid;
 using Application.Features.SupplierCustomerManagementFeatures.SCEmployers.Queries.GetList;
+using Application.Features.SupplierManagementFeatures.SCEmployers.Queries.GetByCompanyGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.SCEmployer, GetListSCEmployerListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.SCEmployer>, GetListResponse<GetListSCEmployerListItemDto>>().ReverseMap();
+
+        CreateMap<X.SCEmployer, GetByCompanyGidListSCEmployerListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.SCEmployer>, GetListResponse<GetByCompanyGidListSCEmployerListItemDto>>().ReverseMap();
     }
 }

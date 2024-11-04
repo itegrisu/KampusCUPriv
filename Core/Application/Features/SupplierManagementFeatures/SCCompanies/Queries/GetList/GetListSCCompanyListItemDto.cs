@@ -6,7 +6,6 @@ namespace Application.Features.SupplierCustomerManagementFeatures.SCCompanies.Qu
 public class GetListSCCompanyListItemDto : IDto
 {
     public Guid Gid { get; set; }
-
     public string CompanyName { get; set; }
     public string? Phone { get; set; }
     public string? WebSite { get; set; }
@@ -21,6 +20,7 @@ public class GetListSCCompanyListItemDto : IDto
     public EnumPartnerType PartnerType { get; set; }
     public int SupplierRank { get; set; }
     public int CustomerRank { get; set; }
+    public bool IsHotel { get; set; }
     public EnumType Type { get; set; }
     public EnumStatus Status { get; set; }
 

@@ -21,4 +21,7 @@ public static class SCWorkHistoriesBusinessMessages
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
 
     public const string SCCompanyNotExists = "Ýlgili Þirket Bulunamadý";
+    //SucessUploadFile
+    public const string SucessUploadFile = "Dosya Yükleme Baþarýlý";
+
 }
