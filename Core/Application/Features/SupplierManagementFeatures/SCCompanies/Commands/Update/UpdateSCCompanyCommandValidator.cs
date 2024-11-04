@@ -22,7 +22,7 @@ public class UpdateSCCompanyCommandValidator : AbstractValidator<UpdateSCCompany
         RuleFor(c => c.PartnerType).NotNull().NotEmpty();
         RuleFor(c => c.Type).NotNull().NotEmpty();
         RuleFor(c => c.Status).NotNull().NotEmpty();
-
+        RuleFor(c => c.IsHotel).NotNull().NotEmpty();
 
     }
 }

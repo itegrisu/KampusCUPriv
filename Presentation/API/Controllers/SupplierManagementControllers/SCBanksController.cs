@@ -3,6 +3,7 @@ using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Commands.D
 using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Commands.Update;
 using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Queries.GetByGid;
 using Application.Features.SupplierCustomerManagementFeatures.SCBanks.Queries.GetList;
+using Application.Features.SupplierManagementFeatures.SCBanks.Queries.GetByCompanyGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -28,6 +29,12 @@ namespace API.Controllers.SupplierManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByCompanyGid([FromQuery] GetByCompanyGidListSCBankQuery getByCompanyGidListSCBankQuery)
+        {
+            GetListResponse<GetByCompanyGidListSCBankListItemDto> response = await Mediator.Send(getByCompanyGidListSCBankQuery);
+            return Ok(response);
+        }
 
     }
 }

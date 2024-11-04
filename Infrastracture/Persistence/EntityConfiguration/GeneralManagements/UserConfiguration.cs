@@ -88,6 +88,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
 
             builder.HasMany(y => y.OrganizationItems).WithOne(y => y.MainResponsibleUserFK).HasForeignKey(y => y.GidMainResponsibleUserFK);
             builder.HasMany(u => u.UserReminders).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
+            builder.HasMany(u => u.SCPersonnels).WithOne(y => y.UserFK).HasForeignKey(y => y.GidPersonnelFK);
 
         }
     }

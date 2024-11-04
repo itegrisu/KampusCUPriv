@@ -2,6 +2,7 @@ using Application.Features.GeneralManagementFeatures.Users.Commands.Create;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Delete;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Update;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UpdateForAdmin;
+using Application.Features.GeneralManagementFeatures.Users.Queries.GetByEnum;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetCompanyEmployee;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetList;
@@ -37,5 +38,9 @@ public class MappingProfiles : Profile
         CreateMap<IPaginate<User>, GetListResponse<GetSystemAdminUserListItemDto>>().ReverseMap();
         CreateMap<IPaginate<User>, GetListResponse<GetListDeletedUserListItemDto>>().ReverseMap();
         CreateMap<IPaginate<User>, GetListResponse<GetCompanyEmployeeUserListItemDto>>().ReverseMap();
+
+        CreateMap<User, GetByEnumUserListItemDto>().ReverseMap();
+        CreateMap<IPaginate<User>, GetListResponse<GetByEnumUserListItemDto>>().ReverseMap();
+
     }
 }

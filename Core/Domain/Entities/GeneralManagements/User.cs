@@ -7,6 +7,7 @@ using Domain.Entities.LogManagements;
 using Domain.Entities.MarketingManagements;
 using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
+using Domain.Entities.SupplierCustomerManagements;
 using Domain.Entities.SupportManagements;
 using Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -83,6 +84,8 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<Organization> Organizations { get; set; }
         public ICollection<OrganizationItem> OrganizationItems { get; set; }
         public ICollection<UserReminder>? UserReminders { get; set; }
+        public ICollection<SCPersonnel>? SCPersonnels { get; set; }
+
 
 
 

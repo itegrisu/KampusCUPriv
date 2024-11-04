@@ -16,6 +16,12 @@ public class SCAddressBusinessRules : BaseBusinessRules
     private readonly ISCCompanyReadRepository _scCompanyReadRepository;
     private readonly ICityReadRepository _cityReadRepository;
 
+    public SCAddressBusinessRules(ISCCompanyReadRepository scCompanyReadRepository, ICityReadRepository cityReadRepository)
+    {
+        _scCompanyReadRepository = scCompanyReadRepository;
+        _cityReadRepository = cityReadRepository;
+    }
+
     public async Task SCAddressShouldExistWhenSelected(X.SCAddress? item)
     {
         if (item == null)

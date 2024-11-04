@@ -2253,6 +2253,9 @@ namespace Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<bool>("IsHotel")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Keywords")
                         .HasMaxLength(300)
                         .HasColumnType("varchar(300)");
@@ -2343,6 +2346,36 @@ namespace Persistence.Migrations
                     b.HasIndex("GidSCCompanyFK");
 
                     b.ToTable("SCEmployers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCPersonnel", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidPersonnelFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidSCCompanyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SCPersonnelLoginStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidPersonnelFK");
+
+                    b.HasIndex("GidSCCompanyFK");
+
+                    b.ToTable("SCPersonnel");
                 });
 
             modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCWorkHistory", b =>
@@ -3403,6 +3436,25 @@ namespace Persistence.Migrations
                     b.Navigation("SCCompanyFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCPersonnel", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("SCPersonnels")
+                        .HasForeignKey("GidPersonnelFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("SCPersonnels")
+                        .HasForeignKey("GidSCCompanyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SCCompanyFK");
+
+                    b.Navigation("UserFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCWorkHistory", b =>
                 {
                     b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
@@ -3737,6 +3789,8 @@ namespace Persistence.Migrations
 
                     b.Navigation("ReceivedFinanceExpenses");
 
+                    b.Navigation("SCPersonnels");
+
                     b.Navigation("SendedFinanceExpenses");
 
                     b.Navigation("SpendedFinanceExpenseDetails");
@@ -3803,6 +3857,8 @@ namespace Persistence.Migrations
                     b.Navigation("SCBanks");
 
                     b.Navigation("SCEmployers");
+
+                    b.Navigation("SCPersonnels");
 
                     b.Navigation("SCWorkHistories");
                 });

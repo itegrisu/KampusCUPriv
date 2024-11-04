@@ -25,12 +25,14 @@ namespace Persistence.EntityConfiguration.SupplierManagements
             builder.Property(y => y.Keywords).IsRequired(false).HasColumnType("varchar").HasMaxLength(300);
             builder.Property(y => y.SupplierRank).IsRequired(false).HasColumnType("int");
             builder.Property(y => y.CustomerRank).IsRequired(false).HasColumnType("int");
+            builder.Property(y => y.IsHotel).IsRequired().HasColumnType("bit");
 
             builder.HasMany(u => u.SCAddresses).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
             builder.HasMany(u => u.SCBanks).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
             builder.HasMany(u => u.SCEmployers).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
             builder.HasMany(u => u.SCWorkHistories).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
             builder.HasMany(u => u.Organizations).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidCustomerFK);
+            builder.HasMany(u => u.SCPersonnels).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
 
         }
 

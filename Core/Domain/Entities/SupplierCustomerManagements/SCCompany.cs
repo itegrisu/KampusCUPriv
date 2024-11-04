@@ -21,6 +21,7 @@ namespace Domain.Entities.SupplierCustomerManagements
         public EnumPartnerType PartnerType { get; set; }
         public int? SupplierRank { get; set; }
         public int? CustomerRank { get; set; }
+        public bool IsHotel { get; set; }
         public EnumType Type { get; set; }
         public EnumStatus Status { get; set; }
 
@@ -29,6 +30,8 @@ namespace Domain.Entities.SupplierCustomerManagements
         public ICollection<SCEmployer>? SCEmployers { get; set; }
         public ICollection<SCWorkHistory>? SCWorkHistories { get; set; }
         public ICollection<Organization> Organizations { get; set; }
+        public ICollection<SCPersonnel>? SCPersonnels { get; set; }
+
 
     }
 }
