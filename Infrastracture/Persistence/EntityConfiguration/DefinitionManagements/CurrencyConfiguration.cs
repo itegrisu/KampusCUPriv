@@ -14,7 +14,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
 
             builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
             builder.Property(y => y.Code).IsRequired(false).HasColumnType("varchar").HasMaxLength(20);
-            builder.Property(y => y.Symbol).IsRequired(false).HasColumnType("varchar").HasMaxLength(5);
+            builder.Property(y => y.Symbol).IsRequired(false).HasColumnType("nvarchar").HasMaxLength(5);
 
             builder.HasMany(u => u.SCBanks).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);
             builder.HasMany(u => u.FinanceIncomes).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidCurrencyFK);

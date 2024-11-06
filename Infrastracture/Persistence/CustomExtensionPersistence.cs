@@ -68,6 +68,7 @@ using Application.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Application.Repositories.TaskManagementRepos.TaskFileRepo;
 using Application.Repositories.TaskManagementRepos.TaskRepo;
 using Application.Repositories.TaskManagementRepos.TaskUserRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleAllRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardImageRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardRepo;
 using Application.Repositories.WarehouseManagementRepos.StockMovementRepo;
@@ -144,6 +145,7 @@ using Persistence.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskFileRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskUserRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleAllRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardImageRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockMovementRepo;
@@ -558,6 +560,11 @@ namespace Persistence
             #region SC Personnel
             services.AddScoped<ISCPersonnelReadRepository, SCPersonnelReadRepository>();
             services.AddScoped<ISCPersonnelWriteRepository, SCPersonnelWriteRepository>();
+            #endregion
+
+            #region Vehicle All
+            services.AddScoped<IVehicleAllReadRepository, VehicleAllReadRepository>();
+            services.AddScoped<IVehicleAllWriteRepository, VehicleAllWriteRepository>();
             #endregion
 
 
