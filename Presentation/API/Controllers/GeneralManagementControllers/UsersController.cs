@@ -1,5 +1,4 @@
-﻿using Application.Features.GeneralManagementFeatures.UserReminders.Queries.GetByUserGid;
-using Application.Features.GeneralManagementFeatures.Users.Commands.ChangeIsActive;
+﻿using Application.Features.GeneralManagementFeatures.Users.Commands.ChangeIsActive;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Create;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Delete;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Update;
@@ -7,9 +6,9 @@ using Application.Features.GeneralManagementFeatures.Users.Commands.UpdateForAdm
 using Application.Features.GeneralManagementFeatures.Users.Commands.UpdatePersonnelSpecialNote;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatar;
 using Application.Features.GeneralManagementFeatures.Users.Commands.UploadAvatarTemp;
+using Application.Features.GeneralManagementFeatures.Users.Queries.GetActiveUser;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetByEnum;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid;
-using Application.Features.GeneralManagementFeatures.Users.Queries.GetCompanyEmployee;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetList;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetListDeleted;
 using Application.Features.GeneralManagementFeatures.Users.Queries.GetSystemAdmin;
@@ -48,7 +47,6 @@ namespace API.Controllers.GeneralManagementControllers
             GetListResponse<GetListUserListItemDto> response = await Mediator.Send(getListUserQuery);
             return Ok(response);
         }
-
 
 
 
@@ -124,20 +122,21 @@ namespace API.Controllers.GeneralManagementControllers
         }
 
         [HttpGet("[action]")]
-        [Authorize(AuthenticationSchemes = "Admin")]
-        public async Task<IActionResult> GetCompanyEmployee([FromQuery] PageRequest pageRequest)
-        {
-            GetCompanyEmployeeUserQuery getCompanyEmployeeUserQuery = new() { PageRequest = pageRequest };
-            GetListResponse<GetCompanyEmployeeUserListItemDto> response = await Mediator.Send(getCompanyEmployeeUserQuery);
-            return Ok(response);
-        }
-
-        [HttpGet("[action]")]
         public async Task<IActionResult> GetByEnumUser([FromQuery] GetByEnumUserQuery getByEnumUserQuery)
         {
             GetListResponse<GetByEnumUserListItemDto> response = await Mediator.Send(getByEnumUserQuery);
             return Ok(response);
         }
+
+        [HttpGet("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> GetActiveUser([FromQuery] PageRequest pageRequest)
+        {
+            GetActiveUserQuery getActiveUserQuery = new() { PageRequest = pageRequest };
+            GetListResponse<GetActiveUserListItemDto> response = await Mediator.Send(getActiveUserQuery);
+            return Ok(response);
+        }
+
 
     }
 }

@@ -1,19 +1,12 @@
-﻿using Application.Features.GeneralManagementFeatures.Users.Queries.GetCompanyEmployee;
-using Application.Helpers.PaginationHelpers;
+﻿using Application.Helpers.PaginationHelpers;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities.GeneralManagements;
 using Domain.Enums;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByEnum
 {
