@@ -10,10 +10,9 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
         {
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
-
-
             builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
 
+            builder.HasMany(u => u.VehicleAlls).WithOne(y => y.OtoBrandFK).HasForeignKey(y => y.GidVehicleBrand);
         }
     }
 }
