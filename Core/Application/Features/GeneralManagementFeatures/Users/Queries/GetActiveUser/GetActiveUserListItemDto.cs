@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetCompanyEmployee
+namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetActiveUser
 {
-    public class GetCompanyEmployeeUserListItemDto :IDto
+    public class GetActiveUserListItemDto :IDto
     {
         public Guid Gid { get; set; }
         public Guid? GidNationalityFK { get; set; }

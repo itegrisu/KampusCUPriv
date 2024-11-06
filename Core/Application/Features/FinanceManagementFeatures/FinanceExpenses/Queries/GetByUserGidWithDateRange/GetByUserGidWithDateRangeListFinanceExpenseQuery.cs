@@ -49,7 +49,7 @@ namespace Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries
                         index: request.PageIndex,
                         size: request.PageSize,
                         cancellationToken: cancellationToken,
-                        include: x => x.Include(x => x.FinanceExpenseGroupFK).Include(x => x.CurrencyFK).Include(x => x.MoneySenderPersonnelFK).Include(x => x.ApprovalReceiverFK).Include(x => x.OrganizationFK),
+                        include: x => x.Include(x => x.FinanceExpenseGroupFK).Include(x => x.CurrencyFK).Include(x => x.MoneySenderPersonnelFK).Include(x => x.ApprovalReceiverFK).Include(x => x.OrganizationFK).Include(x => x.MoneyReceivePersonnelFK),
                         predicate: x => x.TransactionDate >= request.StartDate &&
                                        x.TransactionDate <= request.EndDate &&
                                        x.GidMoneyReceivePersonnelFK == request.Gid
@@ -76,7 +76,7 @@ namespace Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries
                         index: request.PageIndex,
                         size: request.PageSize,
                         cancellationToken: cancellationToken,
-                        include: x => x.Include(x => x.FinanceExpenseGroupFK).Include(x => x.CurrencyFK).Include(x => x.MoneySenderPersonnelFK).Include(x => x.ApprovalReceiverFK).Include(x => x.OrganizationFK),
+                        include: x => x.Include(x => x.FinanceExpenseGroupFK).Include(x => x.CurrencyFK).Include(x => x.MoneySenderPersonnelFK).Include(x => x.ApprovalReceiverFK).Include(x => x.OrganizationFK).Include(x => x.MoneyReceivePersonnelFK),
                         predicate: x => x.TransactionDate >= request.StartDate &&
                                        x.TransactionDate <= request.EndDate
 
