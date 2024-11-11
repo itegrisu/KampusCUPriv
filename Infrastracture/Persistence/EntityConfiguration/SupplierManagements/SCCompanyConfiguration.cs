@@ -33,7 +33,7 @@ namespace Persistence.EntityConfiguration.SupplierManagements
             builder.HasMany(u => u.SCWorkHistories).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
             builder.HasMany(u => u.Organizations).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidCustomerFK);
             builder.HasMany(u => u.SCPersonnels).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSCCompanyFK);
-
+            builder.HasMany(u => u.VehicleTransactions).WithOne(y => y.SCCompanyFK).HasForeignKey(y => y.GidSupplierCustomerFK);
         }
 
     }

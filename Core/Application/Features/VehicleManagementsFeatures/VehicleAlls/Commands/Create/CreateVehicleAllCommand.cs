@@ -21,6 +21,7 @@ public class CreateVehicleAllCommand : IRequest<CreatedVehicleAllResponse>
     public string? ChassisNumber { get; set; }
     public int PassengerCount { get; set; }
     public EnumFuelType FuelType { get; set; }
+    public bool IsSubmitted { get; set; }
     public string? Description { get; set; }
 
     public class CreateVehicleAllCommandHandler : IRequestHandler<CreateVehicleAllCommand, CreatedVehicleAllResponse>

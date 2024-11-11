@@ -9,6 +9,7 @@ using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.SupplierCustomerManagements;
 using Domain.Entities.SupportManagements;
+using Domain.Entities.VehicleManagements;
 using Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using T = Domain.Entities.TaskManagements;
@@ -85,10 +86,7 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<OrganizationItem> OrganizationItems { get; set; }
         public ICollection<UserReminder>? UserReminders { get; set; }
         public ICollection<SCPersonnel>? SCPersonnels { get; set; }
-
-
-
-
+        public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
 
 
         #region NotMapped alanlar 

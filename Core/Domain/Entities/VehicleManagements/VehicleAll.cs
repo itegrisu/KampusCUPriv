@@ -21,8 +21,9 @@ namespace Domain.Entities.VehicleManagements
         public string? ChassisNumber { get; set; }
         public int PassengerCount { get; set; }
         public EnumFuelType FuelType { get; set; }
+        public bool IsSubmitted { get; set; }
         public string? Description { get; set; }
 
-
+        public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
     }
 }
