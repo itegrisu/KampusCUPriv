@@ -12,10 +12,10 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Com
 
 public class UpdateVehicleTransactionCommand : IRequest<UpdatedVehicleTransactionResponse>
 {
-    public Guid Gid { get; set; }
-    public Guid GidVehicleAllFK { get; set; }
-    public Guid GidSupplierCustomerFK { get; set; }
-    public Guid GidVehicleUsePersonnelFK { get; set; }
+    public Guid? Gid { get; set; }
+    public Guid? GidVehicleAllFK { get; set; }
+    public Guid? GidSupplierCustomerFK { get; set; }
+    public Guid? GidVehicleUsePersonnelFK { get; set; }
     public int StartKM { get; set; }
     public int? MonthlyRentalFee { get; set; }
     public DateTime? ContractStartDate { get; set; }

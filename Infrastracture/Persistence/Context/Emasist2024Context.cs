@@ -13,6 +13,7 @@ using Domain.Entities.PortalManagements;
 using Domain.Entities.SupplierCustomerManagements;
 using Domain.Entities.SupportManagements;
 using Domain.Entities.TaskManagements;
+using Domain.Entities.VehicleManagements;
 using Domain.Entities.WarehouseManagements;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfiguration.AnnouncementManagements;
@@ -29,6 +30,7 @@ using Persistence.EntityConfiguration.PortalManagements;
 using Persistence.EntityConfiguration.SupplierManagements;
 using Persistence.EntityConfiguration.SupportManagements;
 using Persistence.EntityConfiguration.TaskManagements;
+using Persistence.EntityConfiguration.VehicleManagements;
 using Persistence.EntityConfiguration.WareHouseManagements;
 using C = Core.Context;
 using T = Domain.Entities.TaskManagements;
@@ -141,6 +143,9 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new FinanceExpenseConfiguration());
             modelBuilder.ApplyConfiguration(new FinanceExpenseDetailConfiguration());
 
+            modelBuilder.ApplyConfiguration(new VehicleAllConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleTransactionConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -252,5 +257,7 @@ namespace Persistence.Context
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<OrganizationGroup> OrganizationGroups { get; set; }
         public DbSet<StockCategory> StockCategories { get; set; }
+        public DbSet<VehicleAll> VehicleAlls { get; set; }
+        public DbSet<VehicleTransaction> VehicleTransactions { get; set;}
     }
 }
