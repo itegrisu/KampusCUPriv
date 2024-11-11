@@ -30,7 +30,7 @@ namespace Persistence.Services.EntityServices
             SELECT TABLE_NAME 
             FROM INFORMATION_SCHEMA.TABLES 
             WHERE TABLE_TYPE = 'BASE TABLE' 
-                AND TABLE_CATALOG = 'u1632502_nam2' 
+                AND TABLE_CATALOG = 'u1632502_emstv4' 
                 AND TABLE_NAME NOT LIKE 'log%'
                 AND TABLE_NAME != 'sysdiagrams'
                 AND TABLE_NAME != '__EFMigrationsHistory';

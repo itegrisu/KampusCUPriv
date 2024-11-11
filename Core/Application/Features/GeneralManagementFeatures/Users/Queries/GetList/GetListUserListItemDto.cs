@@ -1,4 +1,5 @@
 using Core.Application.Dtos;
+using Core.Enum;
 using Domain.Enums;
 
 
@@ -7,6 +8,8 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetList;
 public class GetListUserListItemDto : IDto
 {
     public Guid Gid { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DataState DataState { get; set; }
     public Guid? GidNationalityFK { get; set; }
     public string CountryFKName { get; set; }
     public string Name { get; set; }
