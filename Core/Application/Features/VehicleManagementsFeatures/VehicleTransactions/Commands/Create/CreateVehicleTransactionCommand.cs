@@ -13,8 +13,8 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Com
 public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactionResponse>
 {
     public Guid GidVehicleAllFK { get; set; }
-    public Guid GidSupplierCustomerFK { get; set; }
-    public Guid GidVehicleUsePersonnelFK { get; set; }
+    public Guid? GidSupplierCustomerFK { get; set; }
+    public Guid? GidVehicleUsePersonnelFK { get; set; }
     public int StartKM { get; set; }
     public int? MonthlyRentalFee { get; set; }
     public DateTime? ContractStartDate { get; set; }
@@ -28,8 +28,6 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
     public DateTime? PurchaseDate { get; set; }
     public DateTime? SaleDate { get; set; }
     public EnumVehicleStatus VehicleStatus { get; set; }
-
-
 
     public class CreateVehicleTransactionCommandHandler : IRequestHandler<CreateVehicleTransactionCommand, CreatedVehicleTransactionResponse>
     {

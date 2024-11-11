@@ -6,6 +6,7 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Que
     public class GetByGidVehicleTransactionResponse : IResponse
     {
         public Guid Gid { get; set; }
+        public Guid GidVehicleAllFK { get; set; }
         public Guid GidVehicleAllFKPlateNumber { get; set; }
         public Guid? GidSupplierCustomerFK { get; set; }
         public string SCCompanyFKCompanyName { get; set; }
@@ -13,8 +14,8 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Que
         public string UserFKFullName{ get; set; }
         public int StartKM { get; set; }
         public int MonthlyRentalFee { get; set; }
-        public DateTime ContractStartDate { get; set; }
-        public DateTime ContractEndDate { get; set; }
+        public DateTime? ContractStartDate { get; set; }
+        public DateTime? ContractEndDate { get; set; }
         public string? ContactPerson { get; set; }
         public string? ContactPhone { get; set; }
         public string? ArventoAPIInfo { get; set; }
