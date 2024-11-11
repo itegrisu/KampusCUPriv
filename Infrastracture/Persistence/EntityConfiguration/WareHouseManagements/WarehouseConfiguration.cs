@@ -14,7 +14,7 @@ namespace Persistence.EntityConfiguration.WareHouseManagements
             builder.HasOne(y => y.OrganizationFK).WithMany(u => u.Warehouses).HasForeignKey(y => y.GidOrganizationFK);
 
             builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(y => y.Address).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(y => y.Location).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
 
             builder.HasMany(u => u.PreviousStockMovements).WithOne(y => y.PreviousWarehouseFK).HasForeignKey(y => y.GidPreviousWarehouseFK);
