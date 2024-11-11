@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Emasist2024Context))]
-    partial class Emasist2024ContextModelSnapshot : ModelSnapshot
+    [Migration("20241108213331_mig14")]
+    partial class mig14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2755,9 +2757,6 @@ namespace Persistence.Migrations
                     b.Property<Guid?>("GidSupplierCustomerFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GidVehicleAllFK")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("GidVehicleUsePersonnelFK")
                         .HasColumnType("uniqueidentifier");
 
@@ -2776,9 +2775,6 @@ namespace Persistence.Migrations
                     b.Property<int>("StartKM")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("VehicleAllFKGid")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("VehicleStatus")
                         .HasColumnType("int");
 
@@ -2787,8 +2783,6 @@ namespace Persistence.Migrations
                     b.HasIndex("GidSupplierCustomerFK");
 
                     b.HasIndex("GidVehicleUsePersonnelFK");
-
-                    b.HasIndex("VehicleAllFKGid");
 
                     b.ToTable("VehicleTransaction");
                 });
@@ -3732,17 +3726,9 @@ namespace Persistence.Migrations
                         .HasForeignKey("GidVehicleUsePersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
-                        .WithMany("VehicleTransactions")
-                        .HasForeignKey("VehicleAllFKGid")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("SCCompanyFK");
 
                     b.Navigation("UserFK");
-
-                    b.Navigation("VehicleAllFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.WarehouseManagements.StockCard", b =>
@@ -4052,11 +4038,6 @@ namespace Persistence.Migrations
                     b.Navigation("TaskFiles");
 
                     b.Navigation("TaskUsers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleAll", b =>
-                {
-                    b.Navigation("VehicleTransactions");
                 });
 
             modelBuilder.Entity("Domain.Entities.WarehouseManagements.StockCard", b =>

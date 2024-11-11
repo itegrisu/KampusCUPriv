@@ -24,6 +24,7 @@ namespace Persistence.EntityConfiguration.VehicleManagements
             builder.Property(y => y.EngineNo).IsRequired(false).HasColumnType("varchar").HasMaxLength(50);
             builder.Property(y => y.ChassisNumber).IsRequired(false).HasColumnType("varchar").HasMaxLength(50);
             builder.Property(y => y.PassengerCount).IsRequired().HasColumnType("int");
+            builder.Property(y => y.IsSubmitted).IsRequired().HasColumnType("bit");
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
         }
     }

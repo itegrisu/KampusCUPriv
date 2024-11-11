@@ -16,6 +16,7 @@ namespace Application.Features.VehicleManagementFeatures.VehicleAlls.Queries.Get
         public string? ChassisNumber { get; set; }
         public int PassengerCount { get; set; }
         public EnumFuelType FuelType { get; set; }
+        public bool IsSubmitted { get; set; }
         public string? Description { get; set; }
 
     }
