@@ -21,8 +21,5 @@ namespace Domain.Entities.WarehouseManagements
 
         public ICollection<StockCardImage>? StockCardImages { get; set; }
         public ICollection<StockMovement>? StockMovements { get; set; }
-        //  public ICollection<StoreSaleDetail>? StoreSaleDetails { get; set; }
-        // public ICollection<StoreAdvertising>? StoreAdvertisings { get; set; }
-
     }
 }

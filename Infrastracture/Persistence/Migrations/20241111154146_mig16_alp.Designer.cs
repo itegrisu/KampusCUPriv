@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Emasist2024Context))]
-    partial class Emasist2024ContextModelSnapshot : ModelSnapshot
+    [Migration("20241111154146_mig16_alp")]
+    partial class mig16_alp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2673,12 +2675,10 @@ namespace Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ChassisNumber")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Color")
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2687,12 +2687,10 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EngineNo")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FuelType")
                         .HasColumnType("int");
@@ -2704,16 +2702,14 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Model")
-                        .HasMaxLength(60)
-                        .HasColumnType("varchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PassengerCount")
                         .HasColumnType("int");
 
                     b.Property<string>("PlateNumber")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("VehicleType")
                         .HasColumnType("int");
@@ -2722,7 +2718,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidVehicleBrand");
 
-                    b.ToTable("VehicleAlls");
+                    b.ToTable("VehicleAll");
                 });
 
             modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleTransaction", b =>
@@ -2732,26 +2728,22 @@ namespace Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ArventoAPIInfo")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactPerson")
-                        .HasMaxLength(60)
-                        .HasColumnType("varchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactPhone")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ContractEndDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ContractFile")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ContractStartDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2760,8 +2752,7 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("GidSupplierCustomerFK")
                         .HasColumnType("uniqueidentifier");
@@ -2773,20 +2764,22 @@ namespace Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LicenseFile")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MonthlyRentalFee")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("PurchaseDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("SaleDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("StartKM")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("VehicleAllFKGid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("VehicleStatus")
                         .HasColumnType("int");
@@ -2795,11 +2788,11 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidSupplierCustomerFK");
 
-                    b.HasIndex("GidVehicleAllFK");
-
                     b.HasIndex("GidVehicleUsePersonnelFK");
 
-                    b.ToTable("VehicleTransactions");
+                    b.HasIndex("VehicleAllFKGid");
+
+                    b.ToTable("VehicleTransaction");
                 });
 
             modelBuilder.Entity("Domain.Entities.WarehouseManagements.StockCard", b =>
@@ -3736,16 +3729,16 @@ namespace Persistence.Migrations
                         .HasForeignKey("GidSupplierCustomerFK")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
-                        .WithMany("VehicleTransactions")
-                        .HasForeignKey("GidVehicleAllFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
                         .WithMany("VehicleTransactions")
                         .HasForeignKey("GidVehicleUsePersonnelFK")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("VehicleTransactions")
+                        .HasForeignKey("VehicleAllFKGid")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("SCCompanyFK");
 

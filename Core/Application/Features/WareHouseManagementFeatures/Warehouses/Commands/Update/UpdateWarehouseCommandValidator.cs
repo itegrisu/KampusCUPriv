@@ -11,7 +11,7 @@ public class UpdateWarehouseCommandValidator : AbstractValidator<UpdateWarehouse
 
 RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
 RuleFor(c => c.WarehouseType).NotNull().NotEmpty();
-RuleFor(c => c.Address).MaximumLength(250);
+RuleFor(c => c.Location).MaximumLength(250);
 RuleFor(c => c.Description).MaximumLength(250);
 
 
