@@ -190,7 +190,7 @@ namespace Infrastracture.Services.Auth
             }
 
             #region token - refresh token
-            T.Token token = _tokenHandler.CreateAccessToken(userToCheck, 40);
+            T.Token token = _tokenHandler.CreateAccessToken(userToCheck, 600);
             var sessionId = Guid.NewGuid().ToString();
             //_httpContextAccessor.HttpContext.Session.SetString("SessionId", sessionId); 
             var userRefreshToken = await _userRefreshTokenReadRepository.GetAsync(x => x.GidUserFK == userToCheck.Gid);
@@ -399,7 +399,7 @@ namespace Infrastracture.Services.Auth
 
 
             #region token - refresh token
-            T.Token token = _tokenHandler.CreateAccessToken(userToCheck, 40);
+            T.Token token = _tokenHandler.CreateAccessToken(userToCheck, 600);
             var sessionId = Guid.NewGuid().ToString();
             var userRefreshToken = await _userRefreshTokenReadRepository.GetAsync(x => x.GidUserFK == userToCheck.Gid);
 

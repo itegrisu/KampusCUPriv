@@ -23,4 +23,6 @@ public static class StockMovementsBusinessMessages
     public const string StockCardNotExists = "Stock Card Not Exists";
     public const string PreviousWarehouseNotExists = "Previous Warehouse Not Exists";
     public const string NextWarehouseNotExists = "Next Warehouse Not Exists";
+
+    public const string LessProductInWarehouse = "You don't have the quantity you want to transfer!";
 }

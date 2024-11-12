@@ -3,6 +3,7 @@ using Application.Features.WareHouseManagementFeatures.StockMovements.Commands.D
 using Application.Features.WareHouseManagementFeatures.StockMovements.Commands.Update;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Commands.UploadFile;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Commands.UploadFileTemp;
+using Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetByCard;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetByGid;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetList;
 using Core.Application.Responses;
@@ -93,7 +94,13 @@ namespace API.Controllers.WarehouseControllers
             return Ok(response);
         }
 
-
+        [HttpGet("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> GetByCard([FromQuery] GetByCardStockMovementQuery getByCardStockMovementQuery)
+        {
+            GetListResponse<GetByCardStockMovementListItemDto> response = await Mediator.Send(getByCardStockMovementQuery);
+            return Ok(response);
+        }
 
     }
 }

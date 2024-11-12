@@ -1,6 +1,7 @@
 using Application.Features.WareHouseManagementFeatures.StockMovements.Commands.Create;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Commands.Delete;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Commands.Update;
+using Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetByCard;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetByGid;
 using Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetList;
 using AutoMapper;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<StockMovement, GetListStockMovementListItemDto>().ReverseMap();
         CreateMap<IPaginate<StockMovement>, GetListResponse<GetListStockMovementListItemDto>>().ReverseMap();
+
+        CreateMap<StockMovement, GetByCardStockMovementListItemDto>().ReverseMap();
+        CreateMap<IPaginate<StockMovement>, GetListResponse<GetByCardStockMovementListItemDto>>().ReverseMap();
     }
 }

@@ -1,9 +1,9 @@
-using Core.Application.Responses;
+﻿using Core.Application.Dtos;
 using Domain.Enums;
 
-namespace Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetByGid
+namespace Application.Features.WareHouseManagementFeatures.StockMovements.Queries.GetByCard
 {
-    public class GetByGidStockMovementResponse : IResponse
+    public class GetByCardStockMovementListItemDto : IDto
     {
         public Guid Gid { get; set; }
         public Guid GidStockCardFK { get; set; }

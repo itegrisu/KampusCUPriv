@@ -43,6 +43,9 @@ public class CreateStockMovementCommand : IRequest<CreatedStockMovementResponse>
         {
             StockMovement stockMovement = _mapper.Map<StockMovement>(request);
 
+            if (stockMovement.OperationType == EnumOperationType.StokCikisi || stockMovement.OperationType == EnumOperationType.StokHareketi)
+                await _stockMovementBusinessRules.IsThereStockInWarehouseForStockOutput(stockMovement.GidStockCardFK, stockMovement.GidPreviousWarehouseFK, stockMovement.Amount);
+
             await _stockMovementWriteRepository.AddAsync(stockMovement);
             await _stockMovementWriteRepository.SaveAsync();
 
