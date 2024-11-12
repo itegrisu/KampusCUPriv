@@ -21,6 +21,8 @@ namespace Persistence.EntityConfiguration.OrganisationManagements
             builder.Property(y => y.IsStar).IsRequired().HasColumnType("bit");
             builder.Property(y => y.RowNo).IsRequired().HasColumnType("int");
 
+            builder.HasMany(u => u.OrganizationItemMessages).WithOne(y => y.OrganizationItemFK).HasForeignKey(y => y.GidOrganizationItemFK);
+            builder.HasMany(u => u.OrganizationItemFiles).WithOne(y => y.OrganizationItemFK).HasForeignKey(y => y.GidOrganizationItemFK);
 
         }
     }

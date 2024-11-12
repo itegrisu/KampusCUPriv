@@ -9,7 +9,7 @@ namespace Application.Features.OrganizationManagementFeatures.OrganizationItems.
         public Guid GidOrganizationGroupFK { get; set; }
         public string OrganizationGroupFKGroupName { get; set; }
         public Guid? GidMainResponsibleUserFK { get; set; }
-        public string UserFKFullName { get; set; }
+        public string MainResponsibleUserFKFullName { get; set; }
 
         public string ItemName { get; set; }
         public DateTime StartDate { get; set; }

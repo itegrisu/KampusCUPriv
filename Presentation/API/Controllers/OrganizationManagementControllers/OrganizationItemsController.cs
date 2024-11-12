@@ -4,7 +4,6 @@ using Application.Features.OrganizationManagementFeatures.OrganizationItems.Comm
 using Application.Features.OrganizationManagementFeatures.OrganizationItems.Commands.UpdateRowNo;
 using Application.Features.OrganizationManagementFeatures.OrganizationItems.Queries.GetByGid;
 using Application.Features.OrganizationManagementFeatures.OrganizationItems.Queries.GetList;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
 using MediatR;
@@ -23,9 +22,8 @@ namespace API.Controllers.OrganizationManagementControllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+        public async Task<IActionResult> GetList([FromQuery] GetListOrganizationItemQuery getListOrganizationItemQuery)
         {
-            GetListOrganizationItemQuery getListOrganizationItemQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListOrganizationItemListItemDto> response = await Mediator.Send(getListOrganizationItemQuery);
             return Ok(response);
         }

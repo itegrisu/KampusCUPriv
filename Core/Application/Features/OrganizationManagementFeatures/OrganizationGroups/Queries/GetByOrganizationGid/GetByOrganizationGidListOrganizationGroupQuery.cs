@@ -1,19 +1,12 @@
-﻿using Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetList;
-using Application.Helpers.PaginationHelpers;
+﻿using Application.Helpers.PaginationHelpers;
 using Application.Repositories.OrganizationManagementRepos.OrganizationGroupRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities.OrganizationManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using X = Domain.Entities.OrganizationManagements;
 
 namespace Application.Features.OrganizationManagementFeatures.OrganizationGroups.Queries.GetByOrganizationGid
@@ -42,6 +35,7 @@ namespace Application.Features.OrganizationManagementFeatures.OrganizationGroups
                 {
                     return await _noPagination.NoPaginationData(cancellationToken,
                         predicate: x => x.GidOrganizationFK == request.OrganizationGid,
+                         orderBy: x => x.RowNo,
                         includes: new Expression<Func<OrganizationGroup, object>>[]
                         {
                             x=>x.OrganizationFK
@@ -54,6 +48,7 @@ namespace Application.Features.OrganizationManagementFeatures.OrganizationGroups
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
                     predicate: x => x.GidOrganizationFK == request.OrganizationGid,
+                     orderBy: x => x.OrderBy(x => x.RowNo),
                     include: x => x.Include(x => x.OrganizationFK)
                 );
 

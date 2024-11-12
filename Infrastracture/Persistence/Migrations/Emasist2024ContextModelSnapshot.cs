@@ -1743,6 +1743,76 @@ namespace Persistence.Migrations
                     b.ToTable("OrganizationItems");
                 });
 
+            modelBuilder.Entity("Domain.Entities.OrganizationManagements.OrganizationItemFile", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(300)
+                        .HasColumnType("varchar(300)");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid>("GidOrganizationItemFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RowNo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidOrganizationItemFK");
+
+                    b.ToTable("OrganizationItemFiles");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OrganizationManagements.OrganizationItemMessage", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidOrganizationItemFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidSendMessageUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidOrganizationItemFK");
+
+                    b.HasIndex("GidSendMessageUserFK");
+
+                    b.ToTable("OrganizationItemMessages");
+                });
+
             modelBuilder.Entity("Domain.Entities.PersonnelManagements.PersonnelAddress", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -3403,6 +3473,36 @@ namespace Persistence.Migrations
                     b.Navigation("OrganizationGroupFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.OrganizationManagements.OrganizationItemFile", b =>
+                {
+                    b.HasOne("Domain.Entities.OrganizationManagements.OrganizationItem", "OrganizationItemFK")
+                        .WithMany("OrganizationItemFiles")
+                        .HasForeignKey("GidOrganizationItemFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("OrganizationItemFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OrganizationManagements.OrganizationItemMessage", b =>
+                {
+                    b.HasOne("Domain.Entities.OrganizationManagements.OrganizationItem", "OrganizationItemFK")
+                        .WithMany("OrganizationItemMessages")
+                        .HasForeignKey("GidOrganizationItemFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("OrganizationItemMessages")
+                        .HasForeignKey("GidSendMessageUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("OrganizationItemFK");
+
+                    b.Navigation("UserFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.PersonnelManagements.PersonnelAddress", b =>
                 {
                     b.HasOne("Domain.Entities.DefinitionManagements.City", "CityFK")
@@ -3944,6 +4044,8 @@ namespace Persistence.Migrations
 
                     b.Navigation("MarketingVisitPlans");
 
+                    b.Navigation("OrganizationItemMessages");
+
                     b.Navigation("OrganizationItems");
 
                     b.Navigation("Organizations");
@@ -4025,6 +4127,13 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.OrganizationManagements.OrganizationGroup", b =>
                 {
                     b.Navigation("OrganizationItems");
+                });
+
+            modelBuilder.Entity("Domain.Entities.OrganizationManagements.OrganizationItem", b =>
+                {
+                    b.Navigation("OrganizationItemFiles");
+
+                    b.Navigation("OrganizationItemMessages");
                 });
 
             modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCCompany", b =>

@@ -4,11 +4,11 @@ using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.OrganizationManagements;
-using MediatR;
-using System.Linq.Expressions;
 using Domain.Entities.OrganizationManagements;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using X = Domain.Entities.OrganizationManagements;
 
 namespace Application.Features.OrganizationManagementFeatures.OrganizationFiles.Queries.GetList;
 
@@ -35,6 +35,7 @@ public class GetListOrganizationFileQuery : IRequest<GetListResponse<GetListOrga
                 //unutma
                 //includes varsa eklenecek - Orn: Altta
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    orderBy: x => x.RowNo,
                     includes: new Expression<Func<OrganizationFile, object>>[]
                     {
                        x => x.OrganizationFK
@@ -44,6 +45,7 @@ public class GetListOrganizationFileQuery : IRequest<GetListResponse<GetListOrga
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(x => x.RowNo),
                 include: x => x.Include(x => x.OrganizationFK)
             );
 

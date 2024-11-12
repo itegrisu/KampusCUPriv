@@ -84,6 +84,7 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<FinanceExpenseDetail> ControlledFinanceExpenseDetails { get; set; }
         public ICollection<Organization> Organizations { get; set; }
         public ICollection<OrganizationItem> OrganizationItems { get; set; }
+        public ICollection<OrganizationItemMessage>? OrganizationItemMessages { get; set; }
         public ICollection<UserReminder>? UserReminders { get; set; }
         public ICollection<SCPersonnel>? SCPersonnels { get; set; }
         public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
