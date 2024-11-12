@@ -16,6 +16,7 @@ using Domain.Entities.TaskManagements;
 using Domain.Entities.VehicleManagements;
 using Domain.Entities.WarehouseManagements;
 using Microsoft.EntityFrameworkCore;
+using OrganizationManagement.Persistence.EntityConfiguration;
 using Persistence.EntityConfiguration.AnnouncementManagements;
 using Persistence.EntityConfiguration.AuthManagements;
 using Persistence.EntityConfiguration.DefinitionManagements;
@@ -136,6 +137,8 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new OrganizationItemConfiguration());
             modelBuilder.ApplyConfiguration(new OrganizationConfiguration());
             modelBuilder.ApplyConfiguration(new OrganizationGroupConfiguration());
+            modelBuilder.ApplyConfiguration(new OrganizationItemMessageConfiguration());
+            modelBuilder.ApplyConfiguration(new OrganizationItemFileConfiguration());
 
             modelBuilder.ApplyConfiguration(new FinanceIncomeGroupConfiguration());
             modelBuilder.ApplyConfiguration(new FinanceIncomeConfiguration());
@@ -249,6 +252,8 @@ namespace Persistence.Context
         public DbSet<OfferTransaction> OfferTransactions { get; set; }
         public DbSet<OrganizationType> OrganizationTypes { get; set; }
         public DbSet<OrganizationItem> OrganizationItems { get; set; }
+        public DbSet<OrganizationItemMessage> OrganizationItemMessages { get; set; }
+        public DbSet<OrganizationItemFile> OrganizationItemFiles { get; set; }
         public DbSet<FinanceIncomeGroup> FinanceIncomeGroups { get; set; }
         public DbSet<FinanceIncome> FinanceIncomes { get; set; }
         public DbSet<FinanceExpenseGroup> FinanceExpenseGroups { get; set; }
@@ -258,6 +263,6 @@ namespace Persistence.Context
         public DbSet<OrganizationGroup> OrganizationGroups { get; set; }
         public DbSet<StockCategory> StockCategories { get; set; }
         public DbSet<VehicleAll> VehicleAlls { get; set; }
-        public DbSet<VehicleTransaction> VehicleTransactions { get; set;}
+        public DbSet<VehicleTransaction> VehicleTransactions { get; set; }
     }
 }

@@ -19,6 +19,8 @@ namespace Domain.Entities.OrganizationManagements
         public EnumItemStatus ItemStatus { get; set; }
         public int RowNo { get; set; }
 
+        public ICollection<OrganizationItemMessage>? OrganizationItemMessages { get; set; }
+        public ICollection<OrganizationItemFile>? OrganizationItemFiles { get; set; }
 
     }
 }

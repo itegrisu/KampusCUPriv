@@ -34,6 +34,7 @@ public class GetListOrganizationGroupQuery : IRequest<GetListResponse<GetListOrg
             if (request.PageRequest.PageIndex == -1)
             {
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    orderBy: x => x.RowNo,
                     includes: new Expression<Func<OrganizationGroup, object>>[]
                     {
                       x=>x.OrganizationFK
@@ -45,6 +46,7 @@ public class GetListOrganizationGroupQuery : IRequest<GetListResponse<GetListOrg
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(x => x.RowNo),
                 include: x => x.Include(x => x.OrganizationFK)
             );
 

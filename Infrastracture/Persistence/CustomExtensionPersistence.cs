@@ -43,6 +43,8 @@ using Application.Repositories.OfferManagementRepos.OfferRepo;
 using Application.Repositories.OfferManagementRepos.OfferTransactionRepo;
 using Application.Repositories.OrganizationManagementRepos.OrganizationFileRepo;
 using Application.Repositories.OrganizationManagementRepos.OrganizationGroupRepo;
+using Application.Repositories.OrganizationManagementRepos.OrganizationItemFileRepo;
+using Application.Repositories.OrganizationManagementRepos.OrganizationItemMessageRepo;
 using Application.Repositories.OrganizationManagementRepos.OrganizationItemRepo;
 using Application.Repositories.OrganizationManagementRepos.OrganizationRepo;
 using Application.Repositories.PersonnelManagementRepos.PersonnelAddressRepo;
@@ -121,6 +123,8 @@ using Persistence.Repositories.OfferManagementRepos.OfferRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferTransactionRepo;
 using Persistence.Repositories.OrganizationManagementRepos.OrganizationFileRepo;
 using Persistence.Repositories.OrganizationManagementRepos.OrganizationGroupRepo;
+using Persistence.Repositories.OrganizationManagementRepos.OrganizationItemFileRepo;
+using Persistence.Repositories.OrganizationManagementRepos.OrganizationItemMessageRepo;
 using Persistence.Repositories.OrganizationManagementRepos.OrganizationItemRepo;
 using Persistence.Repositories.OrganizationManagementRepos.OrganizationRepo;
 using Persistence.Repositories.PersonnelManagementRepos.PersonelGraduatedSchoolRepo;
@@ -542,6 +546,16 @@ namespace Persistence
             #region Organization Group
             services.AddScoped<IOrganizationGroupReadRepository, OrganizationGroupReadRepository>();
             services.AddScoped<IOrganizationGroupWriteRepository, OrganizationGroupWriteRepository>();
+            #endregion
+
+            #region Organization Item Message
+            services.AddScoped<IOrganizationItemMessageReadRepository, OrganizationItemMessageReadRepository>();
+            services.AddScoped<IOrganizationItemMessageWriteRepository, OrganizationItemMessageWriteRepository>();
+            #endregion
+
+            #region Organization Item File
+            services.AddScoped<IOrganizationItemFileReadRepository, OrganizationItemFileReadRepository>();
+            services.AddScoped<IOrganizationItemFileWriteRepository, OrganizationItemFileWriteRepository>();
             #endregion
 
             #region Stock Category
