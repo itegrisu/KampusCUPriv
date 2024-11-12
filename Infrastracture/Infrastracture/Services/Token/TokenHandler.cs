@@ -30,7 +30,7 @@ namespace Infrastracture.Services.Token
             return Convert.ToBase64String(numberByte);
         }
 
-        public T.Token CreateAccessToken(User user, int minute = 240)
+        public T.Token CreateAccessToken(User user, int minute = 600)
         {
             var claims = new List<Claim>
             {

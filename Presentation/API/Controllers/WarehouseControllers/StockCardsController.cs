@@ -3,7 +3,8 @@ using Application.Features.WarehouseManagementFeatures.StockCards.Commands.Delet
 using Application.Features.WarehouseManagementFeatures.StockCards.Commands.Update;
 using Application.Features.WarehouseManagementFeatures.StockCards.Queries.GetByGid;
 using Application.Features.WarehouseManagementFeatures.StockCards.Queries.GetList;
-
+using Application.Features.WareHouseManagementFeatures.StockCards.Queries.GetBySearch;
+using Application.Features.WareHouseManagementFeatures.StockCards.Queries.GetByWarehouse;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -72,6 +73,21 @@ namespace API.Controllers.WarehouseControllers
         }
 
 
+        [HttpGet("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> GetByWarehouse([FromQuery] GetByWarehouseStockQuery getByWarehouseStockQuery)
+        {
+            GetListResponse<GetByWarehouseStockListItemDto> response = await Mediator.Send(getByWarehouseStockQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        [Authorize(AuthenticationSchemes = "Admin")]
+        public async Task<IActionResult> GetBySearch([FromQuery] GetBySearchStockQuery getBySearchStockQuery)
+        {
+            GetListResponse<GetBySearchStockListItemDto> response = await Mediator.Send(getBySearchStockQuery);
+            return Ok(response);
+        }
 
     }
 }
