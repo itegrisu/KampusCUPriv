@@ -22,4 +22,7 @@ public static class OrganizationItemsBusinessMessages
 
     public const string OrganizationGroupNotExists = "Ýlgili Kurum Grubu Bulunamadý";
     public const string MainResponsibleUserNotExists = "Ýlgili Sorumlu Kullanýcý Bulunamadý";
+
+    public const string DateRangeCheck = "Baþlama ve Bitiþ tarihleri organizasyon tarih aralýðý içerisinde olmalýdýr.";
+
 }

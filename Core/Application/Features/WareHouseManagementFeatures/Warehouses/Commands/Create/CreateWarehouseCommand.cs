@@ -38,8 +38,8 @@ public class CreateWarehouseCommand : IRequest<CreatedWarehouseResponse>
 
         public async Task<CreatedWarehouseResponse> Handle(CreateWarehouseCommand request, CancellationToken cancellationToken)
         {
-
-            await _warehouseBusinessRules.OrganizationShouldExistWhenSelected(request.GidOrganizationFK);
+            if (request.GidOrganizationFK != null)
+                await _warehouseBusinessRules.OrganizationShouldExistWhenSelected(request.GidOrganizationFK);
             await _warehouseBusinessRules.WarehouseNameShouldBeUnique(request.Name);
 
             X.Warehouse warehouse = _mapper.Map<X.Warehouse>(request);

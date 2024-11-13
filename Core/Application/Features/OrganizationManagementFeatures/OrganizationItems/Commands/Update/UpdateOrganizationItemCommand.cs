@@ -50,6 +50,9 @@ public class UpdateOrganizationItemCommand : IRequest<UpdatedOrganizationItemRes
             await _organizationItemBusinessRules.OrganizationItemShouldExistWhenSelected(organizationItem);
             await _organizationItemBusinessRules.OrganizationGroupShouldExistWhenSelected(request.GidOrganizationGroupFK);
             await _organizationItemBusinessRules.MainResponsibleUserShouldExistWhenSelected(request.GidMainResponsibleUserFK);
+            await _organizationItemBusinessRules.DateRangeCheck(request.GidOrganizationGroupFK, request.StartDate, request.EndDate);
+
+
             organizationItem = _mapper.Map(request, organizationItem);
 
             _organizationItemWriteRepository.Update(organizationItem!);
