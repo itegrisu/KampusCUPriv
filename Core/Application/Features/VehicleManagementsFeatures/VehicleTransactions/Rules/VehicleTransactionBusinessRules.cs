@@ -34,7 +34,7 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
     public async Task IsSuitableForHireVehicle(Guid gidVehicleAllFK)
     {
         var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleAllFK == gidVehicleAllFK && x.VehicleStatus == EnumVehicleStatus.FirmaAraci);
-        if (existingTransaction != null)
+        if (existingTransaction == null)
         {
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleIsNotCompanyVehicleToHire);
         }
@@ -43,7 +43,7 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
     public async Task IsSuitableForSaleVehicle(Guid gidVehicleAllFK)
     {
         var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleAllFK == gidVehicleAllFK && x.VehicleStatus == EnumVehicleStatus.FirmaAraci);
-        if (existingTransaction != null)
+        if (existingTransaction == null)
         {
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleIsNotCompanyVehicleToSale);
         }

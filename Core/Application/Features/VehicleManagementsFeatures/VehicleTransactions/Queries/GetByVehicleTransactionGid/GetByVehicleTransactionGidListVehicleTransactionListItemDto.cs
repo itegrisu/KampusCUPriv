@@ -28,7 +28,7 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
         public string? ContractFile { get; set; }
         public string? Description { get; set; }
         public DateTime PurchaseDate { get; set; }
-        public DateTime SaleDate { get; set; }
+        public DateTime? SaleDate { get; set; }
         public EnumVehicleStatus VehicleStatus { get; set; }
     }
 }
