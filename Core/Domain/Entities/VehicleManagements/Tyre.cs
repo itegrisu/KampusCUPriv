@@ -18,5 +18,7 @@ namespace Domain.Entities.VehicleManagements
         public DateTime? DateOfPurchase { get; set; }
         public EnumTyreStatus TyreStatus { get; set; }
         public string? Description { get; set; }
+
+        public ICollection<VehicleTyreUse>? VehicleTyreUses { get; set; }
     }
 }

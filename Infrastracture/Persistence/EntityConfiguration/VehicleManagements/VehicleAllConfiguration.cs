@@ -34,6 +34,8 @@ namespace Persistence.EntityConfiguration.VehicleManagements
             builder.HasMany(u => u.VehicleInspections).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
             builder.HasMany(u => u.VehicleEquipments).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
             builder.HasMany(u => u.VehicleFuels).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+            builder.HasMany(u => u.VehicleTyreUses).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+
         }
     }
 }

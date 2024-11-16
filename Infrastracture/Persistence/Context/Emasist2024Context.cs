@@ -156,6 +156,8 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new VehicleFuelConfiguration());
             modelBuilder.ApplyConfiguration(new TyreConfiguration());
             modelBuilder.ApplyConfiguration(new TyreTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleTyreUseConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -280,5 +282,6 @@ namespace Persistence.Context
         public DbSet<VehicleFuel> VehicleFuels { get; set; }
         public DbSet<Tyre> Tyres { get; set; }
         public DbSet<TyreType> TyreTypes { get; set; }
+        public DbSet<VehicleTyreUse> VehicleTyreUses { get; set; }
     }
 }

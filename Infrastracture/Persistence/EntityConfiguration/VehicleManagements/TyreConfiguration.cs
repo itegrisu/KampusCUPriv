@@ -22,6 +22,8 @@ namespace Persistence.EntityConfiguration.VehicleManagements
             builder.Property(y => y.ProductionYear).IsRequired(false).HasColumnType("int");
             builder.Property(y => y.DateOfPurchase).IsRequired(false).HasColumnType("datetime");
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
+
+            builder.HasMany(u => u.VehicleTyreUses).WithOne(y => y.TyreFK).HasForeignKey(y => y.GidTyreFK);
         }
     }
 }

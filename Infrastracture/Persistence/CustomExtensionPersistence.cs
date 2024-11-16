@@ -80,6 +80,7 @@ using Application.Repositories.VehicleManagementsRepos.VehicleInspectionRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleInsuranceRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleMaintenanceRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleTransactionRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleTyreUseRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardImageRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardRepo;
 using Application.Repositories.WarehouseManagementRepos.StockMovementRepo;
@@ -168,6 +169,7 @@ using Persistence.Repositories.VehicleManagementRepos.VehicleInspectionRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleInsuranceRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleMaintenanceRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleTransactionRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleTyreUseRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardImageRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockMovementRepo;
@@ -643,6 +645,12 @@ namespace Persistence
             services.AddScoped<ITyreTypeReadRepository, TyreTypeReadRepository>();
             services.AddScoped<ITyreTypeWriteRepository, TyreTypeWriteRepository>();
             #endregion
+
+            #region Vehicle Tyre Use
+            services.AddScoped<IVehicleTyreUseReadRepository, VehicleTyreUseReadRepository>();
+            services.AddScoped<IVehicleTyreUseWriteRepository, VehicleTyreUseWriteRepository>();
+            #endregion
+
 
             services.AddScoped<C.Context, Emasist2024Context>();
             services.AddScoped<IDatabaseService, DatabaseService>();
