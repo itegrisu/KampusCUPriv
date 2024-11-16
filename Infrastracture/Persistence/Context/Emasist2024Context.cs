@@ -148,6 +148,16 @@ namespace Persistence.Context
 
             modelBuilder.ApplyConfiguration(new VehicleAllConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleTransactionConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleDocumentConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleInsuranceConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleMaintenanceConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleInspectionConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleEquipmentConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleFuelConfiguration());
+            modelBuilder.ApplyConfiguration(new TyreConfiguration());
+            modelBuilder.ApplyConfiguration(new TyreTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleTyreUseConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -264,5 +274,14 @@ namespace Persistence.Context
         public DbSet<StockCategory> StockCategories { get; set; }
         public DbSet<VehicleAll> VehicleAlls { get; set; }
         public DbSet<VehicleTransaction> VehicleTransactions { get; set; }
+        public DbSet<VehicleDocument> VehicleDocuments { get; set; }
+        public DbSet<VehicleInsurance> VehicleInsurances { get; set; }
+        public DbSet<VehicleMaintenance> VehicleMaintenances { get; set; }
+        public DbSet<VehicleInspection> VehicleInspections { get; set; }
+        public DbSet<VehicleEquipment> VehicleEquipments { get; set; }
+        public DbSet<VehicleFuel> VehicleFuels { get; set; }
+        public DbSet<Tyre> Tyres { get; set; }
+        public DbSet<TyreType> TyreTypes { get; set; }
+        public DbSet<VehicleTyreUse> VehicleTyreUses { get; set; }
     }
 }

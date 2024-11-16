@@ -18,7 +18,7 @@ namespace Application.Features.OfferManagementFeatures.OfferFiles.Commands.Uploa
         public string FullPath { get; set; }
     }
 
-    public class UploadTrainingRequestFileCommandHandler : IRequestHandler<UploadOfferFileCommand, UploadOfferFileResponse>
+    public class UploadOfferFileCommandHandler : IRequestHandler<UploadOfferFileCommand, UploadOfferFileResponse>
     {
         private readonly IMapper _mapper;
         private readonly IOfferFileReadRepository _offerFileReadRepository;
@@ -30,7 +30,7 @@ namespace Application.Features.OfferManagementFeatures.OfferFiles.Commands.Uploa
         private readonly IConfiguration _configuration;
 
 
-        public UploadTrainingRequestFileCommandHandler(IMapper mapper, IFileTypeCheckService fileTypeCheckService, IStorageService storageService, IWebHostEnvironment webHostEnvironment, IConfiguration configuration, OfferFileBusinessRules offerFileBusinessRules, IOfferFileReadRepository offerFileReadRepository, IOfferFileWriteRepository offerFileWriteRepository)
+        public UploadOfferFileCommandHandler(IMapper mapper, IFileTypeCheckService fileTypeCheckService, IStorageService storageService, IWebHostEnvironment webHostEnvironment, IConfiguration configuration, OfferFileBusinessRules offerFileBusinessRules, IOfferFileReadRepository offerFileReadRepository, IOfferFileWriteRepository offerFileWriteRepository)
         {
             _mapper = mapper;
             _fileTypeCheckService = fileTypeCheckService;

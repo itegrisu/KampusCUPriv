@@ -12,7 +12,7 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Com
 
 public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactionResponse>
 {
-    public Guid GidVehicleAllFK { get; set; }
+    public Guid GidVehicleFK { get; set; }
     public Guid? GidSupplierCustomerFK { get; set; }
     public Guid? GidVehicleUsePersonnelFK { get; set; }
     public int StartKM { get; set; }
@@ -48,17 +48,17 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
         public async Task<CreatedVehicleTransactionResponse> Handle(CreateVehicleTransactionCommand request, CancellationToken cancellationToken)
         {
             if (request.VehicleStatus == EnumVehicleStatus.FirmaAraci)
-                await _vehicleTransactionBusinessRules.VehicleAllReadyExist(request.GidVehicleAllFK);
+                await _vehicleTransactionBusinessRules.VehicleAllReadyExist(request.GidVehicleFK);
 
             if (request.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)            
-                await _vehicleTransactionBusinessRules.IsSuitableForHireVehicle(request.GidVehicleAllFK);
+                await _vehicleTransactionBusinessRules.IsSuitableForHireVehicle(request.GidVehicleFK);
             
 
             if (request.VehicleStatus == EnumVehicleStatus.SatilanArac)            
-                await _vehicleTransactionBusinessRules.IsSuitableForSaleVehicle(request.GidVehicleAllFK);
+                await _vehicleTransactionBusinessRules.IsSuitableForSaleVehicle(request.GidVehicleFK);
 
             if (request.VehicleStatus == EnumVehicleStatus.TahsisArac)
-                await _vehicleTransactionBusinessRules.IsSuitableForAllocated(request.GidVehicleAllFK);
+                await _vehicleTransactionBusinessRules.IsSuitableForAllocated(request.GidVehicleFK);
 
 
             //int maxRowNo = await _vehicleTransactionReadRepository.GetAll().MaxAsync(r => r.RowNo);

@@ -12,7 +12,7 @@ namespace Domain.Entities.VehicleManagements
 {
     public class VehicleTransaction : BaseEntity
     {  
-        public Guid GidVehicleAllFK { get; set; }
+        public Guid GidVehicleFK { get; set; }
         public VehicleAll VehicleAllFK { get; set; }
         public Guid? GidSupplierCustomerFK { get; set; }
         public SCCompany? SCCompanyFK { get; set; }

@@ -11,7 +11,7 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
     public class GetByVehicleTransactionGidListVehicleTransactionListItemDto :IDto
     {
         public Guid Gid { get; set; }
-        public Guid GidVehicleAllFK { get; set; }
+        public Guid GidVehicleFK { get; set; }
         public string VehicleAllFKPlateNumber { get; set; }
         public Guid? GidSupplierCustomerFK { get; set; }
         public string SCCompanyFKCompanyName { get; set; }
