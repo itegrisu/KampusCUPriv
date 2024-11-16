@@ -25,5 +25,11 @@ namespace Domain.Entities.VehicleManagements
         public string? Description { get; set; }
 
         public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
+        public ICollection<VehicleDocument>? VehicleDocuments { get; set; }
+        public ICollection<VehicleInsurance>? VehicleInsurances { get; set; }
+        public ICollection<VehicleMaintenance>? VehicleMaintenances { get; set; }
+        public ICollection<VehicleInspection>? VehicleInspections { get; set; }
+        public ICollection<VehicleEquipment>? VehicleEquipments { get; set; }
+        public ICollection<VehicleFuel>? VehicleFuels { get; set; }
     }
 }

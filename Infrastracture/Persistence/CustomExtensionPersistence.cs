@@ -18,6 +18,7 @@ using Application.Repositories.DefinitionManagementRepos.OtoBrandRepo;
 using Application.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.RoomTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.StockCategoryRepo;
+using Application.Repositories.DefinitionManagementRepos.TyreTypeRepo;
 using Application.Repositories.FinanceManagementRepos.FinanceExpenseDetailRepo;
 using Application.Repositories.FinanceManagementRepos.FinanceExpenseGroupRepo;
 using Application.Repositories.FinanceManagementRepos.FinanceExpenseRepo;
@@ -70,7 +71,14 @@ using Application.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Application.Repositories.TaskManagementRepos.TaskFileRepo;
 using Application.Repositories.TaskManagementRepos.TaskRepo;
 using Application.Repositories.TaskManagementRepos.TaskUserRepo;
+using Application.Repositories.VehicleManagementsRepos.TyreRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleAllRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleDocumentRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleEquipmentRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleFuelRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleInspectionRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleInsuranceRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleMaintenanceRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleTransactionRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardImageRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardRepo;
@@ -98,6 +106,7 @@ using Persistence.Repositories.DefinitionManagementRepos.OtoBrandRepo;
 using Persistence.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.RoomTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.StockCategoryRepo;
+using Persistence.Repositories.DefinitionManagementRepos.TyreTypeRepo;
 using Persistence.Repositories.FinanceManagementRepos.FinanceExpenceDetailRepo;
 using Persistence.Repositories.FinanceManagementRepos.FinanceExpenseGroupRepo;
 using Persistence.Repositories.FinanceManagementRepos.FinanceExpenseRepo;
@@ -150,7 +159,14 @@ using Persistence.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskFileRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskUserRepo;
+using Persistence.Repositories.VehicleManagementRepos.TyreRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleAllRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleDocumentRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleEquipmentRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleFuelRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleInspectionRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleInsuranceRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleMaintenanceRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleTransactionRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardImageRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardRepo;
@@ -588,9 +604,45 @@ namespace Persistence
             services.AddScoped<IVehicleTransactionWriteRepository, VehicleTransactionWriteRepository>();
             #endregion
 
+            #region Vehicle Document
+            services.AddScoped<IVehicleDocumentReadRepository, VehicleDocumentReadRepository>();
+            services.AddScoped<IVehicleDocumentWriteRepository, VehicleDocumentWriteRepository>();
+            #endregion
 
+            #region Vehicle Insurance
+            services.AddScoped<IVehicleInsuranceReadRepository, VehicleInsuranceReadRepository>();
+            services.AddScoped<IVehicleInsuranceWriteRepository, VehicleInsuranceWriteRepository>();
+            #endregion
 
+            #region Vehicle Maintenance
+            services.AddScoped<IVehicleMaintenanceReadRepository, VehicleMaintenanceReadRepository>();
+            services.AddScoped<IVehicleMaintenanceWriteRepository, VehicleMaintenanceWriteRepository>();
+            #endregion
 
+            #region Vehicle Inspection
+            services.AddScoped<IVehicleInspectionReadRepository, VehicleInspectionReadRepository>();
+            services.AddScoped<IVehicleInspectionWriteRepository, VehicleInspectionWriteRepository>();
+            #endregion
+
+            #region Vehicle Equipment
+            services.AddScoped<IVehicleEquipmentReadRepository, VehicleEquipmentReadRepository>();
+            services.AddScoped<IVehicleEquipmentWriteRepository, VehicleEquipmentWriteRepository>();
+            #endregion
+
+            #region Vehicle Fuel
+            services.AddScoped<IVehicleFuelReadRepository, VehicleFuelReadRepository>();
+            services.AddScoped<IVehicleFuelWriteRepository, VehicleFuelWriteRepository>();
+            #endregion
+
+            #region Tyre
+            services.AddScoped<ITyreReadRepository, TyreReadRepository>();
+            services.AddScoped<ITyreWriteRepository, TyreWriteRepository>();
+            #endregion
+
+            #region Tyre Type
+            services.AddScoped<ITyreTypeReadRepository, TyreTypeReadRepository>();
+            services.AddScoped<ITyreTypeWriteRepository, TyreTypeWriteRepository>();
+            #endregion
 
             services.AddScoped<C.Context, Emasist2024Context>();
             services.AddScoped<IDatabaseService, DatabaseService>();

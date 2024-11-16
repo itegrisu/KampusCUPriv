@@ -6,7 +6,7 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Que
     public class GetByGidVehicleTransactionResponse : IResponse
     {
         public Guid Gid { get; set; }
-        public Guid GidVehicleAllFK { get; set; }
+        public Guid GidVehicleFK { get; set; }
         public string VehicleAllFKPlateNumber { get; set; }
         public Guid? GidSupplierCustomerFK { get; set; }
         public string SCCompanyFKCompanyName { get; set; }

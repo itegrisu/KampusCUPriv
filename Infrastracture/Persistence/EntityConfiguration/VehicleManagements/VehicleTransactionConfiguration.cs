@@ -18,7 +18,7 @@ namespace Persistence.EntityConfiguration.VehicleManagements
 
             builder.HasOne(y => y.SCCompanyFK).WithMany(u => u.VehicleTransactions).HasForeignKey(y => y.GidSupplierCustomerFK);
             builder.HasOne(y => y.UserFK).WithMany(u => u.VehicleTransactions).HasForeignKey(y => y.GidVehicleUsePersonnelFK);
-            builder.HasOne(y => y.VehicleAllFK).WithMany(u => u.VehicleTransactions).HasForeignKey(y => y.GidVehicleAllFK);
+            builder.HasOne(y => y.VehicleAllFK).WithMany(u => u.VehicleTransactions).HasForeignKey(y => y.GidVehicleFK);
 
             builder.Property(y => y.StartKM).IsRequired().HasColumnType("int");
             builder.Property(y => y.MonthlyRentalFee).IsRequired(false).HasColumnType("int");

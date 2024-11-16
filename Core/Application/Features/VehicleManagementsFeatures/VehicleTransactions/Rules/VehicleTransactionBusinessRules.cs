@@ -24,7 +24,7 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
 
     public async Task VehicleAllReadyExist(Guid gidVehicleAllFK)
     {
-        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleAllFK == gidVehicleAllFK);
+        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == gidVehicleAllFK);
         if (existingTransaction != null)
         {
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleTransactionAlreadyExists);
@@ -33,7 +33,7 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
 
     public async Task IsSuitableForHireVehicle(Guid gidVehicleAllFK)
     {
-        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleAllFK == gidVehicleAllFK && x.VehicleStatus == EnumVehicleStatus.FirmaAraci);
+        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == gidVehicleAllFK && x.VehicleStatus == EnumVehicleStatus.FirmaAraci);
         if (existingTransaction == null)
         {
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleIsNotCompanyVehicleToHire);
@@ -42,7 +42,7 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
 
     public async Task IsSuitableForSaleVehicle(Guid gidVehicleAllFK)
     {
-        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleAllFK == gidVehicleAllFK && x.VehicleStatus == EnumVehicleStatus.FirmaAraci);
+        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == gidVehicleAllFK && x.VehicleStatus == EnumVehicleStatus.FirmaAraci);
         if (existingTransaction == null)
         {
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleIsNotCompanyVehicleToSale);
@@ -51,7 +51,7 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
 
     public async Task IsSuitableForAllocated(Guid gidVehicleAllFK)
     {
-        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleAllFK == gidVehicleAllFK 
+        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == gidVehicleAllFK 
         && (x.VehicleStatus == EnumVehicleStatus.FirmaAraci || x.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac));
         if (existingTransaction == null)
         {

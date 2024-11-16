@@ -570,6 +570,35 @@ namespace Persistence.Migrations
                     b.ToTable("StockCategories");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.TyreType", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("TyreTypeName")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.ToTable("TyreTypes");
+                });
+
             modelBuilder.Entity("Domain.Entities.FinanceManagements.FinanceExpense", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -2736,6 +2765,46 @@ namespace Persistence.Migrations
                     b.ToTable("TaskUsers");
                 });
 
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.Tyre", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DateOfPurchase")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<Guid>("GidTyreTypeFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("ProductionYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TyreNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<int>("TyreStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidTyreTypeFK");
+
+                    b.ToTable("Tyres");
+                });
+
             modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleAll", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -2795,6 +2864,230 @@ namespace Persistence.Migrations
                     b.ToTable("VehicleAlls");
                 });
 
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleDocument", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<DateTime>("DocumentDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("DocumentFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<DateTime?>("DocumentLastDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("DocumentName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("GidDocumentType")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidVehicleFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidDocumentType");
+
+                    b.HasIndex("GidVehicleFK");
+
+                    b.ToTable("VehicleDocuments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleEquipment", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("DocumentFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<string>("EquipmentName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("GidVehicleFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidVehicleFK");
+
+                    b.ToTable("VehicleEquipments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleFuel", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidVehicleFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidVehicleFK");
+
+                    b.ToTable("VehicleFuels");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleInspection", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("DocumentFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("GidVehicleFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidVehicleFK");
+
+                    b.ToTable("VehicleInspections");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleInsurance", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("DocumentFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("GidVehicleFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("InsuranceFee")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InsuranceType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidVehicleFK");
+
+                    b.ToTable("VehicleInsurances");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleMaintenance", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("DocumentFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid>("GidVehicleFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("MaintenanceDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("MaintenanceFee")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaintenanceScore")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResponsiblePerson")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidVehicleFK");
+
+                    b.ToTable("VehicleMaintenances");
+                });
+
             modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleTransaction", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -2836,7 +3129,7 @@ namespace Persistence.Migrations
                     b.Property<Guid?>("GidSupplierCustomerFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GidVehicleAllFK")
+                    b.Property<Guid>("GidVehicleFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("GidVehicleUsePersonnelFK")
@@ -2865,7 +3158,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidSupplierCustomerFK");
 
-                    b.HasIndex("GidVehicleAllFK");
+                    b.HasIndex("GidVehicleFK");
 
                     b.HasIndex("GidVehicleUsePersonnelFK");
 
@@ -3818,6 +4111,17 @@ namespace Persistence.Migrations
                     b.Navigation("UserFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.Tyre", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.TyreType", "TyreTypeFK")
+                        .WithMany("Tyres")
+                        .HasForeignKey("GidTyreTypeFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TyreTypeFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleAll", b =>
                 {
                     b.HasOne("Domain.Entities.DefinitionManagements.OtoBrand", "OtoBrandFK")
@@ -3829,6 +4133,80 @@ namespace Persistence.Migrations
                     b.Navigation("OtoBrandFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleDocument", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.DocumentType", "DocumentTypeFK")
+                        .WithMany("VehicleDocuments")
+                        .HasForeignKey("GidDocumentType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("VehicleDocuments")
+                        .HasForeignKey("GidVehicleFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DocumentTypeFK");
+
+                    b.Navigation("VehicleAllFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleEquipment", b =>
+                {
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("VehicleEquipments")
+                        .HasForeignKey("GidVehicleFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("VehicleAllFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleFuel", b =>
+                {
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("VehicleFuels")
+                        .HasForeignKey("GidVehicleFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("VehicleAllFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleInspection", b =>
+                {
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("VehicleInspections")
+                        .HasForeignKey("GidVehicleFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("VehicleAllFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleInsurance", b =>
+                {
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("VehicleInsurances")
+                        .HasForeignKey("GidVehicleFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("VehicleAllFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleMaintenance", b =>
+                {
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("VehicleMaintenances")
+                        .HasForeignKey("GidVehicleFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("VehicleAllFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleTransaction", b =>
                 {
                     b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
@@ -3838,7 +4216,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
                         .WithMany("VehicleTransactions")
-                        .HasForeignKey("GidVehicleAllFK")
+                        .HasForeignKey("GidVehicleFK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -3966,6 +4344,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.DocumentType", b =>
                 {
                     b.Navigation("PersonnelDocuments");
+
+                    b.Navigation("VehicleDocuments");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.ForeignLanguage", b =>
@@ -3996,6 +4376,11 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.StockCategory", b =>
                 {
                     b.Navigation("StockCards");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.TyreType", b =>
+                {
+                    b.Navigation("Tyres");
                 });
 
             modelBuilder.Entity("Domain.Entities.FinanceManagements.FinanceExpense", b =>
@@ -4174,6 +4559,18 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleAll", b =>
                 {
+                    b.Navigation("VehicleDocuments");
+
+                    b.Navigation("VehicleEquipments");
+
+                    b.Navigation("VehicleFuels");
+
+                    b.Navigation("VehicleInspections");
+
+                    b.Navigation("VehicleInsurances");
+
+                    b.Navigation("VehicleMaintenances");
+
                     b.Navigation("VehicleTransactions");
                 });
 

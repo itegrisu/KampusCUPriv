@@ -26,6 +26,14 @@ namespace Persistence.EntityConfiguration.VehicleManagements
             builder.Property(y => y.PassengerCount).IsRequired().HasColumnType("int");
             builder.Property(y => y.IsSubmitted).IsRequired().HasColumnType("bit");
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
+
+            builder.HasMany(u => u.VehicleTransactions).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+            builder.HasMany(u => u.VehicleDocuments).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+            builder.HasMany(u => u.VehicleInsurances).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+            builder.HasMany(u => u.VehicleMaintenances).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+            builder.HasMany(u => u.VehicleInspections).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+            builder.HasMany(u => u.VehicleEquipments).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
+            builder.HasMany(u => u.VehicleFuels).WithOne(y => y.VehicleAllFK).HasForeignKey(y => y.GidVehicleFK);
         }
     }
 }
