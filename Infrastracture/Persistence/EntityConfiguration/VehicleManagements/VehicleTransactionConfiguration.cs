@@ -21,6 +21,7 @@ namespace Persistence.EntityConfiguration.VehicleManagements
             builder.HasOne(y => y.VehicleAllFK).WithMany(u => u.VehicleTransactions).HasForeignKey(y => y.GidVehicleFK);
 
             builder.Property(y => y.StartKM).IsRequired().HasColumnType("int");
+            builder.Property(y => y.EndKM).HasColumnType("int");
             builder.Property(y => y.MonthlyRentalFee).IsRequired(false).HasColumnType("int");
             builder.Property(y => y.ContractStartDate).IsRequired(false).HasColumnType("datetime");
             builder.Property(y => y.ContractEndDate).IsRequired(false).HasColumnType("datetime");
@@ -31,7 +32,7 @@ namespace Persistence.EntityConfiguration.VehicleManagements
             builder.Property(y => y.ContractFile).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
             builder.Property(y => y.PurchaseDate).IsRequired(false).HasColumnType("datetime");
-            builder.Property(y => y.SaleDate).IsRequired(false).HasColumnType("datetime");
+            builder.Property(y => y.EndDate).IsRequired(false).HasColumnType("datetime");
         }
     }
 }
