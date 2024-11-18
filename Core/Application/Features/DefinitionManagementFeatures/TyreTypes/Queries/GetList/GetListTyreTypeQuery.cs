@@ -38,11 +38,12 @@ public class GetListTyreTypeQuery : IRequest<GetListResponse<GetListTyreTypeList
                 //       x => x.UserFK,
                 //       x=> x.TyreTypeMembers
                 //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+				return await _noPagination.NoPaginationData(cancellationToken, orderBy: x => x.TyreTypeName);
             IPaginate<X.TyreType> tyreTypes = await _tyreTypeReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(x => x.TyreTypeName)
             );
 
             GetListResponse<GetListTyreTypeListItemDto> response = _mapper.Map<GetListResponse<GetListTyreTypeListItemDto>>(tyreTypes);

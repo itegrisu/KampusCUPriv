@@ -26,7 +26,7 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTyreUses.Queries
 
             public async Task<GetByGidVehicleTyreUseResponse> Handle(GetByGidVehicleTyreUseQuery request, CancellationToken cancellationToken)
             {
-                X.VehicleTyreUse? vehicleTyreUse = await _vehicleTyreUseReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.VehicleAllFK).Include(x => x.TyreFK));
+                X.VehicleTyreUse? vehicleTyreUse = await _vehicleTyreUseReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.VehicleAllFK).Include(x => x.TyreFK).Include(x => x.TyreFK).ThenInclude(x => x.TyreTypeFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)
