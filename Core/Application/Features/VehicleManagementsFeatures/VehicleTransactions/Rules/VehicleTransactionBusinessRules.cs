@@ -39,6 +39,14 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleIsNotCompanyVehicleToHire);
         }
     }
+    public async Task IsSuitableForTakeVehicle(Guid gidVehicleAllFK)
+    {
+        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == gidVehicleAllFK);
+        if (existingTransaction == null)
+        {
+            throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleNotSuitablForTake);
+        }
+    }
 
     public async Task IsSuitableForSaleVehicle(Guid gidVehicleAllFK)
     {
@@ -51,8 +59,7 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
 
     public async Task IsSuitableForAllocated(Guid gidVehicleAllFK)
     {
-        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == gidVehicleAllFK 
-        && (x.VehicleStatus == EnumVehicleStatus.FirmaAraci || x.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac));
+        var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == gidVehicleAllFK && (x.VehicleStatus == EnumVehicleStatus.FirmaAraci || x.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac));
         if (existingTransaction == null)
         {
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleIsNotCompanyVehicleToAllocate);

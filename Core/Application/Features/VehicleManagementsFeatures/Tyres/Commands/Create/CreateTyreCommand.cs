@@ -40,6 +40,7 @@ public class CreateTyreCommand : IRequest<CreatedTyreResponse>
 
         public async Task<CreatedTyreResponse> Handle(CreateTyreCommand request, CancellationToken cancellationToken)
         {
+            await _tyreBusinessRules.IsAllreadyExist(request.TyreNo);
             //int maxRowNo = await _tyreReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.Tyre tyre = _mapper.Map<X.Tyre>(request);
             //tyre.RowNo = maxRowNo + 1;

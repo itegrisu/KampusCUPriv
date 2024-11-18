@@ -22,7 +22,7 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTyreUses.Querie
     {
         public int PageIndex { get; set; } = 0;
         public int PageSize { get; set; } = 10;
-        public Guid VehicleGid { get; set; }
+        public Guid GidVehicleFK { get; set; }
         public class GetByVehicleGidListVehicleTyreUseQueryHandler : IRequestHandler<GetByVehicleGidListVehicleTyreUseQuery, GetListResponse<GetByVehicleGidListVehicleTyreUseListItemDto>>
         {
             private readonly IVehicleTyreUseReadRepository _vehicleTyreUseReadRepository;
@@ -42,19 +42,20 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTyreUses.Querie
                     //unutma
                     //includes varsa eklenecek - Orn: Altta
                     return await _noPagination.NoPaginationData(cancellationToken,
-                        predicate: x => x.GidVehicleFK == request.VehicleGid,
+                        predicate: x => x.GidVehicleFK == request.GidVehicleFK,
                         includes: new Expression<Func<VehicleTyreUse, object>>[]
                         {
                            x => x.VehicleAllFK,
-                           x=> x.TyreFK
+                           x=> x.TyreFK,
+                           X => X.TyreFK.TyreTypeFK
                         });
                 //return await _noPagination.NoPaginationData(cancellationToken);
                 IPaginate<X.VehicleTyreUse> vehicleTyreUses = await _vehicleTyreUseReadRepository.GetListAsync(
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.VehicleAllFK).Include(x => x.TyreFK),
-                    predicate: x => x.GidVehicleFK == request.VehicleGid
+                    include: x => x.Include(x => x.VehicleAllFK).Include(x => x.TyreFK).Include(x => x.TyreFK).ThenInclude(x => x.TyreTypeFK),
+                    predicate: x => x.GidVehicleFK == request.GidVehicleFK
                 );
 
                 GetListResponse<GetByVehicleGidListVehicleTyreUseListItemDto> response = _mapper.Map<GetListResponse<GetByVehicleGidListVehicleTyreUseListItemDto>>(vehicleTyreUses);

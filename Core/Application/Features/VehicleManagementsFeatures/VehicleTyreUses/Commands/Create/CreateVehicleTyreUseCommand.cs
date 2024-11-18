@@ -12,10 +12,10 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTyreUses.Command
 public class CreateVehicleTyreUseCommand : IRequest<CreatedVehicleTyreUseResponse>
 {
     public Guid GidVehicleFK { get; set; }
-public Guid GidTyreFK { get; set; }
+    public Guid GidTyreFK { get; set; }
 
-public DateTime InstallationDate { get; set; }
-public DateTime? TyreRemovalDate { get; set; }
+    public DateTime InstallationDate { get; set; }
+    public DateTime? TyreRemovalDate { get; set; }
 
 
 
@@ -38,20 +38,20 @@ public DateTime? TyreRemovalDate { get; set; }
         public async Task<CreatedVehicleTyreUseResponse> Handle(CreateVehicleTyreUseCommand request, CancellationToken cancellationToken)
         {
             //int maxRowNo = await _vehicleTyreUseReadRepository.GetAll().MaxAsync(r => r.RowNo);
-			X.VehicleTyreUse vehicleTyreUse = _mapper.Map<X.VehicleTyreUse>(request);
+            X.VehicleTyreUse vehicleTyreUse = _mapper.Map<X.VehicleTyreUse>(request);
             //vehicleTyreUse.RowNo = maxRowNo + 1;
 
             await _vehicleTyreUseWriteRepository.AddAsync(vehicleTyreUse);
             await _vehicleTyreUseWriteRepository.SaveAsync();
 
-			X.VehicleTyreUse savedVehicleTyreUse = await _vehicleTyreUseReadRepository.GetAsync(predicate: x => x.Gid == vehicleTyreUse.Gid,
-                include: x => x.Include(x => x.VehicleAllFK).Include(x => x.TyreFK));
-			//INCLUDES Buraya Gelecek include varsa eklenecek
-			//include: x => x.Include(x => x.UserFK));
+            X.VehicleTyreUse savedVehicleTyreUse = await _vehicleTyreUseReadRepository.GetAsync(predicate: x => x.Gid == vehicleTyreUse.Gid,
+                include: x => x.Include(x => x.VehicleAllFK).Include(x => x.TyreFK).Include(x => x.TyreFK).ThenInclude(x => x.TyreTypeFK));
+            //INCLUDES Buraya Gelecek include varsa eklenecek
+            //include: x => x.Include(x => x.UserFK));
 
             GetByGidVehicleTyreUseResponse obj = _mapper.Map<GetByGidVehicleTyreUseResponse>(savedVehicleTyreUse);
             return new()
-            {           
+            {
                 Title = VehicleTyreUsesBusinessMessages.ProcessCompleted,
                 Message = VehicleTyreUsesBusinessMessages.SuccessCreatedVehicleTyreUseMessage,
                 IsValid = true,

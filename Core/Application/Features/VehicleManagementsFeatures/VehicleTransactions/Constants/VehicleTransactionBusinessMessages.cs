@@ -26,5 +26,7 @@ public static class VehicleTransactionsBusinessMessages
     public const string VehicleIsNotCompanyVehicleToAllocate = "Bu araç tahsis edilemez";
     //SucessUploadFile
     public const string SucessUploadFile = "Dosya baþarýyla yüklendi";
+    //VehicleNotSuitableForSale
+    public const string VehicleNotSuitablForTake = "Bu araç Araç Durumunda kaydý olduðu için Kiralýk Alýnan Araca uygun deðil!";
 
 }

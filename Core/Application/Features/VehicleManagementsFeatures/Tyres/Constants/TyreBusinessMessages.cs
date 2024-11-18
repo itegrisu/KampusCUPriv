@@ -18,5 +18,8 @@ public static class TyresBusinessMessages
     public const string TechnicalError = "Technical Error";
 	public const string NotFoundRecord = "No Record Found!";
 	public const string IncorrectOperation = "Incorrect Operation";
-	//public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    // Bu lastik türü zaten mevcut TyreTypeAllreadyExist
+    public const string TyreNoAllreadyExist = " Bu lastik numarasý zaten mevcut";
+
 }

@@ -19,6 +19,7 @@ namespace Domain.Entities.VehicleManagements
         public Guid? GidVehicleUsePersonnelFK { get; set; }
         public User? UserFK { get; set; }
         public int StartKM { get; set; }
+        public int? EndKM { get; set; }
         public int? MonthlyRentalFee { get; set; }
         public DateTime? ContractStartDate { get; set; }
         public DateTime? ContractEndDate { get; set; }
@@ -29,7 +30,7 @@ namespace Domain.Entities.VehicleManagements
         public string? ContractFile { get; set; }
         public string? Description { get; set; }
         public DateTime? PurchaseDate { get; set; }
-        public DateTime? SaleDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public EnumVehicleStatus VehicleStatus { get; set; }
     }
 }
