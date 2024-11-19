@@ -75,10 +75,11 @@ public class CreateSupportRequestCommand : IRequest<CreatedSupportRequestRespons
 
                 throw new BusinessException("An error was encountered while creating a Support Request");
             }
-            finally
-            {
-                await _unitOfWork.RollbackAsync();
-            }
+            //TODO: Buraya bak
+            //finally
+            //{
+            //    await _unitOfWork.RollbackAsync();
+            //}
 
 
             X.SupportRequest? savedSupportRequest = await _supportRequestReadRepository.GetAsync(predicate: x => x.Gid == supportRequest.Gid,

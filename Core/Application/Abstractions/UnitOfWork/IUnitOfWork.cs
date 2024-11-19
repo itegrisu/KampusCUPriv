@@ -6,5 +6,6 @@ namespace Application.Abstractions.UnitOfWork
         void BeginTransaction();
         Task CommitAsync();
         Task RollbackAsync();
+        void Dispose();
     }
 }
