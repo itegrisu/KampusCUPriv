@@ -9,6 +9,10 @@ using Domain.Enums;
 using Application.Repositories.VehicleManagementsRepos.VehicleTransactionRepo;
 using Domain.Entities.VehicleManagements;
 using Core.Enum;
+using Application.Abstractions.UnitOfWork;
+using Core.CrossCuttingConcern.Exceptions;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Commands.Create;
 
@@ -18,7 +22,7 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
     public Guid? GidSupplierCustomerFK { get; set; }
     public Guid? GidVehicleUsePersonnelFK { get; set; }
     public int StartKM { get; set; }
-    public int? EndKM { get; set; }    
+    public int? EndKM { get; set; }
     public int? MonthlyRentalFee { get; set; }
     public DateTime? ContractStartDate { get; set; }
     public DateTime? ContractEndDate { get; set; }
@@ -38,139 +42,226 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
         private readonly IVehicleTransactionWriteRepository _vehicleTransactionWriteRepository;
         private readonly IVehicleTransactionReadRepository _vehicleTransactionReadRepository;
         private readonly VehicleTransactionBusinessRules _vehicleTransactionBusinessRules;
+        private readonly IUnitOfWork _unitOfWork;
 
         public CreateVehicleTransactionCommandHandler(IMapper mapper, IVehicleTransactionWriteRepository vehicleTransactionWriteRepository,
-                                         VehicleTransactionBusinessRules vehicleTransactionBusinessRules, IVehicleTransactionReadRepository vehicleTransactionReadRepository)
+                                         VehicleTransactionBusinessRules vehicleTransactionBusinessRules, IVehicleTransactionReadRepository vehicleTransactionReadRepository, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _vehicleTransactionWriteRepository = vehicleTransactionWriteRepository;
             _vehicleTransactionBusinessRules = vehicleTransactionBusinessRules;
             _vehicleTransactionReadRepository = vehicleTransactionReadRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CreatedVehicleTransactionResponse> Handle(CreateVehicleTransactionCommand request, CancellationToken cancellationToken)
         {
-            if (request.VehicleStatus == EnumVehicleStatus.FirmaAraci)
-                await _vehicleTransactionBusinessRules.VehicleAllReadyExist(request.GidVehicleFK);
+            var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == request.GidVehicleFK);
 
-            if (request.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)            
-                await _vehicleTransactionBusinessRules.IsSuitableForHireVehicle(request.GidVehicleFK);
+            VehicleTransaction newTransaction;
 
-            if (request.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
-                await _vehicleTransactionBusinessRules.IsSuitableForTakeVehicle(request.GidVehicleFK);
-
-            if (request.VehicleStatus == EnumVehicleStatus.SatilanArac)            
-                await _vehicleTransactionBusinessRules.IsSuitableForSaleVehicle(request.GidVehicleFK);
-
-            if (request.VehicleStatus == EnumVehicleStatus.TahsisArac)
-                await _vehicleTransactionBusinessRules.IsSuitableForAllocated(request.GidVehicleFK);
-
-            VehicleTransaction vehicleTransactionOld = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == request.GidVehicleFK); 
-            VehicleTransaction vehicleTransactionNew = vehicleTransactionOld;
-            // Þuanda requestten gelen yeni veriler ile eski verileri matchleyip yeni veriye aktarmamýz lazým ama hangi verilerin yeniden hangi verilerin eskiden alacaðýmýza karar vermemiz lazým.
-            vehicleTransactionNew.Gid = Guid.NewGuid();
-            if (vehicleTransactionOld != null)
+            if (existingTransaction == null)
             {
-                //Firma Aracý
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac && request.VehicleStatus == EnumVehicleStatus.FirmaAraci)
+                if (request.VehicleStatus == EnumVehicleStatus.FirmaAraci || request.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
                 {
-                    throw new Exception("Bu araç firma aracý olarak eklenemez");
+                    newTransaction = _mapper.Map<VehicleTransaction>(request);
+                    await _vehicleTransactionWriteRepository.AddAsync(newTransaction);
+                    await _vehicleTransactionWriteRepository.SaveAsync();
+
+                    return await CreateResponse(newTransaction);
                 }
-
-                //Kiralýk Verilen Araç
-
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac && request.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)
-                {
-                    throw new Exception("Bu araç Kiralýk Verilen Araç olarak eklenemez");
-                }
-
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.SatilanArac && request.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)
-                {
-                    throw new Exception("Bu araç Kiralýk Verilen Araç olarak eklenemez");
-                }
-
-                //Kiralýk Alýnan Araç
-
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.FirmaAraci && request.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
-                {
-                    throw new Exception("Bu araç Kiralýk Alýnan Araç olarak eklenemez");
-                }
-
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac && request.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
-                {
-                    throw new Exception("Bu araç Kiralýk Alýnan Araç olarak eklenemez");
-                }
-
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.TahsisArac && request.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
-                {
-                    throw new Exception("Bu araç Kiralýk Alýnan Araç olarak eklenemez");
-                }
-
-                //Satýlan Araç
-
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac && request.VehicleStatus == EnumVehicleStatus.SatilanArac)
-                {
-                    throw new Exception("Bu araç Satýlan Araç olarak eklenemez");
-                }
-
-                //Tahsis Araç
-
-                if (vehicleTransactionOld.VehicleStatus == EnumVehicleStatus.SatilanArac && request.VehicleStatus == EnumVehicleStatus.TahsisArac)
-                {
-                    throw new Exception("Bu araç Satýlan Araç olarak eklenemez");
-                }
-
-                if (request.VehicleStatus == EnumVehicleStatus.FirmaAraci)
-                {
-                    vehicleTransactionNew.StartKM = request.EndKM.Value;
-                }
-
-
-                vehicleTransactionOld.DataState = DataState.Archive;
-                vehicleTransactionOld.EndDate = DateTime.Now;
-
-                _vehicleTransactionWriteRepository.Update(vehicleTransactionOld);
-
-                vehicleTransactionNew.VehicleStatus = request.VehicleStatus;
-                await _vehicleTransactionWriteRepository.AddAsync(vehicleTransactionNew);
-
-                await _vehicleTransactionWriteRepository.SaveAsync();
-
-                X.VehicleTransaction savedVehicleTransaction = await _vehicleTransactionReadRepository.GetAsync(predicate: x => x.Gid == vehicleTransactionNew.Gid,
-              include: x => x.Include(x => x.SCCompanyFK).Include(x => x.UserFK).Include(x => x.VehicleAllFK));
-                //INCLUDES Buraya Gelecek include varsa eklenecek
-                //include: x => x.Include(x => x.UserFK));
-
-                GetByGidVehicleTransactionResponse obj = _mapper.Map<GetByGidVehicleTransactionResponse>(savedVehicleTransaction);
-                return new()
-                {
-                    Title = VehicleTransactionsBusinessMessages.ProcessCompleted,
-                    Message = VehicleTransactionsBusinessMessages.SuccessCreatedVehicleTransactionMessage,
-                    IsValid = true,
-                    Obj = obj
-                };
+                throw new Exception("Araç Firma Aracý veya Kiralýk Alýnan Araç olmadýðý için eklenemiyor!");
             }
+            else
+            {
+                return await HandleExistingTransaction(existingTransaction, request);
+            }
+        }
+        private async Task<CreatedVehicleTransactionResponse> CreateResponse(VehicleTransaction transaction)
+        {
+            var savedTransaction = await _vehicleTransactionReadRepository.GetAsync(
+                predicate: x => x.Gid == transaction.Gid,
+                include: x => x.Include(t => t.SCCompanyFK).Include(t => t.UserFK).Include(t => t.VehicleAllFK));
 
-            //int maxRowNo = await _vehicleTransactionReadRepository.GetAll().MaxAsync(r => r.RowNo);
-            X.VehicleTransaction vehicleTransaction = _mapper.Map<X.VehicleTransaction>(request);
-            //vehicleTransaction.RowNo = maxRowNo + 1;
+            var responseObject = _mapper.Map<GetByGidVehicleTransactionResponse>(savedTransaction);
 
-            await _vehicleTransactionWriteRepository.AddAsync(vehicleTransaction);
-            await _vehicleTransactionWriteRepository.SaveAsync();
-
-            X.VehicleTransaction savedVehicleTransactionNew = await _vehicleTransactionReadRepository.GetAsync(predicate: x => x.Gid == vehicleTransaction.Gid,
-                include: x => x.Include(x => x.SCCompanyFK).Include(x => x.UserFK).Include(x => x.VehicleAllFK));
-            //INCLUDES Buraya Gelecek include varsa eklenecek
-            //include: x => x.Include(x => x.UserFK));
-
-            GetByGidVehicleTransactionResponse objNew = _mapper.Map<GetByGidVehicleTransactionResponse>(savedVehicleTransactionNew);
-            return new()
+            return new CreatedVehicleTransactionResponse
             {
                 Title = VehicleTransactionsBusinessMessages.ProcessCompleted,
                 Message = VehicleTransactionsBusinessMessages.SuccessCreatedVehicleTransactionMessage,
                 IsValid = true,
-                Obj = objNew
+                Obj = responseObject
             };
         }
+
+        private async Task<CreatedVehicleTransactionResponse> HandleExistingTransaction(VehicleTransaction existingTransaction, CreateVehicleTransactionCommand request)
+        {
+            switch (request.VehicleStatus)
+            {
+                case EnumVehicleStatus.FirmaAraci:
+                    await HandleFirmaAraciTransaction(existingTransaction, request);
+                    break;
+
+                case EnumVehicleStatus.KiralikVerilenArac:
+                    await HandleKiralikVerilenAracTransaction(existingTransaction, request);
+                    break;
+
+                case EnumVehicleStatus.KiralikAlinanArac:
+                    await HandleKiralikAlinanAracTransaction(existingTransaction, request);
+                    break;
+
+                case EnumVehicleStatus.SatilanArac:
+                    await HandleSatilanAracTransaction(existingTransaction, request);
+                    break;
+
+                case EnumVehicleStatus.TahsisArac:
+                    await HandleTahsisAracTransaction(existingTransaction, request);
+                    break;
+
+                default:
+                    throw new Exception("Bilinmeyen araç durumu!");
+            }
+
+            return await CreateResponse(existingTransaction);
+        }
+
+        private async Task HandleFirmaAraciTransaction(VehicleTransaction existingTransaction, CreateVehicleTransactionCommand request)
+        {
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.FirmaAraci)
+                throw new Exception("Bu araç zaten firma aracý durumundadýr.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.SatilanArac)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.TahsisArac)
+            {
+                await _vehicleTransactionBusinessRules.IsCompanyEmployee(existingTransaction.GidVehicleUsePersonnelFK);
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+            }
+        }
+
+        private async Task HandleKiralikVerilenAracTransaction(VehicleTransaction existingTransaction, CreateVehicleTransactionCommand request)
+        {
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.FirmaAraci)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)
+                throw new Exception("Bu araç zaten kiralýk verilen araç durumundadýr.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
+                throw new Exception("Bu araç kiralýk alýnan araç olarak eklenemez.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.SatilanArac)
+                throw new Exception("Bu araç satýlan araç olarak eklenemez.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.TahsisArac)
+            {
+                await _vehicleTransactionBusinessRules.IsCompanyEmployee(existingTransaction.GidVehicleUsePersonnelFK);
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+            }
+        }
+
+        private async Task HandleKiralikAlinanAracTransaction(VehicleTransaction existingTransaction, CreateVehicleTransactionCommand request)
+        {
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.FirmaAraci)
+                throw new Exception("Bu araç firma aracý olarak eklenemez.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)
+                throw new Exception("Bu araç firma aracý olarak eklenemez.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
+                throw new Exception("Bu araç zaten kiralýk alýnan araç olarak eklenmiþ.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.SatilanArac)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.TahsisArac)
+                throw new Exception("Bu araç tahsis araç olarak eklenemez.");
+        }
+
+        private async Task HandleSatilanAracTransaction(VehicleTransaction existingTransaction, CreateVehicleTransactionCommand request)
+        {
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.FirmaAraci)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
+                throw new Exception("Bu araç kiralýk alýnan araç olarak eklenemez.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.SatilanArac)
+                throw new Exception("Bu araç zaten satýlan araç olarak eklenmiþ.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.TahsisArac)
+            {
+                await _vehicleTransactionBusinessRules.IsCompanyEmployee(existingTransaction.GidVehicleUsePersonnelFK);
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+            }
+        }
+
+        private async Task HandleTahsisAracTransaction(VehicleTransaction existingTransaction, CreateVehicleTransactionCommand request)
+        {
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.FirmaAraci)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikVerilenArac)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.KiralikAlinanArac)
+                ArchiveAndCreateNewTransaction(existingTransaction, request);
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.SatilanArac)
+                throw new Exception("Bu araç satýlan araç olarak eklenemez.");
+
+            if (existingTransaction.VehicleStatus == EnumVehicleStatus.TahsisArac)
+                throw new Exception("Bu araç zaten tahsis aracý olarak eklenmiþ.");
+        }
+
+        private async Task ArchiveAndCreateNewTransaction(VehicleTransaction existingTransaction, CreateVehicleTransactionCommand request)
+        {
+            _unitOfWork.BeginTransaction(); // Transaction baþlatýlýr
+            try
+            {
+                // Mevcut iþlemi arþivle
+                existingTransaction.DataState = DataState.Archive;
+                existingTransaction.EndDate = DateTime.Now;
+                existingTransaction.EndKM = request.StartKM;
+                _vehicleTransactionWriteRepository.Update(existingTransaction);
+                await _unitOfWork.SaveChangesAsync();
+
+                // Yeni iþlem oluþtur
+                var newTransaction = _mapper.Map<VehicleTransaction>(request);
+
+                await _vehicleTransactionWriteRepository.AddAsync(newTransaction);
+
+                // Deðiþiklikleri kaydet
+                await _unitOfWork.SaveChangesAsync();
+
+                await _unitOfWork.CommitAsync();
+
+                // Transaction'ý tamamla
+                //TODO Hata veriyor
+            }
+            catch (Exception ex)
+            {
+                // Hata durumunda rollback
+                await _unitOfWork.RollbackAsync();
+
+                throw new BusinessException("Vehicle transaction iþlemi sýrasýnda bir hata oluþtu", ex);
+            }
+            finally
+            {
+                _unitOfWork.Dispose();
+            }
+
+        }
+
     }
 }

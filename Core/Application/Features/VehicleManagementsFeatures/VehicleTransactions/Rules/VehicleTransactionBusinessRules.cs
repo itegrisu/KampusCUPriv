@@ -1,4 +1,5 @@
 using Application.Features.VehicleManagementFeatures.VehicleTransactions.Constants;
+using Application.Repositories.GeneralManagementRepos.UserRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleTransactionRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
@@ -10,10 +11,11 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Rul
 public class VehicleTransactionBusinessRules : BaseBusinessRules
 {
     private readonly IVehicleTransactionReadRepository _vehicleTransactionReadRepository;
-
-    public VehicleTransactionBusinessRules(IVehicleTransactionReadRepository vehicleTransactionReadRepository)
+    private readonly IUserReadRepository _userReadRepository;
+    public VehicleTransactionBusinessRules(IVehicleTransactionReadRepository vehicleTransactionReadRepository, IUserReadRepository userReadRepository)
     {
         _vehicleTransactionReadRepository = vehicleTransactionReadRepository;
+        _userReadRepository = userReadRepository;
     }
 
     public async Task VehicleTransactionShouldExistWhenSelected(X.VehicleTransaction? item)
@@ -65,4 +67,14 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
             throw new BusinessException(VehicleTransactionsBusinessMessages.VehicleIsNotCompanyVehicleToAllocate);
         }
     }
+
+    public async Task IsCompanyEmployee(Guid? gidUserFK)
+    {
+        var user = await _userReadRepository.GetSingleAsync(x => x.Gid == gidUserFK && x.WorkType == EnumWorkType.FirmaCalisani);
+        if (user == null)
+        {
+            throw new BusinessException(VehicleTransactionsBusinessMessages.UserNotExists);
+        }
+    }
+
 }

@@ -28,5 +28,7 @@ public static class VehicleTransactionsBusinessMessages
     public const string SucessUploadFile = "Dosya baþarýyla yüklendi";
     //VehicleNotSuitableForSale
     public const string VehicleNotSuitablForTake = "Bu araç Araç Durumunda kaydý olduðu için Kiralýk Alýnan Araca uygun deðil!";
+    //UserNotExists
+    public const string UserNotExists = "Kullanýcý Bulunamadý!";
 
 }
