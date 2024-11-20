@@ -79,6 +79,7 @@ using Application.Repositories.VehicleManagementsRepos.VehicleFuelRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleInspectionRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleInsuranceRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleMaintenanceRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleRequestRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleTransactionRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleTyreUseRepo;
 using Application.Repositories.WarehouseManagementRepos.StockCardImageRepo;
@@ -168,6 +169,7 @@ using Persistence.Repositories.VehicleManagementRepos.VehicleFuelRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleInspectionRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleInsuranceRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleMaintenanceRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleRequestRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleTransactionRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleTyreUseRepo;
 using Persistence.Repositories.WarehouseManagementRepos.StockCardImageRepo;
@@ -649,6 +651,11 @@ namespace Persistence
             #region Vehicle Tyre Use
             services.AddScoped<IVehicleTyreUseReadRepository, VehicleTyreUseReadRepository>();
             services.AddScoped<IVehicleTyreUseWriteRepository, VehicleTyreUseWriteRepository>();
+            #endregion
+
+            #region Vehicle Request
+            services.AddScoped<IVehicleRequestReadRepository, VehicleRequestReadRepository>();
+            services.AddScoped<IVehicleRequestWriteRepository, VehicleRequestWriteRepository>();
             #endregion
 
 

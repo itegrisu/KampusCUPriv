@@ -1,4 +1,5 @@
-﻿using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.UploadFile;
+﻿using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetByUserGid;
+using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Commands.UploadFile;
 using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Queries.GetByUserGid;
 using Application.Features.VehicleManagementFeatures.VehicleTransactions.Commands.Create;
 using Application.Features.VehicleManagementFeatures.VehicleTransactions.Commands.Delete;
@@ -8,6 +9,8 @@ using Application.Features.VehicleManagementFeatures.VehicleTransactions.Queries
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Commands.UploadContractFile;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Commands.UploadLicenseFile;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetByVehicleTransactionGid;
+using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetHistoriesByVehicleGid;
+using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetListWithDateRange;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -52,6 +55,20 @@ namespace API.Controllers.VehicleManagementControllers
         public async Task<IActionResult> UploadVehicleTransactionLicenseFile([FromBody] UploadVehicleTransactionLicenseFileCommand uploadVehicleTransactionLicenseFileCommand)
         {
             UploadVehicleTransactionLicenseFileResponse response = await Mediator.Send(uploadVehicleTransactionLicenseFileCommand);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetHistoriesByVehicleGid([FromQuery] GetHistoriesByVehicleGidListVehicleTransactionQuery getHistoriesByVehicleGidListVehicleTransactionQuery)
+        {
+            GetListResponse<GetHistoriesByVehicleGidListVehicleTransactionListItemDto> response = await Mediator.Send(getHistoriesByVehicleGidListVehicleTransactionQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> GetListWithDateRange([FromBody] GetListWithDateRangeVehicleTransactionQuery getListWithDateRangeVehicleTransactionQuery)
+        {
+            GetListResponse<GetListWithDateRangeVehicleTransactionListItemDto> response = await Mediator.Send(getListWithDateRangeVehicleTransactionQuery);
             return Ok(response);
         }
     }

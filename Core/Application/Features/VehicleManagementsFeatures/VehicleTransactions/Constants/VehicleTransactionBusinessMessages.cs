@@ -30,5 +30,7 @@ public static class VehicleTransactionsBusinessMessages
     public const string VehicleNotSuitablForTake = "Bu araç Araç Durumunda kaydý olduðu için Kiralýk Alýnan Araca uygun deðil!";
     //UserNotExists
     public const string UserNotExists = "Kullanýcý Bulunamadý!";
+    //NewKMShouldBeMoreThanOldKM
+    public const string NewKMShouldBeMoreThanOldKM = "Girilen yeni KM aracýn eski KM sinden büyük olmalýdýr";
 
 }
