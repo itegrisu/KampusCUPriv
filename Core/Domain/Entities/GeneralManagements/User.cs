@@ -88,8 +88,8 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<UserReminder>? UserReminders { get; set; }
         public ICollection<SCPersonnel>? SCPersonnels { get; set; }
         public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
-
-
+        public ICollection<VehicleRequest>? VehicleUserRequest { get; set; }
+        public ICollection<VehicleRequest>? VehicleApprovedUserRequests { get; set; }
         #region NotMapped alanlar 
         [NotMapped]
         public string FullName

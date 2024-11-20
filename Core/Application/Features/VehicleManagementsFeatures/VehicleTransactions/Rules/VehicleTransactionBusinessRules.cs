@@ -4,6 +4,7 @@ using Application.Repositories.VehicleManagementsRepos.VehicleTransactionRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
 using Domain.Enums;
+using Org.BouncyCastle.Ocsp;
 using X = Domain.Entities.VehicleManagements;
 
 namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Rules;
@@ -77,4 +78,11 @@ public class VehicleTransactionBusinessRules : BaseBusinessRules
         }
     }
 
+    public async Task CheckKM(int? oldKM, int startKM)
+    {
+        if (oldKM > startKM)
+        {
+            throw new BusinessException(VehicleTransactionsBusinessMessages.NewKMShouldBeMoreThanOldKM);
+        }
+    }
 }

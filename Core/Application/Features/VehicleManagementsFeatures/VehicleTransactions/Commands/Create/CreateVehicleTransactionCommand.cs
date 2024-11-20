@@ -57,7 +57,6 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
         public async Task<CreatedVehicleTransactionResponse> Handle(CreateVehicleTransactionCommand request, CancellationToken cancellationToken)
         {
             var existingTransaction = await _vehicleTransactionReadRepository.GetSingleAsync(x => x.GidVehicleFK == request.GidVehicleFK);
-
             VehicleTransaction newTransaction;
 
             if (existingTransaction == null)
@@ -74,6 +73,8 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
             }
             else
             {
+                await _vehicleTransactionBusinessRules.CheckKM(existingTransaction.EndKM, request.StartKM);
+
                 return await HandleExistingTransaction(existingTransaction, request);
             }
         }
