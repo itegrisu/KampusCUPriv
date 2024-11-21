@@ -63,6 +63,7 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new DepartmentUserConfiguration());
             modelBuilder.ApplyConfiguration(new UserShortCutConfiguration());
             modelBuilder.ApplyConfiguration(new UserModuleAuthConfiguration());
+            modelBuilder.ApplyConfiguration(new UserReminderConfiguration());
 
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CityConfiguration());
@@ -204,6 +205,7 @@ namespace Persistence.Context
 
         // DbSet, veritabaný tablosu üzerinde CRUD iþlemlerini gerçekleþtirmeyi saðlar
         public DbSet<User> Users { get; set; }
+        public DbSet<UserReminder> UserReminders { get; set; }
         public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<LogAuthorizationError> LogAuthorizationErrors { get; set; }
