@@ -10,9 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{63DE7DB4-9A40-48C8-8AC6-E2F4CC3657FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{DC898C00-8B47-413C-97B4-CAE77C354DAF}"
-	ProjectSection(SolutionItems) = preProject
-		todo.txt = todo.txt
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Core\Application\Application.csproj", "{591BC51F-0D44-4F0A-A357-7AF066135C83}"
 EndProject
@@ -25,6 +22,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Infrastracture\Persistence\Persistence.csproj", "{F19AF52C-B70E-4E94-8BA6-8020AA956B70}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "Presentation\API\API.csproj", "{E9EB3065-F8C6-4AA3-AA54-389553288099}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RementResource", "RementResource\RementResource.csproj", "{684B1D8F-98A4-461A-9FAA-76F27BB5E451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +55,10 @@ Global
 		{E9EB3065-F8C6-4AA3-AA54-389553288099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9EB3065-F8C6-4AA3-AA54-389553288099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9EB3065-F8C6-4AA3-AA54-389553288099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{684B1D8F-98A4-461A-9FAA-76F27BB5E451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{684B1D8F-98A4-461A-9FAA-76F27BB5E451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{684B1D8F-98A4-461A-9FAA-76F27BB5E451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{684B1D8F-98A4-461A-9FAA-76F27BB5E451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +70,7 @@ Global
 		{B8A04BC1-FD46-4895-9F01-9D6ECB6E7243} = {9F073121-8E5A-4F48-9DD5-178BD74AFFD0}
 		{F19AF52C-B70E-4E94-8BA6-8020AA956B70} = {9F073121-8E5A-4F48-9DD5-178BD74AFFD0}
 		{E9EB3065-F8C6-4AA3-AA54-389553288099} = {63DE7DB4-9A40-48C8-8AC6-E2F4CC3657FC}
+		{684B1D8F-98A4-461A-9FAA-76F27BB5E451} = {DC898C00-8B47-413C-97B4-CAE77C354DAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2AFD0DEF-4C38-4C89-9CF3-F88A3FF7C5C9}
