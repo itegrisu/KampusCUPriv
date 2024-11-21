@@ -1,0 +1,17 @@
+using FluentValidation;
+
+namespace Application.Features.TransportationManagementFeatures.TransportationPersonnels.Commands.Create;
+
+public class CreateTransportationPersonnelCommandValidator : AbstractValidator<CreateTransportationPersonnelCommand>
+{
+    public CreateTransportationPersonnelCommandValidator()
+    {
+        //RuleFor(c => c.GidTransportationServiceFK);//
+RuleFor(c => c.GidStaffPersonnelFK).NotNull().NotEmpty();
+
+RuleFor(c => c.StaffType).NotNull().NotEmpty();
+RuleFor(c => c.Description).MaximumLength(250);
+
+
+    }
+}

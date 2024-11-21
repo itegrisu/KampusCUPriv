@@ -23,10 +23,10 @@ namespace Persistence.EntityConfiguration.TransportationManagements
             builder.Property(y => y.Title).IsRequired().HasColumnType("varchar").HasMaxLength(100);
             builder.Property(y => y.StartDate).IsRequired().HasColumnType("datetime");
             builder.Property(y => y.EndDate).IsRequired(false).HasColumnType("datetime");
+            builder.Property(y => y.Fee).IsRequired().HasColumnType("float").HasMaxLength(10);
 
             builder.HasMany(u => u.TransportationServices).WithOne(y => y.TransportationFK).HasForeignKey(y => y.GidTransportationFK);
             builder.HasMany(u => u.FinanceBalances).WithOne(y => y.TransportationFK).HasForeignKey(y => y.GidTransportationFK);
-
         }
     }
 }

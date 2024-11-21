@@ -95,6 +95,8 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasMany(u => u.VehicleTransactions).WithOne(y => y.UserFK).HasForeignKey(y => y.GidVehicleUsePersonnelFK);
             builder.HasMany(u => u.VehicleUserRequest).WithOne(y => y.RequestUserFK).HasForeignKey(y => y.GidRequestUserFK);
             builder.HasMany(u => u.VehicleApprovedUserRequests).WithOne(y => y.ApprovedUserFK).HasForeignKey(y => y.GidApprovedUserFK);
+
+            builder.HasMany(u => u.TransportationPersonnels).WithOne(y => y.UserFK).HasForeignKey(y => y.GidStaffPersonnelFK);
         }
     }
 }

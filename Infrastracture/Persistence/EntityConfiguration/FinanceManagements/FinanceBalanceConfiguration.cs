@@ -28,7 +28,6 @@ namespace Persistence.EntityConfiguration.FinanceManagements
             builder.Property(y => y.PaymentFile).IsRequired(false).HasColumnType("varchar").HasMaxLength(150);
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
 
-
         }
     }
 }

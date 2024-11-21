@@ -32,7 +32,5 @@ namespace Domain.Entities.FinanceManagements
         public DateTime? PaymentDate { get; set; }
         public string? PaymentFile { get; set; }
         public string? Description { get; set; }
-
-
     }
 }

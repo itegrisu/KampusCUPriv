@@ -13,6 +13,7 @@ using Domain.Entities.PortalManagements;
 using Domain.Entities.SupplierCustomerManagements;
 using Domain.Entities.SupportManagements;
 using Domain.Entities.TaskManagements;
+using Domain.Entities.TransportationManagements;
 using Domain.Entities.VehicleManagements;
 using Domain.Entities.WarehouseManagements;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ using Persistence.EntityConfiguration.PortalManagements;
 using Persistence.EntityConfiguration.SupplierManagements;
 using Persistence.EntityConfiguration.SupportManagements;
 using Persistence.EntityConfiguration.TaskManagements;
+using Persistence.EntityConfiguration.TransportationManagements;
 using Persistence.EntityConfiguration.VehicleManagements;
 using Persistence.EntityConfiguration.WareHouseManagements;
 using C = Core.Context;
@@ -159,7 +161,14 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new TyreTypeConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleTyreUseConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleRequestConfiguration());
-
+            modelBuilder.ApplyConfiguration(new TransportationConfiguration());
+            modelBuilder.ApplyConfiguration(new TransportationServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new TransportationGroupConfiguration());
+            modelBuilder.ApplyConfiguration(new TransportationPersonnelConfiguration());
+            modelBuilder.ApplyConfiguration(new TransportationPassengerConfiguration());
+            modelBuilder.ApplyConfiguration(new TransportationExternalServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new FinanceBalanceConfiguration());
+            modelBuilder.ApplyConfiguration(new DistrictConfiguration());
 
 
             base.OnModelCreating(modelBuilder);
@@ -288,5 +297,13 @@ namespace Persistence.Context
         public DbSet<TyreType> TyreTypes { get; set; }
         public DbSet<VehicleTyreUse> VehicleTyreUses { get; set; }
         public DbSet<VehicleRequest> VehicleRequests { get; set; }
+        public DbSet<Transportation> Transportations { get; set; }
+        public DbSet<TransportationService> TransportationServices { get; set; }
+        public DbSet<TransportationGroup> TransportationGroups { get; set; }
+        public DbSet<TransportationPersonnel> TransportationPersonnels { get; set; }
+        public DbSet<TransportationPassenger> TransportationPassengers { get; set; }
+        public DbSet<TransportationExternalService> TransportationExternalServices { get; set; }
+        public DbSet<FinanceBalance> FinanceBalances { get; set; }
+        public DbSet<District> Districts { get; set; }
     }
 }

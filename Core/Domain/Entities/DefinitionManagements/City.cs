@@ -1,6 +1,7 @@
 using Core.Entities;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.SupplierCustomerManagements;
+using Domain.Entities.TransportationManagements;
 
 namespace Domain.Entities.DefinitionManagements
 {
@@ -14,7 +15,8 @@ namespace Domain.Entities.DefinitionManagements
 
         public ICollection<PersonnelAddress>? PersonnelAddresses { get; set; }
         public ICollection<SCAddress>? SCAddresses { get; set; }
-
-
+        public ICollection<TransportationGroup>? StartTransportationGroups { get; set; }
+        public ICollection<District>? Districts { get; set; }
+        public ICollection<TransportationGroup>? EndTransportationGroups { get; set; }
     }
 }

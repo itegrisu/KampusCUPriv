@@ -21,13 +21,13 @@ namespace Core.Infrastracture
                     description.GroupName,
                     new OpenApiInfo()
                     {
-                        Title = $"UnamV2Project {description.ApiVersion}",
+                        Title = $"EmasistV4 {description.ApiVersion}",
                         Version = description.ApiVersion.ToString(),
                         Contact = new OpenApiContact()
                         {
                             Url = new Uri("https://www.rementsoft.com"),
                             Email = "lys@rementsoft.com",
-                            Name = "UnamV2Project"
+                            Name = "EmasistV4"
                         }
                     });
 

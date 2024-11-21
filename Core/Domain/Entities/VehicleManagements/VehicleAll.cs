@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Domain.Entities.DefinitionManagements;
+using Domain.Entities.TransportationManagements;
 using Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -33,5 +34,6 @@ namespace Domain.Entities.VehicleManagements
         public ICollection<VehicleFuel>? VehicleFuels { get; set; }
         public ICollection<VehicleTyreUse>? VehicleTyreUses { get; set; }
         public ICollection<VehicleRequest>? VehicleRequests { get; set; }
+        public ICollection<TransportationService>? TransportationServices { get; set; }
     }
 }

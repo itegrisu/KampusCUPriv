@@ -23,8 +23,9 @@ namespace Persistence.EntityConfiguration.OrganisationManagements
             builder.HasMany(u => u.Warehouses).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
             builder.HasMany(u => u.FinanceExpenses).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
             builder.HasMany(u => u.OrganizationGroups).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
-            //builder.HasMany(u => u.OrganizationFiles).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK); 
+            builder.HasMany(u => u.OrganizationFiles).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK); 
             builder.HasMany(u => u.Transportations).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
+            builder.HasMany(u => u.TransportationExternalServices).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
         }
     }
 }
