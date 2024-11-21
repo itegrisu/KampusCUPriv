@@ -3,6 +3,7 @@ using Domain.Entities.DefinitionManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.SupplierCustomerManagements;
+using Domain.Entities.TransportationManagements;
 using Domain.Entities.WarehouseManagements;
 using Domain.Enums;
 
@@ -28,6 +29,6 @@ namespace Domain.Entities.OrganizationManagements
         public ICollection<FinanceExpense>? FinanceExpenses { get; set; }
         public ICollection<OrganizationGroup>? OrganizationGroups { get; set; }
         public ICollection<OrganizationFile>? OrganizationFiles { get; set; }
-
+        public ICollection<Transportation>? Transportations { get; set; }
     }
 }

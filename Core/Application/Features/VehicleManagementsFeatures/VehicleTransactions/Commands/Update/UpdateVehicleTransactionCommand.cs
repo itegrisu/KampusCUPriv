@@ -18,7 +18,7 @@ public class UpdateVehicleTransactionCommand : IRequest<UpdatedVehicleTransactio
     public Guid? GidVehicleUsePersonnelFK { get; set; }
     public int StartKM { get; set; }
     public int? EndKM { get; set; }
-    public int? MonthlyRentalFee { get; set; }
+    public int? Fee { get; set; }
     public DateTime? ContractStartDate { get; set; }
     public DateTime? ContractEndDate { get; set; }
     public string? ContactPerson { get; set; }

@@ -16,6 +16,6 @@ namespace Domain.Entities.DefinitionManagements
         public ICollection<FinanceExpenseDetail> FinanceExpenseDetails { get; set; }
         public ICollection<FinanceIncome> FinanceIncomes { get; set; }
         public ICollection<OfferTransaction> OfferTransactions { get; set; }
-
+        public ICollection<FinanceBalance>? FinanceBalances { get; set; }
     }
 }
