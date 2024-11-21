@@ -22,7 +22,7 @@ namespace Persistence.EntityConfiguration.VehicleManagements
 
             builder.Property(y => y.StartKM).IsRequired().HasColumnType("int");
             builder.Property(y => y.EndKM).HasColumnType("int");
-            builder.Property(y => y.MonthlyRentalFee).IsRequired(false).HasColumnType("int");
+            builder.Property(y => y.Fee).IsRequired(false).HasColumnType("int");
             builder.Property(y => y.ContractStartDate).IsRequired(false).HasColumnType("datetime");
             builder.Property(y => y.ContractEndDate).IsRequired(false).HasColumnType("datetime");
             builder.Property(y => y.ContactPerson).IsRequired(false).HasColumnType("varchar").HasMaxLength(60);
@@ -33,6 +33,8 @@ namespace Persistence.EntityConfiguration.VehicleManagements
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
             builder.Property(y => y.PurchaseDate).IsRequired(false).HasColumnType("datetime");
             builder.Property(y => y.EndDate).IsRequired(false).HasColumnType("datetime");
+
+            builder.HasMany(u => u.FinanceBalances).WithOne(y => y.VehicleTransactionFK).HasForeignKey(y => y.GidVehicleTransactionFK);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Domain.Entities.FinanceManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.SupplierCustomerManagements;
 using Domain.Enums;
@@ -20,7 +21,7 @@ namespace Domain.Entities.VehicleManagements
         public User? UserFK { get; set; }
         public int StartKM { get; set; }
         public int? EndKM { get; set; }
-        public int? MonthlyRentalFee { get; set; }
+        public int? Fee { get; set; }
         public DateTime? ContractStartDate { get; set; }
         public DateTime? ContractEndDate { get; set; }
         public string? ContactPerson { get; set; }
@@ -32,5 +33,7 @@ namespace Domain.Entities.VehicleManagements
         public DateTime? PurchaseDate { get; set; }
         public DateTime? EndDate { get; set; }
         public EnumVehicleStatus VehicleStatus { get; set; }
+
+        public ICollection<FinanceBalance>? FinanceBalances { get; set; }
     }
 }
