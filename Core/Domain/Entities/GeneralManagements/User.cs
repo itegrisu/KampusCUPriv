@@ -9,6 +9,7 @@ using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.SupplierCustomerManagements;
 using Domain.Entities.SupportManagements;
+using Domain.Entities.TransportationManagements;
 using Domain.Entities.VehicleManagements;
 using Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -90,6 +91,7 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
         public ICollection<VehicleRequest>? VehicleUserRequest { get; set; }
         public ICollection<VehicleRequest>? VehicleApprovedUserRequests { get; set; }
+        public ICollection<TransportationPersonnel>? TransportationPersonnels { get; set; }
         #region NotMapped alanlar 
         [NotMapped]
         public string FullName

@@ -1,6 +1,7 @@
 using Core.Entities;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.OrganizationManagements;
+using Domain.Entities.TransportationManagements;
 using Domain.Entities.VehicleManagements;
 using Domain.Enums;
 
@@ -35,6 +36,6 @@ namespace Domain.Entities.SupplierCustomerManagements
         public ICollection<SCPersonnel>? SCPersonnels { get; set; }
         public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
         public ICollection<FinanceBalance>? FinanceBalances { get; set; }
-
+        public ICollection<TransportationExternalService>? TransportationExternalServices { get; set; }
     }
 }

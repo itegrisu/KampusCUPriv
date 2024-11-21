@@ -2,6 +2,7 @@ using Core.Entities;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.OfferManagements;
 using Domain.Entities.SupplierCustomerManagements;
+using Domain.Entities.TransportationManagements;
 
 namespace Domain.Entities.DefinitionManagements
 {
@@ -17,5 +18,6 @@ namespace Domain.Entities.DefinitionManagements
         public ICollection<FinanceIncome> FinanceIncomes { get; set; }
         public ICollection<OfferTransaction> OfferTransactions { get; set; }
         public ICollection<FinanceBalance>? FinanceBalances { get; set; }
+        public ICollection<TransportationExternalService>? TransportationExternalServices { get; set; }
     }
 }

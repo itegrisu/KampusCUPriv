@@ -352,6 +352,36 @@ namespace Persistence.Migrations
                     b.ToTable("Currencies");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.District", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DistrictCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DistrictName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<Guid>("GidCityFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidCityFK");
+
+                    b.ToTable("Districts");
+                });
+
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.DocumentType", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -597,6 +627,75 @@ namespace Persistence.Migrations
                     b.HasKey("Gid");
 
                     b.ToTable("TyreTypes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FinanceManagements.FinanceBalance", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BalanceResourceType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BalanceType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<double>("Fee")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("GidFeeCurrencyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidSupplierCustomerFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidTransportationExternalServiceFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidTransportationFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidVehicleTransactionFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("PaymentFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidFeeCurrencyFK");
+
+                    b.HasIndex("GidSupplierCustomerFK");
+
+                    b.HasIndex("GidTransportationExternalServiceFK");
+
+                    b.HasIndex("GidTransportationFK");
+
+                    b.HasIndex("GidVehicleTransactionFK");
+
+                    b.ToTable("FinanceBalances");
                 });
 
             modelBuilder.Entity("Domain.Entities.FinanceManagements.FinanceExpense", b =>
@@ -1119,13 +1218,15 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("Document")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<Guid>("GidUserFK")
                         .HasColumnType("uniqueidentifier");
@@ -1135,13 +1236,14 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Gid");
 
                     b.HasIndex("GidUserFK");
 
-                    b.ToTable("UserReminder");
+                    b.ToTable("UserReminders");
                 });
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.UserShortCut", b =>
@@ -2765,6 +2867,346 @@ namespace Persistence.Migrations
                     b.ToTable("TaskUsers");
                 });
 
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.Transportation", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerInfo")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<double>("Fee")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
+                    b.Property<Guid?>("GidOrganizationFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("TransportationNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<int>("TransportationStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidOrganizationFK");
+
+                    b.ToTable("Transportations");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationExternalService", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<int>("ExternalServiceStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExternalVehicleType")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Fee")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("GidFeeCurrencyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidOrganizationFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidSupplierFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsHasFile")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PassengerCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlateNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("VehicleOfficer")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("VehiclePhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidFeeCurrencyFK");
+
+                    b.HasIndex("GidOrganizationFK");
+
+                    b.HasIndex("GidSupplierFK");
+
+                    b.ToTable("TransportationExternalServices");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationGroup", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("EndPlace")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid>("GidEndCityFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidEndCountryFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidEndDistrictFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidStartCityFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidStartCountryFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidStartDistrictFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidTransportationServiceFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("GroupName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("StartPlace")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<double>("TransportationFee")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidEndCityFK");
+
+                    b.HasIndex("GidEndCountryFK");
+
+                    b.HasIndex("GidEndDistrictFK");
+
+                    b.HasIndex("GidStartCityFK");
+
+                    b.HasIndex("GidStartCountryFK");
+
+                    b.HasIndex("GidStartDistrictFK");
+
+                    b.HasIndex("GidTransportationServiceFK");
+
+                    b.ToTable("TransportationGroups");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationPassenger", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidTransportationGroupFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IdentityNo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("PassengerStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Phone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidTransportationGroupFK");
+
+                    b.ToTable("TransportationPassengers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationPersonnel", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<Guid>("GidStaffPersonnelFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidTransportationServiceFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("StaffType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidStaffPersonnelFK");
+
+                    b.HasIndex("GidTransportationServiceFK");
+
+                    b.ToTable("TransportationPersonnels");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationService", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("EndKM")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidTransportationFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidVehicleFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ServiceNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("StartKM")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransportationFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<int>("TransportationServiceStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VehiclePhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidTransportationFK");
+
+                    b.HasIndex("GidVehicleFK");
+
+                    b.ToTable("TransportationServices");
+                });
+
             modelBuilder.Entity("Domain.Entities.VehicleManagements.Tyre", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -3492,6 +3934,57 @@ namespace Persistence.Migrations
                     b.Navigation("CountryFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.District", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.City", "CityFK")
+                        .WithMany("Districts")
+                        .HasForeignKey("GidCityFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CityFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FinanceManagements.FinanceBalance", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "CurrencyFK")
+                        .WithMany("FinanceBalances")
+                        .HasForeignKey("GidFeeCurrencyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("FinanceBalances")
+                        .HasForeignKey("GidSupplierCustomerFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TransportationManagements.TransportationExternalService", "TransportationExternalServiceFK")
+                        .WithMany("FinanceBalances")
+                        .HasForeignKey("GidTransportationExternalServiceFK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.TransportationManagements.Transportation", "TransportationFK")
+                        .WithMany("FinanceBalances")
+                        .HasForeignKey("GidTransportationFK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleTransaction", "VehicleTransactionFK")
+                        .WithMany("FinanceBalances")
+                        .HasForeignKey("GidVehicleTransactionFK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CurrencyFK");
+
+                    b.Navigation("SCCompanyFK");
+
+                    b.Navigation("TransportationExternalServiceFK");
+
+                    b.Navigation("TransportationFK");
+
+                    b.Navigation("VehicleTransactionFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.FinanceManagements.FinanceExpense", b =>
                 {
                     b.HasOne("Domain.Entities.GeneralManagements.User", "ApprovalReceiverFK")
@@ -4193,6 +4686,149 @@ namespace Persistence.Migrations
                     b.Navigation("UserFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.Transportation", b =>
+                {
+                    b.HasOne("Domain.Entities.OrganizationManagements.Organization", "OrganizationFK")
+                        .WithMany("Transportations")
+                        .HasForeignKey("GidOrganizationFK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("OrganizationFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationExternalService", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "CurrencyFK")
+                        .WithMany("TransportationExternalServices")
+                        .HasForeignKey("GidFeeCurrencyFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.OrganizationManagements.Organization", "OrganizationFK")
+                        .WithMany("TransportationExternalServices")
+                        .HasForeignKey("GidOrganizationFK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("TransportationExternalServices")
+                        .HasForeignKey("GidSupplierFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CurrencyFK");
+
+                    b.Navigation("OrganizationFK");
+
+                    b.Navigation("SCCompanyFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationGroup", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.City", "EndCityFK")
+                        .WithMany("EndTransportationGroups")
+                        .HasForeignKey("GidEndCityFK")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.Country", "EndCountryFK")
+                        .WithMany("EndTransportationGroups")
+                        .HasForeignKey("GidEndCountryFK")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.District", "EndDistrictFK")
+                        .WithMany("EndTransportationGroups")
+                        .HasForeignKey("GidEndDistrictFK")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.City", "StartCityFK")
+                        .WithMany("StartTransportationGroups")
+                        .HasForeignKey("GidStartCityFK")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.Country", "StartCountryFK")
+                        .WithMany("StartTransportationGroups")
+                        .HasForeignKey("GidStartCountryFK")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.District", "StartDistrictFK")
+                        .WithMany("StartTransportationGroups")
+                        .HasForeignKey("GidStartDistrictFK")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TransportationManagements.TransportationService", "TransportationServiceFK")
+                        .WithMany("TransportationGroups")
+                        .HasForeignKey("GidTransportationServiceFK")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("EndCityFK");
+
+                    b.Navigation("EndCountryFK");
+
+                    b.Navigation("EndDistrictFK");
+
+                    b.Navigation("StartCityFK");
+
+                    b.Navigation("StartCountryFK");
+
+                    b.Navigation("StartDistrictFK");
+
+                    b.Navigation("TransportationServiceFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationPassenger", b =>
+                {
+                    b.HasOne("Domain.Entities.TransportationManagements.TransportationGroup", "TransportationGroupFK")
+                        .WithMany("TransportationPassengers")
+                        .HasForeignKey("GidTransportationGroupFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TransportationGroupFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationPersonnel", b =>
+                {
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("TransportationPersonnels")
+                        .HasForeignKey("GidStaffPersonnelFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.TransportationManagements.TransportationService", "TransportationServiceFK")
+                        .WithMany("TransportationPersonnels")
+                        .HasForeignKey("GidTransportationServiceFK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("TransportationServiceFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationService", b =>
+                {
+                    b.HasOne("Domain.Entities.TransportationManagements.Transportation", "TransportationFK")
+                        .WithMany("TransportationServices")
+                        .HasForeignKey("GidTransportationFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.VehicleManagements.VehicleAll", "VehicleAllFK")
+                        .WithMany("TransportationServices")
+                        .HasForeignKey("GidVehicleFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("TransportationFK");
+
+                    b.Navigation("VehicleAllFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.VehicleManagements.Tyre", b =>
                 {
                     b.HasOne("Domain.Entities.DefinitionManagements.TyreType", "TyreTypeFK")
@@ -4442,20 +5078,32 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.City", b =>
                 {
+                    b.Navigation("Districts");
+
+                    b.Navigation("EndTransportationGroups");
+
                     b.Navigation("PersonnelAddresses");
 
                     b.Navigation("SCAddresses");
+
+                    b.Navigation("StartTransportationGroups");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Country", b =>
                 {
                     b.Navigation("Cities");
 
+                    b.Navigation("EndTransportationGroups");
+
+                    b.Navigation("StartTransportationGroups");
+
                     b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Currency", b =>
                 {
+                    b.Navigation("FinanceBalances");
+
                     b.Navigation("FinanceExpenseDetails");
 
                     b.Navigation("FinanceExpenses");
@@ -4465,6 +5113,15 @@ namespace Persistence.Migrations
                     b.Navigation("OfferTransactions");
 
                     b.Navigation("SCBanks");
+
+                    b.Navigation("TransportationExternalServices");
+                });
+
+            modelBuilder.Entity("Domain.Entities.DefinitionManagements.District", b =>
+                {
+                    b.Navigation("EndTransportationGroups");
+
+                    b.Navigation("StartTransportationGroups");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.DocumentType", b =>
@@ -4599,6 +5256,8 @@ namespace Persistence.Migrations
 
                     b.Navigation("Tasks");
 
+                    b.Navigation("TransportationPersonnels");
+
                     b.Navigation("UserModuleAuths");
 
                     b.Navigation("UserRefreshTokens");
@@ -4636,6 +5295,10 @@ namespace Persistence.Migrations
 
                     b.Navigation("OrganizationGroups");
 
+                    b.Navigation("TransportationExternalServices");
+
+                    b.Navigation("Transportations");
+
                     b.Navigation("Warehouses");
                 });
 
@@ -4653,6 +5316,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCCompany", b =>
                 {
+                    b.Navigation("FinanceBalances");
+
                     b.Navigation("Organizations");
 
                     b.Navigation("SCAddresses");
@@ -4664,6 +5329,8 @@ namespace Persistence.Migrations
                     b.Navigation("SCPersonnels");
 
                     b.Navigation("SCWorkHistories");
+
+                    b.Navigation("TransportationExternalServices");
 
                     b.Navigation("VehicleTransactions");
                 });
@@ -4687,6 +5354,30 @@ namespace Persistence.Migrations
                     b.Navigation("TaskUsers");
                 });
 
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.Transportation", b =>
+                {
+                    b.Navigation("FinanceBalances");
+
+                    b.Navigation("TransportationServices");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationExternalService", b =>
+                {
+                    b.Navigation("FinanceBalances");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationGroup", b =>
+                {
+                    b.Navigation("TransportationPassengers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationService", b =>
+                {
+                    b.Navigation("TransportationGroups");
+
+                    b.Navigation("TransportationPersonnels");
+                });
+
             modelBuilder.Entity("Domain.Entities.VehicleManagements.Tyre", b =>
                 {
                     b.Navigation("VehicleTyreUses");
@@ -4694,6 +5385,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleAll", b =>
                 {
+                    b.Navigation("TransportationServices");
+
                     b.Navigation("VehicleDocuments");
 
                     b.Navigation("VehicleEquipments");
@@ -4711,6 +5404,11 @@ namespace Persistence.Migrations
                     b.Navigation("VehicleTransactions");
 
                     b.Navigation("VehicleTyreUses");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleManagements.VehicleTransaction", b =>
+                {
+                    b.Navigation("FinanceBalances");
                 });
 
             modelBuilder.Entity("Domain.Entities.WarehouseManagements.StockCard", b =>

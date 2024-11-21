@@ -30,5 +30,6 @@ namespace Domain.Entities.OrganizationManagements
         public ICollection<OrganizationGroup>? OrganizationGroups { get; set; }
         public ICollection<OrganizationFile>? OrganizationFiles { get; set; }
         public ICollection<Transportation>? Transportations { get; set; }
+        public ICollection<TransportationExternalService>? TransportationExternalServices { get; set; }
     }
 }

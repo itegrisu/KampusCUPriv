@@ -9,6 +9,7 @@ using Application.Repositories.AuthManagementRepos.AuthUserRoleRepo;
 using Application.Repositories.DefinitionManagementRepos.CityRepo;
 using Application.Repositories.DefinitionManagementRepos.CountryRepo;
 using Application.Repositories.DefinitionManagementRepos.CurrencyRepo;
+using Application.Repositories.DefinitionManagementRepos.DistrictRepo;
 using Application.Repositories.DefinitionManagementRepos.DocumentTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.ForeignLanguageRepo;
 using Application.Repositories.DefinitionManagementRepos.JopTypeRepo;
@@ -19,6 +20,7 @@ using Application.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.RoomTypeRepo;
 using Application.Repositories.DefinitionManagementRepos.StockCategoryRepo;
 using Application.Repositories.DefinitionManagementRepos.TyreTypeRepo;
+using Application.Repositories.FinanceManagementRepos.FinanceBalanceRepo;
 using Application.Repositories.FinanceManagementRepos.FinanceExpenseDetailRepo;
 using Application.Repositories.FinanceManagementRepos.FinanceExpenseGroupRepo;
 using Application.Repositories.FinanceManagementRepos.FinanceExpenseRepo;
@@ -71,6 +73,12 @@ using Application.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Application.Repositories.TaskManagementRepos.TaskFileRepo;
 using Application.Repositories.TaskManagementRepos.TaskRepo;
 using Application.Repositories.TaskManagementRepos.TaskUserRepo;
+using Application.Repositories.TransportationRepos.TransportationExternalServiceRepo;
+using Application.Repositories.TransportationRepos.TransportationGroupRepo;
+using Application.Repositories.TransportationRepos.TransportationPassengerRepo;
+using Application.Repositories.TransportationRepos.TransportationPersonnelRepo;
+using Application.Repositories.TransportationRepos.TransportationRepo;
+using Application.Repositories.TransportationRepos.TransportationServiceRepo;
 using Application.Repositories.VehicleManagementsRepos.TyreRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleAllRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleDocumentRepo;
@@ -99,6 +107,7 @@ using Persistence.Repositories.AuthManagementRepos.AuthUserRoleRepo;
 using Persistence.Repositories.DefinitionManagementRepos.CityRepo;
 using Persistence.Repositories.DefinitionManagementRepos.CountryRepo;
 using Persistence.Repositories.DefinitionManagementRepos.CurrencyRepo;
+using Persistence.Repositories.DefinitionManagementRepos.DistrictRepo;
 using Persistence.Repositories.DefinitionManagementRepos.DocumentTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.ForeignLanguageRepo;
 using Persistence.Repositories.DefinitionManagementRepos.JopTypeRepo;
@@ -109,6 +118,7 @@ using Persistence.Repositories.DefinitionManagementRepos.PermitTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.RoomTypeRepo;
 using Persistence.Repositories.DefinitionManagementRepos.StockCategoryRepo;
 using Persistence.Repositories.DefinitionManagementRepos.TyreTypeRepo;
+using Persistence.Repositories.FinanceManagementRepos.FinanceBalanceRepo;
 using Persistence.Repositories.FinanceManagementRepos.FinanceExpenceDetailRepo;
 using Persistence.Repositories.FinanceManagementRepos.FinanceExpenseGroupRepo;
 using Persistence.Repositories.FinanceManagementRepos.FinanceExpenseRepo;
@@ -161,6 +171,12 @@ using Persistence.Repositories.TaskManagementRepos.TaskCommentRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskFileRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskRepo;
 using Persistence.Repositories.TaskManagementRepos.TaskUserRepo;
+using Persistence.Repositories.TransportationManagementRepos.TransportationExternalServiceRepo;
+using Persistence.Repositories.TransportationManagementRepos.TransportationGroupRepo;
+using Persistence.Repositories.TransportationManagementRepos.TransportationPassengerRepo;
+using Persistence.Repositories.TransportationManagementRepos.TransportationPersonnelRepo;
+using Persistence.Repositories.TransportationManagementRepos.TransportationRepo;
+using Persistence.Repositories.TransportationManagementRepos.TransportationServiceRepo;
 using Persistence.Repositories.VehicleManagementRepos.TyreRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleAllRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleDocumentRepo;
@@ -657,6 +673,53 @@ namespace Persistence
             services.AddScoped<IVehicleRequestReadRepository, VehicleRequestReadRepository>();
             services.AddScoped<IVehicleRequestWriteRepository, VehicleRequestWriteRepository>();
             #endregion
+            #region Transportation
+            services.AddScoped<ITransportationReadRepository, TransportationReadRepository>();
+            services.AddScoped<ITransportationWriteRepository, TransportationWriteRepository>();
+            #endregion
+
+
+            #region Transportation Service
+            services.AddScoped<ITransportationServiceReadRepository, TransportationServiceReadRepository>();
+            services.AddScoped<ITransportationServiceWriteRepository, TransportationServiceWriteRepository>();
+            #endregion
+
+
+            #region Transportation Group
+            services.AddScoped<ITransportationGroupReadRepository, TransportationGroupReadRepository>();
+            services.AddScoped<ITransportationGroupWriteRepository, TransportationGroupWriteRepository>();
+            #endregion
+
+
+            #region Transportation Personnel
+            services.AddScoped<ITransportationPersonnelReadRepository, TransportationPersonnelReadRepository>();
+            services.AddScoped<ITransportationPersonnelWriteRepository, TransportationPersonnelWriteRepository>();
+            #endregion
+
+
+            #region Transportation Passenger
+            services.AddScoped<ITransportationPassengerReadRepository, TransportationPassengerReadRepository>();
+            services.AddScoped<ITransportationPassengerWriteRepository, TransportationPassengerWriteRepository>();
+            #endregion
+
+
+            #region Transportation External Service
+            services.AddScoped<ITransportationExternalServiceReadRepository, TransportationExternalServiceReadRepository>();
+            services.AddScoped<ITransportationExternalServiceWriteRepository, TransportationExternalServiceWriteRepository>();
+            #endregion
+          
+
+            #region Finance Balance
+            services.AddScoped<IFinanceBalanceReadRepository, FinanceBalanceReadRepository>();
+            services.AddScoped<IFinanceBalanceWriteRepository, FinanceBalanceWriteRepository>();
+            #endregion
+
+
+            #region District
+            services.AddScoped<IDistrictReadRepository, DistrictReadRepository>();
+            services.AddScoped<IDistrictWriteRepository, DistrictWriteRepository>();
+            #endregion
+
 
 
             services.AddScoped<C.Context, Emasist2024Context>();

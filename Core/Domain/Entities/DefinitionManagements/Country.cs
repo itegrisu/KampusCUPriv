@@ -1,5 +1,6 @@
 using Core.Entities;
 using Domain.Entities.GeneralManagements;
+using Domain.Entities.TransportationManagements;
 
 namespace Domain.Entities.DefinitionManagements
 {
@@ -13,6 +14,7 @@ namespace Domain.Entities.DefinitionManagements
 
         public ICollection<User>? Users { get; set; }
         public ICollection<City>? Cities { get; set; }
-
+        public ICollection<TransportationGroup>? StartTransportationGroups { get; set; }
+        public ICollection<TransportationGroup>? EndTransportationGroups { get; set; }
     }
 }

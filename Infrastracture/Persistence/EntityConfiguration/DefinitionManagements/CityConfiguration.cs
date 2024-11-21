@@ -18,7 +18,9 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
 
             builder.HasMany(u => u.PersonnelAddresses).WithOne(y => y.CityFK).HasForeignKey(y => y.GidCityFK);
             builder.HasMany(u => u.SCAddresses).WithOne(y => y.CityFK).HasForeignKey(y => y.GidCityFK);
-
+            builder.HasMany(u => u.StartTransportationGroups).WithOne(y => y.StartCityFK).HasForeignKey(y => y.GidStartCityFK);
+            builder.HasMany(u => u.Districts).WithOne(y => y.CityFK).HasForeignKey(y => y.GidCityFK);
+            builder.HasMany(u => u.EndTransportationGroups).WithOne(y => y.EndCityFK).HasForeignKey(y => y.GidEndCityFK);
         }
     }
 }
