@@ -16,13 +16,13 @@ namespace Persistence.EntityConfiguration.TransportationManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.HasOne(y => y.TransportationServiceFK).WithMany(u => u.TransportationGroups).HasForeignKey(y => y.GidTransportationServiceFK).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(y => y.StartCountryFK).WithMany(u => u.StartTransportationGroups).HasForeignKey(y => y.GidStartCountryFK).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(y => y.StartCityFK).WithMany(u => u.StartTransportationGroups).HasForeignKey(y => y.GidStartCityFK).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(y => y.StartDistrictFK).WithMany(u => u.StartTransportationGroups).HasForeignKey(y => y.GidStartDistrictFK).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(y => y.EndCountryFK).WithMany(u => u.EndTransportationGroups).HasForeignKey(y => y.GidEndCountryFK).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(y => y.EndCityFK).WithMany(u => u.EndTransportationGroups).HasForeignKey(y => y.GidEndCityFK).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(y => y.EndDistrictFK).WithMany(u => u.EndTransportationGroups).HasForeignKey(y => y.GidEndDistrictFK).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(y => y.TransportationServiceFK).WithMany(u => u.TransportationGroups).HasForeignKey(y => y.GidTransportationServiceFK).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(y => y.StartCountryFK).WithMany(u => u.StartTransportationGroups).HasForeignKey(y => y.GidStartCountryFK).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(y => y.StartCityFK).WithMany(u => u.StartTransportationGroups).HasForeignKey(y => y.GidStartCityFK).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(y => y.StartDistrictFK).WithMany(u => u.StartTransportationGroups).HasForeignKey(y => y.GidStartDistrictFK).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(y => y.EndCountryFK).WithMany(u => u.EndTransportationGroups).HasForeignKey(y => y.GidEndCountryFK).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(y => y.EndCityFK).WithMany(u => u.EndTransportationGroups).HasForeignKey(y => y.GidEndCityFK).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(y => y.EndDistrictFK).WithMany(u => u.EndTransportationGroups).HasForeignKey(y => y.GidEndDistrictFK).OnDelete(DeleteBehavior.Restrict);
 
 
 
