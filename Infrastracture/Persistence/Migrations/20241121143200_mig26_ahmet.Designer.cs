@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Emasist2024Context))]
-    partial class Emasist2024ContextModelSnapshot : ModelSnapshot
+    [Migration("20241121143200_mig26_ahmet")]
+    partial class mig26_ahmet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2891,9 +2893,6 @@ namespace Persistence.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("float");
 
-                    b.Property<Guid>("GidFeeCurrencyFK")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("GidOrganizationFK")
                         .HasColumnType("uniqueidentifier");
 
@@ -2914,8 +2913,6 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Gid");
-
-                    b.HasIndex("GidFeeCurrencyFK");
 
                     b.HasIndex("GidOrganizationFK");
 
@@ -4698,25 +4695,17 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.TransportationManagements.Transportation", b =>
                 {
-                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "FeeCurrencyFK")
-                        .WithMany("Transportations")
-                        .HasForeignKey("GidFeeCurrencyFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.OrganizationManagements.Organization", "OrganizationFK")
                         .WithMany("Transportations")
                         .HasForeignKey("GidOrganizationFK")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("FeeCurrencyFK");
 
                     b.Navigation("OrganizationFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationExternalService", b =>
                 {
-                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "FeeCurrencyFK")
+                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "CurrencyFK")
                         .WithMany("TransportationExternalServices")
                         .HasForeignKey("GidFeeCurrencyFK")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -4733,7 +4722,7 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("FeeCurrencyFK");
+                    b.Navigation("CurrencyFK");
 
                     b.Navigation("OrganizationFK");
 
@@ -5140,8 +5129,6 @@ namespace Persistence.Migrations
                     b.Navigation("SCBanks");
 
                     b.Navigation("TransportationExternalServices");
-
-                    b.Navigation("Transportations");
 
                     b.Navigation("VehicleTransactions");
                 });

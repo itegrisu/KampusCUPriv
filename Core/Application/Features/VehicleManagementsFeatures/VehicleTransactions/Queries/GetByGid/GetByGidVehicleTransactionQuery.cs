@@ -27,7 +27,7 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Que
 
             public async Task<GetByGidVehicleTransactionResponse> Handle(GetByGidVehicleTransactionQuery request, CancellationToken cancellationToken)
             {
-                X.VehicleTransaction? vehicleTransaction = await _vehicleTransactionReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.SCCompanyFK).Include(x => x.UserFK).Include(x => x.VehicleAllFK));
+                X.VehicleTransaction? vehicleTransaction = await _vehicleTransactionReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.SCCompanyFK).Include(x => x.UserFK).Include(x => x.VehicleAllFK).Include(x => x.CurrencyFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

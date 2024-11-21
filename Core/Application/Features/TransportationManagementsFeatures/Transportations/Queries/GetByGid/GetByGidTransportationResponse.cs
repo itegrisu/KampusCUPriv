@@ -8,6 +8,8 @@ namespace Application.Features.TransportationManagementFeatures.Transportations.
         public Guid Gid { get; set; }
         public Guid? GidOrganizationFK { get; set; }
         public string OrganizationFKOrganizationName { get; set; }
+        public Guid GidFeeCurrencyFK { get; set; }
+        public string CurrencyFKName { get; set; }
         public string CustomerInfo { get; set; }
         public string TransportationNo { get; set; }
         public string Title { get; set; }

@@ -21,6 +21,7 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
     public Guid GidVehicleFK { get; set; }
     public Guid? GidSupplierCustomerFK { get; set; }
     public Guid? GidVehicleUsePersonnelFK { get; set; }
+    public Guid GidFeeCurrencyFK { get; set; }
     public int StartKM { get; set; }
     public int? EndKM { get; set; }
     public int? Fee { get; set; }
@@ -82,7 +83,7 @@ public class CreateVehicleTransactionCommand : IRequest<CreatedVehicleTransactio
         {
             var savedTransaction = await _vehicleTransactionReadRepository.GetAsync(
                 predicate: x => x.Gid == transaction.Gid,
-                include: x => x.Include(t => t.SCCompanyFK).Include(t => t.UserFK).Include(t => t.VehicleAllFK));
+                include: x => x.Include(t => t.SCCompanyFK).Include(t => t.UserFK).Include(t => t.VehicleAllFK).Include(x => x.CurrencyFK));
 
             var responseObject = _mapper.Map<GetByGidVehicleTransactionResponse>(savedTransaction);
 

@@ -37,15 +37,16 @@ public class GetListVehicleTransactionQuery : IRequest<GetListResponse<GetListVe
                     includes: new Expression<Func<VehicleTransaction, object>>[]
                     {
                        x => x.UserFK,
-                       x=> x.SCCompanyFK,
-                       x=> x.VehicleAllFK
+                       x => x.SCCompanyFK,
+                       x => x.VehicleAllFK,
+                       x => x.CurrencyFK
                     });
             //return await _noPagination.NoPaginationData(cancellationToken);
             IPaginate<X.VehicleTransaction> vehicleTransactions = await _vehicleTransactionReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.UserFK).Include(x => x.SCCompanyFK).Include(x => x.VehicleAllFK)
+                include: x => x.Include(x => x.UserFK).Include(x => x.SCCompanyFK).Include(x => x.VehicleAllFK).Include(x => x.CurrencyFK)
             );
 
             GetListResponse<GetListVehicleTransactionListItemDto> response = _mapper.Map<GetListResponse<GetListVehicleTransactionListItemDto>>(vehicleTransactions);

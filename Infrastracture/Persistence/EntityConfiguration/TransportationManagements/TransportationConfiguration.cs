@@ -17,6 +17,7 @@ namespace Persistence.EntityConfiguration.TransportationManagements
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
             builder.HasOne(y => y.OrganizationFK).WithMany(u => u.Transportations).HasForeignKey(y => y.GidOrganizationFK);
+            builder.HasOne(y => y.FeeCurrencyFK).WithMany(u => u.Transportations).HasForeignKey(y => y.GidFeeCurrencyFK).IsRequired();
 
             builder.Property(y => y.CustomerInfo).IsRequired().HasColumnType("varchar").HasMaxLength(150);
             builder.Property(y => y.TransportationNo).IsRequired().HasColumnType("varchar").HasMaxLength(20);

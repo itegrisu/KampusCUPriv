@@ -49,7 +49,7 @@ public class UpdateTransportationExternalServiceCommand : IRequest<UpdatedTransp
 
         public async Task<UpdatedTransportationExternalServiceResponse> Handle(UpdateTransportationExternalServiceCommand request, CancellationToken cancellationToken)
         {
-            X.TransportationExternalService? transportationExternalService = await _transportationExternalServiceReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.CurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK));
+            X.TransportationExternalService? transportationExternalService = await _transportationExternalServiceReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.FeeCurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _transportationExternalServiceBusinessRules.TransportationExternalServiceShouldExistWhenSelected(transportationExternalService);
             transportationExternalService = _mapper.Map(request, transportationExternalService);

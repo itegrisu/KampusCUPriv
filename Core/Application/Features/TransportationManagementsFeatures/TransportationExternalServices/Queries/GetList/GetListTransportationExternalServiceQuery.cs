@@ -35,7 +35,7 @@ public class GetListTransportationExternalServiceQuery : IRequest<GetListRespons
                 return await _noPagination.NoPaginationData(cancellationToken,
                     includes: new Expression<Func<TransportationExternalService, object>>[]
                     {
-                       x => x.CurrencyFK,
+                       x => x.FeeCurrencyFK,
                        x => x.OrganizationFK,
                        x => x.SCCompanyFK,
                     });
@@ -44,7 +44,7 @@ public class GetListTransportationExternalServiceQuery : IRequest<GetListRespons
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.CurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK)
+                include: x => x.Include(x => x.FeeCurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK)
             );
 
             GetListResponse<GetListTransportationExternalServiceListItemDto> response = _mapper.Map<GetListResponse<GetListTransportationExternalServiceListItemDto>>(transportationExternalServices);
