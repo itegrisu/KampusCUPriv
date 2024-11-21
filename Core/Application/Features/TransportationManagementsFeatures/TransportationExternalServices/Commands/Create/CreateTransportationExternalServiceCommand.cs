@@ -54,7 +54,7 @@ public class CreateTransportationExternalServiceCommand : IRequest<CreatedTransp
             await _transportationExternalServiceWriteRepository.SaveAsync();
 
             X.TransportationExternalService savedTransportationExternalService = await _transportationExternalServiceReadRepository.GetAsync(predicate: x => x.Gid == transportationExternalService.Gid,
-                include: x => x.Include(x => x.CurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK));
+                include: x => x.Include(x => x.FeeCurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

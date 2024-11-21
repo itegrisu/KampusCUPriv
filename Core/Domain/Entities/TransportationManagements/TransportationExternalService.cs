@@ -19,7 +19,7 @@ namespace Domain.Entities.TransportationManagements
         public Guid? GidOrganizationFK { get; set; }
         public Organization? OrganizationFK { get; set; }
         public Guid GidFeeCurrencyFK { get; set; }
-        public Currency CurrencyFK { get; set; }
+        public Currency FeeCurrencyFK { get; set; }
         public string Title { get; set; } = string.Empty;
         public decimal Fee { get; set; }
         public string PlateNo { get; set; } = string.Empty;

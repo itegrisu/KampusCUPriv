@@ -18,7 +18,7 @@ namespace Persistence.EntityConfiguration.TransportationManagements
 
             builder.HasOne(y => y.SCCompanyFK).WithMany(u => u.TransportationExternalServices).HasForeignKey(y => y.GidSupplierFK);
             builder.HasOne(y => y.OrganizationFK).WithMany(u => u.TransportationExternalServices).HasForeignKey(y => y.GidOrganizationFK);
-            builder.HasOne(y => y.CurrencyFK).WithMany(u => u.TransportationExternalServices).HasForeignKey(y => y.GidFeeCurrencyFK);
+            builder.HasOne(y => y.FeeCurrencyFK).WithMany(u => u.TransportationExternalServices).HasForeignKey(y => y.GidFeeCurrencyFK);
 
             builder.Property(y => y.Title).IsRequired().HasColumnType("varchar").HasMaxLength(100);
             builder.Property(y => y.Fee).IsRequired().HasColumnType("float").HasMaxLength(10);

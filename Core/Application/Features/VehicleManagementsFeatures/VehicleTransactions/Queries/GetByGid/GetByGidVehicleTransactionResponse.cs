@@ -1,4 +1,5 @@
 using Core.Application.Responses;
+using Domain.Entities.DefinitionManagements;
 using Domain.Enums;
 
 namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Queries.GetByGid
@@ -12,6 +13,8 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Que
         public string SCCompanyFKCompanyName { get; set; }
         public Guid? GidVehicleUsePersonnelFK { get; set; }
         public string UserFKFullName { get; set; }
+        public Guid GidFeeCurrencyFK { get; set; }
+        public string CurrencyFKName { get; set; }
         public int StartKM { get; set; }
         public int? EndKM { get; set; }
         public int? Fee { get; set; }

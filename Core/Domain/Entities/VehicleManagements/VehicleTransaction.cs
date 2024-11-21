@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Domain.Entities.DefinitionManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.SupplierCustomerManagements;
@@ -19,6 +20,8 @@ namespace Domain.Entities.VehicleManagements
         public SCCompany? SCCompanyFK { get; set; }
         public Guid? GidVehicleUsePersonnelFK { get; set; }
         public User? UserFK { get; set; }
+        public Guid? GidFeeCurrencyFK { get; set; }
+        public Currency? CurrencyFK { get; set; }
         public int StartKM { get; set; }
         public int? EndKM { get; set; }
         public int? Fee { get; set; }

@@ -13,6 +13,7 @@ namespace Application.Features.TransportationManagementFeatures.Transportations.
 public class CreateTransportationCommand : IRequest<CreatedTransportationResponse>
 {
     public Guid GidOrganizationFK { get; set; }
+    public Guid GidFeeCurrencyFK { get; set; }
     public string CustomerInfo { get; set; }
     public string TransportationNo { get; set; }
     public string Title { get; set; }
@@ -50,6 +51,7 @@ public class CreateTransportationCommand : IRequest<CreatedTransportationRespons
 
             X.Transportation savedTransportation = await _transportationReadRepository.GetAsync(predicate: x => x.Gid == transportation.Gid,
                 include: x => x.Include(x => x.OrganizationFK));
+                //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

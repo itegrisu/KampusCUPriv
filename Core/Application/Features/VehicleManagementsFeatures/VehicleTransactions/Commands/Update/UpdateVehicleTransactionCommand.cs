@@ -16,6 +16,7 @@ public class UpdateVehicleTransactionCommand : IRequest<UpdatedVehicleTransactio
     public Guid? GidVehicleFK { get; set; }
     public Guid? GidSupplierCustomerFK { get; set; }
     public Guid? GidVehicleUsePersonnelFK { get; set; }
+    public Guid GidFeeCurrencyFK { get; set; }
     public int StartKM { get; set; }
     public int? EndKM { get; set; }
     public int? Fee { get; set; }
@@ -49,7 +50,7 @@ public class UpdateVehicleTransactionCommand : IRequest<UpdatedVehicleTransactio
 
         public async Task<UpdatedVehicleTransactionResponse> Handle(UpdateVehicleTransactionCommand request, CancellationToken cancellationToken)
         {
-            X.VehicleTransaction? vehicleTransaction = await _vehicleTransactionReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.SCCompanyFK).Include(x => x.UserFK).Include(x => x.VehicleAllFK));
+            X.VehicleTransaction? vehicleTransaction = await _vehicleTransactionReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.SCCompanyFK).Include(x => x.UserFK).Include(x => x.VehicleAllFK).Include(x => x.CurrencyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _vehicleTransactionBusinessRules.VehicleTransactionShouldExistWhenSelected(vehicleTransaction);
             vehicleTransaction = _mapper.Map(request, vehicleTransaction);

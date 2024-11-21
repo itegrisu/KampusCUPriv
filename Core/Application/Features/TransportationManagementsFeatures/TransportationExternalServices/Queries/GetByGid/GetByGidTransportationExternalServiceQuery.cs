@@ -26,7 +26,7 @@ namespace Application.Features.TransportationManagementFeatures.TransportationEx
 
             public async Task<GetByGidTransportationExternalServiceResponse> Handle(GetByGidTransportationExternalServiceQuery request, CancellationToken cancellationToken)
             {
-                X.TransportationExternalService? transportationExternalService = await _transportationExternalServiceReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.CurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK));
+                X.TransportationExternalService? transportationExternalService = await _transportationExternalServiceReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.FeeCurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

@@ -28,6 +28,7 @@ namespace Application.Features.TransportationManagementFeatures.Transportations.
             {
                 X.Transportation? transportation = await _transportationReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken,
                        include: x => x.Include(x => x.OrganizationFK));
+                       //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

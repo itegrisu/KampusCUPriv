@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Domain.Entities.DefinitionManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.OrganizationManagements;
 using Domain.Enums;
@@ -14,6 +15,8 @@ namespace Domain.Entities.TransportationManagements
     {
         public Guid? GidOrganizationFK { get; set; }
         public Organization? OrganizationFK { get; set; }
+        public Guid GidFeeCurrencyFK { get; set; }
+        public Currency FeeCurrencyFK { get; set; }
         public string CustomerInfo { get; set; } = string.Empty;
         public string TransportationNo { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;

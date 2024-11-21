@@ -17,6 +17,8 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
         public string SCCompanyFKCompanyName { get; set; }
         public Guid? GidVehicleUsePersonnelFK { get; set; }
         public string UserFKFullName { get; set; }
+        public Guid GidFeeCurrencyFK { get; set; }
+        public string CurrencyFKName { get; set; }
         public int StartKM { get; set; }
         public int? EndKM { get; set; }
         public int? Fee { get; set; }

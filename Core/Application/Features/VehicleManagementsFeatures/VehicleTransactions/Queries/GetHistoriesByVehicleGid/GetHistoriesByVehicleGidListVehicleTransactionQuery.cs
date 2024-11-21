@@ -45,8 +45,9 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
                         includes: new Expression<Func<VehicleTransaction, object>>[]
                         {
                            x => x.UserFK,
-                           x=> x.SCCompanyFK,
-                           x=> x.VehicleAllFK
+                           x => x.SCCompanyFK,
+                           x => x.VehicleAllFK,
+                           x => x.CurrencyFK
                         });
                 //return await _noPagination.NoPaginationData(cancellationToken);
                 IPaginate<X.VehicleTransaction> vehicleTransactions = await _vehicleTransactionReadRepository.GetListAsync(
@@ -54,7 +55,7 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
                     predicate: x => x.GidVehicleFK == request.GidVehicle && x.DataState == DataState.Archive,
-                    include: x => x.Include(x => x.UserFK).Include(x => x.SCCompanyFK).Include(x => x.VehicleAllFK)
+                    include: x => x.Include(x => x.UserFK).Include(x => x.SCCompanyFK).Include(x => x.VehicleAllFK).Include(x => x.CurrencyFK)
                 );
 
                 GetListResponse<GetHistoriesByVehicleGidListVehicleTransactionListItemDto> response = _mapper.Map<GetListResponse<GetHistoriesByVehicleGidListVehicleTransactionListItemDto>>(vehicleTransactions);
