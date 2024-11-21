@@ -1,0 +1,17 @@
+HATA 1
+
+ALTER TABLE deyimi FOREIGN KEY kýsýtlamasý "FK_Transportations_Currencies_GidFeeCurrencyFK" ile çakýþtý. "u1632502_emstv4"
+
+ÇÖZÜM
+
+Eðer böyle bir hara alýyorsan genellikler veritabanýnda veri olduðu için bu hatayý alýrsýn. Bu hatayý çözmek için veritabanýnda bulunan verileri silmen gerekmektedir veya ilk baþta o eklemek istediðin entityi nullable yapýp update-database komutunu çalýþtýrýp daha sonra nullable olmayan yapabilirsin veya o entitynin configrasyonuna gidip .isRequired(false) yapabilirsin bir kereliðine çalýþtýrýp sonra tekrar .isRequired(true) yapabilirsin.
+
+HATA 2
+
+Error Number:1785,State:0,Class:16
+'TransportationGroups' tablosuna 'FK_TransportationGroups_Cities_GidStartCityFK' FOREIGN KEY kýsýtlamasýnýn eklenmesi döngü veya birden fazla basamaklandýrma yolu oluþmasýna neden olabilir. ON DELETE NO ACTION veya ON UPDATE NO ACTION belirtin ya da diðer FOREIGN KEY kýsýtlamalarýný deðiþtirin.
+Kýsýtlama veya dizin oluþturulamadý. Önceki hatalara bakýn.
+
+ÇÖZÜM
+
+Eðer böyle bir hata alýrsan eklemek/güncellemek istediðin entitynin configrasyonuna gidip .OnDelete(DeleteBehavior.Restrict); eklemen lazým.
