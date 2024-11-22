@@ -1,8 +1,10 @@
-﻿using Application.Features.TransportationManagementFeatures.Transportations.Commands.Create;
+﻿using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetByOfferGid;
+using Application.Features.TransportationManagementFeatures.Transportations.Commands.Create;
 using Application.Features.TransportationManagementFeatures.Transportations.Commands.Delete;
 using Application.Features.TransportationManagementFeatures.Transportations.Commands.Update;
 using Application.Features.TransportationManagementFeatures.Transportations.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.Transportations.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.Transportations.Queries.GetTransportationNo;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -29,5 +31,11 @@ namespace API.Controllers.TransportationManagementControllers
         }
 
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetTransportationNo([FromQuery] GetTransportationNoQuery getTransportationNoQuery)
+        {
+            GetTransportationNoResponse response = await Mediator.Send(getTransportationNoQuery);
+            return Ok(response);
+        }
     }
 }

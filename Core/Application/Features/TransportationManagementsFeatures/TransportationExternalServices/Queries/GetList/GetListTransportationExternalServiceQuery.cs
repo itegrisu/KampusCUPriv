@@ -38,13 +38,14 @@ public class GetListTransportationExternalServiceQuery : IRequest<GetListRespons
                        x => x.FeeCurrencyFK,
                        x => x.OrganizationFK,
                        x => x.SCCompanyFK,
+                       x => x.FeeCurrencyFK
                     });
             //return await _noPagination.NoPaginationData(cancellationToken);
             IPaginate<X.TransportationExternalService> transportationExternalServices = await _transportationExternalServiceReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.FeeCurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK)
+                include: x => x.Include(x => x.FeeCurrencyFK).Include(x => x.OrganizationFK).Include(x => x.SCCompanyFK).Include(x => x.FeeCurrencyFK)
             );
 
             GetListResponse<GetListTransportationExternalServiceListItemDto> response = _mapper.Map<GetListResponse<GetListTransportationExternalServiceListItemDto>>(transportationExternalServices);
