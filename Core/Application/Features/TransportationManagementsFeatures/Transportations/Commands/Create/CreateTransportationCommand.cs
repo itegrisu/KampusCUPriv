@@ -3,6 +3,7 @@ using Application.Features.TransportationManagementFeatures.Transportations.Quer
 using Application.Features.TransportationManagementFeatures.Transportations.Rules;
 using Application.Repositories.TransportationRepos.TransportationRepo;
 using AutoMapper;
+using Domain.Entities.TransportationManagements;
 using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace Application.Features.TransportationManagementFeatures.Transportations.
 
 public class CreateTransportationCommand : IRequest<CreatedTransportationResponse>
 {
-    public Guid GidOrganizationFK { get; set; }
+    public Guid? GidOrganizationFK { get; set; }
     public Guid GidFeeCurrencyFK { get; set; }
     public string CustomerInfo { get; set; }
     public string TransportationNo { get; set; }

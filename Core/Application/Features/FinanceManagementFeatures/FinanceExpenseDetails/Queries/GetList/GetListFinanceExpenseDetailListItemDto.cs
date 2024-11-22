@@ -22,6 +22,4 @@ public class GetListFinanceExpenseDetailListItemDto : IDto
     public EnumApprovalStatus ApprovalStatus { get; set; }
     public DateTime ControlDate { get; set; }
     public string? ControlDescription { get; set; }
-
-
 }

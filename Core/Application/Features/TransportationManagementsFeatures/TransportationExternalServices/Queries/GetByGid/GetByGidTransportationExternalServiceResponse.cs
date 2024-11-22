@@ -11,7 +11,8 @@ namespace Application.Features.TransportationManagementFeatures.TransportationEx
         public Guid? GidOrganizationFK { get; set; }
         public string OrganizationFKOrganizationName { get; set; }
         public Guid GidFeeCurrencyFK { get; set; }
-        public string CurrencyFKName { get; set; }
+        public string FeeCurrencyFKName { get; set; }
+        public string FeeCurrencyFKSymbol { get; set; }
         public string Title { get; set; }
         public decimal Fee { get; set; }
         public string PlateNo { get; set; }

@@ -36,14 +36,13 @@ public class GetListTransportationQuery : IRequest<GetListResponse<GetListTransp
                     includes: new Expression<Func<Transportation, object>>[]
                     {
                        x => x.OrganizationFK,
-                       //x => x.CurrencyFK
+                       x => x.FeeCurrencyFK
                     });
             IPaginate<X.Transportation> transportations = await _transportationReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                  include: x => x.Include(x => x.OrganizationFK)
-                  //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK)
+                include: x => x.Include(x => x.OrganizationFK).Include(x => x.FeeCurrencyFK)
             );
 
             GetListResponse<GetListTransportationListItemDto> response = _mapper.Map<GetListResponse<GetListTransportationListItemDto>>(transportations);

@@ -13,7 +13,7 @@ namespace Application.Features.TransportationManagementFeatures.TransportationEx
 public class CreateTransportationExternalServiceCommand : IRequest<CreatedTransportationExternalServiceResponse>
 {
     public Guid GidSupplierFK { get; set; }
-    public Guid GidOrganizationFK { get; set; }
+    public Guid? GidOrganizationFK { get; set; }
     public Guid GidFeeCurrencyFK { get; set; }
     public string Title { get; set; }
     public decimal Fee { get; set; }

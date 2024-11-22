@@ -15,3 +15,11 @@ Kýsýtlama veya dizin oluþturulamadý. Önceki hatalara bakýn.
 ÇÖZÜM
 
 Eðer böyle bir hata alýrsan eklemek/güncellemek istediðin entitynin configrasyonuna gidip .OnDelete(DeleteBehavior.Restrict); eklemen lazým.
+
+HATA 3
+
+Object set refenrence hatasý.
+
+ÇÖZÜM
+
+Constructorda servis inject edilmediði içindir. Bu hatayý çözmek için servisi inject etmen gerekmektedir.
