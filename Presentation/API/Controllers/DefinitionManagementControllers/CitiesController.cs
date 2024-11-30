@@ -1,8 +1,10 @@
 ﻿using Application.Features.DefinitionManagementFeatures.Cities.Commands.Create;
 using Application.Features.DefinitionManagementFeatures.Cities.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.Cities.Commands.Update;
+using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetByCountryGid;
 using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetByGid;
 using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetList;
+using Application.Features.PersonnelManagementFeatures.PersonnelDocuments.Queries.GetByUserGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -28,6 +30,12 @@ namespace API.Controllers.DefinitionManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByCountryGid([FromQuery] GetByCountryGidListCityQuery getByCountryGidListCityQuery)
+        {
+            GetListResponse<GetByCoıntryGidListCityListItemDto> response = await Mediator.Send(getByCountryGidListCityQuery);
+            return Ok(response);
+        }
 
     }
 }

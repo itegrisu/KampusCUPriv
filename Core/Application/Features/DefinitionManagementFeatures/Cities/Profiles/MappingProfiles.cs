@@ -1,6 +1,7 @@
 using Application.Features.DefinitionManagementFeatures.Cities.Commands.Create;
 using Application.Features.DefinitionManagementFeatures.Cities.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.Cities.Commands.Update;
+using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetByCountryGid;
 using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetByGid;
 using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetList;
 using AutoMapper;
@@ -25,5 +26,9 @@ public class MappingProfiles : Profile
 
         CreateMap<X.City, GetListCityListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.City>, GetListResponse<GetListCityListItemDto>>().ReverseMap();
+
+
+        CreateMap<X.City, GetByCoýntryGidListCityListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.City>, GetListResponse<GetByCoýntryGidListCityListItemDto>>().ReverseMap();
     }
 }

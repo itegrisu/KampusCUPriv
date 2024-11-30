@@ -3,6 +3,7 @@ using Application.Features.TransportationManagementFeatures.TransportationPerson
 using Application.Features.TransportationManagementFeatures.TransportationPersonnels.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationPersonnels.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationPersonnels.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationPersonnels.Queries.GetByServiceGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.TransportationPersonnel, GetListTransportationPersonnelListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.TransportationPersonnel>, GetListResponse<GetListTransportationPersonnelListItemDto>>().ReverseMap();
+
+        CreateMap<X.TransportationPersonnel, GetByServiceGidListTransportationPersonnelListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.TransportationPersonnel>, GetListResponse<GetByServiceGidListTransportationPersonnelListItemDto>>().ReverseMap();
     }
 }

@@ -3,6 +3,9 @@ using Application.Features.TransportationManagementFeatures.TransportationPassen
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetList;
+using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Queries.GetByGroupGid;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Queries.GetByTransportationGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -25,6 +28,13 @@ namespace API.Controllers.TransportationManagementControllers
         {
             GetListTransportationPassengerQuery getListTransportationPassengerQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListTransportationPassengerListItemDto> response = await Mediator.Send(getListTransportationPassengerQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByGroupGid([FromQuery] GetByGroupGidListTransportationPassengerQuery getByGroupGidListTransportationPassengerQuery)
+        {
+            GetListResponse<GetByGroupGidListTransportationPassengerListItemDto> response = await Mediator.Send(getByGroupGidListTransportationPassengerQuery);
             return Ok(response);
         }
 

@@ -4,7 +4,10 @@ using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
+using Domain.Entities.TransportationManagements;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using X = Domain.Entities.TransportationManagements;
 
 namespace Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetList;
@@ -31,17 +34,17 @@ public class GetListTransportationPassengerQuery : IRequest<GetListResponse<GetL
             if (request.PageRequest.PageIndex == -1)
                 //unutma
                 //includes varsa eklenecek - Orn: Altta
-                //return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<TransportationPassenger, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.TransportationPassengerMembers
-                //    });
-                return await _noPagination.NoPaginationData(cancellationToken);
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    includes: new Expression<Func<TransportationPassenger, object>>[]
+                    {
+                       x => x.TransportationGroupFK,
+                    });
+            //return await _noPagination.NoPaginationData(cancellationToken);
             IPaginate<X.TransportationPassenger> transportationPassengers = await _transportationPassengerReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(y => y.TransportationGroupFK)
             );
 
             GetListResponse<GetListTransportationPassengerListItemDto> response = _mapper.Map<GetListResponse<GetListTransportationPassengerListItemDto>>(transportationPassengers);

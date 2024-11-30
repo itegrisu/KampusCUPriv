@@ -3,6 +3,8 @@ using Application.Features.TransportationManagementFeatures.TransportationGroups
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationGroups.Queries.GetByServiceGid;
+using Application.Features.TransportationManagementsFeatures.TransportationPersonnels.Queries.GetByServiceGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -29,6 +31,11 @@ namespace API.Controllers.TransportationManagementControllers
             return Ok(response);
         }
 
-
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByServiceGid([FromQuery] GetByServiceGidListTransportationGroupQuery getByServiceGidListTransportationGroupQuery)
+        {
+            GetListResponse<GetByServiceGidListTransportationGroupListItemDto> response = await Mediator.Send(getByServiceGidListTransportationGroupQuery);
+            return Ok(response);
+        }
     }
 }

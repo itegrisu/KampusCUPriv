@@ -36,7 +36,7 @@ public class GetListTransportationPersonnelQuery : IRequest<GetListResponse<GetL
                     includes: new Expression<Func<TransportationPersonnel, object>>[]
                     {
                        x => x.TransportationServiceFK,
-                       x=> x.TransportationServiceFK
+                       x=> x.UserFK
                     });
             IPaginate<X.TransportationPersonnel> transportationPersonnels = await _transportationPersonnelReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
