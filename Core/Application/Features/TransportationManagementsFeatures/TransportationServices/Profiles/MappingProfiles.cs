@@ -3,6 +3,9 @@ using Application.Features.TransportationManagementFeatures.TransportationServic
 using Application.Features.TransportationManagementFeatures.TransportationServices.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CreateServiceWithGroup;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UpdateServiceWithGroup;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Queries.GetByTransportationGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +28,14 @@ public class MappingProfiles : Profile
 
         CreateMap<X.TransportationService, GetListTransportationServiceListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.TransportationService>, GetListResponse<GetListTransportationServiceListItemDto>>().ReverseMap();
+
+        CreateMap<X.TransportationService, GetByTransportationGidListTransportationServiceListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.TransportationService>, GetListResponse<GetByTransportationGidListTransportationServiceListItemDto>>().ReverseMap();
+
+        CreateMap<X.TransportationService, CreateTransportationServiceWithGroupCommand>().ReverseMap();
+        CreateMap<X.TransportationService, CreatedTransportationServiceWithGroupResponse>().ReverseMap();
+
+        CreateMap<X.TransportationService, UpdateServiceWithGroupTransportationServiceCommand>().ReverseMap();
+        CreateMap<X.TransportationService, UpdateServiceWithGroupTransportationServiceCommand>().ReverseMap();
     }
 }

@@ -1,18 +1,6 @@
-﻿using Application.Features.TransportationManagementFeatures.Transportations.Queries.GetByGid;
-using Application.Features.TransportationManagementFeatures.Transportations.Rules;
-using Application.Repositories.OfferManagementRepos.OfferTransactionRepo;
-using Application.Repositories.TransportationRepos.TransportationRepo;
-using AutoMapper;
-using Domain.Entities.OfferManagements;
+﻿using Application.Repositories.TransportationRepos.TransportationRepo;
 using Domain.Entities.TransportationManagements;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using X = Domain.Entities.TransportationManagements;
 
 namespace Application.Features.TransportationManagementsFeatures.Transportations.Queries.GetTransportationNo
 {
@@ -20,15 +8,11 @@ namespace Application.Features.TransportationManagementsFeatures.Transportations
     {
         public class GetTransportationNoQueryHandler : IRequestHandler<GetTransportationNoQuery, GetTransportationNoResponse>
         {
-            private readonly IMapper _mapper;
             private readonly ITransportationReadRepository _transportationReadRepository;
-            private readonly TransportationBusinessRules _transportationBusinessRules;
 
-            public GetTransportationNoQueryHandler(IMapper mapper, ITransportationReadRepository transportationReadRepository, TransportationBusinessRules transportationBusinessRules)
+            public GetTransportationNoQueryHandler(ITransportationReadRepository transportationReadRepository)
             {
-                _mapper = mapper;
                 _transportationReadRepository = transportationReadRepository;
-                _transportationBusinessRules = transportationBusinessRules;
             }
 
             public async Task<GetTransportationNoResponse> Handle(GetTransportationNoQuery request, CancellationToken cancellationToken)

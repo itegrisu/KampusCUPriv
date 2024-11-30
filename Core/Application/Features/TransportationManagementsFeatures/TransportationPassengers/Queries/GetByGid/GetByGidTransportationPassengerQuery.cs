@@ -2,6 +2,7 @@ using Application.Features.TransportationManagementFeatures.TransportationPassen
 using Application.Repositories.TransportationRepos.TransportationPassengerRepo;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.TransportationManagements;
 
 namespace Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetByGid
@@ -25,7 +26,7 @@ namespace Application.Features.TransportationManagementFeatures.TransportationPa
 
             public async Task<GetByGidTransportationPassengerResponse> Handle(GetByGidTransportationPassengerQuery request, CancellationToken cancellationToken)
             {
-                X.TransportationPassenger? transportationPassenger = await _transportationPassengerReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
+                X.TransportationPassenger? transportationPassenger = await _transportationPassengerReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.TransportationGroupFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

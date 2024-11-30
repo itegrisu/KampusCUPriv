@@ -1,8 +1,16 @@
-﻿using Application.Features.TransportationManagementFeatures.TransportationServices.Commands.Create;
+﻿using Application.Features.OfferManagementFeatures.OfferFiles.Commands.UploadFile;
+using Application.Features.OfferManagementFeatures.OfferFiles.Queries.GetByOfferGid;
+using Application.Features.TransportationManagementFeatures.TransportationServices.Commands.Create;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Commands.Delete;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.Transportations.Queries.GetTransportationNo;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CreateServiceWithGroup;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UpdateServiceWithGroup;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UploadFile;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Queries.GetByTransportationGid;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Queries.GetServiceNo;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -25,6 +33,41 @@ namespace API.Controllers.TransportationManagementControllers
         {
             GetListTransportationServiceQuery getListTransportationServiceQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListTransportationServiceListItemDto> response = await Mediator.Send(getListTransportationServiceQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByTransportationGid([FromQuery] GetByTransportationGidListTransportationServiceQuery getByTransportationGidListTransportationServiceQuery)
+        {
+            GetListResponse<GetListTransportationServiceListItemDto> response = await Mediator.Send(getByTransportationGidListTransportationServiceQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UploadTransportationServiceFile([FromBody] UploadTransportationServiceFileCommand uploadTransportationServiceFileCommand)
+        {
+            UploadTransportationServiceFileResponse response = await Mediator.Send(uploadTransportationServiceFileCommand);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CreateTransportationServiceWithGroup([FromBody] CreateTransportationServiceWithGroupCommand createTransportationServiceWithGroupCommand)
+        {
+            CreatedTransportationServiceWithGroupResponse response = await Mediator.Send(createTransportationServiceWithGroupCommand);
+            return Ok(response);
+        }
+
+        [HttpPut("[action]")]
+        public async Task<IActionResult> UpdateTransportationServiceWithGroup([FromBody] UpdateServiceWithGroupTransportationServiceCommand updateServiceWithGroupTransportationServiceCommand)
+        {
+            UpdateServiceWithGroupTransportationServiceResponse response = await Mediator.Send(updateServiceWithGroupTransportationServiceCommand);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetServiceNo([FromQuery] GetServiceNoQuery getServiceNoQuery)
+        {
+            GetServiceNoResponse response = await Mediator.Send(getServiceNoQuery);
             return Ok(response);
         }
     }

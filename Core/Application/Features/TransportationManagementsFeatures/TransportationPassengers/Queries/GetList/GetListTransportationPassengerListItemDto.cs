@@ -7,6 +7,8 @@ namespace Application.Features.TransportationManagementFeatures.TransportationPa
 public class GetListTransportationPassengerListItemDto : IDto
 {
     public Guid Gid { get; set; }
+    public Guid GidTransportationGroupFK { get; set; }
+    public string TransportationGroupFKGroupName { get; set; }
     public string Country { get; set; }
     public string IdentityNo { get; set; }
     public string FirstName { get; set; }

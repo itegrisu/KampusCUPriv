@@ -1,8 +1,10 @@
+using Application.Features.GeneralManagementFeatures.Departments.Queries.GetListWithUser;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Commands.Create;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Commands.Delete;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationGroups.Queries.GetByServiceGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +27,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.TransportationGroup, GetListTransportationGroupListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.TransportationGroup>, GetListResponse<GetListTransportationGroupListItemDto>>().ReverseMap();
+
+        CreateMap<X.TransportationGroup, GetByServiceGidListTransportationGroupListItemDto>().ForMember(dest => dest.PassengerCount, opt => opt.MapFrom(src => src.TransportationPassengers.Where(t => t.DataState == Core.Enum.DataState.Active).Count())).ReverseMap();
+        CreateMap<IPaginate<X.TransportationGroup>, GetListResponse<GetByServiceGidListTransportationGroupListItemDto>>().ReverseMap();
     }
 }

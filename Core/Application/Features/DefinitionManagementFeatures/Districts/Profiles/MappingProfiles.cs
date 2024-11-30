@@ -1,6 +1,7 @@
 using Application.Features.DefinitionManagementFeatures.Districts.Commands.Create;
 using Application.Features.DefinitionManagementFeatures.Districts.Commands.Delete;
 using Application.Features.DefinitionManagementFeatures.Districts.Commands.Update;
+using Application.Features.DefinitionManagementFeatures.Districts.Queries.GetByCityGid;
 using Application.Features.DefinitionManagementFeatures.Districts.Queries.GetByGid;
 using Application.Features.DefinitionManagementFeatures.Districts.Queries.GetList;
 using AutoMapper;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.District, GetListDistrictListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.District>, GetListResponse<GetListDistrictListItemDto>>().ReverseMap();
+
+        CreateMap<X.District, GetByCityGidListDistrictListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.District>, GetListResponse<GetByCityGidListDistrictListItemDto>>().ReverseMap();
     }
 }

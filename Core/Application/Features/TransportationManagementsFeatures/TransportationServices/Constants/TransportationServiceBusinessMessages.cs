@@ -18,5 +18,7 @@ public static class TransportationServicesBusinessMessages
     public const string TechnicalError = "Technical Error";
 	public const string NotFoundRecord = "No Record Found!";
 	public const string IncorrectOperation = "Incorrect Operation";
-	//public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    //SucessUploadFile
+    public const string SucessUploadFile = "Dosya baþarýyla yüklendi";
 }
