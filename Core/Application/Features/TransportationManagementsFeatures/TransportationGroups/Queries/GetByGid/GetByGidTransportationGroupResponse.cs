@@ -24,6 +24,6 @@ namespace Application.Features.TransportationManagementFeatures.TransportationGr
         public string StartPlace { get; set; }
         public string EndPlace { get; set; }
         public string? Description { get; set; }
-
+        public string? RefNoTransportationGroup { get; set; }
     }
 }

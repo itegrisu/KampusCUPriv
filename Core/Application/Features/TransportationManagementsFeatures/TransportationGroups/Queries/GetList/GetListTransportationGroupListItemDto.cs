@@ -25,6 +25,5 @@ public class GetListTransportationGroupListItemDto : IDto
     public string StartPlace { get; set; }
     public string EndPlace { get; set; }
     public string? Description { get; set; }
-
-
+    public string? RefNoTransportationGroup { get; set; }
 }

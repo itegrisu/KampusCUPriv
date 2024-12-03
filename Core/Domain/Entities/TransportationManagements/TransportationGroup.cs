@@ -30,7 +30,7 @@ namespace Domain.Entities.TransportationManagements
         public string StartPlace { get; set; } = string.Empty;
         public string EndPlace { get; set; } = string.Empty;
         public string? Description { get; set; }
-
+        public string? RefNoTransportationGroup { get; set; }
         public ICollection<TransportationPassenger>? TransportationPassengers { get; set; }
     }
 }

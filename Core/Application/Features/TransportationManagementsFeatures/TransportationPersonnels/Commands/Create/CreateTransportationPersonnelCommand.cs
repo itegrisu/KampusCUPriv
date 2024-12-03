@@ -38,6 +38,8 @@ public class CreateTransportationPersonnelCommand : IRequest<CreatedTransportati
 
         public async Task<CreatedTransportationPersonnelResponse> Handle(CreateTransportationPersonnelCommand request, CancellationToken cancellationToken)
         {
+            await _transportationPersonnelBusinessRules.PersonnelAllreadyExist(request.GidStaffPersonnelFK);
+
             //int maxRowNo = await _transportationPersonnelReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.TransportationPersonnel transportationPersonnel = _mapper.Map<X.TransportationPersonnel>(request);
             //transportationPersonnel.RowNo = maxRowNo + 1;

@@ -31,6 +31,7 @@ namespace Persistence.EntityConfiguration.TransportationManagements
             builder.Property(y => y.StartPlace).IsRequired().HasColumnType("varchar").HasMaxLength(150);
             builder.Property(y => y.EndPlace).IsRequired().HasColumnType("varchar").HasMaxLength(150);
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(y => y.RefNoTransportationGroup).IsRequired(false).HasColumnType("varchar").HasMaxLength(50);
 
             builder.HasMany(u => u.TransportationPassengers).WithOne(y => y.TransportationGroupFK).HasForeignKey(y => y.GidTransportationGroupFK);
         }

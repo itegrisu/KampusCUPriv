@@ -24,7 +24,7 @@ namespace Domain.Entities.TransportationManagements
         public EnumTransportationServiceStatus TransportationServiceStatus { get; set; }
         public string? TransportationFile { get; set; }
         public string? Description { get; set; }
-
+        public string? RefNoTransportation { get; set; }
         public ICollection<TransportationGroup>? TransportationGroups { get; set; }
         public ICollection<TransportationPersonnel>? TransportationPersonnels { get; set; }
     }
