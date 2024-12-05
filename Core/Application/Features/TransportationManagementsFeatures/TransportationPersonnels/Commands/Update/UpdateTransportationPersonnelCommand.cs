@@ -14,11 +14,10 @@ public class UpdateTransportationPersonnelCommand : IRequest<UpdatedTransportati
 {
     public Guid Gid { get; set; }
 
-	public Guid GidTransportationServiceFK { get; set; }
-public Guid GidStaffPersonnelFK { get; set; }
-
-public EnumStaffType StaffType { get; set; }
-public string? Description { get; set; }
+    public Guid GidTransportationServiceFK { get; set; }
+    public Guid GidStaffPersonnelFK { get; set; }
+    public EnumStaffType StaffType { get; set; }
+    public string? Description { get; set; }
 
 
 
@@ -41,7 +40,7 @@ public string? Description { get; set; }
         public async Task<UpdatedTransportationPersonnelResponse> Handle(UpdateTransportationPersonnelCommand request, CancellationToken cancellationToken)
         {
             X.TransportationPersonnel? transportationPersonnel = await _transportationPersonnelReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.TransportationServiceFK).Include(x => x.UserFK));
-			//INCLUDES Buraya Gelecek include varsa eklenecek
+            //INCLUDES Buraya Gelecek include varsa eklenecek
             await _transportationPersonnelBusinessRules.TransportationPersonnelShouldExistWhenSelected(transportationPersonnel);
             transportationPersonnel = _mapper.Map(request, transportationPersonnel);
 

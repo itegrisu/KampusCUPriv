@@ -22,7 +22,7 @@ namespace Persistence.EntityConfiguration.TransportationManagements
             builder.Property(y => y.IdentityNo).IsRequired().HasColumnType("varchar").HasMaxLength(30);
             builder.Property(y => y.FirstName).IsRequired().HasColumnType("varchar").HasMaxLength(50);
             builder.Property(y => y.LastName).IsRequired().HasColumnType("varchar").HasMaxLength(50);
-            builder.Property(y => y.Phone).IsRequired(false).HasColumnType("varchar").HasMaxLength(20);            
+            builder.Property(y => y.Phone).IsRequired(false).HasColumnType("varchar").HasMaxLength(20); builder.Property(y => y.RefNoTransportationPassenger).IsRequired(false).HasColumnType("varchar").HasMaxLength(50);
         }
     }
 }

@@ -17,6 +17,7 @@ public class UpdateTransportationServiceCommandValidator : AbstractValidator<Upd
         RuleFor(c => c.TransportationServiceStatus).NotNull().NotEmpty();
         RuleFor(c => c.TransportationFile).MaximumLength(150);
         RuleFor(c => c.Description).MaximumLength(250);
+        RuleFor(c => c.RefNoTransportation).MaximumLength(100);
 
 
     }

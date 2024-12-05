@@ -13,21 +13,19 @@ public class UpdateTransportationGroupCommand : IRequest<UpdatedTransportationGr
 {
     public Guid Gid { get; set; }
 
-	public Guid GidTransportationServiceFK { get; set; }
-public Guid GidStartCountryFK { get; set; }
-public Guid GidStartCityFK { get; set; }
-public Guid GidStartDistrictFK { get; set; }
-public Guid GidEndCountryFK { get; set; }
-public Guid GidEndCityFK { get; set; }
-public Guid GidEndDistrictFK { get; set; }
-
-public string GroupName { get; set; }
-public decimal TransportationFee { get; set; }
-public string StartPlace { get; set; }
-public string EndPlace { get; set; }
-public string? Description { get; set; }
-
-
+    public Guid GidTransportationServiceFK { get; set; }
+    public Guid GidStartCountryFK { get; set; }
+    public Guid GidStartCityFK { get; set; }
+    public Guid GidStartDistrictFK { get; set; }
+    public Guid GidEndCountryFK { get; set; }
+    public Guid GidEndCityFK { get; set; }
+    public Guid GidEndDistrictFK { get; set; }
+    public string GroupName { get; set; }
+    public decimal TransportationFee { get; set; }
+    public string StartPlace { get; set; }
+    public string EndPlace { get; set; }
+    public string? Description { get; set; }
+    public string? RefNoTransportationGroup { get; set; }
 
     public class UpdateTransportationGroupCommandHandler : IRequestHandler<UpdateTransportationGroupCommand, UpdatedTransportationGroupResponse>
     {
@@ -48,7 +46,7 @@ public string? Description { get; set; }
         public async Task<UpdatedTransportationGroupResponse> Handle(UpdateTransportationGroupCommand request, CancellationToken cancellationToken)
         {
             X.TransportationGroup? transportationGroup = await _transportationGroupReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.StartCountryFK).Include(x => x.StartCityFK).Include(x => x.StartDistrictFK).Include(x => x.EndCountryFK).Include(x => x.EndCityFK).Include(x => x.EndDistrictFK).Include(x => x.TransportationServiceFK));
-			//INCLUDES Buraya Gelecek include varsa eklenecek
+            //INCLUDES Buraya Gelecek include varsa eklenecek
             await _transportationGroupBusinessRules.TransportationGroupShouldExistWhenSelected(transportationGroup);
             transportationGroup = _mapper.Map(request, transportationGroup);
 

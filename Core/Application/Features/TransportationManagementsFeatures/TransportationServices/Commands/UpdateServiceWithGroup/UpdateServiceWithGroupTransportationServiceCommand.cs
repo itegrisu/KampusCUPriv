@@ -35,6 +35,7 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
         public EnumTransportationServiceStatus TransportationServiceStatus { get; set; }
         public string? TransportationFile { get; set; }
         public string? Description { get; set; }
+        public string? RefNoTransportation { get; set; }
 
         public Guid GroupGid { get; set; }
         public Guid GidTransportationServiceFK { get; set; }

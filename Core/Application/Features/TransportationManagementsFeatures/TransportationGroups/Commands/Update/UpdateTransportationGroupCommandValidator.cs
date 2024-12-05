@@ -20,5 +20,6 @@ public class UpdateTransportationGroupCommandValidator : AbstractValidator<Updat
         RuleFor(c => c.StartPlace).NotNull().NotEmpty().MaximumLength(150);
         RuleFor(c => c.EndPlace).NotNull().NotEmpty().MaximumLength(150);
         RuleFor(c => c.Description).MaximumLength(250);
+        RuleFor(c => c.RefNoTransportationGroup).MaximumLength(50);
     }
 }

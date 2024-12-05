@@ -26,6 +26,7 @@ public class UpdateTransportationServiceCommand : IRequest<UpdatedTransportation
     public EnumTransportationServiceStatus TransportationServiceStatus { get; set; }
     public string? TransportationFile { get; set; }
     public string? Description { get; set; }
+    public string? RefNoTransportation { get; set; }
 
 
 

@@ -15,6 +15,7 @@ namespace Application.Features.TransportationManagementFeatures.TransportationPa
         public EnumGender Gender { get; set; }
         public string? Phone { get; set; }
         public EnumPassengerStatus PassengerStatus { get; set; }
+        public string? RefNoTransportationPassenger { get; set; }
 
     }
 }

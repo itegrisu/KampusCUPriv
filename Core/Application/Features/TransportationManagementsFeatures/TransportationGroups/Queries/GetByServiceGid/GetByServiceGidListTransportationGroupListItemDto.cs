@@ -30,6 +30,6 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationG
         public string EndPlace { get; set; }
         public string? Description { get; set; }
         public int? PassengerCount { get; set; }
-
+        public string? RefNoTransportationGroup { get; set; }
     }
 }

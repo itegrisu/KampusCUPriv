@@ -21,6 +21,7 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
             RuleFor(c => c.TransportationServiceStatus).NotNull().NotEmpty();
             RuleFor(c => c.TransportationFile).MaximumLength(150);
             RuleFor(c => c.Description).MaximumLength(250);
+            RuleFor(c => c.RefNoTransportation).MaximumLength(100);
 
             RuleFor(c => c.GroupGid).NotNull().NotEmpty();
             RuleFor(c => c.GidTransportationServiceFK).NotNull().NotEmpty();
