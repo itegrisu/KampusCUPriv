@@ -12,5 +12,6 @@ public class GetListTransportationPersonnelListItemDto : IDto
     public Guid GidStaffPersonnelFK { get; set; }
     public string UserFKFullName { get; set; }
     public EnumStaffType StaffType { get; set; }
+    public EnumStaffStatus StaffStatus { get; set; }
     public string? Description { get; set; }
 }

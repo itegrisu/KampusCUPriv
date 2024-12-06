@@ -7,11 +7,9 @@ public class CreateTransportationPersonnelCommandValidator : AbstractValidator<C
     public CreateTransportationPersonnelCommandValidator()
     {
         //RuleFor(c => c.GidTransportationServiceFK);//
-RuleFor(c => c.GidStaffPersonnelFK).NotNull().NotEmpty();
-
-RuleFor(c => c.StaffType).NotNull().NotEmpty();
-RuleFor(c => c.Description).MaximumLength(250);
-
-
+        RuleFor(c => c.GidStaffPersonnelFK).NotNull().NotEmpty();
+        RuleFor(c => c.StaffType).NotNull().NotEmpty();
+        RuleFor(c => c.StaffStatus).NotNull().NotEmpty();
+        RuleFor(c => c.Description).MaximumLength(250);
     }
 }
