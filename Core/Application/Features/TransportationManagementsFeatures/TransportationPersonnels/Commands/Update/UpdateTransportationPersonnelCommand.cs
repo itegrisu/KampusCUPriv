@@ -17,6 +17,7 @@ public class UpdateTransportationPersonnelCommand : IRequest<UpdatedTransportati
     public Guid GidTransportationServiceFK { get; set; }
     public Guid GidStaffPersonnelFK { get; set; }
     public EnumStaffType StaffType { get; set; }
+    public EnumStaffStatus StaffStatus { get; set; }
     public string? Description { get; set; }
 
 

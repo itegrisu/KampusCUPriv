@@ -16,8 +16,7 @@ namespace Domain.Entities.TransportationManagements
         public Guid GidStaffPersonnelFK { get; set; }
         public User UserFK { get; set; }
         public EnumStaffType StaffType { get; set; }
+        public EnumStaffStatus StaffStatus { get; set; }
         public string? Description { get; set; }
-
-
     }
 }

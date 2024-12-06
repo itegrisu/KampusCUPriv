@@ -8,11 +8,9 @@ public class UpdateTransportationPersonnelCommandValidator : AbstractValidator<U
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
         //RuleFor(c => c.GidTransportationServiceFK);//
-RuleFor(c => c.GidStaffPersonnelFK).NotNull().NotEmpty();
-
-RuleFor(c => c.StaffType).NotNull().NotEmpty();
-RuleFor(c => c.Description).MaximumLength(250);
-
-
+        RuleFor(c => c.GidStaffPersonnelFK).NotNull().NotEmpty();
+        RuleFor(c => c.StaffType).NotNull().NotEmpty();
+        RuleFor(c => c.StaffStatus).NotNull().NotEmpty();
+        RuleFor(c => c.Description).MaximumLength(250);
     }
 }
