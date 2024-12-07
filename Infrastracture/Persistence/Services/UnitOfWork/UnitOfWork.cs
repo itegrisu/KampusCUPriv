@@ -23,11 +23,15 @@ namespace Persistence.Services.UnitOfWork
         {
             await _context.SaveChangesAsync();
             await _transaction.CommitAsync();
+            _transaction.Dispose();
+            _transaction = null;
         }
 
         public async Task RollbackAsync()
         {
             await _transaction.RollbackAsync();
+            _transaction.Dispose();
+            _transaction = null;
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
