@@ -4,6 +4,9 @@ using Application.Features.TransportationManagementFeatures.TransportationPerson
 using Application.Features.TransportationManagementFeatures.TransportationPersonnels.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationPersonnels.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationPersonnels.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationGroups.Commands.Report;
+using Application.Features.TransportationManagementsFeatures.TransportationPersonnels.Commands.CancelReport;
+using Application.Features.TransportationManagementsFeatures.TransportationPersonnels.Commands.Report;
 using Application.Features.TransportationManagementsFeatures.TransportationPersonnels.Queries.GetByServiceGid;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -34,6 +37,21 @@ namespace API.Controllers.TransportationManagementControllers
         public async Task<IActionResult> GetByServiceGid([FromQuery] GetByServiceGidListTransportationPersonnelQuery getByServiceGidListTransportationPersonnelQuery)
         {
             GetListResponse<GetByServiceGidListTransportationPersonnelListItemDto> response = await Mediator.Send(getByServiceGidListTransportationPersonnelQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ReportTransportationPersonnel([FromBody] ReportTransportationPersonnelCommand reportTransportationPersonnelCommand)
+        {
+            ReportedTransportationPersonnelResponse response = await Mediator.Send(reportTransportationPersonnelCommand);
+            return Ok(response);
+        }
+        
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CancelTransportationPersonnel([FromBody] CancelTransportationPersonnelCommand cancelTransportationPersonnelCommand)
+        {
+            CanceledTransportationPersonnelResponse response = await Mediator.Send(cancelTransportationPersonnelCommand);
             return Ok(response);
         }
 

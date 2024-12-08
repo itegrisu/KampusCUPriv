@@ -21,4 +21,9 @@ public static class TransportationServicesBusinessMessages
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
     //SucessUploadFile
     public const string SucessUploadFile = "Dosya baþarýyla yüklendi";
+    // Sefer Bildirilemedi
+    public const string TransportationServiceCantReoported = "Sefer Bildirilemedi";
+    // Sefer Basariyla Bildirildi
+    public const string SuccessReportedTransportatinServiceMessage = "Sefer Basariyla Bildirildi";
+    public const string SuccessReportCancelledTransportatinServiceMessage = "Sefer Iptal Edildi";
 }

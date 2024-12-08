@@ -3,6 +3,9 @@ using Application.Features.TransportationManagementFeatures.TransportationPassen
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Commands.CancelReport;
+using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Commands.ReportMultiPersonnel;
+using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Commands.ReportPersonnel;
 using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Queries.GetByGroupGid;
 using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Queries.GetByServiceGid;
 using AutoMapper;
@@ -33,5 +36,14 @@ public class MappingProfiles : Profile
 
         CreateMap<X.TransportationPassenger, GetByServiceGidListTransportationPassengerListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.TransportationPassenger>, GetListResponse<GetByServiceGidListTransportationPassengerListItemDto>>().ReverseMap();
+
+        CreateMap<X.TransportationPassenger, ReportTransportationPassengerMultiCommand>().ReverseMap();
+        CreateMap<X.TransportationPassenger, ReportedTransportationPassengerMultiResponse>().ReverseMap();
+
+        CreateMap<X.TransportationPassenger, ReportTransportationPassengerCommand>().ReverseMap();
+        CreateMap<X.TransportationPassenger, ReportedTransportationPassengerResponse>().ReverseMap();
+
+        CreateMap<X.TransportationPassenger, CancelTransportationPassengerCommand>().ReverseMap();
+        CreateMap<X.TransportationPassenger, CanceledTransportationPassengerResponse>().ReverseMap();
     }
 }

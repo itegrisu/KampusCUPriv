@@ -6,7 +6,9 @@ using Application.Features.TransportationManagementFeatures.TransportationServic
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetList;
 using Application.Features.TransportationManagementsFeatures.Transportations.Queries.GetTransportationNo;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CancelReport;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CreateServiceWithGroup;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.ReportTransportationService;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UpdateServiceWithGroup;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UploadFile;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Queries.GetByTransportationGid;
@@ -68,6 +70,21 @@ namespace API.Controllers.TransportationManagementControllers
         public async Task<IActionResult> GetServiceNo([FromQuery] GetServiceNoQuery getServiceNoQuery)
         {
             GetServiceNoResponse response = await Mediator.Send(getServiceNoQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ReportTransportationService([FromBody] ReportTransportationServiceCommand reportTransportationServiceCommand)
+        {
+            ReportedTransportationServiceResponse response = await Mediator.Send(reportTransportationServiceCommand);
+            return Ok(response);
+        }
+
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CancelTransportationService([FromBody] CancelTransportationServiceCommand  cancelTransportationServiceCommand)
+        {
+            CancaledTransportationServiceResponse response = await Mediator.Send(cancelTransportationServiceCommand);
             return Ok(response);
         }
     }

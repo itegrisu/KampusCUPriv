@@ -4,8 +4,12 @@ using Application.Features.TransportationManagementFeatures.TransportationPassen
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationPassengers.Queries.GetList;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Commands.CancelReport;
+using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Commands.ReportMultiPersonnel;
+using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Commands.ReportPersonnel;
 using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Queries.GetByGroupGid;
 using Application.Features.TransportationManagementsFeatures.TransportationPassengers.Queries.GetByServiceGid;
+using Application.Features.TransportationManagementsFeatures.TransportationPersonnels.Commands.Report;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Queries.GetByTransportationGid;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -46,6 +50,27 @@ namespace API.Controllers.TransportationManagementControllers
             return Ok(response);
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ReportTransportationPassengerMulti([FromBody] ReportTransportationPassengerMultiCommand reportTransportationPassengerCommand)
+        {
+            ReportedTransportationPassengerMultiResponse response = await Mediator.Send(reportTransportationPassengerCommand);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ReportTransportationPassenger([FromBody] ReportTransportationPassengerCommand reportTransportationPassengerCommand)
+        {
+            ReportedTransportationPassengerResponse response = await Mediator.Send(reportTransportationPassengerCommand);
+            return Ok(response);
+        }
+        
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CancelTransportationPassenger([FromBody] CancelTransportationPassengerCommand cancelTransportationPassengerCommand)
+        {
+            CanceledTransportationPassengerResponse response = await Mediator.Send(cancelTransportationPassengerCommand);
+            return Ok(response);
+        }
 
     }
 }

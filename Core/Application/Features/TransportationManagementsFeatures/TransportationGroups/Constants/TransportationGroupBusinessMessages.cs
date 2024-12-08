@@ -19,4 +19,8 @@ public static class TransportationGroupsBusinessMessages
 	public const string NotFoundRecord = "No Record Found!";
 	public const string IncorrectOperation = "Incorrect Operation";
 	//public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    public const string TransportationGroupCantReported = "Grup Bildirilemedi";
+    public const string SuccessReportedTransportationGroupMessage = "Grup Basariyla Bildirildi";
+    public const string SuccessCanceledTransportationGroupMessage = "Grup Iptal Edildi";
+
 }
