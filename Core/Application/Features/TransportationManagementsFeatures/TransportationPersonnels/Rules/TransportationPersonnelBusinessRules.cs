@@ -21,9 +21,9 @@ public class TransportationPersonnelBusinessRules : BaseBusinessRules
             throw new BusinessException(TransportationPersonnelsBusinessMessages.TransportationPersonnelNotExists);
     }
 
-    public async Task PersonnelAllreadyExist(Guid gid)
+    public async Task PersonnelAllreadyExist(Guid GidTransportationServiceFK, Guid GidStaffPersonnelFK)
     {
-        var exist = await _transportationPersonnelReadRepository.GetSingleAsync(x => x.GidStaffPersonnelFK == gid);
+        var exist = await _transportationPersonnelReadRepository.GetSingleAsync(x => x.GidTransportationServiceFK == GidTransportationServiceFK && x.GidStaffPersonnelFK == GidStaffPersonnelFK);
         if(exist != null)
             throw new BusinessException(TransportationPersonnelsBusinessMessages.PersonnelAllreadyExist);
     }

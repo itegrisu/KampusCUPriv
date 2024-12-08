@@ -21,6 +21,9 @@ public static class TransportationPersonnelsBusinessMessages
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
     //Personel Zaten Mevcut
     public const string PersonnelAllreadyExist = "Personel zaten kayýtlý!";
+    //SuccessReportedTransportationPersonnelMessage
+    public const string SuccessReportedTransportationPersonnelMessage = "Personel Baþarýyla Bildirildi!";
+    public const string SuccessReportCancelTransportationPersonnelMessage = "Personel Iptal Edildi!";
 
 
 }

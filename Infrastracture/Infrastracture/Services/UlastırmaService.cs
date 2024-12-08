@@ -1,6 +1,14 @@
 ﻿using Application.Abstractions;
+using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetByGid;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.ReportTransportationService;
+using Application.Repositories.TransportationRepos.TransportationPassengerRepo;
+using Application.Repositories.TransportationRepos.TransportationPersonnelRepo;
+using Application.Repositories.TransportationRepos.TransportationServiceRepo;
+using Domain.Entities.TransportationManagements;
+using Domain.Enums;
 using System.Net;
 using System.ServiceModel;
+using System.Text;
 using UlasımSoapTest; // bu test için kutuphanedir.
 //using UlasimSoap;  // bu canlı için kutuphanedir. 
 
@@ -14,6 +22,18 @@ namespace Infrastracture.Services
         public string Password { get; } = "Z7A45FK8JN";
 
         private bool uestsLive = false;     //false ise test true ise canli (sunucu)
+
+        private readonly ITransportationServiceReadRepository _transportationServiceReadRepository;
+        private readonly ITransportationServiceWriteRepository _transportationServiceWriteRepository;
+        private readonly ITransportationPersonnelWriteRepository _transportationPersonnelWriteRepository;
+        private readonly ITransportationPassengerWriteRepository _transportationPassengerWriteRepository;
+        public UlastirmaService(ITransportationServiceReadRepository transportationServiceReadRepository, ITransportationPersonnelWriteRepository transportationPersonnelWriteRepository, ITransportationPassengerWriteRepository transportationPassengerWriteRepository, ITransportationServiceWriteRepository transportationServiceWriteRepository)
+        {
+            _transportationServiceReadRepository = transportationServiceReadRepository;
+            _transportationPersonnelWriteRepository = transportationPersonnelWriteRepository;
+            _transportationPassengerWriteRepository = transportationPassengerWriteRepository;
+            _transportationServiceWriteRepository = transportationServiceWriteRepository;
+        }
 
         public UdhbUetdsAriziServiceClient UedtsService()
         {
@@ -54,7 +74,6 @@ namespace Infrastracture.Services
 
             return binding;
         }
-
         public uetdsYtsUser User()
         {
             uetdsYtsUser user = new uetdsYtsUser();
@@ -72,7 +91,6 @@ namespace Infrastracture.Services
 
             return user;
         }
-
         public async Task TestService()
         {
             var result = await UedtsService().servisTestAsync("Test mesajı");
@@ -81,8 +99,6 @@ namespace Infrastracture.Services
 
             Console.WriteLine(elma);
         }
-
-
         public async Task<string> IpListesiAsync()
         {
             var result = await UedtsService().ipListeleAsync(User());
@@ -93,299 +109,347 @@ namespace Infrastracture.Services
                 return "HATA ";     //HATA MESAJI
         }
 
-
         #region Metodlar
+        public async Task<string> SeferEkleAsync(TransportationService ulasimSeferi)
+        {
+            uetdsAriziSeferBilgileriInput seferBilgileriInput = new uetdsAriziSeferBilgileriInput();
 
-        //public async Task<string> SeferEkleAsync(UlasimSeferleri ulasimSeferi)  //Ulasım seferleri dto oluşturulmalı.
-        //{
-        //    uetdsAriziSeferBilgileriInput seferBilgileriInput = new uetdsAriziSeferBilgileriInput();
+            seferBilgileriInput.aracPlaka = ulasimSeferi.VehicleAllFK.PlateNumber;
+            seferBilgileriInput.aracTelefonu = ulasimSeferi.VehiclePhone;
+            seferBilgileriInput.firmaSeferNo = ulasimSeferi.TransportationFK.TransportationNo;
+            seferBilgileriInput.hareketTarihi = ulasimSeferi.StartDate;
+            seferBilgileriInput.hareketSaati = ulasimSeferi.StartDate.ToString("HH:mm");
+            seferBilgileriInput.seferBitisTarihi = ulasimSeferi.EndDate;
+            seferBilgileriInput.seferBitisSaati = ulasimSeferi.EndDate.ToString("HH:mm");
+            seferBilgileriInput.seferAciklama = ulasimSeferi.Description;
 
-        //    seferBilgileriInput.aracPlaka = ulasimSeferi.AracFK.Plaka;
-        //    seferBilgileriInput.aracTelefonu = ulasimSeferi.AracTelefonNumarasi;
-        //    seferBilgileriInput.firmaSeferNo = ulasimSeferi.SeferNo;
-        //    seferBilgileriInput.hareketTarihi = ulasimSeferi.BaslamaTarihi;
-        //    seferBilgileriInput.hareketSaati = ulasimSeferi.BaslamaTarihi.ToString("HH:mm");
-        //    seferBilgileriInput.seferBitisTarihi = ulasimSeferi.BitisTarihi;
-        //    seferBilgileriInput.seferBitisSaati = ulasimSeferi.BitisTarihi.ToString("HH:mm");
-        //    seferBilgileriInput.seferAciklama = ulasimSeferi.Aciklama;
+            var result = await UedtsService().seferEkleAsync(User(), seferBilgileriInput);
+
+            long seferRefNo = result.@return.uetdsSeferReferansNo;
+            int sonucKodu = result.@return.sonucKodu;
+            string sonucMesaji = result.@return.sonucMesaji;
+
+            if (sonucKodu == 0)
+                return seferRefNo.ToString(); //Başarılysa direkt seferRefNo Gönderilecek
+            else
+                return "HATA " + sonucMesaji; //HATA MESAJI
+        }
+        public async Task<string> SeferGuncelleAsync(TransportationService transportationService, long seferRefNumber)
+        {
+            // UETDS sefer bilgileri nesnesini dolduruyoruz
+            var seferBilgileriInput = new uetdsAriziSeferBilgileriInput
+            {
+                aracPlaka = transportationService.VehicleAllFK.PlateNumber,
+                aracTelefonu = transportationService.VehiclePhone,
+                firmaSeferNo = transportationService.TransportationFK.TransportationNo,
+                hareketTarihi = transportationService.StartDate,
+                hareketSaati = transportationService.StartDate.ToString("HH:mm"),
+                seferBitisTarihi = transportationService.EndDate,
+                seferBitisSaati = transportationService.EndDate.ToString("HH:mm"),
+                seferAciklama = transportationService.Description
+            };
+
+            // UETDS servisi üzerinden sefer güncelleme işlemi gerçekleştiriliyor
+            var result = await UedtsService().seferGuncelleAsync(User(), seferRefNumber, seferBilgileriInput
+            );
+
+            // Sonuç bilgileri
+            long seferRefNo = result.@return.uetdsSeferReferansNo;
+            int sonucKodu = result.@return.sonucKodu;
+            string sonucMesaji = result.@return.sonucMesaji;
+
+            // Başarı durumu kontrol ediliyor
+            if (sonucKodu == 0)
+            {
+                return seferRefNo.ToString(); // Güncellenen seferin referans numarasını döndür
+            }
+            else
+            {
+                return $"HATA {sonucMesaji}"; // Hata mesajını döndür
+            }
+        }
+        public async Task<string> SeferIptalAsync(long seferRefNumber)
+        {
+            // İptal açıklamasını burada belirtebilirsiniz.
+            string iptalAciklama = "Sefer teknik bir sebepten dolayı iptal edilmiştir.";
+
+            // UETDS sefer iptal servis çağrısı
+            var result = await UedtsService().seferIptalAsync(
+                User(),                     // Kullanıcı bilgileri
+                seferRefNumber,             // Uetds Sefer Referans Numarası
+                iptalAciklama               // İptal açıklaması
+            );
+
+            // Sonuç bilgileri
+            int sonucKodu = result.@return.sonucKodu;
+            string sonucMesaji = result.@return.sonucMesaji;
+
+            // İşlem durumu kontrol ediliyor
+            if (sonucKodu == 0)
+            {
+                return "Sefer iptal işlemi başarılı."; // Başarı mesajı
+            }
+            else
+            {
+                return $"HATA: {sonucMesaji}"; // Hata mesajı
+            }
+        }
+        public async Task<string> GrupEkleAsync(TransportationGroup transportationGroup)
+        {
+            uetdsAriziGrupBilgileriInput grupBilgileriInput = new uetdsAriziGrupBilgileriInput();
+
+            var transportationService = await _transportationServiceReadRepository.GetSingleAsync(x => x.Gid == transportationGroup.GidTransportationServiceFK);
+
+            grupBilgileriInput.baslangicYer = transportationGroup.StartPlace;
+            grupBilgileriInput.baslangicUlke = transportationGroup.StartCountryFK.CountryCode;
+            grupBilgileriInput.baslangicIl = long.Parse(transportationGroup.StartCityFK.PlateCode);
+            grupBilgileriInput.baslangicIlce = transportationGroup.StartDistrictFK.DistrictCode;
+            grupBilgileriInput.bitisYer = transportationGroup.EndPlace;
+            grupBilgileriInput.bitisUlke = transportationGroup.EndCountryFK.CountryCode;
+            grupBilgileriInput.bitisIl = long.Parse(transportationGroup.EndCityFK.PlateCode);
+            grupBilgileriInput.bitisIlce = transportationGroup.EndDistrictFK.DistrictCode;
+            grupBilgileriInput.grupAciklama = transportationGroup.Description;
+            grupBilgileriInput.grupAdi = transportationGroup.GroupName;
+            grupBilgileriInput.grupUcret = transportationGroup.TransportationFee.ToString();
+
+            int sonucKodu = 9999;
+            string sonucMesaji = "";
+
+            if (string.IsNullOrEmpty(transportationGroup.RefNoTransportationGroup))
+            {
+
+                var response = await UedtsService().seferGrupEkleAsync(User(), long.Parse(transportationService.RefNoTransportation), grupBilgileriInput);
+
+                sonucKodu = response.@return.sonucKodu;
+                sonucMesaji = response.@return.sonucMesaji;
+
+                if (sonucKodu == 0)
+                    return response.@return.uetdsGrupRefNo;
+                else
+                    return "HATA " + sonucMesaji;//HATA MESAJI
+            }
+            else
+            {
+                var response = await UedtsService().seferGrupGuncelleAsync(User(), long.Parse(transportationService.RefNoTransportation), long.Parse(transportationGroup.RefNoTransportationGroup), grupBilgileriInput);
+
+                sonucKodu = response.@return.sonucKodu;
+                sonucMesaji = response.@return.sonucMesaji;
+
+                if (sonucKodu == 0)
+                    return "Grup Güncellendi";
+                else
+                    return "HATA " + sonucMesaji;//HATA MESAJI
+            }
+        }
+        public async Task<string> GrupIptalAsync(long seferRefNumber, long grupRefNumber)
+        {
+            // İptal açıklamasını burada belirtebilirsiniz.
+            string iptalAciklama = "Grup, teknik bir sebepten dolayı iptal edilmiştir.";
+
+            // UETDS sefer grup iptal servis çağrısı
+            var result = await UedtsService().seferGrupIptalAsync(
+                User(),                     // Kullanıcı bilgileri
+                seferRefNumber,             // Uetds Sefer Referans Numarası
+                grupRefNumber,              // Grup Referans Numarası
+                iptalAciklama               // İptal açıklaması
+            );
+
+            // Sonuç bilgileri
+            int sonucKodu = result.@return.sonucKodu;
+            string sonucMesaji = result.@return.sonucMesaji;
+
+            // İşlem durumu kontrol ediliyor
+            if (sonucKodu == 0)
+            {
+                return "Grup iptal işlemi başarılı."; // Başarı mesajı
+            }
+            else
+            {
+                return $"HATA: {sonucMesaji}"; // Hata mesajı
+            }
+        }
+        public async Task<string> PersonelEkleAsync(List<TransportationPersonnel> transportationPersonnel, long seferRefNumber)
+        {
+            List<string> wrongPersonnel = new List<string>();
+
+            foreach (TransportationPersonnel personnel in transportationPersonnel)
+            {
+                List<uetdsAriziSeferPersonelBilgileriInput> personnelList = new List<uetdsAriziSeferPersonelBilgileriInput>();
+
+                uetdsAriziSeferPersonelBilgileriInput personelBilgileriInput = new uetdsAriziSeferPersonelBilgileriInput();
+
+                personelBilgileriInput.adi = personnel.UserFK.Name;
+                personelBilgileriInput.soyadi = personnel.UserFK.Surname;
+                personelBilgileriInput.tcKimlikPasaportNo = personnel.UserFK.IdentityNo == null ? personnel.UserFK.PassportNo : personnel.UserFK.IdentityNo;
+                personelBilgileriInput.turKodu = (int)personnel.StaffType;
+                personelBilgileriInput.telefon = personnel.UserFK.Gsm;
+                personelBilgileriInput.uyrukUlke = personnel.UserFK.CountryFK.CountryCode;
+                personelBilgileriInput.cinsiyet = personnel.UserFK.Gender.ToString();
+                personelBilgileriInput.adres = ""; //TODO - Konuşulacak
+
+                personnelList.Add(personelBilgileriInput);
+                var res = await UedtsService().personelEkleAsync(User(), seferRefNumber, personnelList.ToArray());
+
+                if (res.@return.sonucKodu == 0)
+                {
+                    personnel.StaffStatus = EnumStaffStatus.Gecerli;
+
+                    _transportationPersonnelWriteRepository.Update(personnel);
+                    await _transportationPersonnelWriteRepository.SaveAsync();
+                }
+                else
+                {
+                    wrongPersonnel.Add(personnel.UserFK.FullName);
+                }
+            }
+
+            if (wrongPersonnel.Count == 0)
+            {
+                return "";
+            }
+            else
+            {
+                string hataliPersonellerMesaj = "HATA. ";
+
+                foreach (string personel in wrongPersonnel)
+                {
+                    hataliPersonellerMesaj += personel + " ";
+                }
+
+                hataliPersonellerMesaj += "bilgili personel veya personellerde hata var. Lütfen bilgileri kontrol edip tekrar deneyin. Diğer personeller eklenmiştir.";
+                return hataliPersonellerMesaj;
+            }
+        }
+        public async Task<string> PersonelIptalAsync(TransportationPersonnel transportationPersonnel, long seferRefNumber)
+        {
+            // İptal açıklamasını burada belirtebilirsiniz.
+            string iptalAciklama = "Personel, teknik bir sebepten dolayı iptal edilmiştir.";
+
+            // UETDS personel iptal input nesnesi oluşturuluyor
+            var personelIptalInput = new uetdsPersonelIptalInput
+            {
+                personelTCKimlikPasaportNo = transportationPersonnel.UserFK.IdentityNo == null ? transportationPersonnel.UserFK.PassportNo : transportationPersonnel.UserFK.IdentityNo, // Personelin kimlik/pasaport numarası
+                uetdsSeferReferansNo = seferRefNumber,                                        // UETDS Sefer Referans Numarası
+                iptalAciklama = iptalAciklama                                                // İptal açıklaması
+            };
+
+            // UETDS personel iptal servis çağrısı
+            var result = await UedtsService().personelIptalAsync(User(), personelIptalInput);
+
+            // Sonuç bilgileri
+            int sonucKodu = result.@return.sonucKodu;
+            string sonucMesaji = result.@return.sonucMesaji;
+
+            // İşlem durumu kontrol ediliyor
+            if (sonucKodu == 0)
+            {
+                return "Personel iptal işlemi başarılı."; // Başarı mesajı
+            }
+            else
+            {
+                return $"HATA: {sonucMesaji}"; // Hata mesajı
+            }
+        }
+        public async Task<string> YolcuEkleAsync(List<TransportationPassenger> passengers, long seferRefNo, long grupRefNo)
+        {
+            List<TransportationPassenger> failedPassengers = new List<TransportationPassenger>();
+
+            foreach (var passenger in passengers)
+            {
+                uetdsAriziSeferYolcuBilgileriInput yolcuBilgileriInput = new uetdsAriziSeferYolcuBilgileriInput();
+
+                // Eğer yolcu daha önce eklendiyse, iptal edilip tekrar eklenecek
+                if (!string.IsNullOrEmpty(passenger.RefNoTransportationPassenger))
+                {
+                    var iptalInput = new uetdsAriziYolcuIptalInput();
+                    var cancelResponse = await UedtsService().yolcuIptalAsync(User(),seferRefNo,iptalInput);
+
+                    if (cancelResponse.@return.sonucKodu != 0)
+                    {
+                        return cancelResponse.@return.sonucMesaji;
+                    }
+
+                    // Yolcu bilgilerini güncelle
+                    passenger.RefNoTransportationPassenger = null;
+                    passenger.PassengerStatus = EnumPassengerStatus.Taslak;
+
+                    _transportationPassengerWriteRepository.Update(passenger);
+                    await _transportationPassengerWriteRepository.SaveAsync();
+                }
+
+                // Yolcu bilgileri dolduruluyor
+                yolcuBilgileriInput.adi = passenger.FirstName;
+                yolcuBilgileriInput.soyadi = passenger.LastName;
+                yolcuBilgileriInput.tcKimlikPasaportNo = passenger.IdentityNo;
+                yolcuBilgileriInput.uyrukUlke = passenger.Country;
+                yolcuBilgileriInput.cinsiyet = passenger.Gender.ToString();
+                yolcuBilgileriInput.grupId = grupRefNo;
+                yolcuBilgileriInput.telefonNo = passenger.Phone ?? "";
+
+                // Yolcu ekleme işlemi
+                var response = await UedtsService().yolcuEkleAsync(User(),seferRefNo,yolcuBilgileriInput);
+
+                if (response.@return.sonucKodu == 0)
+                {
+                    // Başarılı işlem, yolcu bilgileri güncelleniyor
+                    passenger.RefNoTransportationPassenger = response.@return.uetdsYolcuRefNo;
+                    passenger.PassengerStatus = EnumPassengerStatus.Gecerli;
+
+                    _transportationPassengerWriteRepository.Update(passenger);
+                    await _transportationPassengerWriteRepository.SaveAsync();
+                }
+                else
+                {
+                    // Hata alan yolcular listeye ekleniyor
+                    failedPassengers.Add(passenger);
+                }
+            }
+
+            // Hatalı yolcular için mesaj hazırlanıyor
+            if (failedPassengers.Count == 0)
+            {
+                return "";
+            }
+            else
+            {
+                var errorMessage = new StringBuilder();
+                errorMessage.AppendLine("HATA: Aşağıdaki yolcularda hata oluştu:");
+
+                foreach (var failedPassenger in failedPassengers)
+                {
+                    errorMessage.AppendLine($"{failedPassenger.FirstName} {failedPassenger.LastName}");
+                }
+
+                errorMessage.AppendLine("Lütfen bilgileri kontrol edip tekrar deneyin. Diğer yolcular başarıyla eklenmiştir.");
+                return errorMessage.ToString();
+            }
+        }
+        public async Task<string> YolcuIptalAsync(long seferRefNumber, long refNoTransportationPassenger)
+        {
+            // İptal açıklamasını burada belirtebilirsiniz.
+            string iptalAciklama = "Yolcu, teknik bir sebepten dolayı iptal edilmiştir.";
+
+            // UETDS yolcu iptal servis çağrısı
+            var result = await UedtsService().yolcuIptalUetdsYolcuRefNoIleAsync(
+                User(),seferRefNumber,refNoTransportationPassenger, iptalAciklama
+            );
+
+            // Sonuç bilgileri
+            int sonucKodu = result.@return.sonucKodu;
+            string sonucMesaji = result.@return.sonucMesaji;
+
+            // İşlem durumu kontrol ediliyor
+            if (sonucKodu == 0)
+            {
+                return "Yolcu iptal işlemi başarılı."; // Başarı mesajı
+            }
+            else
+            {
+                return $"HATA: {sonucMesaji}"; // Hata mesajı
+            }
+        }
 
 
-        //    var result = await UedtsService().seferEkleAsync(User(), seferBilgileriInput);
-
-        //    long seferRefNo = result.@return.uetdsSeferReferansNo;
-        //    int sonucKodu = result.@return.sonucKodu;
-        //    string sonucMesaji = result.@return.sonucMesaji;
-
-        //    if (sonucKodu == 0)
-        //        return seferRefNo.ToString(); //Başarılysa direkt seferRefNo Gönderilecek
-        //    else
-        //        return "HATA " + sonucMesaji; //HATA MESAJI
-        //}
-
-        //public string SeferGuncelle(UlasimSeferleri ulasimSeferi)
-        //{
-        //    uetdsAriziSeferBilgileriInput seferBilgileriInput = new uetdsAriziSeferBilgileriInput();
-
-        //    seferBilgileriInput.aracPlaka = ulasimSeferi.AracFK.Plaka;
-        //    seferBilgileriInput.aracTelefonu = ulasimSeferi.AracTelefonNumarasi;
-        //    seferBilgileriInput.firmaSeferNo = ulasimSeferi.SeferNo;
-        //    seferBilgileriInput.hareketSaati = ulasimSeferi.BaslamaTarihi.ToString("HH:mm");
-        //    seferBilgileriInput.hareketTarihi = ulasimSeferi.BaslamaTarihi;
-        //    seferBilgileriInput.seferAciklama = ulasimSeferi.Aciklama;
-        //    seferBilgileriInput.seferBitisSaati = ulasimSeferi.BitisTarihi.ToString("HH:mm");
-        //    seferBilgileriInput.seferBitisTarihi = ulasimSeferi.BitisTarihi;
-
-        //    var res = UedtsService().seferGuncelle(User(), long.Parse(ulasimSeferi.SeferRefNo), true, seferBilgileriInput);
-
-        //    long seferRefNo = res.uetdsSeferReferansNo;
-        //    int sonucKodu = res.sonucKodu;
-        //    string sonucMesaji = res.sonucMesaji;
-
-        //    if (sonucKodu == 0)
-        //        return seferRefNo.ToString(); //Başarılysa direkt seferRefNo Gönderilecek
-        //    else
-        //        return "HATA " + sonucMesaji; //HATA MESAJI
-        //}
-
-        //public string PersonelEkle(List<UlasimSeferPersonelleri> personeller, long seferRefNumber)
-        //{
-        //    List<string> hataliPersoneller = new List<string>();
-
-        //    foreach (UlasimSeferPersonelleri personel in personeller)
-        //    {
-        //        List<uetdsAriziSeferPersonelBilgileriInput> personelListesi = new List<uetdsAriziSeferPersonelBilgileriInput>();
-
-        //        uetdsAriziSeferPersonelBilgileriInput personelBilgileriInput = new uetdsAriziSeferPersonelBilgileriInput();
-
-        //        if (personel.EnumPersonelTuru == UlasimSeferPersonelleri.PersonelTuruEnum.AsliPersonel)
-        //        {
-        //            Yonetici yonetici = YoneticiBO.Instance.GetirYoneticiObjectId(personel.IdGorevliPersonelFK);
-        //            Ulkeler ulke = UlkelerBO.Instance.GetirUlkelerObjectId(yonetici.IdUyrukFK.Value);
-
-        //            personelBilgileriInput.adi = yonetici.Adi;
-        //            personelBilgileriInput.soyadi = yonetici.Soyadi;
-        //            personelBilgileriInput.tcKimlikPasaportNo = yonetici.KimlikNo == null ? yonetici.PasaportNo : yonetici.KimlikNo;
-        //            personelBilgileriInput.telefon = yonetici.Gsm;
-        //            personelBilgileriInput.turKodu = (int)personel.EnumTuru;
-        //            personelBilgileriInput.uyrukUlke = ulke.UlkeKodu;
-        //            personelBilgileriInput.cinsiyet = yonetici.CinsiyetStr;
-        //            personelBilgileriInput.adres = ""; //TODO - Konuşulacak
-
-        //            personelListesi.Add(personelBilgileriInput);
-        //            var res = UedtsService().personelEkle(User(), seferRefNumber, personelListesi.ToArray());
-
-        //            if (res.sonucKodu == 0)
-        //            {
-        //                personel.EnumPersonelDurumu = UlasimSeferPersonelleri.PersonelDurumuEnum.Gecerli;
-
-        //                UlasimSeferPersonelleriBO.Instance.GuncelleUlasimSeferPersonelleri(personel);
-        //            }
-        //            else
-        //            {
-        //                hataliPersoneller.Add(yonetici.AdiSoyadi);
-        //            }
-        //        }
-        //        else if (personel.EnumPersonelTuru == UlasimSeferPersonelleri.PersonelTuruEnum.DisPersonel)
-        //        {
-        //            DisPersoneller yonetici = DisPersonellerBO.Instance.GetirDisPersonellerObjectId(personel.IdGorevliPersonelFK);
-        //            Ulkeler ulke = UlkelerBO.Instance.GetirUlkelerObjectId(yonetici.IdUyrukFK.Value);
-
-        //            personelBilgileriInput.adi = yonetici.Adi;
-        //            personelBilgileriInput.soyadi = yonetici.Soyadi;
-        //            personelBilgileriInput.tcKimlikPasaportNo = yonetici.KimlikNo == null ? yonetici.PasaportNo : yonetici.KimlikNo;
-        //            personelBilgileriInput.telefon = yonetici.Gsm;
-        //            personelBilgileriInput.turKodu = (int)personel.EnumTuru;
-        //            personelBilgileriInput.uyrukUlke = ulke.UlkeKodu;
-        //            personelBilgileriInput.cinsiyet = yonetici.CinsiyetStr;
-        //            personelBilgileriInput.adres = ""; //TODO - Konuşulacak
-
-        //            personelListesi.Add(personelBilgileriInput);
-        //            var res = UedtsService().personelEkle(User(), seferRefNumber, personelListesi.ToArray());
-
-        //            if (res.sonucKodu == 0)
-        //            {
-        //                personel.EnumPersonelDurumu = UlasimSeferPersonelleri.PersonelDurumuEnum.Gecerli;
-
-        //                UlasimSeferPersonelleriBO.Instance.GuncelleUlasimSeferPersonelleri(personel);
-        //            }
-        //            else
-        //            {
-        //                hataliPersoneller.Add(yonetici.AdiSoyadi);
-        //            }
-        //        }
-
-        //    }
-
-        //    if (hataliPersoneller.Count == 0)
-        //    {
-        //        return "";
-        //    }
-        //    else
-        //    {
-        //        string hataliPersonellerMesaj = "HATA. ";
-
-        //        foreach (string personel in hataliPersoneller)
-        //        {
-        //            hataliPersonellerMesaj += personel + " ";
-        //        }
-
-        //        hataliPersonellerMesaj += "bilgili personel veya personellerde hata var. Lütfen bilgileri kontrol edip tekrar deneyin. Diğer personeller eklenmiştir.";
-        //        return hataliPersonellerMesaj;
-        //    }
-        //}
-
-        //public string GrupEkle(UlasimSeferGruplari ulasimSeferGruplari)
-        //{
-        //    uetdsAriziGrupBilgileriInput grupBilgileriInput = new uetdsAriziGrupBilgileriInput();
-
-        //    UlasimSeferleri sefer = UlasimSeferleriBO.Instance.GetirUlasimSeferleriObjectId(ulasimSeferGruplari.IdUlasimSeferFK);
-
-        //    Ulkeler baslangicUlke = UlkelerBO.Instance.GetirUlkelerObjectId(ulasimSeferGruplari.IdBaslangicUlkeFK);
-        //    grupBilgileriInput.baslangicUlke = ulasimSeferGruplari.BaslangicUlkeFK.UlkeKodu;
-
-        //    Ulkeler bitisUlke = UlkelerBO.Instance.GetirUlkelerObjectId(ulasimSeferGruplari.IdBitisUlkeFK);
-        //    grupBilgileriInput.bitisUlke = ulasimSeferGruplari.BitisUlkeFK.UlkeKodu;
-
-        //    if (ulasimSeferGruplari.IdBaslangicSehirFK != null)
-        //    {
-        //        Sehirler baslangicSehir = SehirlerBO.Instance.GetirSehirlerObjectId(ulasimSeferGruplari.IdBaslangicSehirFK.Value);
-        //        grupBilgileriInput.baslangicIl = long.Parse(baslangicSehir.PlakaKodu);
-
-        //        Ilceler baslangicIlce = IlcelerBO.Instance.GetirIlcelerObjectId(ulasimSeferGruplari.IdBaslangicIlceFK.Value);
-        //        grupBilgileriInput.baslangicIlce = baslangicIlce.IlceKodu;
-        //    }
-
-        //    if (ulasimSeferGruplari.IdBitisSehirFK != null)
-        //    {
-        //        Sehirler bitisSehir = SehirlerBO.Instance.GetirSehirlerObjectId(ulasimSeferGruplari.IdBitisSehirFK.Value);
-        //        grupBilgileriInput.bitisIl = long.Parse(bitisSehir.PlakaKodu);
-
-        //        Ilceler bitisIlce = IlcelerBO.Instance.GetirIlcelerObjectId(ulasimSeferGruplari.IdBitisIlceFK.Value);
-        //        grupBilgileriInput.bitisIlce = bitisIlce.IlceKodu;
-        //    }
-
-        //    grupBilgileriInput.baslangicYer = ulasimSeferGruplari.BaslangicYeri;
-        //    grupBilgileriInput.bitisYer = ulasimSeferGruplari.BitisYeri;
-        //    grupBilgileriInput.grupAciklama = ulasimSeferGruplari.Aciklama;
-        //    grupBilgileriInput.grupAdi = ulasimSeferGruplari.GrupAdi;
-        //    grupBilgileriInput.grupUcret = ulasimSeferGruplari.TasimaUcreti;
-
-        //    uetdsAriziGrupIslemSonuc res;
-        //    int sonucKodu = 9999;
-        //    string sonucMesaji = "";
-
-        //    if (string.IsNullOrEmpty(ulasimSeferGruplari.GrupRefId))
-        //    {
-        //        res = UedtsService().seferGrupEkle(User(), long.Parse(sefer.SeferRefNo), true, grupBilgileriInput);
-        //        sonucKodu = res.sonucKodu;
-        //        sonucMesaji = res.sonucMesaji;
-
-        //        if (sonucKodu == 0)
-        //            return res.uetdsGrupRefNo;
-        //        else
-        //            return "HATA " + sonucMesaji;//HATA MESAJI
-        //    }
-        //    else
-        //    {
-        //        res = UedtsService().seferGrupGuncelle(User(), long.Parse(sefer.SeferRefNo), true, long.Parse(ulasimSeferGruplari.GrupRefId), true, grupBilgileriInput);
-        //        sonucKodu = res.sonucKodu;
-        //        sonucMesaji = res.sonucMesaji;
-
-        //        if (sonucKodu == 0)
-        //            return "Grup Güncellendi";
-        //        else
-        //            return "HATA " + sonucMesaji;//HATA MESAJI
-        //    }
-        //}
-
-        //public string YolcuEkleCoklu(List<UlasimSeferYolculari> ulasimSeferYolculari, string seferRefNo, string grupRefNo)
-        //{
-        //    List<UlasimSeferYolculari> hataliYolcular = new List<UlasimSeferYolculari>();
-
-        //    foreach (UlasimSeferYolculari yolcu in ulasimSeferYolculari)
-        //    {
-        //        uetdsAriziSeferYolcuBilgileriInput yolcuBilgileriInput = new uetdsAriziSeferYolcuBilgileriInput();
-
-        //        if (!string.IsNullOrEmpty(yolcu.YolcuRefNo))
-        //        {
-        //            uetdsAriziYolcuIptalInput yolcuGelmeyenInput = new uetdsAriziYolcuIptalInput();
-
-        //            var resIptal = UedtsService().yolcuIptalUetdsYolcuRefNoIle(User(), long.Parse(seferRefNo), true, long.Parse(yolcu.YolcuRefNo), true, "");
-
-        //            if (resIptal.sonucKodu != 0)
-        //            {
-        //                return resIptal.sonucMesaji;
-        //            }
-        //            else
-        //            {
-        //                yolcu.YolcuRefNo = null;
-        //                yolcu.EnumDurumu = UlasimSeferYolculari.DurumuEnum.Taslak;
-
-        //                UlasimSeferYolculariBO.Instance.GuncelleUlasimSeferYolculari(yolcu);
-        //            }
-        //        }
-
-        //        yolcuBilgileriInput.adi = "Test Ad"; //yolcu.Adi;
-        //        yolcuBilgileriInput.soyadi = "Test Soyad"; //yolcu.Soyadi;
-        //        yolcuBilgileriInput.tcKimlikPasaportNo = "15058023598";     //yolcu.TCKNoPasaportNo;
-        //        yolcuBilgileriInput.uyrukUlke = yolcu.Ulkesi;
-        //        yolcuBilgileriInput.cinsiyet = yolcu.CinsiyetStr;
-        //        yolcuBilgileriInput.grupId = long.Parse(grupRefNo);
-        //        yolcuBilgileriInput.telefonNo = yolcu.TelefonNo;
-
-        //        var res = UedtsService().yolcuEkle(User(), long.Parse(seferRefNo), true, yolcuBilgileriInput);
-
-        //        if (res.sonucKodu == 0)
-        //        {
-        //            yolcu.YolcuRefNo = res.uetdsYolcuRefNo;
-        //            yolcu.EnumDurumu = UlasimSeferYolculari.DurumuEnum.Gecerli;
-
-        //            UlasimSeferYolculariBO.Instance.GuncelleUlasimSeferYolculari(yolcu);
-        //        }
-        //        else
-        //        {
-        //            hataliYolcular.Add(yolcu);
-        //        }
-        //    }
-
-        //    if (hataliYolcular.Count == 0)
-        //    {
-        //        return "";
-        //    }
-        //    else
-        //    {
-        //        string hataliYolcuMesaj = "";
-
-        //        foreach (UlasimSeferYolculari yolcu in hataliYolcular)
-        //        {
-        //            hataliYolcuMesaj += yolcu.Adi + " " + yolcu.Soyadi + " ";
-        //        }
-
-        //        hataliYolcuMesaj += "bilgili yolcuda veya yolcularda hata var. Lütfen bilgileri kontrol edip tekrar deneyin. Diğer yolcular başarıyla eklenmiştir.";
-        //        return hataliYolcuMesaj;
-        //    }
-
-        //}
-
-        //public string YolcuIptalEt(UlasimSeferYolculari yolcu, string seferRefNo, string grupRefNo)
-        //{
-        //    List<UlasimSeferYolculari> hataliYolcular = new List<UlasimSeferYolculari>();
-
-        //    var resIptal = UedtsService().yolcuIptalUetdsYolcuRefNoIle(User(), long.Parse(seferRefNo), true, long.Parse(yolcu.YolcuRefNo), true, "");
-
-        //    if (resIptal.sonucKodu != 0)
-        //    {
-        //        return "HATA " + resIptal.sonucMesaji;
-        //    }
-        //    else
-        //    {
-        //        yolcu.YolcuRefNo = null;
-        //        yolcu.EnumDurumu = UlasimSeferYolculari.DurumuEnum.Taslak;
-
-        //        UlasimSeferYolculariBO.Instance.GuncelleUlasimSeferYolculari(yolcu);
-        //        return "Yolcu İptal işlemi başarılı.";
-        //    }
-        //}
 
         //public string SeferCiktisiAl(UlasimSeferleri ulasimSeferi, string path)
         //{

@@ -19,4 +19,8 @@ public static class TransportationPassengersBusinessMessages
 	public const string NotFoundRecord = "No Record Found!";
 	public const string IncorrectOperation = "Incorrect Operation";
 	//public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+	public const string SuccessReportedTransportationPassengerMessage = "Yolcu Basariyla Bildirildi";
+    public const string SuccessReportedTransportationPassengerMultiMessage = "Yolcular Basariyla Bildirildi";
+    public const string SuccessReportCancelTransportationPassengerMessage = "Yolcu Iptal Edildi";
+
 }

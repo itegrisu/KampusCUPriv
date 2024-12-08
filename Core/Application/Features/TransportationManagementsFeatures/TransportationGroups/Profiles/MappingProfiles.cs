@@ -4,6 +4,8 @@ using Application.Features.TransportationManagementFeatures.TransportationGroups
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationGroups.Commands.CancelReport;
+using Application.Features.TransportationManagementsFeatures.TransportationGroups.Commands.Report;
 using Application.Features.TransportationManagementsFeatures.TransportationGroups.Queries.GetByServiceGid;
 using AutoMapper;
 using Core.Application.Responses;
@@ -30,5 +32,11 @@ public class MappingProfiles : Profile
 
         CreateMap<X.TransportationGroup, GetByServiceGidListTransportationGroupListItemDto>().ForMember(dest => dest.PassengerCount, opt => opt.MapFrom(src => src.TransportationPassengers.Where(t => t.DataState == Core.Enum.DataState.Active).Count())).ReverseMap();
         CreateMap<IPaginate<X.TransportationGroup>, GetListResponse<GetByServiceGidListTransportationGroupListItemDto>>().ReverseMap();
+
+        CreateMap<X.TransportationGroup, ReportTransportationGroupCommand>().ReverseMap();
+        CreateMap<X.TransportationGroup, ReportedTransportationGroupResponse>().ReverseMap();
+
+        CreateMap<X.TransportationGroup, CancelTransportationGroupCommand>().ReverseMap();
+        CreateMap<X.TransportationGroup, CanceledTransportationGroupResponse>().ReverseMap();
     }
 }

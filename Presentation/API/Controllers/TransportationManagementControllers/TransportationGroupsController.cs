@@ -3,8 +3,11 @@ using Application.Features.TransportationManagementFeatures.TransportationGroups
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Queries.GetList;
+using Application.Features.TransportationManagementsFeatures.TransportationGroups.Commands.CancelReport;
+using Application.Features.TransportationManagementsFeatures.TransportationGroups.Commands.Report;
 using Application.Features.TransportationManagementsFeatures.TransportationGroups.Queries.GetByServiceGid;
 using Application.Features.TransportationManagementsFeatures.TransportationPersonnels.Queries.GetByServiceGid;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.ReportTransportationService;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -35,6 +38,20 @@ namespace API.Controllers.TransportationManagementControllers
         public async Task<IActionResult> GetByServiceGid([FromQuery] GetByServiceGidListTransportationGroupQuery getByServiceGidListTransportationGroupQuery)
         {
             GetListResponse<GetByServiceGidListTransportationGroupListItemDto> response = await Mediator.Send(getByServiceGidListTransportationGroupQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ReportTransportationGroup([FromBody] ReportTransportationGroupCommand reportTransportationGroupCommand)
+        {
+            ReportedTransportationGroupResponse response = await Mediator.Send(reportTransportationGroupCommand);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CancelTransportationGroup([FromBody] CancelTransportationGroupCommand cancelTransportationGroupCommand)
+        {
+            CanceledTransportationGroupResponse response = await Mediator.Send(cancelTransportationGroupCommand);
             return Ok(response);
         }
     }
