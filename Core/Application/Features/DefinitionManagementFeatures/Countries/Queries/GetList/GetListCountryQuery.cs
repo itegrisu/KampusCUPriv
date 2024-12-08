@@ -1,3 +1,4 @@
+using Application.Abstractions;
 using Application.Helpers.PaginationHelpers;
 using Application.Repositories.DefinitionManagementRepos.CountryRepo;
 using AutoMapper;
@@ -18,12 +19,14 @@ public class GetListCountryQuery : IRequest<GetListResponse<GetListCountryListIt
         private readonly ICountryReadRepository _countryReadRepository;
         private readonly IMapper _mapper;
         private readonly NoPagination<X.Country, GetListCountryListItemDto> _noPagination;
+        private readonly IUlasýmService _ulasýmService;
 
-        public GetListCountryQueryHandler(ICountryReadRepository countryReadRepository, IMapper mapper, NoPagination<X.Country, GetListCountryListItemDto> noPagination)
+        public GetListCountryQueryHandler(ICountryReadRepository countryReadRepository, IMapper mapper, NoPagination<X.Country, GetListCountryListItemDto> noPagination, IUlasýmService ulasýmService)
         {
             _countryReadRepository = countryReadRepository;
             _mapper = mapper;
             _noPagination = noPagination;
+            _ulasýmService = ulasýmService;
         }
 
         public async Task<GetListResponse<GetListCountryListItemDto>> Handle(GetListCountryQuery request, CancellationToken cancellationToken)
@@ -31,6 +34,8 @@ public class GetListCountryQuery : IRequest<GetListResponse<GetListCountryListIt
             if (request.PageRequest.PageIndex == -1)
                 return await _noPagination.NoPaginationData(cancellationToken);
 
+
+            await _ulasýmService.TestService();
 
             IPaginate<X.Country> countrys = await _countryReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,

@@ -25,6 +25,8 @@ namespace Infrastracture
             services.AddScoped<LogUserPageVisitService>();
             services.AddScoped<IFileTypeCheckService, FileTypeCheckService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IUlasýmService, UlastirmaService>();
+
         }
 
         public static void AddStorage<T>(this IServiceCollection services) where T : BaseStorage, IStorage
