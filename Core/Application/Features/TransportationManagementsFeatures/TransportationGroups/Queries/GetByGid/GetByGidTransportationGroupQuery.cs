@@ -26,7 +26,7 @@ namespace Application.Features.TransportationManagementFeatures.TransportationGr
 
             public async Task<GetByGidTransportationGroupResponse> Handle(GetByGidTransportationGroupQuery request, CancellationToken cancellationToken)
             {
-                X.TransportationGroup? transportationGroup = await _transportationGroupReadRepository.GetAsync(predicate: uc => uc.GidTransportationServiceFK == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.StartCountryFK).Include(x => x.StartCityFK).Include(x => x.StartDistrictFK).Include(x => x.EndCountryFK).Include(x => x.EndCityFK).Include(x => x.EndDistrictFK).Include(x => x.TransportationServiceFK));
+                X.TransportationGroup? transportationGroup = await _transportationGroupReadRepository.GetAsync(predicate: uc => uc.GidTransportationServiceFK == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.StartCountryFK).Include(x => x.StartCityFK).Include(x => x.StartDistrictFK).Include(x => x.EndCountryFK).Include(x => x.EndCityFK).Include(x => x.EndDistrictFK).Include(x => x.TransportationServiceFK).Include(x => x.TransportationPassengers));
                     
                 await _transportationGroupBusinessRules.TransportationGroupShouldExistWhenSelected(transportationGroup);
 

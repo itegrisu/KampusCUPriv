@@ -25,5 +25,11 @@ public static class TransportationServicesBusinessMessages
     public const string TransportationServiceCantReoported = "Sefer Bildirilemedi";
     // Sefer Basariyla Bildirildi
     public const string SuccessReportedTransportatinServiceMessage = "Sefer Basariyla Bildirildi";
+    public const string SuccessPrintedTransportatinServiceMessage = "Sefer Basariyla Cikti Alindi";
     public const string SuccessReportCancelledTransportatinServiceMessage = "Sefer Iptal Edildi";
+    //PersonnelNotExists
+    public const string TransportationServiceNotReported = "Sefer Bildirilmemis";
+    public const string GroupNotReported = "Hic Grup Bildirilmemis";
+    public const string PersonnelNotReported = "Hic Personel Bildirilmemis";
+    public const string PassengerNotReported = "Hic Yolcu Bildirilmemis";
 }

@@ -5,6 +5,7 @@ using Application.Features.TransportationManagementFeatures.TransportationServic
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetList;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CancelReport;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CreateServiceWithGroup;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.Print;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.ReportTransportationService;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UpdateServiceWithGroup;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Queries.GetByTransportationGid;
@@ -45,5 +46,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.TransportationService, CancelTransportationServiceCommand>().ReverseMap();
         CreateMap<X.TransportationService, CancaledTransportationServiceResponse>().ReverseMap();
+
+        CreateMap<X.TransportationService, PrintTransportationServiceCommand>().ReverseMap();
+        CreateMap<X.TransportationService, PrintedTransportationServiceResponse>().ReverseMap();
     }
 }
