@@ -449,6 +449,37 @@ namespace Infrastracture.Services
             }
         }
 
+        public async Task<string> SeferCiktisiAl(TransportationService transportationService, string path)
+        {
+            // UETDS servisine kullanıcı bilgilerini ve sefer referans numarasını gönderiyoruz
+            var resCikti = await UedtsService().seferDetayCiktisiAlAsync(User(),long.Parse(transportationService.RefNoTransportation));
+
+            // İşlem sonucunu kontrol ediyoruz
+            if (resCikti.@return.sonucKodu != 0)
+            {
+                // Hata durumunda mesajı döndürüyoruz
+                return $"HATA: {resCikti.@return.sonucMesaji}";
+            }
+            else
+            {
+                // PDF dosyasını byte[] olarak alıyoruz
+                byte[] pdfData = resCikti.@return.sonucPdf;
+
+                // Dosya adını belirliyoruz 
+                string fileName = $"{path}{transportationService.Gid}.pdf";
+
+                // PDF dosyasını belirtilen dizine yazıyoruz
+                await System.IO.File.WriteAllBytesAsync(fileName, pdfData);
+                transportationService.TransportationFile = $"{transportationService.Gid}.pdf";
+
+                _transportationServiceWriteRepository.Update(transportationService);
+                await _transportationServiceWriteRepository.SaveAsync();
+
+                // Başarılı mesajını döndürüyoruz
+                return $"Başarılı: PDF dosyası {fileName} olarak kaydedildi.";
+            }
+        }
+
 
 
         //public string SeferCiktisiAl(UlasimSeferleri ulasimSeferi, string path)

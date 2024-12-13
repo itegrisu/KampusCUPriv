@@ -8,6 +8,7 @@ using Application.Features.TransportationManagementFeatures.TransportationServic
 using Application.Features.TransportationManagementsFeatures.Transportations.Queries.GetTransportationNo;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CancelReport;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.CreateServiceWithGroup;
+using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.Print;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.ReportTransportationService;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UpdateServiceWithGroup;
 using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.UploadFile;
@@ -85,6 +86,13 @@ namespace API.Controllers.TransportationManagementControllers
         public async Task<IActionResult> CancelTransportationService([FromBody] CancelTransportationServiceCommand  cancelTransportationServiceCommand)
         {
             CancaledTransportationServiceResponse response = await Mediator.Send(cancelTransportationServiceCommand);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> PrintTransportationService([FromBody] PrintTransportationServiceCommand printTransportationServiceCommand)
+        {
+            PrintedTransportationServiceResponse response = await Mediator.Send(printTransportationServiceCommand);
             return Ok(response);
         }
     }

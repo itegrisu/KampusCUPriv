@@ -8,11 +8,11 @@ namespace Domain.Enums
 {
     public enum EnumStaffType
     {
-        Sofor = 1,
-        SoforYardimcisi = 2,
-        Host = 3,
-        Hostes = 4,
+        Sofor = 0,
+        SoforYardimcisi = 1,
+        Host = 2,
+        Hostes = 3,
+        Diger = 4,
         Rehber = 5,
-        Diger = 6,
     }
 }

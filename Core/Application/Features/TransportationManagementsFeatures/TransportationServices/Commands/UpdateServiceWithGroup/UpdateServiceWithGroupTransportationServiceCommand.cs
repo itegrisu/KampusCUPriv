@@ -1,4 +1,5 @@
-﻿using Application.Abstractions.UnitOfWork;
+﻿using Application.Abstractions;
+using Application.Abstractions.UnitOfWork;
 using Application.Features.TransportationManagementFeatures.TransportationGroups.Rules;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Commands.Update;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Constants;
@@ -60,9 +61,9 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
             private readonly ITransportationGroupReadRepository _transportationGroupReadRepository;
             private readonly TransportationServiceBusinessRules _transportationServiceBusinessRules;
             private readonly IUnitOfWork _unitOfWork;
-
+            private readonly IUlasımService _ulasımService;
             public UpdateServiceWithGroupTransportationServiceCommandHandler(IMapper mapper, ITransportationServiceWriteRepository transportationServiceWriteRepository,
-                                             TransportationServiceBusinessRules transportationServiceBusinessRules, ITransportationServiceReadRepository transportationServiceReadRepository, ITransportationGroupWriteRepository transportationGroupWriteRepository, IUnitOfWork unitOfWork, ITransportationGroupReadRepository transportationGroupReadRepository)
+                                             TransportationServiceBusinessRules transportationServiceBusinessRules, ITransportationServiceReadRepository transportationServiceReadRepository, ITransportationGroupWriteRepository transportationGroupWriteRepository, IUnitOfWork unitOfWork, ITransportationGroupReadRepository transportationGroupReadRepository, IUlasımService ulasımService)
             {
                 _mapper = mapper;
                 _transportationServiceWriteRepository = transportationServiceWriteRepository;
@@ -71,6 +72,7 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
                 _transportationGroupWriteRepository = transportationGroupWriteRepository;
                 _unitOfWork = unitOfWork;
                 _transportationGroupReadRepository = transportationGroupReadRepository;
+                _ulasımService = ulasımService;
             }
 
             public async Task<UpdateServiceWithGroupTransportationServiceResponse> Handle(UpdateServiceWithGroupTransportationServiceCommand request, CancellationToken cancellationToken)
@@ -95,6 +97,21 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
 
                     X.TransportationGroup updateTransportationGroup = await _transportationGroupReadRepository.GetAsync(predicate: x => x.GidTransportationServiceFK == request.Gid);
 
+                    if(request.RefNoTransportation != null)
+                    {
+                        var response = await _ulasımService.SeferGuncelleAsync(transportationService, long.Parse(transportationService.RefNoTransportation));
+
+                        if (!response.Contains("HATA"))
+                        {
+                            transportationService.RefNoTransportation = response;
+                        }
+                        else
+                        {
+                            throw new BusinessException($"Transaction sırasında bir hata oluştu: {response}");
+                        }
+                    }
+                  
+
                     // TransportationService güncellenir
                     _transportationServiceWriteRepository.Update(transportationService!);
                     await _transportationServiceWriteRepository.SaveAsync();
@@ -116,6 +133,9 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
 
                     _transportationGroupWriteRepository.Update(transportationGroup!);
                     await _transportationGroupWriteRepository.SaveAsync();
+
+              
+
 
                     // Tüm değişiklikler kaydedilir
                     await _unitOfWork.CommitAsync();
