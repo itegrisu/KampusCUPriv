@@ -13,6 +13,7 @@ using Domain.Entities.TransportationManagements;
 using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
         public string StartPlace { get; set; }
         public string EndPlace { get; set; }
         public string? GroupDescription { get; set; }
+        public string? RefNoTransportationGroup { get; set; }
 
         public class UpdateServiceWithGroupTransportationServiceCommandHandler : IRequestHandler<UpdateServiceWithGroupTransportationServiceCommand, UpdateServiceWithGroupTransportationServiceResponse>
         {
@@ -97,7 +99,7 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
 
                     X.TransportationGroup updateTransportationGroup = await _transportationGroupReadRepository.GetAsync(predicate: x => x.GidTransportationServiceFK == request.Gid);
 
-                    if(request.RefNoTransportation != null)
+                    if(!request.RefNoTransportation.IsNullOrEmpty())
                     {
                         var response = await _ulasımService.SeferGuncelleAsync(transportationService, long.Parse(transportationService.RefNoTransportation));
 
@@ -129,13 +131,24 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
                     transportationGroup.GidStartDistrictFK = request.GidStartDistrictFK;
                     transportationGroup.GidEndCountryFK = request.GidEndCountryFK;
                     transportationGroup.GidEndCityFK = request.GidEndCityFK;
-                    transportationGroup.GidEndDistrictFK = request.GidEndDistrictFK;
+                    transportationGroup.GidEndDistrictFK = request.GidEndDistrictFK;               
+
+                    if (!request.RefNoTransportationGroup.IsNullOrEmpty())
+                    {
+                        var responseGrup = await _ulasımService.GrupGuncelleAsync(transportationGroup, long.Parse(transportationService.RefNoTransportation), long.Parse(transportationGroup.RefNoTransportationGroup));
+
+                        if (!responseGrup.Contains("HATA"))
+                        {
+                            transportationGroup.RefNoTransportationGroup = responseGrup;
+                        }
+                        else
+                        {
+                            throw new BusinessException($"Transaction sırasında bir hata oluştu: {responseGrup}");
+                        }
+                    }
 
                     _transportationGroupWriteRepository.Update(transportationGroup!);
-                    await _transportationGroupWriteRepository.SaveAsync();
-
-              
-
+                    await _transportationGroupWriteRepository.SaveAsync();            
 
                     // Tüm değişiklikler kaydedilir
                     await _unitOfWork.CommitAsync();

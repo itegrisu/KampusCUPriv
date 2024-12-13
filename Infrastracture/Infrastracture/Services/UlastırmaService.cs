@@ -194,6 +194,36 @@ namespace Infrastracture.Services
                 return $"HATA: {sonucMesaji}"; // Hata mesajı
             }
         }
+        public async Task<string> SeferCiktisiAl(TransportationService transportationService, string path)
+        {
+            // UETDS servisine kullanıcı bilgilerini ve sefer referans numarasını gönderiyoruz
+            var resCikti = await UedtsService().seferDetayCiktisiAlAsync(User(), long.Parse(transportationService.RefNoTransportation));
+
+            // İşlem sonucunu kontrol ediyoruz
+            if (resCikti.@return.sonucKodu != 0)
+            {
+                // Hata durumunda mesajı döndürüyoruz
+                return $"HATA: {resCikti.@return.sonucMesaji}";
+            }
+            else
+            {
+                // PDF dosyasını byte[] olarak alıyoruz
+                byte[] pdfData = resCikti.@return.sonucPdf;
+
+                // Dosya adını belirliyoruz 
+                string fileName = $"{path}{transportationService.Gid}.pdf";
+
+                // PDF dosyasını belirtilen dizine yazıyoruz
+                await System.IO.File.WriteAllBytesAsync(fileName, pdfData);
+                transportationService.TransportationFile = $"{transportationService.Gid}.pdf";
+
+                _transportationServiceWriteRepository.Update(transportationService);
+                await _transportationServiceWriteRepository.SaveAsync();
+
+                // Başarılı mesajını döndürüyoruz
+                return $"Başarılı: PDF dosyası {fileName} olarak kaydedildi.";
+            }
+        }
         public async Task<string> GrupEkleAsync(TransportationGroup transportationGroup)
         {
             uetdsAriziGrupBilgileriInput grupBilgileriInput = new uetdsAriziGrupBilgileriInput();
@@ -239,6 +269,47 @@ namespace Infrastracture.Services
                     return "Grup Güncellendi";
                 else
                     return "HATA " + sonucMesaji;//HATA MESAJI
+            }
+        }
+        public async Task<string> GrupGuncelleAsync(TransportationGroup transportationGroup, long seferRefNumber, long grupRefNumber)
+        {
+            // UETDS grup bilgileri nesnesini dolduruyoruz
+            var grupBilgileriInput = new uetdsAriziGrupBilgileriInput
+            {
+                grupAdi = transportationGroup.GroupName,
+                grupAciklama = transportationGroup.Description,
+                baslangicUlke = transportationGroup.StartCountryFK.CountryCode,
+                baslangicIl = long.Parse(transportationGroup.StartCityFK.PlateCode),
+                baslangicIlce = transportationGroup.StartDistrictFK.DistrictCode,
+                baslangicYer = transportationGroup.StartPlace,
+                bitisUlke = transportationGroup.EndCountryFK.CountryCode,
+                bitisIl = long.Parse(transportationGroup.EndCityFK.PlateCode),
+                bitisIlce = transportationGroup.EndDistrictFK.DistrictCode,
+                bitisYer = transportationGroup.EndPlace,
+                grupUcret = transportationGroup.TransportationFee.ToString()
+            };
+
+            // UETDS servisi üzerinden grup güncelleme işlemi gerçekleştiriliyor
+            var result = await UedtsService().seferGrupGuncelleAsync(
+                User(), // Kullanıcı bilgileri
+                seferRefNumber, // UETDS Sefer Referans Numarası
+                grupRefNumber, // UETDS Grup Referans Numarası
+                grupBilgileriInput // Grup bilgileri
+            );
+
+            // Sonuç bilgileri
+            int sonucKodu = result.@return.sonucKodu;
+            string sonucMesaji = result.@return.sonucMesaji;
+            string grupRefNo = result.@return.uetdsGrupRefNo;
+
+            // Başarı durumu kontrol ediliyor
+            if (sonucKodu == 0)
+            {
+                return grupRefNo; // Güncellenen grup referans numarasını döndür
+            }
+            else
+            {
+                return $"HATA {sonucMesaji}"; // Hata mesajını döndür
             }
         }
         public async Task<string> GrupIptalAsync(long seferRefNumber, long grupRefNumber)
@@ -448,61 +519,6 @@ namespace Infrastracture.Services
                 return $"HATA: {sonucMesaji}"; // Hata mesajı
             }
         }
-
-        public async Task<string> SeferCiktisiAl(TransportationService transportationService, string path)
-        {
-            // UETDS servisine kullanıcı bilgilerini ve sefer referans numarasını gönderiyoruz
-            var resCikti = await UedtsService().seferDetayCiktisiAlAsync(User(),long.Parse(transportationService.RefNoTransportation));
-
-            // İşlem sonucunu kontrol ediyoruz
-            if (resCikti.@return.sonucKodu != 0)
-            {
-                // Hata durumunda mesajı döndürüyoruz
-                return $"HATA: {resCikti.@return.sonucMesaji}";
-            }
-            else
-            {
-                // PDF dosyasını byte[] olarak alıyoruz
-                byte[] pdfData = resCikti.@return.sonucPdf;
-
-                // Dosya adını belirliyoruz 
-                string fileName = $"{path}{transportationService.Gid}.pdf";
-
-                // PDF dosyasını belirtilen dizine yazıyoruz
-                await System.IO.File.WriteAllBytesAsync(fileName, pdfData);
-                transportationService.TransportationFile = $"{transportationService.Gid}.pdf";
-
-                _transportationServiceWriteRepository.Update(transportationService);
-                await _transportationServiceWriteRepository.SaveAsync();
-
-                // Başarılı mesajını döndürüyoruz
-                return $"Başarılı: PDF dosyası {fileName} olarak kaydedildi.";
-            }
-        }
-
-
-
-        //public string SeferCiktisiAl(UlasimSeferleri ulasimSeferi, string path)
-        //{
-        //    var resCikti = UedtsService().seferDetayCiktisiAl(User(), long.Parse(ulasimSeferi.SeferRefNo), true);
-
-        //    if (resCikti.sonucKodu != 0)
-        //    {
-        //        return "HATA " + resCikti.sonucMesaji;
-        //    }
-        //    else
-        //    {
-        //        string gidPdf = ulasimSeferi.Gid;
-
-        //        System.IO.File.WriteAllBytes(string.Format("{0}.pdf", path + gidPdf), resCikti.sonucPdf);
-
-        //        ulasimSeferi.SeferDosyasi = gidPdf + ".pdf";
-
-        //        UlasimSeferleriBO.Instance.GuncelleUlasimSeferleri(ulasimSeferi);
-        //        return "Başarılı.";
-        //    }
-        //}
-
         #endregion
 
 

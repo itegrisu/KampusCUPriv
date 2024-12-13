@@ -25,7 +25,7 @@ public class MappingProfiles : Profile
         CreateMap<X.TransportationGroup, DeleteTransportationGroupCommand>().ReverseMap();
         CreateMap<X.TransportationGroup, DeletedTransportationGroupResponse>().ReverseMap();
 
-		CreateMap<X.TransportationGroup, GetByGidTransportationGroupResponse>().ReverseMap();
+		CreateMap<X.TransportationGroup, GetByGidTransportationGroupResponse>().ForMember(dest => dest.PassengerCount, opt => opt.MapFrom(src => src.TransportationPassengers.Where(t => t.DataState == Core.Enum.DataState.Active).Count())).ReverseMap();
 
         CreateMap<X.TransportationGroup, GetListTransportationGroupListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.TransportationGroup>, GetListResponse<GetListTransportationGroupListItemDto>>().ReverseMap();

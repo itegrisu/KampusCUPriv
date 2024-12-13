@@ -13,6 +13,7 @@ namespace Application.Abstractions
         Task<string> SeferCiktisiAl(TransportationService transportationService, string path);
         Task<string> GrupEkleAsync(TransportationGroup transportationGroup);
         Task<string> GrupIptalAsync(long seferRefNumber, long grupRefNumber);
+        Task<string> GrupGuncelleAsync(TransportationGroup transportationGroup,long seferRefNumber, long grupRefNumber);
         Task<string> PersonelEkleAsync(List<TransportationPersonnel> transportationPersonnel, long seferRefNumber);
         Task<string> PersonelIptalAsync(TransportationPersonnel transportationPersonnel, long seferRefNumber);
         Task<string> YolcuEkleAsync(List<TransportationPassenger> transportationPassengers, long seferRefNumber, long grupRefNumber);
