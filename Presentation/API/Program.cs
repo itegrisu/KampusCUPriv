@@ -249,7 +249,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseSerilogRequestLogging();
 app.UseHttpLogging();
-if (app.Environment.IsProduction())
+//if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();
 
 app.UseCors();
