@@ -69,7 +69,7 @@ namespace Infrastracture.Services
                         ClientCredentialType = HttpClientCredentialType.Basic // Basic Authentication
                     }
                 },
-                MaxReceivedMessageSize = 65536 // Gerekirse artırılabilir
+                MaxReceivedMessageSize = 2147483647 // Gerekirse artırılabilir
             };
 
             return binding;
