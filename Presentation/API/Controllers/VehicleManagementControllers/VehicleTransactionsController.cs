@@ -9,6 +9,7 @@ using Application.Features.VehicleManagementFeatures.VehicleTransactions.Queries
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Commands.UploadContractFile;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Commands.UploadLicenseFile;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetByVehicleTransactionGid;
+using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetForCalendar;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetHistoriesByVehicleGid;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetListWithDateRange;
 using Core.Application.Request;
@@ -69,6 +70,13 @@ namespace API.Controllers.VehicleManagementControllers
         public async Task<IActionResult> GetListWithDateRange([FromBody] GetListWithDateRangeVehicleTransactionQuery getListWithDateRangeVehicleTransactionQuery)
         {
             GetListResponse<GetListWithDateRangeVehicleTransactionListItemDto> response = await Mediator.Send(getListWithDateRangeVehicleTransactionQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> GetForCalendar([FromBody] GetForCalendarQuery getForCalendarQuery)
+        {
+            GetListResponse<GetForCalendarListItemDto> response = await Mediator.Send(getForCalendarQuery);
             return Ok(response);
         }
     }

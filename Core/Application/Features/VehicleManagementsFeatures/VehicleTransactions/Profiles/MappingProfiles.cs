@@ -4,6 +4,7 @@ using Application.Features.VehicleManagementFeatures.VehicleTransactions.Command
 using Application.Features.VehicleManagementFeatures.VehicleTransactions.Queries.GetByGid;
 using Application.Features.VehicleManagementFeatures.VehicleTransactions.Queries.GetList;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetByVehicleTransactionGid;
+using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetForCalendar;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetHistoriesByVehicleGid;
 using Application.Features.VehicleManagementsFeatures.VehicleTransactions.Queries.GetListWithDateRange;
 using AutoMapper;
@@ -38,5 +39,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.VehicleTransaction, GetListWithDateRangeVehicleTransactionListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.VehicleTransaction>, GetListResponse<GetListWithDateRangeVehicleTransactionListItemDto>>().ReverseMap();
+
+        CreateMap<X.VehicleTransaction, GetForCalendarListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.VehicleTransaction>, GetListResponse<GetForCalendarListItemDto>>().ReverseMap();
     }
 }

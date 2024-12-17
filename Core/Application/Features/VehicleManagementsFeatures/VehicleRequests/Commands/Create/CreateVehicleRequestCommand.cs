@@ -14,7 +14,7 @@ public class CreateVehicleRequestCommand : IRequest<CreatedVehicleRequestRespons
 {
     public Guid GidVehicleFK { get; set; }
     public Guid GidRequestUserFK { get; set; }
-    public Guid GidApprovedUserFK { get; set; }
+    public Guid? GidApprovedUserFK { get; set; }
 
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
