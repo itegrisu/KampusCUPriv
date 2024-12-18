@@ -80,6 +80,7 @@ using Application.Repositories.TransportationRepos.TransportationPersonnelRepo;
 using Application.Repositories.TransportationRepos.TransportationRepo;
 using Application.Repositories.TransportationRepos.TransportationServiceRepo;
 using Application.Repositories.VehicleManagementsRepos.TyreRepo;
+using Application.Repositories.VehicleManagementsRepos.VehicleAccidentRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleAllRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleDocumentRepo;
 using Application.Repositories.VehicleManagementsRepos.VehicleEquipmentRepo;
@@ -178,6 +179,7 @@ using Persistence.Repositories.TransportationManagementRepos.TransportationPerso
 using Persistence.Repositories.TransportationManagementRepos.TransportationRepo;
 using Persistence.Repositories.TransportationManagementRepos.TransportationServiceRepo;
 using Persistence.Repositories.VehicleManagementRepos.TyreRepo;
+using Persistence.Repositories.VehicleManagementRepos.VehicleAccidentRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleAllRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleDocumentRepo;
 using Persistence.Repositories.VehicleManagementRepos.VehicleEquipmentRepo;
@@ -652,6 +654,11 @@ namespace Persistence
             #region Vehicle Fuel
             services.AddScoped<IVehicleFuelReadRepository, VehicleFuelReadRepository>();
             services.AddScoped<IVehicleFuelWriteRepository, VehicleFuelWriteRepository>();
+            #endregion
+
+            #region Vehicle Accident
+            services.AddScoped<IVehicleAccidentReadRepository, VehicleAccidentReadRepository>();
+            services.AddScoped<IVehicleAccidentWriteRepository, VehicleAccidentWriteRepository>();
             #endregion
 
             #region Tyre

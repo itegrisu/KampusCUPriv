@@ -35,5 +35,6 @@ namespace Domain.Entities.VehicleManagements
         public ICollection<VehicleTyreUse>? VehicleTyreUses { get; set; }
         public ICollection<VehicleRequest>? VehicleRequests { get; set; }
         public ICollection<TransportationService>? TransportationServices { get; set; }
+        public ICollection<VehicleAccident>? VehicleAccidents { get; set; }
     }
 }
