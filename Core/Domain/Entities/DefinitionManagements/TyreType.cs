@@ -15,6 +15,6 @@ namespace Domain.Entities.DefinitionManagements
         public EnumTyreTypeName TyreTypeName { get; set; }
         public string? Size { get; set; }
 
-        public ICollection<Tyre>? Tyres { get; set; }
+        public ICollection<VehicleTyre>? Tyres { get; set; }
     }
 }

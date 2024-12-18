@@ -661,9 +661,9 @@ namespace Persistence
             services.AddScoped<IVehicleAccidentWriteRepository, VehicleAccidentWriteRepository>();
             #endregion
 
-            #region Tyre
-            services.AddScoped<ITyreReadRepository, TyreReadRepository>();
-            services.AddScoped<ITyreWriteRepository, TyreWriteRepository>();
+            #region VehicleTyre
+            services.AddScoped<IVehicleTyreReadRepository, VehicleTyreReadRepository>();
+            services.AddScoped<IVehicleTyreWriteRepository, VehicleTyreWriteRepository>();
             #endregion
 
             #region Tyre Type
