@@ -157,9 +157,7 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new VehicleInspectionConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleEquipmentConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleFuelConfiguration());
-            modelBuilder.ApplyConfiguration(new VehicleAccidentConfiguration());
-
-            modelBuilder.ApplyConfiguration(new TyreConfiguration());
+            modelBuilder.ApplyConfiguration(new VehicleTyreConfiguration());
             modelBuilder.ApplyConfiguration(new TyreTypeConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleTyreUseConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleRequestConfiguration());
@@ -295,8 +293,7 @@ namespace Persistence.Context
         public DbSet<VehicleInspection> VehicleInspections { get; set; }
         public DbSet<VehicleEquipment> VehicleEquipments { get; set; }
         public DbSet<VehicleFuel> VehicleFuels { get; set; }
-        public DbSet<VehicleAccident> VehicleAccidents { get; set; }
-        public DbSet<Tyre> Tyres { get; set; }
+        public DbSet<VehicleTyre> VehicleTyres { get; set; }
         public DbSet<TyreType> TyreTypes { get; set; }
         public DbSet<VehicleTyreUse> VehicleTyreUses { get; set; }
         public DbSet<VehicleRequest> VehicleRequests { get; set; }
