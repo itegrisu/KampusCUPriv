@@ -10,8 +10,16 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
 {
     public class GetForCalendarListItemDto : IDto
     {
-        public DateTime Date { get; set; }                           // Tarih
-        public List<string> BusyVehicles { get; set; }              // Dolu araç plakaları
-        public List<string> EmptyVehicles { get; set; }             // Boş araç plakaları
+        public DateTime Date { get; set; }
+        public List<string> BusyVehicles { get; set; }
+        public List<string> EmptyVehicles { get; set; }
+        public List<BusyVehicleDetail> BusyVehicleDetails { get; set; } // Yeni alan
     }
+
+    public class BusyVehicleDetail
+    {
+        public string PlateNumber { get; set; } // Araç plakası
+        public string Reason { get; set; }     // Doluluk sebebi (Sefer veya Talep)
+    }
+
 }
