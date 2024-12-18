@@ -55,13 +55,12 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
 
                 for (var date = request.StartDate.Date; date <= request.EndDate.Date; date = date.AddDays(1))
                 {
-                    // O günün başlangıcı ve bitişini ayarlıyoruz
                     var dayStart = new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
                     var dayEnd = new DateTime(date.Year, date.Month, date.Day, 23, 59, 59);
 
                     // TransportationService: Belirtilen tarihte dolu olan araçlar
                     var busyInTransport = (await _transportationServiceReadRepository.GetListAsync(
-                        predicate: x => x.StartDate <= dayEnd && x.EndDate >= dayStart)) // Günü kapsayan seferler
+                        predicate: x => x.StartDate <= dayEnd && x.EndDate >= dayStart))
                         .Items.Select(x => x.GidVehicleFK)
                         .Distinct()
                         .ToList();
@@ -69,7 +68,7 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
                     // VehicleRequest: Onaylanmış taleplerdeki dolu araçlar
                     var busyInRequests = (await _vehicleRequestReadRepository.GetListAsync(
                         predicate: x => x.VehicleApprovedStatus == EnumVehicleApprovedStatus.Onaylandi &&
-                                        x.StartDate <= dayEnd && x.EndDate >= dayStart)) // Günü kapsayan talepler
+                                        x.StartDate <= dayEnd && x.EndDate >= dayStart))
                         .Items.Select(x => x.GidVehicleFK)
                         .Distinct()
                         .ToList();
@@ -82,17 +81,23 @@ namespace Application.Features.VehicleManagementsFeatures.VehicleTransactions.Qu
                                                    .Select(v => v.PlateNumber)
                                                    .ToList();
 
-                    // Dolu araç plakalarını al
-                    var busyVehiclePlates = allVehicles.Where(v => busyVehicles.Contains(v.GidVehicleFK))
-                                                       .Select(v => v.PlateNumber)
-                                                       .ToList();
+                    // Dolu araç plakalarını ve doluluk nedenlerini belirle
+                    var busyVehicleDetails = allVehicles
+                        .Where(v => busyVehicles.Contains(v.GidVehicleFK))
+                        .Select(v => new BusyVehicleDetail
+                        {
+                            PlateNumber = v.PlateNumber,
+                            Reason = busyInTransport.Contains(v.GidVehicleFK) ? "Sefer" : "Talep"
+                        })
+                        .ToList();
 
                     // Günü ve araç durumlarını ekliyoruz
                     result.Add(new GetForCalendarListItemDto
                     {
-                        Date = dayStart, // O günün tarihi
-                        BusyVehicles = busyVehiclePlates,
-                        EmptyVehicles = emptyVehicles
+                        Date = dayStart,
+                        BusyVehicles = busyVehicleDetails.Select(b => b.PlateNumber).ToList(),
+                        EmptyVehicles = emptyVehicles,
+                        BusyVehicleDetails = busyVehicleDetails // Yeni alan
                     });
                 }
 
