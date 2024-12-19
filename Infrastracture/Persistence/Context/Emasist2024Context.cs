@@ -6,6 +6,7 @@ using Domain.Entities.FinanceManagements;
 using Domain.Entities.GeneralManagements;
 using Domain.Entities.LogManagements;
 using Domain.Entities.MarketingManagements;
+using Domain.Entities.NotificationManagements;
 using Domain.Entities.OfferManagements;
 using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
@@ -25,6 +26,7 @@ using Persistence.EntityConfiguration.FinanceManagements;
 using Persistence.EntityConfiguration.GeneralManagements;
 using Persistence.EntityConfiguration.LogManagements;
 using Persistence.EntityConfiguration.MarketingManagements;
+using Persistence.EntityConfiguration.NotificationManagements;
 using Persistence.EntityConfiguration.OfferManagements;
 using Persistence.EntityConfiguration.OrganisationManagements;
 using Persistence.EntityConfiguration.PersonnelManagements;
@@ -101,6 +103,8 @@ namespace Persistence.Context
 
             modelBuilder.ApplyConfiguration(new AnnouncementConfiguration());
             modelBuilder.ApplyConfiguration(new AnnouncementRecipientConfiguration());
+
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
 
             modelBuilder.ApplyConfiguration(new TaskConfiguration());
             modelBuilder.ApplyConfiguration(new TaskUserConfiguration());
@@ -243,6 +247,7 @@ namespace Persistence.Context
         public DbSet<TaskUser> TaskUsers { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<AnnouncementRecipient> AnnouncementRecipients { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<DepartmentUser> DepartmentUsers { get; set; }
         public DbSet<PersonnelAddress> PersonnelAddresses { get; set; }

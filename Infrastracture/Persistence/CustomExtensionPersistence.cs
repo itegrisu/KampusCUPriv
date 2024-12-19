@@ -41,6 +41,7 @@ using Application.Repositories.LogManagementRepos.LogUserPageVisitActionRepo;
 using Application.Repositories.LogManagementRepos.LogUserPageVisitRepo;
 using Application.Repositories.MarketingManagementsRepos.MarketingCustomerRepo;
 using Application.Repositories.MarketingManagementsRepos.MerketingVisitPlanRepo;
+using Application.Repositories.NotificationManagementRepos;
 using Application.Repositories.OfferManagementRepos.OfferFileRepo;
 using Application.Repositories.OfferManagementRepos.OfferRepo;
 using Application.Repositories.OfferManagementRepos.OfferTransactionRepo;
@@ -140,6 +141,7 @@ using Persistence.Repositories.LogManagementRepos.LogUserPageVisitActionRepo;
 using Persistence.Repositories.LogManagementRepos.LogUserPageVisitRepo;
 using Persistence.Repositories.MarketingManagementRepos.MarketingCustomerRepo;
 using Persistence.Repositories.MarketingManagementRepos.MarketingVisitPlanRepo;
+using Persistence.Repositories.NotificationManagementRepos;
 using Persistence.Repositories.OfferManagementRepos.OfferFileRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferRepo;
 using Persistence.Repositories.OfferManagementRepos.OfferTransactionRepo;
@@ -279,8 +281,6 @@ namespace Persistence
             services.AddScoped<IMarketingVisitPlanWriteRepository, MarketingVisitPlanWriteRepository>();
             #endregion
 
-
-
             #region Base
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
@@ -343,16 +343,10 @@ namespace Persistence
             services.AddScoped<IPermitTypeWriteRepository, PermitTypeWriteRepository>();
             #endregion
 
-
-
-
             #region City
             services.AddScoped<ICityReadRepository, CityReadRepository>();
             services.AddScoped<ICityWriteRepository, CityWriteRepository>();
             #endregion
-
-
-
 
             #region Department
             services.AddScoped<IDepartmentReadRepository, DepartmentReadRepository>();
@@ -473,6 +467,11 @@ namespace Persistence
             #region Announcement Recipient
             services.AddScoped<IAnnouncementRecipientReadRepository, AnnouncementRecipientReadRepository>();
             services.AddScoped<IAnnouncementRecipientWriteRepository, AnnouncementRecipientWriteRepository>();
+            #endregion
+
+            #region Notification
+            services.AddScoped<INotificationReadRepository, NotificationReadRepository>();
+            services.AddScoped<INotificationWriteRepository, NotificationWriteRepository>();
             #endregion
 
             #region Usershort cut
@@ -714,7 +713,7 @@ namespace Persistence
             services.AddScoped<ITransportationExternalServiceReadRepository, TransportationExternalServiceReadRepository>();
             services.AddScoped<ITransportationExternalServiceWriteRepository, TransportationExternalServiceWriteRepository>();
             #endregion
-          
+
 
             #region Finance Balance
             services.AddScoped<IFinanceBalanceReadRepository, FinanceBalanceReadRepository>();

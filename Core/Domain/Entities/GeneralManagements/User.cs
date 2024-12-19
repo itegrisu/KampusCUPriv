@@ -5,6 +5,7 @@ using Domain.Entities.DefinitionManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.LogManagements;
 using Domain.Entities.MarketingManagements;
+using Domain.Entities.NotificationManagements;
 using Domain.Entities.OrganizationManagements;
 using Domain.Entities.PersonnelManagements;
 using Domain.Entities.SupplierCustomerManagements;
@@ -73,6 +74,7 @@ namespace Domain.Entities.GeneralManagements
         public ICollection<T.TaskFile> TaskFiles { get; set; }
         public ICollection<T.TaskUser> TaskUsers { get; set; }
         public ICollection<AnnouncementRecipient> AnnouncementRecipients { get; set; }
+        public ICollection<Notification>? Notifications { get; set; }
         public ICollection<SupportMessage> SupportMessages { get; set; }
         public ICollection<SupportMessageDetail> SupportMessageDetails { get; set; }
         public ICollection<UserShortCut> UserShortCuts { get; set; }
