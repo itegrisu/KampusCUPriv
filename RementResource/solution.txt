@@ -4,7 +4,7 @@ ALTER TABLE deyimi FOREIGN KEY kýsýtlamasý "FK_Transportations_Currencies_GidFee
 
 ÇÖZÜM
 
-Eðer böyle bir hara alýyorsan genellikler veritabanýnda veri olduðu için bu hatayý alýrsýn. Bu hatayý çözmek için veritabanýnda bulunan verileri silmen gerekmektedir veya ilk baþta o eklemek istediðin entityi nullable yapýp update-database komutunu çalýþtýrýp daha sonra nullable olmayan yapabilirsin veya o entitynin configrasyonuna gidip .isRequired(false) yapabilirsin bir kereliðine çalýþtýrýp sonra tekrar .isRequired(true) yapabilirsin.
+Eðer böyle bir hata alýyorsan genellikler veritabanýnda veri olduðu için bu hatayý alýrsýn. Bu hatayý çözmek için veritabanýnda bulunan verileri silmen gerekmektedir veya ilk baþta o eklemek istediðin entityi nullable yapýp update-database komutunu çalýþtýrýp daha sonra nullable olmayan yapabilirsin veya o entitynin configrasyonuna gidip .isRequired(false) yapabilirsin bir kereliðine çalýþtýrýp sonra tekrar .isRequired(true) yapabilirsin.
 
 HATA 2
 

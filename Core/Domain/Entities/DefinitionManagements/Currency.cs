@@ -1,4 +1,5 @@
 using Core.Entities;
+using Domain.Entities.AccommodationManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.OfferManagements;
 using Domain.Entities.SupplierCustomerManagements;
@@ -22,5 +23,7 @@ namespace Domain.Entities.DefinitionManagements
         public ICollection<TransportationExternalService>? TransportationExternalServices { get; set; }
         public ICollection<Transportation>? Transportations { get; set; }
         public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
+        public ICollection<ReservationHotel>? BuyReservationHotels { get; set; }
+        public ICollection<ReservationHotel>? SellReservationHotels { get; set; }
     }
 }

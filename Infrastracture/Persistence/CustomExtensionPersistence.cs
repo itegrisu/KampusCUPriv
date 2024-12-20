@@ -1,5 +1,12 @@
 ﻿using Application.Abstractions.EntityServices;
 using Application.Abstractions.UnitOfWork;
+using Application.Repositories.AccommodationManagements.AccommodationDateRepo;
+using Application.Repositories.AccommodationManagements.GuestRepo;
+using Application.Repositories.AccommodationManagements.ReservationDetailRepo;
+using Application.Repositories.AccommodationManagements.ReservationHotelRepo;
+using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
+using Application.Repositories.AccommodationManagements.ReservationRepo;
+using Application.Repositories.AccommodationManagements.ReservationRoomRepo;
 using Application.Repositories.AnnouncementManagementRepos.AnnouncementRecipientRepo;
 using Application.Repositories.AnnouncementManagementRepos.AnnouncementRepo;
 using Application.Repositories.AuthManagementRepos.AuthPageRepo;
@@ -100,6 +107,13 @@ using Core.Repositories.Abstracts;
 using Core.Repositories.Concretes;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Context;
+using Persistence.Repositories.AccommodationManagements.AccommodationDateRepo;
+using Persistence.Repositories.AccommodationManagements.GuestRepo;
+using Persistence.Repositories.AccommodationManagements.ReservationDetailRepo;
+using Persistence.Repositories.AccommodationManagements.ReservationHotelRepo;
+using Persistence.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
+using Persistence.Repositories.AccommodationManagements.ReservationRepo;
+using Persistence.Repositories.AccommodationManagements.ReservationRoomRepo;
 using Persistence.Repositories.AnnouncementManagementRepos.AnnouncementRecipientRepo;
 using Persistence.Repositories.AnnouncementManagementRepos.AnnouncementRepo;
 using Persistence.Repositories.AuthManagementRepos.AuthPageRepo;
@@ -679,6 +693,7 @@ namespace Persistence
             services.AddScoped<IVehicleRequestReadRepository, VehicleRequestReadRepository>();
             services.AddScoped<IVehicleRequestWriteRepository, VehicleRequestWriteRepository>();
             #endregion
+
             #region Transportation
             services.AddScoped<ITransportationReadRepository, TransportationReadRepository>();
             services.AddScoped<ITransportationWriteRepository, TransportationWriteRepository>();
@@ -725,6 +740,44 @@ namespace Persistence
             services.AddScoped<IDistrictReadRepository, DistrictReadRepository>();
             services.AddScoped<IDistrictWriteRepository, DistrictWriteRepository>();
             #endregion
+
+
+            #region Reservation
+            services.AddScoped<IReservationReadRepository, ReservationReadRepository>();
+            services.AddScoped<IReservationWriteRepository, ReservationWriteRepository>();
+            #endregion
+
+            #region Reservation Hotel
+            services.AddScoped<IReservationHotelReadRepository, ReservationHotelReadRepository>();
+            services.AddScoped<IReservationHotelWriteRepository, ReservationHotelWriteRepository>();
+            #endregion
+
+            #region Reservation Detail
+            services.AddScoped<IReservationDetailReadRepository, ReservationDetailReadRepository>();
+            services.AddScoped<IReservationDetailWriteRepository, ReservationDetailWriteRepository>();
+            #endregion
+
+            #region Reservation Hotel Staff
+            services.AddScoped<IReservationHotelStaffReadRepository, ReservationHotelStaffReadRepository>();
+            services.AddScoped<IReservationHotelStaffWriteRepository, ReservationHotelStaffWriteRepository>();
+            #endregion
+
+            #region Reservation Room
+            services.AddScoped<IReservationRoomReadRepository, ReservationRoomReadRepository>();
+            services.AddScoped<IReservationRoomWriteRepository, ReservationRoomWriteRepository>();
+            #endregion
+
+            #region Accommodation Date
+            services.AddScoped<IAccommodationDateReadRepository, AccommodationDateReadRepository>();
+            services.AddScoped<IAccommodationDateWriteRepository, AccommodationDateWriteRepository>();
+            #endregion
+
+            #region Guest
+            services.AddScoped<IGuestReadRepository, GuestReadRepository>();
+            services.AddScoped<IGuestWriteRepository, GuestWriteRepository>();
+            #endregion
+
+
 
 
 

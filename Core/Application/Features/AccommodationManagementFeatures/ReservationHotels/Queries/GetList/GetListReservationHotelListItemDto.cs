@@ -1,0 +1,17 @@
+using Core.Application.Dtos;
+using Core.Enum;
+
+namespace Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetList;
+
+public class GetListReservationHotelListItemDto : IDto
+{
+    public Guid Gid { get; set; }
+    public Guid GidReservationFK { get; set; }
+    public string ReservationFKTitle { get; set; }
+    public Guid GidHotelFK { get; set; }
+    public string SCCompanyFKCompanyName { get; set; }
+    public Guid GidBuyCurrencyTypeFK { get; set; }
+    public string BuyCurrencyFKName { get; set; }
+    public Guid GidSellCurrencyTypeFK { get; set; }
+    public string SellCurrencyFKName { get; set; }
+}
