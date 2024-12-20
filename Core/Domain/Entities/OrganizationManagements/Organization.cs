@@ -1,4 +1,5 @@
 using Core.Entities;
+using Domain.Entities.AccommodationManagements;
 using Domain.Entities.DefinitionManagements;
 using Domain.Entities.FinanceManagements;
 using Domain.Entities.GeneralManagements;
@@ -31,5 +32,6 @@ namespace Domain.Entities.OrganizationManagements
         public ICollection<OrganizationFile>? OrganizationFiles { get; set; }
         public ICollection<Transportation>? Transportations { get; set; }
         public ICollection<TransportationExternalService>? TransportationExternalServices { get; set; }
+        public ICollection<Reservation>? Reservations { get; set; }
     }
 }

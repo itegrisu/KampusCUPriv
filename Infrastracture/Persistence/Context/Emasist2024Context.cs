@@ -1,4 +1,5 @@
 using Core.Entities;
+using Domain.Entities.AccommodationManagements;
 using Domain.Entities.AnnouncementManagements;
 using Domain.Entities.AuthManagements;
 using Domain.Entities.DefinitionManagements;
@@ -19,6 +20,7 @@ using Domain.Entities.VehicleManagements;
 using Domain.Entities.WarehouseManagements;
 using Microsoft.EntityFrameworkCore;
 using OrganizationManagement.Persistence.EntityConfiguration;
+using Persistence.EntityConfiguration.AccommodationManagements;
 using Persistence.EntityConfiguration.AnnouncementManagements;
 using Persistence.EntityConfiguration.AuthManagements;
 using Persistence.EntityConfiguration.DefinitionManagements;
@@ -165,14 +167,25 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new TyreTypeConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleTyreUseConfiguration());
             modelBuilder.ApplyConfiguration(new VehicleRequestConfiguration());
+
             modelBuilder.ApplyConfiguration(new TransportationConfiguration());
             modelBuilder.ApplyConfiguration(new TransportationServiceConfiguration());
             modelBuilder.ApplyConfiguration(new TransportationGroupConfiguration());
             modelBuilder.ApplyConfiguration(new TransportationPersonnelConfiguration());
             modelBuilder.ApplyConfiguration(new TransportationPassengerConfiguration());
             modelBuilder.ApplyConfiguration(new TransportationExternalServiceConfiguration());
+
             modelBuilder.ApplyConfiguration(new FinanceBalanceConfiguration());
+
             modelBuilder.ApplyConfiguration(new DistrictConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ReservationConfiguration());
+            modelBuilder.ApplyConfiguration(new ReservationHotelConfiguration());
+            modelBuilder.ApplyConfiguration(new ReservationDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new ReservationHotelStaffConfiguration());
+            modelBuilder.ApplyConfiguration(new ReservationRoomConfiguration());
+            modelBuilder.ApplyConfiguration(new AccommodationDateConfiguration());
+            modelBuilder.ApplyConfiguration(new GuestConfiguration());
 
 
             base.OnModelCreating(modelBuilder);
@@ -310,5 +323,12 @@ namespace Persistence.Context
         public DbSet<TransportationExternalService> TransportationExternalServices { get; set; }
         public DbSet<FinanceBalance> FinanceBalances { get; set; }
         public DbSet<District> Districts { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ReservationHotel> ReservationHotels { get; set; }
+        public DbSet<ReservationDetail> ReservationDetails { get; set; }
+        public DbSet<ReservationHotelStaff> ReservationHotelStaffs { get; set; }
+        public DbSet<ReservationRoom> ReservationRooms { get; set; }
+        public DbSet<AccommodationDate> AccommodationDates { get; set; }
+        public DbSet<Guest> Guests { get; set; }
     }
 }

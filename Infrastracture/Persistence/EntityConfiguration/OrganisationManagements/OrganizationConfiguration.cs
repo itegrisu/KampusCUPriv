@@ -26,6 +26,7 @@ namespace Persistence.EntityConfiguration.OrganisationManagements
             builder.HasMany(u => u.OrganizationFiles).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK); 
             builder.HasMany(u => u.Transportations).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
             builder.HasMany(u => u.TransportationExternalServices).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
+            builder.HasMany(u => u.Reservations).WithOne(y => y.OrganizationFK).HasForeignKey(y => y.GidOrganizationFK);
         }
     }
 }
