@@ -20,7 +20,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
         public string Password { get; set; }
         public string PasswordHash { get; set; }
         public string SifreGuncellemeToken { get; set; }
-        public DateTime TokenExpiredDate { get; set; }
+        public DateTime? TokenExpiredDate { get; set; }
         public string? Avatar { get; set; }
         public bool IsLoginStatus { get; set; }
         public bool IsSystemAdmin { get; set; }

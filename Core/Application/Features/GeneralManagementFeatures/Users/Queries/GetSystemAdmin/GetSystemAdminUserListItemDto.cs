@@ -19,13 +19,13 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetSystem
         public string Password { get; set; }
         public string PasswordHash { get; set; }
         public string SifreGuncellemeToken { get; set; }
-        public DateTime TokenExpiredDate { get; set; }
+        public DateTime? TokenExpiredDate { get; set; }
         public string? Avatar { get; set; }
         public bool IsLoginStatus { get; set; }
         public bool IsSystemAdmin { get; set; }
         public string Gsm { get; set; }
         public string? Birthplace { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public string? IdentityNo { get; set; }
         public string? PassportNo { get; set; }
         public string? SGKNo { get; set; }

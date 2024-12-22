@@ -28,7 +28,10 @@ namespace Application.Features.TransportationManagementsFeatures.Transportations
             static string GenerateDocumentNumber(List<Transportation> requests)
             {
                 int currentYear = DateTime.Now.Year;
-                string prefix = "UT" + currentYear.ToString().Substring(2) + "-" + DateTime.Now.Month.ToString().Substring(2) + DateTime.Now.Day.ToString().Substring(2);
+                string prefix = "UT" + currentYear.ToString().Substring(2)
+                                + "-"
+                                + DateTime.Now.Month.ToString("D2")
+                                + DateTime.Now.Day.ToString("D2");
                 int maxSuffix = 0;
 
                 foreach (var request in requests)
