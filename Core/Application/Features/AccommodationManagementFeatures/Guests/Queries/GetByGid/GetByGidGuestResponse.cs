@@ -18,5 +18,6 @@ namespace Application.Features.AccommodationManagementFeatures.Guests.Queries.Ge
         public EnumGender Gender { get; set; }
         public string? HesCode { get; set; }
         public string? Description { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
