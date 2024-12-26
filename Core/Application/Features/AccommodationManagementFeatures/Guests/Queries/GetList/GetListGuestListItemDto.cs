@@ -19,4 +19,5 @@ public class GetListGuestListItemDto : IDto
     public EnumGender Gender { get; set; }
     public string? HesCode { get; set; }
     public string? Description { get; set; }
+    public DateTime CreatedDate { get; set; }
 }
