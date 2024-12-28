@@ -3,7 +3,6 @@ using Application.Features.AccommodationManagementFeatures.ReservationHotels.Com
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetList;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
 using MediatR;
@@ -21,9 +20,8 @@ namespace API.Controllers.AccommodationManagementControllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+        public async Task<IActionResult> GetList([FromQuery] GetListReservationHotelQuery getListReservationHotelQuery)
         {
-            GetListReservationHotelQuery getListReservationHotelQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListReservationHotelListItemDto> response = await Mediator.Send(getListReservationHotelQuery);
             return Ok(response);
         }

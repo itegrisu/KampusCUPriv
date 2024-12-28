@@ -1,20 +1,21 @@
 using Application.Helpers.PaginationHelpers;
+using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.AccommodationManagements;
-using MediatR;
-using System.Linq.Expressions;
-using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
 using Domain.Entities.AccommodationManagements;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Queries.GetList;
 
 public class GetListReservationHotelStaffQuery : IRequest<GetListResponse<GetListReservationHotelStaffListItemDto>>
 {
-    public PageRequest PageRequest { get; set; }
+    public int PageIndex { get; set; } = 0;
+    public int PageSize { get; set; } = 10;
+    public string HotelGid { get; set; }
 
     public class GetListReservationHotelStaffQueryHandler : IRequestHandler<GetListReservationHotelStaffQuery, GetListResponse<GetListReservationHotelStaffListItemDto>>
     {
@@ -31,15 +32,20 @@ public class GetListReservationHotelStaffQuery : IRequest<GetListResponse<GetLis
 
         public async Task<GetListResponse<GetListReservationHotelStaffListItemDto>> Handle(GetListReservationHotelStaffQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageRequest.PageIndex == -1)
-                return await _noPagination.NoPaginationData(cancellationToken,
+            Expression<Func<ReservationHotelStaff, bool>> predicate = null;
+            if (request.HotelGid != null)
+                predicate = x => x.GidHotelFK.ToString() == request.HotelGid;
+
+            if (request.PageIndex == -1)
+                return await _noPagination.NoPaginationData(cancellationToken, predicate: predicate,
                     includes: new Expression<Func<ReservationHotelStaff, object>>[]
                     {
                        x => x.SCCompanyFK,
                     });
             IPaginate<X.ReservationHotelStaff> reservationHotelStaffs = await _reservationHotelStaffReadRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
+                index: request.PageIndex,
+                size: request.PageSize,
+                predicate: predicate,
                 cancellationToken: cancellationToken,
                 include: x => x.Include(x => x.SCCompanyFK)
             );

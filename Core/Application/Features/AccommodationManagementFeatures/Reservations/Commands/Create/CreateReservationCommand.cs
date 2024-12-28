@@ -1,18 +1,18 @@
 using Application.Features.AccommodationManagementFeatures.Reservations.Constants;
 using Application.Features.AccommodationManagementFeatures.Reservations.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.Reservations.Rules;
+using Application.Repositories.AccommodationManagements.ReservationRepo;
 using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
+using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Domain.Enums;
-using Application.Repositories.AccommodationManagements.ReservationRepo;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.Reservations.Commands.Create;
 
 public class CreateReservationCommand : IRequest<CreatedReservationResponse>
 {
-    public Guid GidOrganizationFK { get; set; }
+    public Guid? GidOrganizationFK { get; set; }
     public string Title { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

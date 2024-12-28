@@ -12,6 +12,6 @@ namespace Application.Features.AccommodationManagementFeatures.ReservationHotelS
         public string? GsmNo { get; set; }
         public EnumHotelStaffStatus HotelStaffStatus { get; set; }
         public string? Password { get; set; }
-        public string? PasswordHash { get; set; }
+        //public string? PasswordHash { get; set; }
     }
 }
