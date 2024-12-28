@@ -3,7 +3,6 @@ using Application.Features.SupplierCustomerManagementFeatures.SCCompanies.Comman
 using Application.Features.SupplierCustomerManagementFeatures.SCCompanies.Commands.Update;
 using Application.Features.SupplierCustomerManagementFeatures.SCCompanies.Queries.GetByGid;
 using Application.Features.SupplierCustomerManagementFeatures.SCCompanies.Queries.GetList;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
 using MediatR;
@@ -21,9 +20,8 @@ namespace API.Controllers.SupplierManagementControllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+        public async Task<IActionResult> GetList([FromQuery] GetListSCCompanyQuery getListSCCompanyQuery)
         {
-            GetListSCCompanyQuery getListSCCompanyQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListSCCompanyListItemDto> response = await Mediator.Send(getListSCCompanyQuery);
             return Ok(response);
         }

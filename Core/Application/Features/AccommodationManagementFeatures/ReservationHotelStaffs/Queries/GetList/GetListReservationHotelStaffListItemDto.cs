@@ -1,5 +1,4 @@
 using Core.Application.Dtos;
-using Core.Enum;
 using Domain.Enums;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Queries.GetList;
@@ -13,5 +12,5 @@ public class GetListReservationHotelStaffListItemDto : IDto
     public string? GsmNo { get; set; }
     public EnumHotelStaffStatus HotelStaffStatus { get; set; }
     public string? Password { get; set; }
-    public string? PasswordHash { get; set; }
+    //public string? PasswordHash { get; set; }
 }

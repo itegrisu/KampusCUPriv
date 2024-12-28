@@ -1,12 +1,13 @@
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Constants;
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Rules;
+using Application.Helpers;
+using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
 using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
+using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Domain.Enums;
-using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Commands.Create;
 
@@ -17,7 +18,7 @@ public class CreateReservationHotelStaffCommand : IRequest<CreatedReservationHot
     public string? GsmNo { get; set; }
     public EnumHotelStaffStatus HotelStaffStatus { get; set; }
     public string? Password { get; set; }
-    public string? PasswordHash { get; set; }
+    //public string? PasswordHash { get; set; }
 
     public class CreateReservationHotelStaffCommandHandler : IRequestHandler<CreateReservationHotelStaffCommand, CreatedReservationHotelStaffResponse>
     {
@@ -37,9 +38,17 @@ public class CreateReservationHotelStaffCommand : IRequest<CreatedReservationHot
 
         public async Task<CreatedReservationHotelStaffResponse> Handle(CreateReservationHotelStaffCommand request, CancellationToken cancellationToken)
         {
+            await _reservationHotelStaffBusinessRules.HotelShouldExist(request.GidHotelFK);
+
             //int maxRowNo = await _reservationHotelStaffReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.ReservationHotelStaff reservationHotelStaff = _mapper.Map<X.ReservationHotelStaff>(request);
             //reservationHotelStaff.RowNo = maxRowNo + 1;
+
+            string passwordHash, passwordSalt;
+            HashingHelperForApplicationLayer.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+            reservationHotelStaff.Password = passwordHash;
+            reservationHotelStaff.PasswordHash = passwordSalt;
 
             await _reservationHotelStaffWriteRepository.AddAsync(reservationHotelStaff);
             await _reservationHotelStaffWriteRepository.SaveAsync();

@@ -1,17 +1,20 @@
 using Application.Helpers.PaginationHelpers;
 using Application.Repositories.SupplierManagementRepos.SCCompanyRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
 using MediatR;
+using System.Linq.Expressions;
 using X = Domain.Entities.SupplierCustomerManagements;
 
 namespace Application.Features.SupplierCustomerManagementFeatures.SCCompanies.Queries.GetList;
 
 public class GetListSCCompanyQuery : IRequest<GetListResponse<GetListSCCompanyListItemDto>>
 {
-    public PageRequest PageRequest { get; set; }
+    public int PageIndex { get; set; } = 0;
+    public int PageSize { get; set; } = 10;
+
+    public bool? IsHotel { get; set; }
 
     public class GetListSCCompanyQueryHandler : IRequestHandler<GetListSCCompanyQuery, GetListResponse<GetListSCCompanyListItemDto>>
     {
@@ -28,12 +31,17 @@ public class GetListSCCompanyQuery : IRequest<GetListResponse<GetListSCCompanyLi
 
         public async Task<GetListResponse<GetListSCCompanyListItemDto>> Handle(GetListSCCompanyQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageRequest.PageIndex == -1)
-                return await _noPagination.NoPaginationData(cancellationToken);
+            Expression<Func<X.SCCompany, bool>> predicate = x => x.IsHotel == true || x.IsHotel == false;
+            if (request.IsHotel == true)
+                predicate = x => x.IsHotel == true;
+
+            if (request.PageIndex == -1)
+                return await _noPagination.NoPaginationData(cancellationToken, predicate: predicate);
 
             IPaginate<X.SCCompany> sCCompanys = await _sCCompanyReadRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
+                index: request.PageIndex,
+                size: request.PageSize,
+                predicate: predicate,
                 cancellationToken: cancellationToken
             );
 

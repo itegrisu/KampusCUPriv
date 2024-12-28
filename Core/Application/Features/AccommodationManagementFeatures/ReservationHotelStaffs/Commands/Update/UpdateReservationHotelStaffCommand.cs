@@ -1,12 +1,12 @@
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Constants;
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Rules;
-using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
-using MediatR;
-using Domain.Enums;
 using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
+using AutoMapper;
+using Domain.Enums;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Commands.Update;
 
@@ -20,7 +20,7 @@ public class UpdateReservationHotelStaffCommand : IRequest<UpdatedReservationHot
     public string? GsmNo { get; set; }
     public EnumHotelStaffStatus HotelStaffStatus { get; set; }
     public string? Password { get; set; }
-    public string? PasswordHash { get; set; }
+    //public string? PasswordHash { get; set; }
 
 
 
@@ -42,6 +42,8 @@ public class UpdateReservationHotelStaffCommand : IRequest<UpdatedReservationHot
 
         public async Task<UpdatedReservationHotelStaffResponse> Handle(UpdateReservationHotelStaffCommand request, CancellationToken cancellationToken)
         {
+            await _reservationHotelStaffBusinessRules.HotelShouldExist(request.GidHotelFK);
+
             X.ReservationHotelStaff? reservationHotelStaff = await _reservationHotelStaffReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.SCCompanyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _reservationHotelStaffBusinessRules.ReservationHotelStaffShouldExistWhenSelected(reservationHotelStaff);
