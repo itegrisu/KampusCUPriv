@@ -1,19 +1,19 @@
 using Application.Features.AccommodationManagementFeatures.Reservations.Constants;
 using Application.Features.AccommodationManagementFeatures.Reservations.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.Reservations.Rules;
-using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
-using MediatR;
-using Domain.Enums;
 using Application.Repositories.AccommodationManagements.ReservationRepo;
+using AutoMapper;
+using Domain.Enums;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.Reservations.Commands.Update;
 
 public class UpdateReservationCommand : IRequest<UpdatedReservationResponse>
 {
     public Guid Gid { get; set; }
-    public Guid GidOrganizationFK { get; set; }
+    public Guid? GidOrganizationFK { get; set; }
     public string Title { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
@@ -47,7 +47,10 @@ public class UpdateReservationCommand : IRequest<UpdatedReservationResponse>
 
             _reservationWriteRepository.Update(reservation!);
             await _reservationWriteRepository.SaveAsync();
-            GetByGidReservationResponse obj = _mapper.Map<GetByGidReservationResponse>(reservation);
+
+            X.Reservation? newReservation = await _reservationReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.OrganizationFK));
+
+            GetByGidReservationResponse obj = _mapper.Map<GetByGidReservationResponse>(newReservation);
 
             return new()
             {

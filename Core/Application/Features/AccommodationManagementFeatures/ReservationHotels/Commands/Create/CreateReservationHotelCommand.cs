@@ -1,11 +1,11 @@
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Constants;
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Rules;
+using Application.Repositories.AccommodationManagements.ReservationHotelRepo;
 using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Application.Repositories.AccommodationManagements.ReservationHotelRepo;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotels.Commands.Create;
 
@@ -38,6 +38,8 @@ public class CreateReservationHotelCommand : IRequest<CreatedReservationHotelRes
             //int maxRowNo = await _reservationHotelReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.ReservationHotel reservationHotel = _mapper.Map<X.ReservationHotel>(request);
             //reservationHotel.RowNo = maxRowNo + 1;
+
+            await _reservationHotelBusinessRules.ReservationHotelAlreadyAdded(request.GidReservationFK, request.GidHotelFK);
 
             await _reservationHotelWriteRepository.AddAsync(reservationHotel);
             await _reservationHotelWriteRepository.SaveAsync();

@@ -1,5 +1,4 @@
 using Core.Application.Responses;
-using Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetByGid
 {
@@ -12,7 +11,9 @@ namespace Application.Features.AccommodationManagementFeatures.ReservationHotels
         public string SCCompanyFKCompanyName { get; set; }
         public Guid GidBuyCurrencyTypeFK { get; set; }
         public string BuyCurrencyFKName { get; set; }
+        public string BuyCurrencyFKSymbol { get; set; }
         public Guid GidSellCurrencyTypeFK { get; set; }
         public string SellCurrencyFKName { get; set; }
+        public string SellCurrencyFKSymbol { get; set; }
     }
 }

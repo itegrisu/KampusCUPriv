@@ -1,5 +1,4 @@
 using Core.Application.Dtos;
-using Core.Enum;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetList;
 
@@ -12,6 +11,8 @@ public class GetListReservationHotelListItemDto : IDto
     public string SCCompanyFKCompanyName { get; set; }
     public Guid GidBuyCurrencyTypeFK { get; set; }
     public string BuyCurrencyFKName { get; set; }
+    public string BuyCurrencyFKSymbol { get; set; }
     public Guid GidSellCurrencyTypeFK { get; set; }
     public string SellCurrencyFKName { get; set; }
+    public string SellCurrencyFKSymbol { get; set; }
 }
