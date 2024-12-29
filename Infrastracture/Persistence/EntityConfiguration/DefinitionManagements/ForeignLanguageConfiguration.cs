@@ -17,7 +17,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.Property(y => y.LanguageCode).IsRequired(false).HasColumnType("varchar").HasMaxLength(5);
 
             builder.HasMany(u => u.PersonnelForeignLanguages).WithOne(y => y.ForeignLanguageFK).HasForeignKey(y => y.GidLanguageFK);
-
+            builder.HasMany(u => u.PartTimeWorkerForeignLanguages).WithOne(y => y.ForeignLanguageFK).HasForeignKey(y => y.GidForeignLanguageFK);
         }
     }
 }

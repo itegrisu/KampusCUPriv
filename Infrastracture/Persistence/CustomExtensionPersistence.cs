@@ -2,7 +2,11 @@
 using Application.Abstractions.UnitOfWork;
 using Application.Repositories.AccommodationManagements.AccommodationDateRepo;
 using Application.Repositories.AccommodationManagements.GuestRepo;
+using Application.Repositories.AccommodationManagements.PartTimeWorkerFileRepo;
+using Application.Repositories.AccommodationManagements.PartTimeWorkerForeignLanguageRepo;
+using Application.Repositories.AccommodationManagements.PartTimeWorkerRepo;
 using Application.Repositories.AccommodationManagements.ReservationDetailRepo;
+using Application.Repositories.AccommodationManagements.ReservationHotelPartTimeWorkerRepo;
 using Application.Repositories.AccommodationManagements.ReservationHotelRepo;
 using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
 using Application.Repositories.AccommodationManagements.ReservationRepo;
@@ -109,7 +113,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Persistence.Context;
 using Persistence.Repositories.AccommodationManagements.AccommodationDateRepo;
 using Persistence.Repositories.AccommodationManagements.GuestRepo;
+using Persistence.Repositories.AccommodationManagements.PartTimeWorkerFileRepo;
+using Persistence.Repositories.AccommodationManagements.PartTimeWorkerForeignLanguageRepo;
+using Persistence.Repositories.AccommodationManagements.PartTimeWorkerRepo;
 using Persistence.Repositories.AccommodationManagements.ReservationDetailRepo;
+using Persistence.Repositories.AccommodationManagements.ReservationHotelPartTimeWorkerRepo;
 using Persistence.Repositories.AccommodationManagements.ReservationHotelRepo;
 using Persistence.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
 using Persistence.Repositories.AccommodationManagements.ReservationRepo;
@@ -777,7 +785,28 @@ namespace Persistence
             services.AddScoped<IGuestWriteRepository, GuestWriteRepository>();
             #endregion
 
+            #region Part Time Worker
+            services.AddScoped<IPartTimeWorkerReadRepository, PartTimeWorkerReadRepository>();
+            services.AddScoped<IPartTimeWorkerWriteRepository, PartTimeWorkerWriteRepository>();
+            #endregion
 
+
+            #region Part Time Worker Foreign Language
+            services.AddScoped<IPartTimeWorkerForeignLanguageReadRepository, PartTimeWorkerForeignLanguageReadRepository>();
+            services.AddScoped<IPartTimeWorkerForeignLanguageWriteRepository, PartTimeWorkerForeignLanguageWriteRepository>();
+            #endregion
+
+
+            #region Part Time Worker File
+            services.AddScoped<IPartTimeWorkerFileReadRepository, PartTimeWorkerFileReadRepository>();
+            services.AddScoped<IPartTimeWorkerFileWriteRepository, PartTimeWorkerFileWriteRepository>();
+            #endregion
+
+
+            #region Reservation Hotel Part Time Worker
+            services.AddScoped<IReservationHotelPartTimeWorkerReadRepository, ReservationHotelPartTimeWorkerReadRepository>();
+            services.AddScoped<IReservationHotelPartTimeWorkerWriteRepository, ReservationHotelPartTimeWorkerWriteRepository>();
+            #endregion
 
 
 
