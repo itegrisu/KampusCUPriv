@@ -36,6 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Repositories\AccommodationManagements\ReservationDetailRepo\" />
 	  <Folder Include="Services\EntityServices\DefinationManagements\" />
 	</ItemGroup>
 

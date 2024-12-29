@@ -1,11 +1,6 @@
 ﻿using Domain.Entities.AccommodationManagements;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfiguration.AccommodationManagements
 {
@@ -22,6 +17,8 @@ namespace Persistence.EntityConfiguration.AccommodationManagements
             builder.HasOne(y => y.SellCurrencyFK).WithMany(u => u.SellReservationHotels).HasForeignKey(y => y.GidSellCurrencyTypeFK).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(u => u.ReservationDetails).WithOne(y => y.ReservationHotelFK).HasForeignKey(y => y.GidReservationHotelFK);
+            builder.HasMany(u => u.ReservationHotelPartTimeWorkers).WithOne(y => y.ReservationHotelFK).HasForeignKey(y => y.GidHotelFK);
+
         }
     }
 }

@@ -125,6 +125,7 @@ namespace Persistence.Migrations
                     b.ToTable("Guests");
                 });
 
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodation", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -288,6 +289,121 @@ namespace Persistence.Migrations
                     b.ToTable("GuestAccommodationRooms");
                 });
 
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.PartTimeWorker", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<string>("Gsm")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("IdentityNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<bool>("IsLoginStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Gid");
+
+                    b.ToTable("PartTimeWorkers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.PartTimeWorkerFile", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ExpiredDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("GidPartTimeWorkerFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("WorkerFile")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidPartTimeWorkerFK");
+
+                    b.ToTable("PartTimeWorkerFiles");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.PartTimeWorkerForeignLanguage", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidForeignLanguageFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidPartTimeWorkerFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidForeignLanguageFK");
+
+                    b.HasIndex("GidPartTimeWorkerFK");
+
+                    b.ToTable("PartTimeWorkerForeignLanguages");
+                });
+
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -409,6 +525,40 @@ namespace Persistence.Migrations
                     b.HasIndex("GidSellCurrencyTypeFK");
 
                     b.ToTable("ReservationHotels");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.ReservationHotelPartTimeWorker", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidHotelFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidPartTimeWorkerFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidHotelFK");
+
+                    b.HasIndex("GidPartTimeWorkerFK");
+
+                    b.ToTable("ReservationHotelPartTimeWorkers");
                 });
 
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.ReservationHotelStaff", b =>
@@ -4533,6 +4683,36 @@ namespace Persistence.Migrations
                     b.Navigation("RoomTypeFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.PartTimeWorkerFile", b =>
+                {
+                    b.HasOne("Domain.Entities.AccommodationManagements.PartTimeWorker", "PartTimeWorkerFK")
+                        .WithMany("PartTimeWorkerFiles")
+                        .HasForeignKey("GidPartTimeWorkerFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("PartTimeWorkerFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.PartTimeWorkerForeignLanguage", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.ForeignLanguage", "ForeignLanguageFK")
+                        .WithMany("PartTimeWorkerForeignLanguages")
+                        .HasForeignKey("GidForeignLanguageFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.AccommodationManagements.PartTimeWorker", "PartTimeWorkerFK")
+                        .WithMany("PartTimeWorkerForeignLanguages")
+                        .HasForeignKey("GidPartTimeWorkerFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ForeignLanguageFK");
+
+                    b.Navigation("PartTimeWorkerFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
                     b.HasOne("Domain.Entities.OrganizationManagements.Organization", "OrganizationFK")
@@ -4595,6 +4775,25 @@ namespace Persistence.Migrations
                     b.Navigation("SCCompanyFK");
 
                     b.Navigation("SellCurrencyFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.ReservationHotelPartTimeWorker", b =>
+                {
+                    b.HasOne("Domain.Entities.AccommodationManagements.ReservationHotel", "ReservationHotelFK")
+                        .WithMany("ReservationHotelPartTimeWorkers")
+                        .HasForeignKey("GidHotelFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.AccommodationManagements.PartTimeWorker", "PartTimeWorkerFK")
+                        .WithMany("ReservationHotelPartTimeWorkers")
+                        .HasForeignKey("GidPartTimeWorkerFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("PartTimeWorkerFK");
+
+                    b.Navigation("ReservationHotelFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.ReservationHotelStaff", b =>
@@ -5858,6 +6057,7 @@ namespace Persistence.Migrations
                     b.Navigation("AccommodationDates");
                 });
 
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodation", b =>
                 {
                     b.Navigation("GuestAccommodationPersons");
@@ -5875,6 +6075,17 @@ namespace Persistence.Migrations
                     b.Navigation("GuestAccommodationResults");
                 });
 
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.PartTimeWorker", b =>
+                {
+                    b.Navigation("PartTimeWorkerFiles");
+
+                    b.Navigation("PartTimeWorkerForeignLanguages");
+
+                    b.Navigation("ReservationHotelPartTimeWorkers");
+                });
+
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
                     b.Navigation("ReservationHotels");
@@ -5890,6 +6101,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.ReservationHotel", b =>
                 {
                     b.Navigation("ReservationDetails");
+
+                    b.Navigation("ReservationHotelPartTimeWorkers");
                 });
 
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.ReservationRoom", b =>
@@ -5989,6 +6202,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.ForeignLanguage", b =>
                 {
+                    b.Navigation("PartTimeWorkerForeignLanguages");
+
                     b.Navigation("PersonnelForeignLanguages");
                 });
 
