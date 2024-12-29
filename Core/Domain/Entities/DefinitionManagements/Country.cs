@@ -18,5 +18,6 @@ namespace Domain.Entities.DefinitionManagements
         public ICollection<TransportationGroup>? StartTransportationGroups { get; set; }
         public ICollection<TransportationGroup>? EndTransportationGroups { get; set; }
         public ICollection<Guest>? Guests { get; set; }
+        public ICollection<GuestAccommodationPerson>? GuestAccommodationPersons { get; set; }
     }
 }

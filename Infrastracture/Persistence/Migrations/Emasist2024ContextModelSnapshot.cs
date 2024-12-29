@@ -125,6 +125,169 @@ namespace Persistence.Migrations
                     b.ToTable("Guests");
                 });
 
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodation", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("BuyPrice")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<Guid?>("GidBuyCurrencyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidHotelFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GidSellCurrencyFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("GuestAccommodationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuestCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Institution")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<double?>("SellPrice")
+                        .HasMaxLength(10)
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidBuyCurrencyFK");
+
+                    b.HasIndex("GidHotelFK");
+
+                    b.HasIndex("GidSellCurrencyFK");
+
+                    b.ToTable("GuestAccommodations");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationPerson", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("GidGuestAccommodationFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidNationalityFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("IdNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidGuestAccommodationFK");
+
+                    b.HasIndex("GidNationalityFK");
+
+                    b.ToTable("GuestAccommodationPersons");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationResult", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidGuestAccommodationPersonFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidGuestAccommodationRoomFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidGuestAccommodationPersonFK");
+
+                    b.HasIndex("GidGuestAccommodationRoomFK");
+
+                    b.ToTable("GuestAccommodationResults");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationRoom", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("GidGuestAccommodationFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidRoomTypeFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidGuestAccommodationFK");
+
+                    b.HasIndex("GidRoomTypeFK");
+
+                    b.ToTable("GuestAccommodationRooms");
+                });
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -4290,6 +4453,86 @@ namespace Persistence.Migrations
                     b.Navigation("CountryFK");
                 });
 
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodation", b =>
+                {
+                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "BuyCurrencyFK")
+                        .WithMany("BuyGuestAccommodations")
+                        .HasForeignKey("GidBuyCurrencyFK");
+
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("GuestAccommodations")
+                        .HasForeignKey("GidHotelFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.Currency", "SellCurrencyFK")
+                        .WithMany("SellGuestAccommodations")
+                        .HasForeignKey("GidSellCurrencyFK");
+
+                    b.Navigation("BuyCurrencyFK");
+
+                    b.Navigation("SCCompanyFK");
+
+                    b.Navigation("SellCurrencyFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationPerson", b =>
+                {
+                    b.HasOne("Domain.Entities.AccommodationManagements.GuestAccommodation", "GuestAccommodationFK")
+                        .WithMany("GuestAccommodationPersons")
+                        .HasForeignKey("GidGuestAccommodationFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.Country", "CountryFK")
+                        .WithMany("GuestAccommodationPersons")
+                        .HasForeignKey("GidNationalityFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CountryFK");
+
+                    b.Navigation("GuestAccommodationFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationResult", b =>
+                {
+                    b.HasOne("Domain.Entities.AccommodationManagements.GuestAccommodationPerson", "GuestAccommodationPersonFK")
+                        .WithMany("GuestAccommodationResults")
+                        .HasForeignKey("GidGuestAccommodationPersonFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.AccommodationManagements.GuestAccommodationRoom", "GuestAccommodationRoomFK")
+                        .WithMany("GuestAccommodationResults")
+                        .HasForeignKey("GidGuestAccommodationRoomFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GuestAccommodationPersonFK");
+
+                    b.Navigation("GuestAccommodationRoomFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationRoom", b =>
+                {
+                    b.HasOne("Domain.Entities.AccommodationManagements.GuestAccommodation", "GuestAccommodationFK")
+                        .WithMany("GuestAccommodationRooms")
+                        .HasForeignKey("GidGuestAccommodationFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.DefinitionManagements.RoomType", "RoomTypeFK")
+                        .WithMany("GuestAccommodationRooms")
+                        .HasForeignKey("GidRoomTypeFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GuestAccommodationFK");
+
+                    b.Navigation("RoomTypeFK");
+                });
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
                     b.HasOne("Domain.Entities.OrganizationManagements.Organization", "OrganizationFK")
@@ -5615,6 +5858,23 @@ namespace Persistence.Migrations
                     b.Navigation("AccommodationDates");
                 });
 
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodation", b =>
+                {
+                    b.Navigation("GuestAccommodationPersons");
+
+                    b.Navigation("GuestAccommodationRooms");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationPerson", b =>
+                {
+                    b.Navigation("GuestAccommodationResults");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodationRoom", b =>
+                {
+                    b.Navigation("GuestAccommodationResults");
+                });
+
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
                     b.Navigation("ReservationHotels");
@@ -5675,6 +5935,8 @@ namespace Persistence.Migrations
 
                     b.Navigation("EndTransportationGroups");
 
+                    b.Navigation("GuestAccommodationPersons");
+
                     b.Navigation("Guests");
 
                     b.Navigation("StartTransportationGroups");
@@ -5684,6 +5946,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Currency", b =>
                 {
+                    b.Navigation("BuyGuestAccommodations");
+
                     b.Navigation("BuyReservationHotels");
 
                     b.Navigation("FinanceBalances");
@@ -5697,6 +5961,8 @@ namespace Persistence.Migrations
                     b.Navigation("OfferTransactions");
 
                     b.Navigation("SCBanks");
+
+                    b.Navigation("SellGuestAccommodations");
 
                     b.Navigation("SellReservationHotels");
 
@@ -5748,6 +6014,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.RoomType", b =>
                 {
+                    b.Navigation("GuestAccommodationRooms");
+
                     b.Navigation("ReservationDetails");
                 });
 
@@ -5916,6 +6184,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.SupplierCustomerManagements.SCCompany", b =>
                 {
                     b.Navigation("FinanceBalances");
+
+                    b.Navigation("GuestAccommodations");
 
                     b.Navigation("Organizations");
 
