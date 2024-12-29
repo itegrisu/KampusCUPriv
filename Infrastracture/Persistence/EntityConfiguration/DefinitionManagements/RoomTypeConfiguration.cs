@@ -18,6 +18,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(100);
 
             builder.HasMany(u => u.ReservationDetails).WithOne(y => y.RoomTypeFK).HasForeignKey(y => y.GidRoomTypeFK);
+            builder.HasMany(u => u.GuestAccommodationRooms).WithOne(y => y.RoomTypeFK).HasForeignKey(y => y.GidRoomTypeFK);
         }
     }
 }

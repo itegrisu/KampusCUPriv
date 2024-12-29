@@ -186,7 +186,10 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new ReservationRoomConfiguration());
             modelBuilder.ApplyConfiguration(new AccommodationDateConfiguration());
             modelBuilder.ApplyConfiguration(new GuestConfiguration());
-
+            modelBuilder.ApplyConfiguration(new GuestAccommodationConfiguration());
+            modelBuilder.ApplyConfiguration(new GuestAccommodationPersonConfiguration());
+            modelBuilder.ApplyConfiguration(new GuestAccommodationRoomConfiguration());
+            modelBuilder.ApplyConfiguration(new GuestAccommodationResultConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -330,5 +333,9 @@ namespace Persistence.Context
         public DbSet<ReservationRoom> ReservationRooms { get; set; }
         public DbSet<AccommodationDate> AccommodationDates { get; set; }
         public DbSet<Guest> Guests { get; set; }
+        public DbSet<GuestAccommodation> GuestAccommodations { get; set; }
+        public DbSet<GuestAccommodationPerson> GuestAccommodationPersons { get; set; }
+        public DbSet<GuestAccommodationRoom> GuestAccommodationRooms { get; set; }
+        public DbSet<GuestAccommodationResult> GuestAccommodationResults { get; set; }
     }
 }

@@ -25,6 +25,10 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.HasMany(u => u.TransportationExternalServices).WithOne(y => y.FeeCurrencyFK).HasForeignKey(y => y.GidFeeCurrencyFK);
             builder.HasMany(u => u.Transportations).WithOne(y => y.FeeCurrencyFK).HasForeignKey(y => y.GidFeeCurrencyFK);
             builder.HasMany(u => u.VehicleTransactions).WithOne(y => y.CurrencyFK).HasForeignKey(y => y.GidFeeCurrencyFK);
+            builder.HasMany(u => u.BuyReservationHotels).WithOne(y => y.BuyCurrencyFK).HasForeignKey(y => y.GidBuyCurrencyTypeFK);
+            builder.HasMany(u => u.SellReservationHotels).WithOne(y => y.SellCurrencyFK).HasForeignKey(y => y.GidSellCurrencyTypeFK);
+            builder.HasMany(u => u.BuyGuestAccommodations).WithOne(y => y.BuyCurrencyFK).HasForeignKey(y => y.GidBuyCurrencyFK);
+            builder.HasMany(u => u.SellGuestAccommodations).WithOne(y => y.SellCurrencyFK).HasForeignKey(y => y.GidSellCurrencyFK);
         }
     }
 }

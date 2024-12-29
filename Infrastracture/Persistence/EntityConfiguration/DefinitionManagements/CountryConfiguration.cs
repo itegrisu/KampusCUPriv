@@ -21,7 +21,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.HasMany(u => u.Cities).WithOne(y => y.CountryFK).HasForeignKey(y => y.GidCountryFK);
             builder.HasMany(u => u.StartTransportationGroups).WithOne(y => y.StartCountryFK).HasForeignKey(y => y.GidStartCountryFK);
             builder.HasMany(u => u.EndTransportationGroups).WithOne(y => y.EndCountryFK).HasForeignKey(y => y.GidEndCountryFK);
-            builder.HasMany(u => u.Guests).WithOne(y => y.CountryFK).HasForeignKey(y => y.GidNationalityFK);
+            builder.HasMany(u => u.Guests).WithOne(y => y.CountryFK).HasForeignKey(y => y.GidNationalityFK); builder.HasMany(u => u.GuestAccommodationPersons).WithOne(y => y.CountryFK).HasForeignKey(y => y.GidNationalityFK);
         }
     }
 }

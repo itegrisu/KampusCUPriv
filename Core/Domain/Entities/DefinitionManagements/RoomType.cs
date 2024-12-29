@@ -11,5 +11,6 @@ namespace Domain.Entities.DefinitionManagements
         public string? Description { get; set; }
 
         public ICollection<ReservationDetail>? ReservationDetails { get; set; }
+        public ICollection<GuestAccommodationRoom>? GuestAccommodationRooms { get; set; }
     }
 }

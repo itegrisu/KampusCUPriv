@@ -25,5 +25,7 @@ namespace Domain.Entities.DefinitionManagements
         public ICollection<VehicleTransaction>? VehicleTransactions { get; set; }
         public ICollection<ReservationHotel>? BuyReservationHotels { get; set; }
         public ICollection<ReservationHotel>? SellReservationHotels { get; set; }
+        public ICollection<GuestAccommodation>? BuyGuestAccommodations { get; set; }
+        public ICollection<GuestAccommodation>? SellGuestAccommodations { get; set; }
     }
 }
