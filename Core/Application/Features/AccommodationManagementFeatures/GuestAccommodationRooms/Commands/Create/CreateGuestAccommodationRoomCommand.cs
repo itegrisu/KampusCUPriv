@@ -6,6 +6,9 @@ using X = Domain.Entities.AccommodationManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.AccommodationManagements.GuestAccommodationRoomRepo;
+using Application.Features.AccommodationManagementFeatures.GuestAccommodationRooms.Queries.GetList;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 
 namespace Application.Features.AccommodationManagementFeatures.GuestAccommodationRooms.Commands.Create;
 
@@ -14,6 +17,7 @@ public class CreateGuestAccommodationRoomCommand : IRequest<CreatedGuestAccommod
     public Guid GidGuestAccommodationFK { get; set; }
     public Guid GidRoomTypeFK { get; set; }
     public DateTime Date { get; set; }
+    public int Count { get; set; }
 
     public class CreateGuestAccommodationRoomCommandHandler : IRequestHandler<CreateGuestAccommodationRoomCommand, CreatedGuestAccommodationRoomResponse>
     {
@@ -33,25 +37,37 @@ public class CreateGuestAccommodationRoomCommand : IRequest<CreatedGuestAccommod
 
         public async Task<CreatedGuestAccommodationRoomResponse> Handle(CreateGuestAccommodationRoomCommand request, CancellationToken cancellationToken)
         {
-            //int maxRowNo = await _guestAccommodationRoomReadRepository.GetAll().MaxAsync(r => r.RowNo);
-            X.GuestAccommodationRoom guestAccommodationRoom = _mapper.Map<X.GuestAccommodationRoom>(request);
-            //guestAccommodationRoom.RowNo = maxRowNo + 1;
+            var createdRooms = new List<GetByGidGuestAccommodationRoomResponse>();
 
-            await _guestAccommodationRoomWriteRepository.AddAsync(guestAccommodationRoom);
-            await _guestAccommodationRoomWriteRepository.SaveAsync();
+            for (int i = 0; i < request.Count; i++)
+            {
+                // Yeni bir entity oluþturuluyor
+                X.GuestAccommodationRoom guestAccommodationRoom = _mapper.Map<X.GuestAccommodationRoom>(request);
 
-            X.GuestAccommodationRoom savedGuestAccommodationRoom = await _guestAccommodationRoomReadRepository.GetAsync(predicate: x => x.Gid == guestAccommodationRoom.Gid, include: x => x.Include(x => x.GuestAccommodationFK).Include(x => x.RoomTypeFK));
-            //INCLUDES Buraya Gelecek include varsa eklenecek
-            //include: x => x.Include(x => x.UserFK));
+                // Veritabanýna ekleniyor
+                await _guestAccommodationRoomWriteRepository.AddAsync(guestAccommodationRoom);
+                await _guestAccommodationRoomWriteRepository.SaveAsync();
 
-            GetByGidGuestAccommodationRoomResponse obj = _mapper.Map<GetByGidGuestAccommodationRoomResponse>(savedGuestAccommodationRoom);
-            return new()
+                // Eklenen kayýt tekrar okunuyor
+                X.GuestAccommodationRoom savedGuestAccommodationRoom = await _guestAccommodationRoomReadRepository.GetAsync(
+                    predicate: x => x.Gid == guestAccommodationRoom.Gid,
+                    include: x => x.Include(x => x.GuestAccommodationFK).Include(x => x.RoomTypeFK));
+
+                // Response için DTO'ya dönüþtürülüp listeye ekleniyor
+                GetByGidGuestAccommodationRoomResponse obj = _mapper.Map<GetByGidGuestAccommodationRoomResponse>(savedGuestAccommodationRoom);
+                createdRooms.Add(obj);
+            }
+
+            // Dönüþ için yeni bir response oluþturuluyor
+            return new CreatedGuestAccommodationRoomResponse
             {
                 Title = GuestAccommodationRoomsBusinessMessages.ProcessCompleted,
                 Message = GuestAccommodationRoomsBusinessMessages.SuccessCreatedGuestAccommodationRoomMessage,
                 IsValid = true,
-                Obj = obj
+                Obj = createdRooms // Listeyi burada dönüyoruz
             };
         }
+
+
     }
 }

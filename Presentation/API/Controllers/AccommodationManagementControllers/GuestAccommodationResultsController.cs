@@ -1,7 +1,9 @@
-﻿using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Create;
+﻿using Application.Features.AccommodationManagementFeatures.GuestAccommodationPersons.Queries.GetByGuestGid;
+using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Create;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Delete;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGid;
+using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGuestGidForDate;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -25,6 +27,13 @@ namespace API.Controllers.AccommodationManagementControllers
         {
             GetListGuestAccommodationResultQuery getListGuestAccommodationResultQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListGuestAccommodationResultListItemDto> response = await Mediator.Send(getListGuestAccommodationResultQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByGuestGidForDate([FromQuery] GetByGuestGidForDateListGuestAccommodationResultQuery getByGuestGidForDateListGuestAccommodationResultQuery)
+        {
+            GetListResponse<GetByGuestGidForDateListGuestAccommodationResultListItemDto> response = await Mediator.Send(getByGuestGidForDateListGuestAccommodationResultQuery);
             return Ok(response);
         }
     }

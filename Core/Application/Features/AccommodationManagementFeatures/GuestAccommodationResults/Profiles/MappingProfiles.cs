@@ -2,6 +2,7 @@ using Application.Features.AccommodationManagementFeatures.GuestAccommodationRes
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Delete;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGid;
+using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGuestGidForDate;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.GuestAccommodationResult, GetListGuestAccommodationResultListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.GuestAccommodationResult>, GetListResponse<GetListGuestAccommodationResultListItemDto>>().ReverseMap();
+
+        CreateMap<X.GuestAccommodationResult, GetByGuestGidForDateListGuestAccommodationResultListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.GuestAccommodationResult>, GetListResponse<GetByGuestGidForDateListGuestAccommodationResultListItemDto>>().ReverseMap();
     }
 }
