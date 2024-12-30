@@ -6,6 +6,8 @@ using X = Domain.Entities.AccommodationManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.AccommodationManagements.GuestAccommodationResultRepo;
+using Core.CrossCuttingConcern.Exceptions;
+using Application.Repositories.AccommodationManagements.GuestAccommodationRoomRepo;
 
 namespace Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Create;
 
@@ -20,19 +22,38 @@ public class CreateGuestAccommodationResultCommand : IRequest<CreatedGuestAccomm
         private readonly IMapper _mapper;
         private readonly IGuestAccommodationResultWriteRepository _guestAccommodationResultWriteRepository;
         private readonly IGuestAccommodationResultReadRepository _guestAccommodationResultReadRepository;
+        private readonly IGuestAccommodationRoomReadRepository _guestAccommodationRoomReadRepository;
         private readonly GuestAccommodationResultBusinessRules _guestAccommodationResultBusinessRules;
 
         public CreateGuestAccommodationResultCommandHandler(IMapper mapper, IGuestAccommodationResultWriteRepository guestAccommodationResultWriteRepository,
-                                         GuestAccommodationResultBusinessRules guestAccommodationResultBusinessRules, IGuestAccommodationResultReadRepository guestAccommodationResultReadRepository)
+                                         GuestAccommodationResultBusinessRules guestAccommodationResultBusinessRules, IGuestAccommodationResultReadRepository guestAccommodationResultReadRepository, IGuestAccommodationRoomReadRepository guestAccommodationRoomReadRepository)
         {
             _mapper = mapper;
             _guestAccommodationResultWriteRepository = guestAccommodationResultWriteRepository;
             _guestAccommodationResultBusinessRules = guestAccommodationResultBusinessRules;
             _guestAccommodationResultReadRepository = guestAccommodationResultReadRepository;
+            _guestAccommodationRoomReadRepository = guestAccommodationRoomReadRepository;
         }
 
         public async Task<CreatedGuestAccommodationResultResponse> Handle(CreateGuestAccommodationResultCommand request, CancellationToken cancellationToken)
         {
+            await _guestAccommodationResultBusinessRules.RoomCapacityShouldNotBeExceeded(request.GidGuestAccommodationRoomFK);
+            await _guestAccommodationResultBusinessRules.GuestCannotBeAddedTwiceToSameRoom(request.GidGuestAccommodationPersonFK, request.GidGuestAccommodationRoomFK);
+
+
+            var room = await _guestAccommodationRoomReadRepository.GetAsync(
+                predicate: x => x.Gid == request.GidGuestAccommodationRoomFK,
+                include: x => x.Include(y => y.RoomTypeFK)
+            );
+
+            if (room == null || room.RoomTypeFK == null)
+            {
+                throw new BusinessException("Oda bilgisi veya oda tipi bilgisi bulunamadý.");
+            }
+
+            await _guestAccommodationResultBusinessRules.GuestCannotBeAddedToMultipleRoomsOnSameDay(request.GidGuestAccommodationPersonFK, room.Date);
+
+
             //int maxRowNo = await _guestAccommodationResultReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.GuestAccommodationResult guestAccommodationResult = _mapper.Map<X.GuestAccommodationResult>(request);
             //guestAccommodationResult.RowNo = maxRowNo + 1;
