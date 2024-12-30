@@ -3,8 +3,8 @@ using Application.Features.AccommodationManagementFeatures.PartTimeWorkerFiles.Q
 using Application.Features.AccommodationManagementFeatures.PartTimeWorkerFiles.Rules;
 using Application.Repositories.AccommodationManagements.PartTimeWorkerFileRepo;
 using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
 using MediatR;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.PartTimeWorkerFiles.Commands.Update;
 
@@ -12,11 +12,11 @@ public class UpdatePartTimeWorkerFileCommand : IRequest<UpdatedPartTimeWorkerFil
 {
     public Guid Gid { get; set; }
 
-	public Guid GidPartTimeWorkerFK { get; set; }
+    public Guid GidPartTimeWorkerFK { get; set; }
 
-public string Title { get; set; }
-public string? WorkerFile { get; set; }
-public DateTime? ExpiredDate { get; set; }
+    public string Title { get; set; }
+    public string? WorkerFile { get; set; }
+    public DateTime? ExpiredDate { get; set; }
 
 
 
@@ -39,7 +39,7 @@ public DateTime? ExpiredDate { get; set; }
         public async Task<UpdatedPartTimeWorkerFileResponse> Handle(UpdatePartTimeWorkerFileCommand request, CancellationToken cancellationToken)
         {
             X.PartTimeWorkerFile? partTimeWorkerFile = await _partTimeWorkerFileReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
-			//INCLUDES Buraya Gelecek include varsa eklenecek
+            //INCLUDES Buraya Gelecek include varsa eklenecek
             await _partTimeWorkerFileBusinessRules.PartTimeWorkerFileShouldExistWhenSelected(partTimeWorkerFile);
             partTimeWorkerFile = _mapper.Map(request, partTimeWorkerFile);
 

@@ -8,7 +8,7 @@ public class GetListPartTimeWorkerForeignLanguageListItemDto : IDto
     public Guid GidPartTimeWorkerFK { get; set; }
     //public PartTimeWorker PartTimeWorkerFK { get; set; }
     public Guid GidForeignLanguageFK { get; set; }
-    //public ForeignLanguage ForeignLanguageFK { get; set; }
+    public string ForeignLanguageFKName { get; set; }
 
 
 

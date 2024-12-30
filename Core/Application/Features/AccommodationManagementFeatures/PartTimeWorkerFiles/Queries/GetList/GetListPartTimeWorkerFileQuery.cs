@@ -1,19 +1,19 @@
 using Application.Helpers.PaginationHelpers;
 using Application.Repositories.AccommodationManagements.PartTimeWorkerFileRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.AccommodationManagements;
 using MediatR;
 using System.Linq.Expressions;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.PartTimeWorkerFiles.Queries.GetList;
 
 public class GetListPartTimeWorkerFileQuery : IRequest<GetListResponse<GetListPartTimeWorkerFileListItemDto>>
 {
-    public PageRequest PageRequest { get; set; }
-
+    public string PartTimeWorkerGid { get; set; }
+    public int PageIndex { get; set; } = 0;
+    public int PageSize { get; set; } = 10;
     public class GetListPartTimeWorkerFileQueryHandler : IRequestHandler<GetListPartTimeWorkerFileQuery, GetListResponse<GetListPartTimeWorkerFileListItemDto>>
     {
         private readonly IPartTimeWorkerFileReadRepository _partTimeWorkerFileReadRepository;
@@ -29,19 +29,20 @@ public class GetListPartTimeWorkerFileQuery : IRequest<GetListResponse<GetListPa
 
         public async Task<GetListResponse<GetListPartTimeWorkerFileListItemDto>> Handle(GetListPartTimeWorkerFileQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<PartTimeWorkerFile, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.PartTimeWorkerFileMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+            Expression<Func<X.PartTimeWorkerFile, bool>> predicate = null;
+
+            if (request.PartTimeWorkerGid != null)
+                predicate = x => x.GidPartTimeWorkerFK.ToString() == request.PartTimeWorkerGid;
+
+            if (request.PageIndex == -1)
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    predicate: predicate);
+
             IPaginate<X.PartTimeWorkerFile> partTimeWorkerFiles = await _partTimeWorkerFileReadRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
+                index: request.PageIndex,
+                size: request.PageSize,
+                predicate: predicate,
+                //include: x => x.Include(x => x.PartTimeWorkerFK),
                 cancellationToken: cancellationToken
             );
 

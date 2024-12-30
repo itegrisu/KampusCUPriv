@@ -38,8 +38,12 @@ public class UpdateReservationHotelPartTimeWorkerCommand : IRequest<UpdatedReser
 
         public async Task<UpdatedReservationHotelPartTimeWorkerResponse> Handle(UpdateReservationHotelPartTimeWorkerCommand request, CancellationToken cancellationToken)
         {
+            await _reservationHotelPartTimeWorkerBusinessRules.PartTimeWorkerAlreadyExist(request.GidPartTimeWorkerFK);
+            await _reservationHotelPartTimeWorkerBusinessRules.ReservationHotelAlreadyExist(request.GidHotelFK);
+
             X.ReservationHotelPartTimeWorker? reservationHotelPartTimeWorker = await _reservationHotelPartTimeWorkerReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
-            //INCLUDES Buraya Gelecek include varsa eklenecek
+
+
             await _reservationHotelPartTimeWorkerBusinessRules.ReservationHotelPartTimeWorkerShouldExistWhenSelected(reservationHotelPartTimeWorker);
             reservationHotelPartTimeWorker = _mapper.Map(request, reservationHotelPartTimeWorker);
 

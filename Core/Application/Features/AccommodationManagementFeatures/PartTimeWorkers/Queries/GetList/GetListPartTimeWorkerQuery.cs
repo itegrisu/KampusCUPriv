@@ -3,10 +3,11 @@ using Application.Repositories.AccommodationManagements.PartTimeWorkerRepo;
 using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
+using Core.Enum;
 using Core.Persistence.Paging;
-using X = Domain.Entities.AccommodationManagements;
 using MediatR;
-using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.PartTimeWorkers.Queries.GetList;
 
@@ -29,23 +30,60 @@ public class GetListPartTimeWorkerQuery : IRequest<GetListResponse<GetListPartTi
 
         public async Task<GetListResponse<GetListPartTimeWorkerListItemDto>> Handle(GetListPartTimeWorkerQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<PartTimeWorker, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.PartTimeWorkerMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
-            IPaginate<X.PartTimeWorker> partTimeWorkers = await _partTimeWorkerReadRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
-            );
+            GetListResponse<GetListPartTimeWorkerListItemDto> response;
 
-            GetListResponse<GetListPartTimeWorkerListItemDto> response = _mapper.Map<GetListResponse<GetListPartTimeWorkerListItemDto>>(partTimeWorkers);
+            if (request.PageRequest.PageIndex == -1)
+            {
+                var partTimeWorkers = await _noPagination.NoPaginationData(cancellationToken);
+
+                // Foreign languages için Languages özelliðini doldur
+                foreach (var item in partTimeWorkers.Items)
+                {
+                    var worker = await _partTimeWorkerReadRepository.GetAsync(
+                        x => x.Gid == item.Gid,
+                        include: source => source.Include(p => p.PartTimeWorkerForeignLanguages)
+                                                 .ThenInclude(pfl => pfl.ForeignLanguageFK)
+                    );
+
+                    if (worker?.PartTimeWorkerForeignLanguages != null)
+                    {
+                        var activeLanguages = worker.PartTimeWorkerForeignLanguages
+                           .Where(x => x.DataState == DataState.Active)
+                           .Select(pfl => pfl.ForeignLanguageFK.LanguageCode)
+                           .Where(code => !string.IsNullOrEmpty(code));
+                        item.Languages = string.Join(", ", activeLanguages);
+                    }
+                }
+
+                response = partTimeWorkers;
+            }
+            else
+            {
+                IPaginate<X.PartTimeWorker> partTimeWorkers = await _partTimeWorkerReadRepository.GetListAsync(
+                    include: source => source.Include(p => p.PartTimeWorkerForeignLanguages)
+                                             .ThenInclude(pfl => pfl.ForeignLanguageFK), // ForeignLanguage bilgisi ekleniyor
+                    index: request.PageRequest.PageIndex,
+                    size: request.PageRequest.PageSize,
+                    cancellationToken: cancellationToken
+                );
+
+                response = _mapper.Map<GetListResponse<GetListPartTimeWorkerListItemDto>>(partTimeWorkers);
+
+                // Foreign languages için Languages özelliðini doldur
+                foreach (var item in response.Items)
+                {
+
+                    var worker = partTimeWorkers.Items.FirstOrDefault(w => w.Gid == item.Gid);
+                    if (worker?.PartTimeWorkerForeignLanguages != null)
+                    {
+                        var activeLanguages = worker.PartTimeWorkerForeignLanguages
+                          .Where(x => x.DataState == DataState.Active)
+                          .Select(pfl => pfl.ForeignLanguageFK.LanguageCode)
+                          .Where(code => !string.IsNullOrEmpty(code));
+                        item.Languages = string.Join(", ", activeLanguages);
+                    }
+                }
+            }
             return response;
         }
     }

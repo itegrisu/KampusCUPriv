@@ -3,9 +3,8 @@ using Application.Features.AccommodationManagementFeatures.PartTimeWorkerFiles.Q
 using Application.Features.AccommodationManagementFeatures.PartTimeWorkerFiles.Rules;
 using Application.Repositories.AccommodationManagements.PartTimeWorkerFileRepo;
 using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.PartTimeWorkerFiles.Commands.Create;
 
@@ -13,9 +12,9 @@ public class CreatePartTimeWorkerFileCommand : IRequest<CreatedPartTimeWorkerFil
 {
     public Guid GidPartTimeWorkerFK { get; set; }
 
-public string Title { get; set; }
-public string? WorkerFile { get; set; }
-public DateTime? ExpiredDate { get; set; }
+    public string Title { get; set; }
+    public string? WorkerFile { get; set; }
+    public DateTime? ExpiredDate { get; set; }
 
 
 
@@ -38,19 +37,19 @@ public DateTime? ExpiredDate { get; set; }
         public async Task<CreatedPartTimeWorkerFileResponse> Handle(CreatePartTimeWorkerFileCommand request, CancellationToken cancellationToken)
         {
             //int maxRowNo = await _partTimeWorkerFileReadRepository.GetAll().MaxAsync(r => r.RowNo);
-			X.PartTimeWorkerFile partTimeWorkerFile = _mapper.Map<X.PartTimeWorkerFile>(request);
+            X.PartTimeWorkerFile partTimeWorkerFile = _mapper.Map<X.PartTimeWorkerFile>(request);
             //partTimeWorkerFile.RowNo = maxRowNo + 1;
 
             await _partTimeWorkerFileWriteRepository.AddAsync(partTimeWorkerFile);
             await _partTimeWorkerFileWriteRepository.SaveAsync();
 
-			X.PartTimeWorkerFile savedPartTimeWorkerFile = await _partTimeWorkerFileReadRepository.GetAsync(predicate: x => x.Gid == partTimeWorkerFile.Gid);
-			//INCLUDES Buraya Gelecek include varsa eklenecek
-			//include: x => x.Include(x => x.UserFK));
+            X.PartTimeWorkerFile savedPartTimeWorkerFile = await _partTimeWorkerFileReadRepository.GetAsync(predicate: x => x.Gid == partTimeWorkerFile.Gid);
+            //INCLUDES Buraya Gelecek include varsa eklenecek
+            //include: x => x.Include(x => x.UserFK));
 
             GetByGidPartTimeWorkerFileResponse obj = _mapper.Map<GetByGidPartTimeWorkerFileResponse>(savedPartTimeWorkerFile);
             return new()
-            {           
+            {
                 Title = PartTimeWorkerFilesBusinessMessages.ProcessCompleted,
                 Message = PartTimeWorkerFilesBusinessMessages.SuccessCreatedPartTimeWorkerFileMessage,
                 IsValid = true,
