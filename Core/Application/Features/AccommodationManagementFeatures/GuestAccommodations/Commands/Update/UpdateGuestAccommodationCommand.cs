@@ -47,6 +47,7 @@ public class UpdateGuestAccommodationCommand : IRequest<UpdatedGuestAccommodatio
             X.GuestAccommodation? guestAccommodation = await _guestAccommodationReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.SCCompanyFK).Include(x => x.BuyCurrencyFK).Include(x => x.SellCurrencyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _guestAccommodationBusinessRules.GuestAccommodationShouldExistWhenSelected(guestAccommodation);
+
             guestAccommodation = _mapper.Map(request, guestAccommodation);
 
             _guestAccommodationWriteRepository.Update(guestAccommodation!);

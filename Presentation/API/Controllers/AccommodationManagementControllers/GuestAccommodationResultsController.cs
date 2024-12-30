@@ -3,7 +3,9 @@ using Application.Features.AccommodationManagementFeatures.GuestAccommodationRes
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Delete;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGid;
+using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGuestGid;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGuestGidForDate;
+using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetByGuestGidForPerson;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationResults.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -34,6 +36,20 @@ namespace API.Controllers.AccommodationManagementControllers
         public async Task<IActionResult> GetByGuestGidForDate([FromQuery] GetByGuestGidForDateListGuestAccommodationResultQuery getByGuestGidForDateListGuestAccommodationResultQuery)
         {
             GetListResponse<GetByGuestGidForDateListGuestAccommodationResultListItemDto> response = await Mediator.Send(getByGuestGidForDateListGuestAccommodationResultQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByGuestGidForPerson([FromQuery] GetByGuestGidForPersonListGuestAccommodationResultQuery getByGuestGidForPersonListGuestAccommodationResultQuery)
+        {
+            GetListResponse<GetByGuestGidForPersonListGuestAccommodationResultListItemDto> response = await Mediator.Send(getByGuestGidForPersonListGuestAccommodationResultQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByRoomGid([FromQuery] GetByRoomGidListGuestAccommodationResultQuery getByRoomGidListGuestAccommodationResultQuery)
+        {
+            GetListResponse<GetByRoomGidListGuestAccommodationResultListItemDto> response = await Mediator.Send(getByRoomGidListGuestAccommodationResultQuery);
             return Ok(response);
         }
     }

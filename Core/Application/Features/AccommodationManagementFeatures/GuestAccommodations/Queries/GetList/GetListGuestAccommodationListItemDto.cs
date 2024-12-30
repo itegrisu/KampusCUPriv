@@ -10,9 +10,9 @@ public class GetListGuestAccommodationListItemDto : IDto
     public Guid GidHotelFK { get; set; }
     public string SCCompanyFKCompanyName { get; set; }
     public Guid? GidBuyCurrencyFK { get; set; }
-    public string BuyCurrencyFKName { get; set; }
+    public string BuyCurrencyFKSymbol { get; set; }
     public Guid? GidSellCurrencyFK { get; set; }
-    public string SellCurrencyFKName { get; set; }
+    public string SellCurrencyFKSymbol { get; set; }
     public string Title { get; set; }
     public string? Institution { get; set; }
     public int GuestCount { get; set; }

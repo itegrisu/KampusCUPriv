@@ -36,6 +36,8 @@ public class CreateGuestAccommodationPersonCommand : IRequest<CreatedGuestAccomm
 
         public async Task<CreatedGuestAccommodationPersonResponse> Handle(CreateGuestAccommodationPersonCommand request, CancellationToken cancellationToken)
         {
+            await _guestAccommodationPersonBusinessRules.GuestCountShouldNotExceedAccommodationLimit(request.GidGuestAccommodationFK);
+
             //int maxRowNo = await _guestAccommodationPersonReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.GuestAccommodationPerson guestAccommodationPerson = _mapper.Map<X.GuestAccommodationPerson>(request);
             //guestAccommodationPerson.RowNo = maxRowNo + 1;
