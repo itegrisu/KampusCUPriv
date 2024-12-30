@@ -14,7 +14,6 @@ namespace Domain.Entities.AccommodationManagements
         public GuestAccommodation GuestAccommodationFK { get; set; }
         public Guid GidNationalityFK { get; set; }
         public Country CountryFK { get; set; }
-
         public string? IdNumber { get; set; }
         public string FullName { get; set; } = string.Empty;
         public DateTime? BirthDate { get; set; }
