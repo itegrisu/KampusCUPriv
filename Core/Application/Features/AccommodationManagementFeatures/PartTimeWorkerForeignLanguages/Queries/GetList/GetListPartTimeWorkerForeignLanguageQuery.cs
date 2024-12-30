@@ -1,18 +1,21 @@
 using Application.Helpers.PaginationHelpers;
 using Application.Repositories.AccommodationManagements.PartTimeWorkerForeignLanguageRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.AccommodationManagements;
+using Domain.Entities.AccommodationManagements;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.PartTimeWorkerForeignLanguages.Queries.GetList;
 
 public class GetListPartTimeWorkerForeignLanguageQuery : IRequest<GetListResponse<GetListPartTimeWorkerForeignLanguageListItemDto>>
 {
-    public PageRequest PageRequest { get; set; }
+    public string PartTimeWorkerGid { get; set; }
+    public int PageIndex { get; set; } = 0;
+    public int PageSize { get; set; } = 10;
 
     public class GetListPartTimeWorkerForeignLanguageQueryHandler : IRequestHandler<GetListPartTimeWorkerForeignLanguageQuery, GetListResponse<GetListPartTimeWorkerForeignLanguageListItemDto>>
     {
@@ -29,19 +32,26 @@ public class GetListPartTimeWorkerForeignLanguageQuery : IRequest<GetListRespons
 
         public async Task<GetListResponse<GetListPartTimeWorkerForeignLanguageListItemDto>> Handle(GetListPartTimeWorkerForeignLanguageQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<PartTimeWorkerForeignLanguage, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.PartTimeWorkerForeignLanguageMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+            Expression<Func<X.PartTimeWorkerForeignLanguage, bool>> predicate = null;
+
+            if (request.PartTimeWorkerGid != null)
+                predicate = x => x.GidPartTimeWorkerFK.ToString() == request.PartTimeWorkerGid;
+
+            if (request.PageIndex == -1)
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    predicate: predicate,
+                    includes: new Expression<Func<PartTimeWorkerForeignLanguage, object>>[]
+                    {
+                       x => x.ForeignLanguageFK
+                    });
+
+
+
             IPaginate<X.PartTimeWorkerForeignLanguage> partTimeWorkerForeignLanguages = await _partTimeWorkerForeignLanguageReadRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
+                index: request.PageIndex,
+                size: request.PageSize,
+                predicate: predicate,
+                include: x => x.Include(x => x.ForeignLanguageFK),
                 cancellationToken: cancellationToken
             );
 

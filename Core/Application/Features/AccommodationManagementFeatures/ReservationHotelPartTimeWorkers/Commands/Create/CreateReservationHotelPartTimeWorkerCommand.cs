@@ -4,6 +4,7 @@ using Application.Features.AccommodationManagementFeatures.ReservationHotelPartT
 using Application.Repositories.AccommodationManagements.ReservationHotelPartTimeWorkerRepo;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationHotelPartTimeWorkers.Commands.Create;
@@ -36,6 +37,10 @@ public class CreateReservationHotelPartTimeWorkerCommand : IRequest<CreatedReser
 
         public async Task<CreatedReservationHotelPartTimeWorkerResponse> Handle(CreateReservationHotelPartTimeWorkerCommand request, CancellationToken cancellationToken)
         {
+            await _reservationHotelPartTimeWorkerBusinessRules.PartTimeWorkerAlreadyExist(request.GidPartTimeWorkerFK);
+            await _reservationHotelPartTimeWorkerBusinessRules.ReservationHotelAlreadyExist(request.GidHotelFK);
+            await _reservationHotelPartTimeWorkerBusinessRules.IsReservationHotelAlreadyAdded(request.GidPartTimeWorkerFK, request.GidHotelFK);
+
             //int maxRowNo = await _reservationHotelPartTimeWorkerReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.ReservationHotelPartTimeWorker reservationHotelPartTimeWorker = _mapper.Map<X.ReservationHotelPartTimeWorker>(request);
             //reservationHotelPartTimeWorker.RowNo = maxRowNo + 1;
@@ -43,9 +48,8 @@ public class CreateReservationHotelPartTimeWorkerCommand : IRequest<CreatedReser
             await _reservationHotelPartTimeWorkerWriteRepository.AddAsync(reservationHotelPartTimeWorker);
             await _reservationHotelPartTimeWorkerWriteRepository.SaveAsync();
 
-            X.ReservationHotelPartTimeWorker savedReservationHotelPartTimeWorker = await _reservationHotelPartTimeWorkerReadRepository.GetAsync(predicate: x => x.Gid == reservationHotelPartTimeWorker.Gid);
-            //INCLUDES Buraya Gelecek include varsa eklenecek
-            //include: x => x.Include(x => x.UserFK));
+            X.ReservationHotelPartTimeWorker savedReservationHotelPartTimeWorker = await _reservationHotelPartTimeWorkerReadRepository.GetAsync(predicate: x => x.Gid == reservationHotelPartTimeWorker.Gid,
+            include: x => x.Include(x => x.PartTimeWorkerFK));
 
             GetByGidReservationHotelPartTimeWorkerResponse obj = _mapper.Map<GetByGidReservationHotelPartTimeWorkerResponse>(savedReservationHotelPartTimeWorker);
             return new()

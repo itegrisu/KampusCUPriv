@@ -6,9 +6,9 @@ namespace Application.Features.AccommodationManagementFeatures.PartTimeWorkerFor
     {
         public Guid Gid { get; set; }
         public Guid GidPartTimeWorkerFK { get; set; }
-        //public PartTimeWorker PartTimeWorkerFK { get; set; }
+        public string PartTimeWorkerFKFullName { get; set; }
         public Guid GidForeignLanguageFK { get; set; }
-        //public ForeignLanguage ForeignLanguageFK { get; set; }
+        public string ForeignLanguageFKName { get; set; }
 
 
     }
