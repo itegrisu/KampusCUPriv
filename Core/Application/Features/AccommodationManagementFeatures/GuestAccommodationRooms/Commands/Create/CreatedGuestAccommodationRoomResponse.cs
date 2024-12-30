@@ -7,5 +7,5 @@ namespace Application.Features.AccommodationManagementFeatures.GuestAccommodatio
 
 public class CreatedGuestAccommodationRoomResponse : BaseResponse, IResponse
 {
-    public GetByGidGuestAccommodationRoomResponse Obj { get; set; }
+    public List<GetByGidGuestAccommodationRoomResponse> Obj { get; set; }
 }
