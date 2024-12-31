@@ -41,7 +41,8 @@ public class GetListGuestQuery : IRequest<GetListResponse<GetListGuestListItemDt
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.CountryFK)
+                include: x => x.Include(x => x.CountryFK),
+                orderBy: x => x.OrderByDescending(x => x.CreatedDate)
             );
 
             GetListResponse<GetListGuestListItemDto> response = _mapper.Map<GetListResponse<GetListGuestListItemDto>>(guests);
