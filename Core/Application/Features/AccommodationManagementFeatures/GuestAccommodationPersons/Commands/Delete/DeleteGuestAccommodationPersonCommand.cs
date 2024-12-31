@@ -29,6 +29,8 @@ public class DeleteGuestAccommodationPersonCommand : IRequest<DeletedGuestAccomm
 
         public async Task<DeletedGuestAccommodationPersonResponse> Handle(DeleteGuestAccommodationPersonCommand request, CancellationToken cancellationToken)
         {
+            await _guestAccommodationPersonBusinessRules.GuestAccommodationPersonShouldNotBeDeletedIfAssignedToRoom(request.Gid);
+
             X.GuestAccommodationPerson? guestAccommodationPerson = await _guestAccommodationPersonReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             await _guestAccommodationPersonBusinessRules.GuestAccommodationPersonShouldExistWhenSelected(guestAccommodationPerson);
             guestAccommodationPerson.DataState = Core.Enum.DataState.Deleted;

@@ -1,7 +1,9 @@
-﻿using Application.Features.AccommodationManagementFeatures.Guests.Commands.Create;
+﻿using Application.Features.AccommodationManagementFeatures.GuestAccommodationPersons.Queries.GetByGuestGid;
+using Application.Features.AccommodationManagementFeatures.Guests.Commands.Create;
 using Application.Features.AccommodationManagementFeatures.Guests.Commands.Delete;
 using Application.Features.AccommodationManagementFeatures.Guests.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.Guests.Queries.GetByGid;
+using Application.Features.AccommodationManagementFeatures.Guests.Queries.GetByLetter;
 using Application.Features.AccommodationManagementFeatures.Guests.Queries.GetList;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -28,6 +30,11 @@ namespace API.Controllers.AccommodationManagementControllers
             return Ok(response);
         }
 
-
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByLetter([FromQuery] GetByLetterGetByLetterListGuestQuery getByLetterGetByLetterListGuestQuery)
+        {
+            GetListResponse<GetByLetterListGuestListItemDto> response = await Mediator.Send(getByLetterGetByLetterListGuestQuery);
+            return Ok(response);
+        }
     }
 }
