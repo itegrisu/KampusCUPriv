@@ -97,7 +97,7 @@ namespace Core.Repositories.Concretes
             return await queryable.FirstOrDefaultAsync(predicate, cancellationToken);
         }
 
-        public async Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool withDeleted = false, bool enableTracking = true, CancellationToken cancellationToken = default)
+        public async Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderByDesc = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool withDeleted = false, bool enableTracking = true, CancellationToken cancellationToken = default)
         {
             IQueryable<T> queryable = Table.AsQueryable().Where(entity => entity.DataState == Enum.DataState.Active);
             if (!enableTracking)
@@ -125,9 +125,14 @@ namespace Core.Repositories.Concretes
                 return await orderBy(queryable).ToPaginateAsync(index, size, 0, cancellationToken);
             }
 
+            if (orderByDesc != null)
+            {
+                return await orderByDesc(queryable).ToPaginateAsync(index, size, 0, cancellationToken);
+            }
+
             return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
         }
-        public async Task<IPaginate<T>> GetListAllAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool withDeleted = false, bool enableTracking = true, CancellationToken cancellationToken = default)
+        public async Task<IPaginate<T>> GetListAllAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderByDesc = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, int index = 0, int size = 10, bool withDeleted = false, bool enableTracking = true, CancellationToken cancellationToken = default)
         {
             IQueryable<T> queryable = Table.AsQueryable();
             if (!enableTracking)
@@ -153,6 +158,11 @@ namespace Core.Repositories.Concretes
             if (orderBy != null)
             {
                 return await orderBy(queryable).ToPaginateAsync(index, size, 0, cancellationToken);
+            }
+
+            if (orderByDesc != null)
+            {
+                return await orderByDesc(queryable).ToPaginateAsync(index, size, 0, cancellationToken);
             }
 
             return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);

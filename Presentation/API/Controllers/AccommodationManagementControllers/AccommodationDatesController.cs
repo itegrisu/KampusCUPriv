@@ -3,7 +3,6 @@ using Application.Features.AccommodationManagementFeatures.AccommodationDates.Co
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetList;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
 using MediatR;
@@ -21,9 +20,8 @@ namespace API.Controllers.AccommodationManagementControllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+        public async Task<IActionResult> GetList([FromQuery] GetListAccommodationDateQuery getListAccommodationDateQuery)
         {
-            GetListAccommodationDateQuery getListAccommodationDateQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListAccommodationDateListItemDto> response = await Mediator.Send(getListAccommodationDateQuery);
             return Ok(response);
         }
