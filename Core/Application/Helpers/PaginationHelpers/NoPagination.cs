@@ -26,6 +26,7 @@ namespace Application.Helpers.PaginationHelpers
           CancellationToken cancellationToken,
            Expression<Func<TEntity, bool>> predicate = null,
            Expression<Func<TEntity, object>> orderBy = null,
+           Expression<Func<TEntity, object>> orderByDesc = null,
            params Expression<Func<TEntity, object>>[] includes)
         {
 
@@ -38,6 +39,7 @@ namespace Application.Helpers.PaginationHelpers
                 fullData = await _readRepository.GetListAllAsync(
                     predicate: predicate,
                     orderBy: orderBy != null ? o => o.OrderBy(orderBy) : null,
+                     orderByDesc: orderByDesc != null ? o => o.OrderByDescending(orderByDesc) : null,
                     include: query =>
                     {
                         foreach (var include in includes)
@@ -56,6 +58,7 @@ namespace Application.Helpers.PaginationHelpers
                 fullData = await _readRepository.GetListAllAsync(
                     predicate: predicate,
                     orderBy: orderBy != null ? o => o.OrderBy(orderBy) : null,
+                    orderByDesc: orderByDesc != null ? o => o.OrderByDescending(orderByDesc) : null,
                     include: null,
                     index: 0,
                     size: count,
@@ -72,6 +75,7 @@ namespace Application.Helpers.PaginationHelpers
          CancellationToken cancellationToken,
           Expression<Func<TEntity, bool>> predicate = null,
           Expression<Func<TEntity, object>> orderBy = null,
+          Expression<Func<TEntity, object>> orderByDesc = null,
           bool isDesc = false,
           params Expression<Func<TEntity, object>>[] includes)
         {
@@ -85,6 +89,7 @@ namespace Application.Helpers.PaginationHelpers
                 fullData = await _readRepository.GetListAsync(
                     predicate: predicate,
                     orderBy: orderBy != null ? o => o.OrderBy(orderBy) : null,
+                    orderByDesc: orderByDesc != null ? o => o.OrderByDescending(orderByDesc) : null,
                     include: query =>
                     {
                         foreach (var include in includes)
@@ -103,6 +108,7 @@ namespace Application.Helpers.PaginationHelpers
                 fullData = await _readRepository.GetListAsync(
                     predicate: predicate,
                     orderBy: orderBy != null ? o => o.OrderBy(orderBy) : null,
+                    orderByDesc: orderByDesc != null ? o => o.OrderByDescending(orderByDesc) : null,
                     include: null,
                     index: 0,
                     size: count,
