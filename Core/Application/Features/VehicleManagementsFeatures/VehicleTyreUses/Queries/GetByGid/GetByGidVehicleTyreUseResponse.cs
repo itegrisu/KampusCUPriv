@@ -10,7 +10,7 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTyreUses.Queries
         public Guid GidTyreFK { get; set; }
         public string TyreFKTyreTypeFKTitle { get; set; }
         public DateTime InstallationDate { get; set; }
-        public DateTime TyreRemovalDate { get; set; }
+        public DateTime? TyreRemovalDate { get; set; }
 
     }
 }

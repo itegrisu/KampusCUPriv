@@ -18,8 +18,8 @@ namespace Application.Features.VehicleManagementFeatures.VehicleTransactions.Que
         public int StartKM { get; set; }
         public int? EndKM { get; set; }
         public int? Fee { get; set; }
-        public DateTime ContractStartDate { get; set; }
-        public DateTime ContractEndDate { get; set; }
+        public DateTime? ContractStartDate { get; set; }
+        public DateTime? ContractEndDate { get; set; }
         public string? ContactPerson { get; set; }
         public string? ContactPhone { get; set; }
         public string? ArventoAPIInfo { get; set; }

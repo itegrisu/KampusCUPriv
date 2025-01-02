@@ -43,14 +43,15 @@ namespace Application.Features.AccommodationManagementFeatures.GuestAccommodatio
                         predicate: x => x.GidGuestAccommodationFK == request.GuestGid,
                         includes: new Expression<Func<GuestAccommodationRoom, object>>[]
                         {
-                       x => x.GuestAccommodationFK,
-                       x=> x.RoomTypeFK
+                           x => x.GuestAccommodationFK,
+                           x => x.RoomTypeFK,
+                           x => x.GuestAccommodationResults
                         });
                 IPaginate<X.GuestAccommodationRoom> guestAccommodationRooms = await _guestAccommodationRoomReadRepository.GetListAsync(
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.GuestAccommodationFK).Include(x => x.RoomTypeFK),
+                    include: x => x.Include(x => x.GuestAccommodationFK).Include(x => x.RoomTypeFK).Include(x => x.GuestAccommodationResults),
                     predicate: x => x.GidGuestAccommodationFK == request.GuestGid
                 );
 
