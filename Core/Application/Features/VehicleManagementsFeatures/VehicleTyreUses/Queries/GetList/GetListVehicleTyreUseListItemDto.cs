@@ -11,5 +11,5 @@ public class GetListVehicleTyreUseListItemDto : IDto
     public Guid GidTyreFK { get; set; }
     public string TyreFKTyreNo { get; set; }
     public DateTime InstallationDate { get; set; }
-    public DateTime TyreRemovalDate { get; set; }
+    public DateTime? TyreRemovalDate { get; set; }
 }

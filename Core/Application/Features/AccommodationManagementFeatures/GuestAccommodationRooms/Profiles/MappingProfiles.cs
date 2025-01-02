@@ -4,6 +4,7 @@ using Application.Features.AccommodationManagementFeatures.GuestAccommodationRoo
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationRooms.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationRooms.Queries.GetByGuestGid;
 using Application.Features.AccommodationManagementFeatures.GuestAccommodationRooms.Queries.GetList;
+using Application.Features.GeneralManagementFeatures.Departments.Queries.GetListWithUser;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -27,7 +28,8 @@ public class MappingProfiles : Profile
         CreateMap<X.GuestAccommodationRoom, GetListGuestAccommodationRoomListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.GuestAccommodationRoom>, GetListResponse<GetListGuestAccommodationRoomListItemDto>>().ReverseMap();
 
-        CreateMap<X.GuestAccommodationRoom, GetByGuestGidListGuestAccommodationRoomListItemDto>().ReverseMap();
+        CreateMap<X.GuestAccommodationRoom, GetByGuestGidListGuestAccommodationRoomListItemDto>().ForMember(dest => dest.GuestCount, opt => opt.MapFrom(src => src.GuestAccommodationResults.Where(t => t.DataState == Core.Enum.DataState.Active).Count())).ReverseMap();
         CreateMap<IPaginate<X.GuestAccommodationRoom>, GetListResponse<GetByGuestGidListGuestAccommodationRoomListItemDto>>().ReverseMap();
+
     }
 }

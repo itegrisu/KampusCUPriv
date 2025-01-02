@@ -25,7 +25,7 @@ public class GetListFinanceExpenseListItemDto : IDto
     public string? Document { get; set; }
     public string? Description { get; set; }
     public EnumReceiverAcceptStatus ReceiverAcceptStatus { get; set; }
-    public DateTime ReceiverAcceptDate { get; set; }
-    public DateTime ReceiverRejectDate { get; set; }
+    public DateTime? ReceiverAcceptDate { get; set; }
+    public DateTime? ReceiverRejectDate { get; set; }
     public string? ReceiverIpAddress { get; set; }
 }

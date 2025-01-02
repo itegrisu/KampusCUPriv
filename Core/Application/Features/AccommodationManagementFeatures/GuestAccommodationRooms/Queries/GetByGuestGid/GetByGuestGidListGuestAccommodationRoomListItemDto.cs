@@ -14,6 +14,7 @@ namespace Application.Features.AccommodationManagementFeatures.GuestAccommodatio
         public string GuestAccommodationFKTitle { get; set; }
         public Guid GidRoomTypeFK { get; set; }
         public string RoomTypeFKName { get; set; }
+        public int GuestCount { get; set; }
         public DateTime Date { get; set; }
     }
 }

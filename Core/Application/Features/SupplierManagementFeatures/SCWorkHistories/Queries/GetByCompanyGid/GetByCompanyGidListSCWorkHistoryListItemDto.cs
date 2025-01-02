@@ -14,7 +14,7 @@ namespace Application.Features.SupplierManagementFeatures.SCWorkHistories.Querie
         public string SCCompanyFKCompanyName { get; set; }
         public string Title { get; set; }
         public string? Detail { get; set; }
-        public DateTime WorkDate { get; set; }
+        public DateTime? WorkDate { get; set; }
         public string? WorkFile { get; set; }
     }
 }

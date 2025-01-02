@@ -44,7 +44,7 @@ public class UpdateTransportationCommand : IRequest<UpdatedTransportationRespons
         public async Task<UpdatedTransportationResponse> Handle(UpdateTransportationCommand request, CancellationToken cancellationToken)
         {
             X.Transportation? transportation = await _transportationReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken,
-                   include: x => x.Include(x => x.OrganizationFK));
+                   include: x => x.Include(x => x.OrganizationFK).Include(x => x.FeeCurrencyFK));
                    //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _transportationBusinessRules.TransportationShouldExistWhenSelected(transportation);
@@ -52,7 +52,10 @@ public class UpdateTransportationCommand : IRequest<UpdatedTransportationRespons
 
             _transportationWriteRepository.Update(transportation!);
             await _transportationWriteRepository.SaveAsync();
-            GetByGidTransportationResponse obj = _mapper.Map<GetByGidTransportationResponse>(transportation);
+
+            X.Transportation? transportationUpdated = await _transportationReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken,
+                 include: x => x.Include(x => x.OrganizationFK).Include(x => x.FeeCurrencyFK));
+            GetByGidTransportationResponse obj = _mapper.Map<GetByGidTransportationResponse>(transportationUpdated);
 
             return new()
             {
