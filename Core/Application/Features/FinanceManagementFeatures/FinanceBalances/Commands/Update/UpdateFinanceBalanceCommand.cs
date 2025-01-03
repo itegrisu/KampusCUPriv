@@ -13,13 +13,11 @@ namespace Application.Features.FinanceManagementFeatures.FinanceBalances.Command
 public class UpdateFinanceBalanceCommand : IRequest<UpdatedFinanceBalanceResponse>
 {
     public Guid Gid { get; set; }
-
     public Guid GidSupplierCustomerFK { get; set; }
-    public Guid GidVehicleTransactionFK { get; set; }
-    public Guid GidTransportationFK { get; set; }
-    public Guid GidTransportationExternalServiceFK { get; set; }
+    public Guid? GidVehicleTransactionFK { get; set; }
+    public Guid? GidTransportationFK { get; set; }
+    public Guid? GidTransportationExternalServiceFK { get; set; }
     public Guid GidFeeCurrencyFK { get; set; }
-
     public EnumBalanceType BalanceType { get; set; }
     public EnumBalanceResourceType BalanceResourceType { get; set; }
     public DateTime ExpirationDate { get; set; }
@@ -28,8 +26,6 @@ public class UpdateFinanceBalanceCommand : IRequest<UpdatedFinanceBalanceRespons
     public DateTime? PaymentDate { get; set; }
     public string? PaymentFile { get; set; }
     public string? Description { get; set; }
-
-
 
     public class UpdateFinanceBalanceCommandHandler : IRequestHandler<UpdateFinanceBalanceCommand, UpdatedFinanceBalanceResponse>
     {
