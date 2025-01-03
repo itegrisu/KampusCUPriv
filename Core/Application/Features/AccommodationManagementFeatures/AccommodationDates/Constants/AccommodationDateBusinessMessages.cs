@@ -23,4 +23,9 @@ public static class AccommodationDatesBusinessMessages
     public const string ReservationDetailFKNotExists = "Rezervasyon Mevcut Deðil!";
     public const string GuestFKNotExists = "Ziyaretçi Mevcut Deðil!";
     public const string RoomNoFKNotExists = "Rezervasyon Odasý Mevcut Deðil!";
+    public const string ReservationHotelFKNotExists = "Rezervasyon Otel Mevcut Deðil!";
+
+    public const string RoomNotAvailableForSelectedDates = "Seçili Tarihlerde Oda Mevcut Deðil!";
+    public const string RoomTypeNotAvailableForSelectedDates = "Seçili Tarihlerde Oda Tipi Mevcut Deðil!";
+    public const string CustomerAlreadyRegisteredAnotherRoom = "Müþteri Zaten Baþka Bir Odada Kayýtlý!";
 }
