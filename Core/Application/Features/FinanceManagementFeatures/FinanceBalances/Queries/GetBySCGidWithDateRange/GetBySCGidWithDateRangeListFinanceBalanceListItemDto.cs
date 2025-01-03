@@ -1,9 +1,14 @@
-using Core.Application.Responses;
+﻿using Core.Application.Dtos;
 using Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetByGid
+namespace Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetBySCGidWithDateRange
 {
-    public class GetByGidFinanceBalanceResponse : IResponse
+    public class GetBySCGidWithDateRangeListFinanceBalanceListItemDto : IDto
     {
         public Guid Gid { get; set; }
         public Guid GidSupplierCustomerFK { get; set; }
@@ -25,5 +30,6 @@ namespace Application.Features.FinanceManagementFeatures.FinanceBalances.Queries
         public DateTime PaymentDate { get; set; }
         public string? PaymentFile { get; set; }
         public string? Description { get; set; }
+
     }
 }

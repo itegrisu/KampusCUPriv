@@ -2,6 +2,7 @@ using Application.Features.FinanceManagementFeatures.FinanceBalances.Commands.Cr
 using Application.Features.FinanceManagementFeatures.FinanceBalances.Commands.Delete;
 using Application.Features.FinanceManagementFeatures.FinanceBalances.Commands.Update;
 using Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetByGid;
+using Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetBySCGidWithDateRange;
 using Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetList;
 using AutoMapper;
 using Core.Application.Responses;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.FinanceBalance, GetListFinanceBalanceListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.FinanceBalance>, GetListResponse<GetListFinanceBalanceListItemDto>>().ReverseMap();
+
+        CreateMap<X.FinanceBalance, GetBySCGidWithDateRangeListFinanceBalanceListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.FinanceBalance>, GetListResponse<GetBySCGidWithDateRangeListFinanceBalanceListItemDto>>().ReverseMap();
     }
 }

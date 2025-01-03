@@ -17,6 +17,7 @@ public class GetListFinanceBalanceListItemDto : IDto
     public string TransportationExternalServiceFKTitle { get; set; }
     public Guid GidFeeCurrencyFK { get; set; }
     public string CurrencyFKName { get; set; }
+    public string CurrencyFKSymbol { get; set; }
     public EnumBalanceType BalanceType { get; set; }
     public EnumBalanceResourceType BalanceResourceType { get; set; }
     public DateTime ExpirationDate { get; set; }

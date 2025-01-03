@@ -13,9 +13,9 @@ namespace Application.Features.FinanceManagementFeatures.FinanceBalances.Command
 public class CreateFinanceBalanceCommand : IRequest<CreatedFinanceBalanceResponse>
 {
     public Guid GidSupplierCustomerFK { get; set; }
-    public Guid GidVehicleTransactionFK { get; set; }
-    public Guid GidTransportationFK { get; set; }
-    public Guid GidTransportationExternalServiceFK { get; set; }
+    public Guid? GidVehicleTransactionFK { get; set; }
+    public Guid? GidTransportationFK { get; set; }
+    public Guid? GidTransportationExternalServiceFK { get; set; }
     public Guid GidFeeCurrencyFK { get; set; }
     public EnumBalanceType BalanceType { get; set; }
     public EnumBalanceResourceType BalanceResourceType { get; set; }

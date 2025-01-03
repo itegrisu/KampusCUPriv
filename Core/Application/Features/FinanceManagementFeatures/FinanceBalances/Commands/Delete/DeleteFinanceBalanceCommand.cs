@@ -10,6 +10,7 @@ namespace Application.Features.FinanceManagementFeatures.FinanceBalances.Command
 public class DeleteFinanceBalanceCommand : IRequest<DeletedFinanceBalanceResponse>
 {
 	public Guid Gid { get; set; }
+    public Guid UserGid {get; set; }
 
     public class DeleteFinanceBalanceCommandHandler : IRequestHandler<DeleteFinanceBalanceCommand, DeletedFinanceBalanceResponse>
     {
@@ -29,6 +30,8 @@ public class DeleteFinanceBalanceCommand : IRequest<DeletedFinanceBalanceRespons
 
         public async Task<DeletedFinanceBalanceResponse> Handle(DeleteFinanceBalanceCommand request, CancellationToken cancellationToken)
         {
+            await _financeBalanceBusinessRules.isSystemAdmin(request.UserGid);
+
             X.FinanceBalance? financeBalance = await _financeBalanceReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             await _financeBalanceBusinessRules.FinanceBalanceShouldExistWhenSelected(financeBalance);
             financeBalance.DataState = Core.Enum.DataState.Deleted;
