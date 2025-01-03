@@ -49,14 +49,15 @@ public class GetListAccommodationDateQuery : IRequest<GetListResponse<GetListAcc
                        x=> x.ReservationRoomFK,
                        x=>x.ReservationDetailFK.ReservationHotelFK,
                        x=>x.ReservationDetailFK.ReservationHotelFK.SCCompanyFK,
+                       x=>x.ReservationDetailFK.RoomTypeFK
                     });
             IPaginate<X.AccommodationDate> accommodationDates = await _accommodationDateReadRepository.GetListAsync(
                 index: request.PageIndex,
                 size: request.PageSize,
                 predicate: predicate,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.GuestFK).Include(x => x.ReservationDetailFK).Include(x => x.ReservationRoomFK).
-                Include(x => x.ReservationDetailFK).ThenInclude(x => x.ReservationHotelFK).Include(x => x.ReservationDetailFK).ThenInclude(x => x.ReservationHotelFK).ThenInclude(x => x.SCCompanyFK)
+                include: x => x.Include(x => x.GuestFK).Include(x => x.ReservationDetailFK).Include(x => x.ReservationRoomFK).Include(x => x.ReservationDetailFK).ThenInclude(x => x.RoomTypeFK)
+                .Include(x => x.ReservationDetailFK).ThenInclude(x => x.ReservationHotelFK).Include(x => x.ReservationDetailFK).ThenInclude(x => x.ReservationHotelFK).ThenInclude(x => x.SCCompanyFK)
             );
 
             GetListResponse<GetListAccommodationDateListItemDto> response = _mapper.Map<GetListResponse<GetListAccommodationDateListItemDto>>(accommodationDates);
