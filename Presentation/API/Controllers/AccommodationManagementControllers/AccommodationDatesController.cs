@@ -1,4 +1,5 @@
-﻿using Application.Features.AccommodationManagementFeatures.AccommodationDates.Commands.Create;
+﻿using Application.Features.AccommodationManagementFeatures.AccommodationDates.Commands.ChangeRoom;
+using Application.Features.AccommodationManagementFeatures.AccommodationDates.Commands.Create;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Commands.Delete;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetByGid;
@@ -26,6 +27,12 @@ namespace API.Controllers.AccommodationManagementControllers
             return Ok(response);
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ChangeRoom([FromBody] ChangeRoomAccommodationDateCommand changeRoomAccommodationDateCommand)
+        {
+            ChangeRoomAccommodationDateResponse response = await Mediator.Send(changeRoomAccommodationDateCommand);
+            return Ok(response);
+        }
 
     }
 }

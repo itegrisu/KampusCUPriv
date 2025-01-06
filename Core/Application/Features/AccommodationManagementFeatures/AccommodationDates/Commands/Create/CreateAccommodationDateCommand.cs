@@ -103,7 +103,6 @@ public class CreateAccommodationDateCommand : IRequest<CreatedAccommodationDateR
                     GidGuestFK = request.GidGuestFK,
                     GidReservationDetailFK = currentReservationDetail.Gid,
                     GidRoomNoFK = matchingRoom.Gid, // Bulunan oda Gid
-                    PreviousRoomInfo = $"Oda numarasý: {desiredRoomNo}, Tarih: {date:dd.MM.yyyy}"
                 };
 
                 await _accommodationDateWriteRepository.AddAsync(accommodationDate);
