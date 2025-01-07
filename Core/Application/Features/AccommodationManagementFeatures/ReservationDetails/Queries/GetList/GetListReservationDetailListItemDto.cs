@@ -10,11 +10,17 @@ public class GetListReservationDetailListItemDto : IDto
     public string ReservationHotelFKReservationFKTitle { get; set; }
     public string ReservationHotelFKBuyCurrencyFKSymbol { get; set; }
     public string ReservationHotelFKSellCurrencyFKSymbol { get; set; }
+
+    public string ReservationHotelFKReservationFKStartDate { get; set; }
+    public string ReservationHotelFKReservationFKEndDate { get; set; }
+
+
     public Guid GidRoomTypeFK { get; set; }
     public string RoomTypeFKName { get; set; }
     public int RoomTypeFKCapacity { get; set; }
     public DateTime ReservationDate { get; set; }
     public int RoomCount { get; set; }
+    public int FullRoomCount { get; set; }
     public decimal BuyPrice { get; set; }
     public decimal SellPrice { get; set; }
 }

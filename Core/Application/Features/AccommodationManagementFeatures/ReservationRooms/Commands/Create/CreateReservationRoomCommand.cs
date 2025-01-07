@@ -1,11 +1,11 @@
 using Application.Features.AccommodationManagementFeatures.ReservationRooms.Constants;
 using Application.Features.AccommodationManagementFeatures.ReservationRooms.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.ReservationRooms.Rules;
+using Application.Repositories.AccommodationManagements.ReservationRoomRepo;
 using AutoMapper;
-using X = Domain.Entities.AccommodationManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Application.Repositories.AccommodationManagements.ReservationRoomRepo;
+using X = Domain.Entities.AccommodationManagements;
 
 namespace Application.Features.AccommodationManagementFeatures.ReservationRooms.Commands.Create;
 
@@ -39,7 +39,8 @@ public class CreateReservationRoomCommand : IRequest<CreatedReservationRoomRespo
             await _reservationRoomWriteRepository.AddAsync(reservationRoom);
             await _reservationRoomWriteRepository.SaveAsync();
 
-            X.ReservationRoom savedReservationRoom = await _reservationRoomReadRepository.GetAsync(predicate: x => x.Gid == reservationRoom.Gid, include: x => x.Include(x => x.ReservationDetailFK));
+            X.ReservationRoom savedReservationRoom = await _reservationRoomReadRepository.GetAsync(predicate: x => x.Gid == reservationRoom.Gid,
+                include: x => x.Include(x => x.ReservationDetailFK).Include(x => x.ReservationDetailFK).ThenInclude(x => x.RoomTypeFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

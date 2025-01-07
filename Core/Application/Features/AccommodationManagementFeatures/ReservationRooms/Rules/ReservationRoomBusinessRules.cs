@@ -12,4 +12,10 @@ public class ReservationRoomBusinessRules : BaseBusinessRules
         if (item == null)
             throw new BusinessException(ReservationRoomsBusinessMessages.ReservationRoomNotExists);
     }
+
+    public async Task ReservationRoomShouldNotHaveAccommodationDates(X.ReservationRoom item)
+    {
+        if (item.AccommodationDates.Count() != 0)
+            throw new BusinessException(ReservationRoomsBusinessMessages.ReservationRoomHasAccommodationDates);
+    }
 }

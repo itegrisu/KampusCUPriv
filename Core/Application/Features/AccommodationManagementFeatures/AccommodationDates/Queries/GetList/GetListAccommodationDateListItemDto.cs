@@ -1,4 +1,5 @@
 using Core.Application.Dtos;
+using Domain.Enums;
 using System.Text.Json.Serialization;
 
 namespace Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetList;
@@ -21,5 +22,15 @@ public class GetListAccommodationDateListItemDto : IDto
     public string ReservationDetailFKRoomTypeFKName { get; set; }
     public DateTime Date { get; set; }
     public string? PreviousRoomInfo { get; set; }
+
+    public string? GuestFKCountryFKName { get; set; }
+    public string GuestFKIdNumber { get; set; } = string.Empty;
+    public string? GuestFKDuty { get; set; }
+    public string? GuestFKInstitution { get; set; }
+    public string? GuestFKPhone { get; set; }
+    public string? GuestFKEmail { get; set; }
+    public EnumGender GuestFKGender { get; set; }
+    public string? GuestFKHesCode { get; set; }
+    public string? GuestFKDescription { get; set; }
 
 }
