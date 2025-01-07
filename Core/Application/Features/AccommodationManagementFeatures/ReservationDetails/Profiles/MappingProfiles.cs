@@ -21,7 +21,7 @@ public class MappingProfiles : Profile
         CreateMap<X.ReservationDetail, DeleteReservationDetailCommand>().ReverseMap();
         CreateMap<X.ReservationDetail, DeletedReservationDetailResponse>().ReverseMap();
 
-		CreateMap<X.ReservationDetail, GetByGidReservationDetailResponse>().ReverseMap();
+        CreateMap<X.ReservationDetail, GetByGidReservationDetailResponse>().ReverseMap();
 
         CreateMap<X.ReservationDetail, GetListReservationDetailListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.ReservationDetail>, GetListResponse<GetListReservationDetailListItemDto>>().ReverseMap();
