@@ -1,6 +1,6 @@
 using Application.Abstractions.Storage;
-using Application.Features.GeneralManagementFeatures.Users.Constants;
-using Application.Features.GeneralManagementFeatures.Users.Rules;
+using Application.Features.GeneralFeatures.Users.Constants;
+using Application.Features.GeneralFeatures.Users.Rules;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 

@@ -25,7 +25,6 @@ namespace Infrastracture
             services.AddScoped<LogUserPageVisitService>();
             services.AddScoped<IFileTypeCheckService, FileTypeCheckService>();
             services.AddScoped<IMailService, MailService>();
-            services.AddScoped<IUlasýmService, UlastirmaService>();
 
         }
 

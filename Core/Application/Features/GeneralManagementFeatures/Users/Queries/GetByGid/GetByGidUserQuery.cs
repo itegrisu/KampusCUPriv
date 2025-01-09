@@ -1,11 +1,10 @@
-﻿using Application.Features.GeneralManagementFeatures.Users.Rules;
-using Application.Repositories.GeneralManagementRepos.UserRepo;
 using AutoMapper;
-using Domain.Entities.GeneralManagements;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using X = Domain.Entities.GeneralManagements;
+using Application.Features.GeneralFeatures.Users.Rules;
+using Application.Repositories.GeneralManagementRepo.UserRepo;
 
-namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
+namespace Application.Features.GeneralFeatures.Users.Queries.GetByGid
 {
     public class GetByGidUserQuery : IRequest<GetByGidUserResponse>
     {
@@ -26,13 +25,13 @@ namespace Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid
 
             public async Task<GetByGidUserResponse> Handle(GetByGidUserQuery request, CancellationToken cancellationToken)
             {
-                await _userBusinessRules.UserCustomIdShouldExistWhenSelected(request.Gid);
-                User? userCustom = await _userReadRepository.GetAsync(
-                    predicate: uc => uc.Gid == request.Gid,
-                    cancellationToken: cancellationToken,
-                    include: i => i.Include(i => i.CountryFK));
+                X.User? user = await _userReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
+                    //unutma
+					//includes varsa eklenecek - Orn: Altta
+					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)
+                await _userBusinessRules.UserShouldExistWhenSelected(user);
 
-                GetByGidUserResponse response = _mapper.Map<GetByGidUserResponse>(userCustom);
+                GetByGidUserResponse response = _mapper.Map<GetByGidUserResponse>(user);
                 return response;
             }
         }

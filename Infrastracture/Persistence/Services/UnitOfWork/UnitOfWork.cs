@@ -6,10 +6,10 @@ namespace Persistence.Services.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly Emasist2024Context _context;
+        private readonly KampusCUContext _context;
         private IDbContextTransaction _transaction;
 
-        public UnitOfWork(Emasist2024Context context)
+        public UnitOfWork(KampusCUContext context)
         {
             _context = context;
         }

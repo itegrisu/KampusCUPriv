@@ -34,6 +34,9 @@
 	<ItemGroup>
 	  <Folder Include="Abstractions\EntityServices\DefinationManagement\" />
 	  <Folder Include="Dtos\DefinitionManagerDtos\" />
+	  <Folder Include="Repositories\ClubManagementRepos\" />
+	  <Folder Include="Repositories\CommunicationManagementRepo\" />
+	  <Folder Include="Repositories\DefinitionManagementRepo\" />
 	</ItemGroup>
 	
 	

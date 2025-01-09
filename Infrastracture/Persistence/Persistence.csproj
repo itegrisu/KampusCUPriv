@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="EntityConfiguration\StockManagements\**" />
+    <Compile Remove="Repositories\AccommodationManagements\**" />
     <EmbeddedResource Remove="EntityConfiguration\StockManagements\**" />
+    <EmbeddedResource Remove="Repositories\AccommodationManagements\**" />
     <None Remove="EntityConfiguration\StockManagements\**" />
+    <None Remove="Repositories\AccommodationManagements\**" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -36,7 +39,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Repositories\AccommodationManagements\ReservationDetailRepo\" />
 	  <Folder Include="Services\EntityServices\DefinationManagements\" />
 	</ItemGroup>
 

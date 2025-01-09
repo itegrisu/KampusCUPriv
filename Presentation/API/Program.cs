@@ -1,6 +1,6 @@
 using API.Filters;
 using Application;
-using Application.Features.AuthManagementFeatures.AuthPages.Profiles;
+using Application.Features.GeneralFeatures.Users.Profiles;
 using Core;
 using Core.Context;
 using Core.CrossCuttingConcern.Exceptions.WepApi.Extensions;
@@ -204,7 +204,7 @@ builder.Services.AddCors(options =>
 
 #region DbContext
 //IServiceCollection arabirimine XXXContext tipinde bir veritabaný baðlamýný (DbContext) ekler.
-builder.Services.AddDbContext<Emasist2024Context>(options =>
+builder.Services.AddDbContext<KampusCUContext>(options =>
 {
     // SQL Server veritabaný saðlayýcýsýný kullanarak veritabaný baðlamýnýn yapýlandýrýlmasýný yapar. connectionString parametresi, SQL Server baðlantý dizesini temsil eder. 
     // b => b.MigrationsAssembly("SalihPoc.Api") ifadesi, veritabaný migrasyonlarýný uygulamak için kullanýlacak olan migrasyon derlemesinin adýný belirtir. Bu ad, "SalihPoc.Api" olarak belirtilmiþtir.

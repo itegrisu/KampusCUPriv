@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.EntityServices;
 using Application.Features.Base;
-using Application.Repositories.GeneralManagementRepos.UserRepo;
+using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Core.CrossCuttingConcern.Exceptions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -64,16 +64,7 @@ namespace Persistence.Services.EntityServices
                     Title = "Update Data"
                 };
             }
-            if (!user.IsSystemAdmin)
-            {
-                return new()
-                {
-                    IsValid = false,
-                    Message = "User is not authorized to perform this action",
-                    ActionType = "Update",
-                    Title = "Update Data"
-                };
-            }
+           
 
             using (var connection = new SqlConnection(_connectionString))
             {

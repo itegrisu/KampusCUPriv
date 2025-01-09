@@ -10,8 +10,8 @@ namespace Application.Abstractions.EntityServices
     public interface ILogService
     { 
 
-        List<LogErrorDto> GetLogErrors(Guid? userGid, DateTime startTime, DateTime endTime);
-        Task LogOutLog(Guid gid);
+        //List<LogErrorDto> GetLogErrors(Guid? userGid, DateTime startTime, DateTime endTime);
+        //Task LogOutLog(Guid gid);
 
     }
 }

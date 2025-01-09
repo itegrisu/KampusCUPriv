@@ -1,9 +1,9 @@
 using Application.Features.Base;
-using Application.Features.GeneralManagementFeatures.Users.Queries.GetByGid;
+using Application.Features.GeneralFeatures.Users.Queries.GetByGid;
 using Core.Application.Responses;
+using System.Configuration;
 
-
-namespace Application.Features.GeneralManagementFeatures.Users.Commands.Create;
+namespace Application.Features.GeneralFeatures.Users.Commands.Create;
 
 public class CreatedUserResponse : BaseResponse, IResponse
 {
