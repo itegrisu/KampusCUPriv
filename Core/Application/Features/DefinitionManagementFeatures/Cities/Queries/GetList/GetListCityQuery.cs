@@ -34,6 +34,7 @@ public class GetListCityQuery : IRequest<GetListResponse<GetListCityListItemDto>
             if (request.PageRequest.PageIndex == -1)
             {
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    orderBy: x => x.PlateCode,
                   includes: new Expression<Func<City, object>>[]
                   {
                       x=>x.CountryFK
@@ -45,6 +46,7 @@ public class GetListCityQuery : IRequest<GetListResponse<GetListCityListItemDto>
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(x => x.PlateCode),
                 include: x => x.Include(x => x.CountryFK));
 
             GetListResponse<GetListCityListItemDto> response = _mapper.Map<GetListResponse<GetListCityListItemDto>>(citys);

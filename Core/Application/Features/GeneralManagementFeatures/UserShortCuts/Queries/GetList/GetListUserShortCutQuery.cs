@@ -1,12 +1,12 @@
 using Application.Helpers.PaginationHelpers;
+using Application.Repositories.GeneralManagementRepos.UserShortCutRepo;
 using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
+using Domain.Entities.GeneralManagements;
 using MediatR;
 using System.Linq.Expressions;
-using Application.Repositories.GeneralManagementRepos.UserShortCutRepo;
-using Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralManagementFeatures.UserShortCuts.Queries.GetList;
 
@@ -32,6 +32,7 @@ public class GetListUserShortCutQuery : IRequest<GetListResponse<GetListUserShor
             if (request.PageRequest.PageIndex == -1)
             {
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    orderBy: x => x.RowNo,
                    includes: new Expression<Func<UserShortCut, object>>[]
                    {
                       x=>x.UserFK
@@ -41,6 +42,7 @@ public class GetListUserShortCutQuery : IRequest<GetListResponse<GetListUserShor
             IPaginate<UserShortCut> userShortCuts = await _userShortCutReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                 orderBy: x => x.OrderBy(x => x.RowNo),
                 cancellationToken: cancellationToken
             );
 

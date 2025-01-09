@@ -1,11 +1,10 @@
 ﻿using Application.Abstractions;
-using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetByGid;
-using Application.Features.TransportationManagementsFeatures.TransportationServices.Commands.ReportTransportationService;
 using Application.Repositories.TransportationRepos.TransportationPassengerRepo;
 using Application.Repositories.TransportationRepos.TransportationPersonnelRepo;
 using Application.Repositories.TransportationRepos.TransportationServiceRepo;
 using Domain.Entities.TransportationManagements;
 using Domain.Enums;
+using Microsoft.AspNetCore.Hosting;
 using System.Net;
 using System.ServiceModel;
 using System.Text;
@@ -27,12 +26,14 @@ namespace Infrastracture.Services
         private readonly ITransportationServiceWriteRepository _transportationServiceWriteRepository;
         private readonly ITransportationPersonnelWriteRepository _transportationPersonnelWriteRepository;
         private readonly ITransportationPassengerWriteRepository _transportationPassengerWriteRepository;
-        public UlastirmaService(ITransportationServiceReadRepository transportationServiceReadRepository, ITransportationPersonnelWriteRepository transportationPersonnelWriteRepository, ITransportationPassengerWriteRepository transportationPassengerWriteRepository, ITransportationServiceWriteRepository transportationServiceWriteRepository)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public UlastirmaService(ITransportationServiceReadRepository transportationServiceReadRepository, ITransportationPersonnelWriteRepository transportationPersonnelWriteRepository, ITransportationPassengerWriteRepository transportationPassengerWriteRepository, ITransportationServiceWriteRepository transportationServiceWriteRepository, IWebHostEnvironment webHostEnvironment)
         {
             _transportationServiceReadRepository = transportationServiceReadRepository;
             _transportationPersonnelWriteRepository = transportationPersonnelWriteRepository;
             _transportationPassengerWriteRepository = transportationPassengerWriteRepository;
             _transportationServiceWriteRepository = transportationServiceWriteRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public UdhbUetdsAriziServiceClient UedtsService()
@@ -214,8 +215,8 @@ namespace Infrastracture.Services
                 string fileName = $"{path}{transportationService.Gid}.pdf";
 
                 // PDF dosyasını belirtilen dizine yazıyoruz
-                await System.IO.File.WriteAllBytesAsync(fileName, pdfData);
-                transportationService.TransportationFile = $"{transportationService.Gid}.pdf";
+                await System.IO.File.WriteAllBytesAsync(_webHostEnvironment.WebRootPath + fileName, pdfData);
+                transportationService.TransportationFile = fileName;
 
                 _transportationServiceWriteRepository.Update(transportationService);
                 await _transportationServiceWriteRepository.SaveAsync();
@@ -433,7 +434,7 @@ namespace Infrastracture.Services
                 if (!string.IsNullOrEmpty(passenger.RefNoTransportationPassenger))
                 {
                     var iptalInput = new uetdsAriziYolcuIptalInput();
-                    var cancelResponse = await UedtsService().yolcuIptalAsync(User(),seferRefNo,iptalInput);
+                    var cancelResponse = await UedtsService().yolcuIptalAsync(User(), seferRefNo, iptalInput);
 
                     if (cancelResponse.@return.sonucKodu != 0)
                     {
@@ -458,7 +459,7 @@ namespace Infrastracture.Services
                 yolcuBilgileriInput.telefonNo = passenger.Phone ?? "";
 
                 // Yolcu ekleme işlemi
-                var response = await UedtsService().yolcuEkleAsync(User(),seferRefNo,yolcuBilgileriInput);
+                var response = await UedtsService().yolcuEkleAsync(User(), seferRefNo, yolcuBilgileriInput);
 
                 if (response.@return.sonucKodu == 0)
                 {
@@ -502,7 +503,7 @@ namespace Infrastracture.Services
 
             // UETDS yolcu iptal servis çağrısı
             var result = await UedtsService().yolcuIptalUetdsYolcuRefNoIleAsync(
-                User(),seferRefNumber,refNoTransportationPassenger, iptalAciklama
+                User(), seferRefNumber, refNoTransportationPassenger, iptalAciklama
             );
 
             // Sonuç bilgileri
