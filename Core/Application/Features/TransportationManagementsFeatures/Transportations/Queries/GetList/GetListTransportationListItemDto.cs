@@ -1,5 +1,4 @@
 using Core.Application.Dtos;
-using Core.Enum;
 using Domain.Enums;
 
 namespace Application.Features.TransportationManagementFeatures.Transportations.Queries.GetList;
@@ -12,7 +11,9 @@ public class GetListTransportationListItemDto : IDto
     public Guid GidFeeCurrencyFK { get; set; }
     public string FeeCurrencyFKName { get; set; }
     public string FeeCurrencyFKSymbol { get; set; }
-    public string CustomerInfo { get; set; }
+    //public string CustomerInfo { get; set; }
+    public Guid GidCustomerFK { get; set; }
+    public string SCCompanyFKCompanyName { get; set; }
     public string TransportationNo { get; set; }
     public string Title { get; set; }
     public DateTime StartDate { get; set; }

@@ -5,9 +5,6 @@ using Application.Features.FinanceManagementFeatures.FinanceBalances.Commands.Up
 using Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetByGid;
 using Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetBySCGidWithDateRange;
 using Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetList;
-using Application.Features.FinanceManagementFeatures.FinanceExpenses.Queries.GetByUserGid;
-using Application.Features.OfferManagementFeatures.OfferFiles.Commands.UploadFile;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
 using MediatR;
@@ -25,9 +22,8 @@ namespace API.Controllers.FinanceManagementControllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+        public async Task<IActionResult> GetList([FromQuery] GetListFinanceBalanceQuery getListFinanceBalanceQuery)
         {
-            GetListFinanceBalanceQuery getListFinanceBalanceQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListFinanceBalanceListItemDto> response = await Mediator.Send(getListFinanceBalanceQuery);
             return Ok(response);
         }
@@ -43,6 +39,13 @@ namespace API.Controllers.FinanceManagementControllers
         public async Task<IActionResult> UploadBalanceFile([FromBody] UploadBalanceFileCommand uploadBalanceFileCommand)
         {
             UploadBalanceFileResponse response = await Mediator.Send(uploadBalanceFileCommand);
+            return Ok(response);
+        }
+
+        [HttpPut("[action]")]
+        public virtual async Task<IActionResult> DeleteWithUserGid([FromBody] DeleteFinanceBalanceCommand request)
+        {
+            DeletedFinanceBalanceResponse response = await Mediator.Send(request);
             return Ok(response);
         }
 

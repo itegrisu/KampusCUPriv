@@ -39,6 +39,7 @@ public class CreateReservationHotelStaffCommand : IRequest<CreatedReservationHot
         public async Task<CreatedReservationHotelStaffResponse> Handle(CreateReservationHotelStaffCommand request, CancellationToken cancellationToken)
         {
             await _reservationHotelStaffBusinessRules.HotelShouldExist(request.GidHotelFK);
+            await _reservationHotelStaffBusinessRules.GsmNoAlreadyExist(request.GsmNo);
 
             //int maxRowNo = await _reservationHotelStaffReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.ReservationHotelStaff reservationHotelStaff = _mapper.Map<X.ReservationHotelStaff>(request);

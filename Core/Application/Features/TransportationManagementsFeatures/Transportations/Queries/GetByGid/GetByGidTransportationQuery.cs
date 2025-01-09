@@ -1,9 +1,9 @@
-using AutoMapper;
-using MediatR;
-using X = Domain.Entities.TransportationManagements;
-using Microsoft.EntityFrameworkCore;
 using Application.Features.TransportationManagementFeatures.Transportations.Rules;
 using Application.Repositories.TransportationRepos.TransportationRepo;
+using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using X = Domain.Entities.TransportationManagements;
 
 namespace Application.Features.TransportationManagementFeatures.Transportations.Queries.GetByGid
 {
@@ -27,11 +27,11 @@ namespace Application.Features.TransportationManagementFeatures.Transportations.
             public async Task<GetByGidTransportationResponse> Handle(GetByGidTransportationQuery request, CancellationToken cancellationToken)
             {
                 X.Transportation? transportation = await _transportationReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken,
-                       include: x => x.Include(x => x.OrganizationFK).Include(x => x.FeeCurrencyFK));
-                       //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
-                    //unutma
-					//includes varsa eklenecek - Orn: Altta
-					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)
+                       include: x => x.Include(x => x.OrganizationFK).Include(x => x.FeeCurrencyFK).Include(x => x.SCCompanyFK));
+                //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
+                //unutma
+                //includes varsa eklenecek - Orn: Altta
+                //include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)
                 await _transportationBusinessRules.TransportationShouldExistWhenSelected(transportation);
 
                 GetByGidTransportationResponse response = _mapper.Map<GetByGidTransportationResponse>(transportation);

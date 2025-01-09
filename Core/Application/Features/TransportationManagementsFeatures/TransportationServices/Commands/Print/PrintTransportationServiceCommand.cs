@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Abstractions;
-using Application.Features.TransportationManagementFeatures.TransportationServices.Commands.Update;
+﻿using Application.Abstractions;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Constants;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Queries.GetByGid;
 using Application.Features.TransportationManagementFeatures.TransportationServices.Rules;
 using Application.Repositories.TransportationRepos.TransportationGroupRepo;
 using Application.Repositories.TransportationRepos.TransportationServiceRepo;
 using AutoMapper;
-using Domain.Entities.TransportationManagements;
-using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.TransportationManagements;
@@ -59,13 +51,18 @@ namespace Application.Features.TransportationManagementsFeatures.TransportationS
                 var response = await _ulasımService.SeferCiktisiAl(transportationService, "\\Files\\transportation-service-files\\");
 
                 if (!response.Contains("HATA"))
-                {                 
+                {
+                    X.TransportationService? savedTransportationService = await _transportationServiceReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken,
+                        include: x => x.Include(x => x.TransportationFK).Include(x => x.VehicleAllFK));
+
+                    GetByGidTransportationServiceResponse obj = _mapper.Map<GetByGidTransportationServiceResponse>(savedTransportationService);
 
                     return new()
                     {
                         Title = TransportationServicesBusinessMessages.ProcessCompleted,
                         Message = response,
                         IsValid = true,
+                        Obj = obj
                     };
                 }
 

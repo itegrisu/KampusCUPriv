@@ -1,19 +1,12 @@
-﻿using Application.Features.DefinitionManagementFeatures.Cities.Queries.GetList;
-using Application.Helpers.PaginationHelpers;
+﻿using Application.Helpers.PaginationHelpers;
 using Application.Repositories.DefinitionManagementRepos.CityRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities.DefinitionManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using X = Domain.Entities.DefinitionManagements;
 
 namespace Application.Features.DefinitionManagementFeatures.Cities.Queries.GetByCountryGid
@@ -42,6 +35,7 @@ namespace Application.Features.DefinitionManagementFeatures.Cities.Queries.GetBy
                 {
                     return await _noPagination.NoPaginationData(cancellationToken,
                       predicate: x => x.GidCountryFK == request.CountryGid,
+                        orderBy: x => x.PlateCode,
                       includes: new Expression<Func<City, object>>[]
                       {
                       x=>x.CountryFK
@@ -53,6 +47,7 @@ namespace Application.Features.DefinitionManagementFeatures.Cities.Queries.GetBy
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
+                     orderBy: x => x.OrderBy(x => x.PlateCode),
                     predicate: x => x.GidCountryFK == request.CountryGid,
                     include: x => x.Include(x => x.CountryFK));
 

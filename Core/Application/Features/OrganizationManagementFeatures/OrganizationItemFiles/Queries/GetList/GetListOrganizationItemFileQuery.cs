@@ -33,6 +33,7 @@ public class GetListOrganizationItemFileQuery : IRequest<GetListResponse<GetList
         {
             if (request.PageRequest.PageIndex == -1)
                 return await _noPagination.NoPaginationData(cancellationToken,
+                     orderBy: x => x.RowNo,
                     includes: new Expression<Func<OrganizationItemFile, object>>[]
                     {
                        x => x.OrganizationItemFK
@@ -41,6 +42,7 @@ public class GetListOrganizationItemFileQuery : IRequest<GetListResponse<GetList
             IPaginate<X.OrganizationItemFile> organizationItemFiles = await _organizationItemFileReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                orderBy: x => x.OrderBy(x => x.RowNo),
                 include: i => i.Include(i => i.OrganizationItemFK),
                 cancellationToken: cancellationToken
             );

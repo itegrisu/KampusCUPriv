@@ -28,4 +28,6 @@ public static class ReservationDetailsBusinessMessages
     public const string ReservationHotelNotExist = "Rezervasyon Oteli Mevcut Deðil!";
     public const string RoomTypeNotExist = "Oda Tipi Mevcut Deðil!";
 
+    public const string ReservationHotelAuthError = "Bu Otele Eriþiminiz Yoktur!";
+
 }

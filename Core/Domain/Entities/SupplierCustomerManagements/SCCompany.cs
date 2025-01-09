@@ -41,5 +41,6 @@ namespace Domain.Entities.SupplierCustomerManagements
         public ICollection<ReservationHotel>? ReservationHotels { get; set; }
         public ICollection<ReservationHotelStaff>? ReservationHotelStaffs { get; set; }
         public ICollection<GuestAccommodation>? GuestAccommodations { get; set; }
+        public ICollection<Transportation>? Transportations { get; set; }
     }
 }

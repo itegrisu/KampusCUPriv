@@ -4,11 +4,11 @@ using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.DefinitionManagements;
-using MediatR;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using Domain.Entities.DefinitionManagements;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using X = Domain.Entities.DefinitionManagements;
 
 namespace Application.Features.DefinitionManagementFeatures.Districts.Queries.GetList;
 
@@ -35,6 +35,7 @@ public class GetListDistrictQuery : IRequest<GetListResponse<GetListDistrictList
                 //unutma
                 //includes varsa eklenecek - Orn: Altta
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    orderBy: x => x.DistrictName,
                     includes: new Expression<Func<District, object>>[]
                     {
                        x => x.CityFK
@@ -44,6 +45,7 @@ public class GetListDistrictQuery : IRequest<GetListResponse<GetListDistrictList
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(x => x.DistrictName),
                 include: x => x.Include(x => x.CityFK)
             );
 

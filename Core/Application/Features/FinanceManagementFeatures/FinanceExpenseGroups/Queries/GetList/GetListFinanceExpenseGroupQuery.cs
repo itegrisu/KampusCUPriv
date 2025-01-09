@@ -4,9 +4,8 @@ using AutoMapper;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.FinanceManagements;
 using MediatR;
-using System.Linq.Expressions;
+using X = Domain.Entities.FinanceManagements;
 
 namespace Application.Features.FinanceManagementFeatures.FinanceExpenseGroups.Queries.GetList;
 
@@ -30,18 +29,12 @@ public class GetListFinanceExpenseGroupQuery : IRequest<GetListResponse<GetListF
         public async Task<GetListResponse<GetListFinanceExpenseGroupListItemDto>> Handle(GetListFinanceExpenseGroupQuery request, CancellationToken cancellationToken)
         {
             if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<FinanceExpenseGroup, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.FinanceExpenseGroupMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+                return await _noPagination.NoPaginationData(cancellationToken, orderBy: x => x.RowNo);
+
             IPaginate<X.FinanceExpenseGroup> financeExpenseGroups = await _financeExpenseGroupReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                orderBy: x => x.OrderBy(x => x.RowNo),
                 cancellationToken: cancellationToken
             );
 

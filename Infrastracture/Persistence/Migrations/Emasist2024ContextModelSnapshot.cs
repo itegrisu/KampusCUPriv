@@ -125,7 +125,6 @@ namespace Persistence.Migrations
                     b.ToTable("Guests");
                 });
 
-
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodation", b =>
                 {
                     b.Property<Guid>("Gid")
@@ -402,7 +401,6 @@ namespace Persistence.Migrations
 
                     b.ToTable("PartTimeWorkerForeignLanguages");
                 });
-
 
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
@@ -3524,11 +3522,6 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CustomerInfo")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
@@ -3538,6 +3531,9 @@ namespace Persistence.Migrations
                     b.Property<double>("Fee")
                         .HasMaxLength(10)
                         .HasColumnType("float");
+
+                    b.Property<Guid>("GidCustomerFK")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GidFeeCurrencyFK")
                         .HasColumnType("uniqueidentifier");
@@ -3562,6 +3558,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Gid");
+
+                    b.HasIndex("GidCustomerFK");
 
                     b.HasIndex("GidFeeCurrencyFK");
 
@@ -5657,6 +5655,12 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.TransportationManagements.Transportation", b =>
                 {
+                    b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
+                        .WithMany("Transportations")
+                        .HasForeignKey("GidCustomerFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Domain.Entities.DefinitionManagements.Currency", "FeeCurrencyFK")
                         .WithMany("Transportations")
                         .HasForeignKey("GidFeeCurrencyFK")
@@ -5671,6 +5675,8 @@ namespace Persistence.Migrations
                     b.Navigation("FeeCurrencyFK");
 
                     b.Navigation("OrganizationFK");
+
+                    b.Navigation("SCCompanyFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.TransportationManagements.TransportationExternalService", b =>
@@ -6057,7 +6063,6 @@ namespace Persistence.Migrations
                     b.Navigation("AccommodationDates");
                 });
 
-
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.GuestAccommodation", b =>
                 {
                     b.Navigation("GuestAccommodationPersons");
@@ -6075,7 +6080,6 @@ namespace Persistence.Migrations
                     b.Navigation("GuestAccommodationResults");
                 });
 
-
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.PartTimeWorker", b =>
                 {
                     b.Navigation("PartTimeWorkerFiles");
@@ -6084,7 +6088,6 @@ namespace Persistence.Migrations
 
                     b.Navigation("ReservationHotelPartTimeWorkers");
                 });
-
 
             modelBuilder.Entity("Domain.Entities.AccommodationManagements.Reservation", b =>
                 {
@@ -6419,6 +6422,8 @@ namespace Persistence.Migrations
                     b.Navigation("SCWorkHistories");
 
                     b.Navigation("TransportationExternalServices");
+
+                    b.Navigation("Transportations");
 
                     b.Navigation("VehicleTransactions");
                 });

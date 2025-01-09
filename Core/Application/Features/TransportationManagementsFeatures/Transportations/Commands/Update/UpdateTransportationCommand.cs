@@ -15,7 +15,8 @@ public class UpdateTransportationCommand : IRequest<UpdatedTransportationRespons
     public Guid Gid { get; set; }
     public Guid GidOrganizationFK { get; set; }
     public Guid GidFeeCurrencyFK { get; set; }
-    public string CustomerInfo { get; set; }
+    //public string CustomerInfo { get; set; }
+    public Guid GidCustomerFK { get; set; }
     public string TransportationNo { get; set; }
     public string Title { get; set; }
     public DateTime StartDate { get; set; }
@@ -45,7 +46,7 @@ public class UpdateTransportationCommand : IRequest<UpdatedTransportationRespons
         {
             X.Transportation? transportation = await _transportationReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken,
                    include: x => x.Include(x => x.OrganizationFK).Include(x => x.FeeCurrencyFK));
-                   //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
+            //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _transportationBusinessRules.TransportationShouldExistWhenSelected(transportation);
             transportation = _mapper.Map(request, transportation);

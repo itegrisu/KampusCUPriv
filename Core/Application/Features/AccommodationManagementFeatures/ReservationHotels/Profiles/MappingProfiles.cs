@@ -3,6 +3,8 @@ using Application.Features.AccommodationManagementFeatures.ReservationHotels.Com
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Commands.Update;
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetList;
+using Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetListByPartTime;
+using Application.Features.AccommodationManagementFeatures.ReservationHotels.Queries.GetListByWorker;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -21,9 +23,15 @@ public class MappingProfiles : Profile
         CreateMap<X.ReservationHotel, DeleteReservationHotelCommand>().ReverseMap();
         CreateMap<X.ReservationHotel, DeletedReservationHotelResponse>().ReverseMap();
 
-		CreateMap<X.ReservationHotel, GetByGidReservationHotelResponse>().ReverseMap();
+        CreateMap<X.ReservationHotel, GetByGidReservationHotelResponse>().ReverseMap();
 
         CreateMap<X.ReservationHotel, GetListReservationHotelListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.ReservationHotel>, GetListResponse<GetListReservationHotelListItemDto>>().ReverseMap();
+
+        CreateMap<X.ReservationHotel, GetListByPartTimeReservationHotelListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.ReservationHotel>, GetListResponse<GetListByPartTimeReservationHotelListItemDto>>().ReverseMap();
+
+        CreateMap<X.ReservationHotel, GetListByWorkerReservationHotelListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.ReservationHotel>, GetListResponse<GetListByWorkerReservationHotelListItemDto>>().ReverseMap();
     }
 }

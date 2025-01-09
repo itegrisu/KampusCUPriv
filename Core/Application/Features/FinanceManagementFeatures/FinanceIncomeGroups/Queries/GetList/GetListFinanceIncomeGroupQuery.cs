@@ -29,12 +29,13 @@ public class GetListFinanceIncomeGroupQuery : IRequest<GetListResponse<GetListFi
         public async Task<GetListResponse<GetListFinanceIncomeGroupListItemDto>> Handle(GetListFinanceIncomeGroupQuery request, CancellationToken cancellationToken)
         {
             if (request.PageRequest.PageIndex == -1)
-                return await _noPagination.NoPaginationData(cancellationToken);
+                return await _noPagination.NoPaginationData(cancellationToken, orderBy: x => x.RowNo);
 
 
             IPaginate<X.FinanceIncomeGroup> financeIncomeGroups = await _financeIncomeGroupReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                orderBy: x => x.OrderBy(x => x.RowNo),
                 cancellationToken: cancellationToken
             );
 

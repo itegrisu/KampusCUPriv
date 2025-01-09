@@ -2,6 +2,8 @@
 using Application.Features.GeneralManagementFeatures.Auth.Commands.DeleteRefreshToken;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.GetTokenByRefreshToken;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.Login;
+using Application.Features.GeneralManagementFeatures.Auth.Commands.LoginForPartTime;
+using Application.Features.GeneralManagementFeatures.Auth.Commands.LoginForWorker;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.LoginWithSystemAdmin;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.Register;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.UpdatePassword;
@@ -29,6 +31,20 @@ namespace API.Controllers.GeneralManagementControllers
         public async Task<IActionResult> Login([FromBody] LoginAuthCommand loginAuthCommand)
         {
             LoginAuthResponse response = await _mediator.Send(loginAuthCommand);
+            return Ok(response);
+        }
+
+        [HttpPost("LoginForPartTime")]
+        public async Task<IActionResult> LoginForPartTime([FromBody] LoginForPartTimeAuthCommand loginAuthCommand)
+        {
+            LoginForPartTimeAuthResponse response = await _mediator.Send(loginAuthCommand);
+            return Ok(response);
+        }
+
+        [HttpPost("LoginForWorker")]
+        public async Task<IActionResult> LoginForWorker([FromBody] LoginForWorkerAuthCommand loginAuthCommand)
+        {
+            LoginForWorkerAuthResponse response = await _mediator.Send(loginAuthCommand);
             return Ok(response);
         }
 

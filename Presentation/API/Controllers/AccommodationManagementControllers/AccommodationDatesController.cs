@@ -5,6 +5,7 @@ using Application.Features.AccommodationManagementFeatures.AccommodationDates.Co
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetList;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetListByHotel;
+using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetListByUser;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
 using MediatR;
@@ -41,5 +42,13 @@ namespace API.Controllers.AccommodationManagementControllers
             GetListResponse<GetListByHotelAccommodationDateListItemDto> response = await Mediator.Send(getListByHotelAccommodationDateQuery);
             return Ok(response);
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetListByUser([FromQuery] GetListByUserAccommodationDateQuery getListByUserAccommodationDateQuery)
+        {
+            GetListResponse<GetListByUserAccommodationDateListItemDto> response = await Mediator.Send(getListByUserAccommodationDateQuery);
+            return Ok(response);
+        }
+
     }
 }
