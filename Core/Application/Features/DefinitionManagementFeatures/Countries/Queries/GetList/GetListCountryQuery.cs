@@ -32,7 +32,7 @@ public class GetListCountryQuery : IRequest<GetListResponse<GetListCountryListIt
         public async Task<GetListResponse<GetListCountryListItemDto>> Handle(GetListCountryQuery request, CancellationToken cancellationToken)
         {
             if (request.PageRequest.PageIndex == -1)
-                return await _noPagination.NoPaginationData(cancellationToken);
+                return await _noPagination.NoPaginationData(cancellationToken, orderBy: x => x.RowNo);
 
 
             await _ulasýmService.TestService();
@@ -40,6 +40,7 @@ public class GetListCountryQuery : IRequest<GetListResponse<GetListCountryListIt
             IPaginate<X.Country> countrys = await _countryReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
+                orderBy: x => x.OrderBy(x => x.RowNo),
                 cancellationToken: cancellationToken
             );
 

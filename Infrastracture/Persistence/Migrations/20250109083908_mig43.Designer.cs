@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(Emasist2024Context))]
-    partial class Emasist2024ContextModelSnapshot : ModelSnapshot
+    [Migration("20250109083908_mig43")]
+    partial class mig43
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3532,7 +3534,7 @@ namespace Persistence.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("float");
 
-                    b.Property<Guid>("GidCustomerFK")
+                    b.Property<Guid?>("GidCustomerFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GidFeeCurrencyFK")
@@ -5658,8 +5660,7 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.SupplierCustomerManagements.SCCompany", "SCCompanyFK")
                         .WithMany("Transportations")
                         .HasForeignKey("GidCustomerFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Entities.DefinitionManagements.Currency", "FeeCurrencyFK")
                         .WithMany("Transportations")

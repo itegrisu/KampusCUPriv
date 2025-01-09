@@ -4,6 +4,7 @@ using Application.Repositories.AccommodationManagements.ReservationHotelRepo;
 using Application.Repositories.DefinitionManagementRepos.RoomTypeRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
+using Core.Enum;
 using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.AccommodationManagements;
 
@@ -69,5 +70,16 @@ public class ReservationDetailBusinessRules : BaseBusinessRules
             throw new BusinessException(ReservationDetailsBusinessMessages.RoomTypeNotExist);
     }
 
+    public async Task PartTimeWorkerControl(string gidReservationHotelFK, Guid partTimeWorkerGid)
+    {
+        var reservationHotels = await _reservationHotelReadRepository.GetAll()
+            .Where(x => x.ReservationHotelPartTimeWorkers.Any(r => r.GidPartTimeWorkerFK == partTimeWorkerGid
+                && r.DataState == DataState.Active && r.IsActive == true))
+            .Include(x => x.ReservationHotelPartTimeWorkers).Include(x => x.ReservationFK).ToListAsync();
+
+        if (!reservationHotels.Any(x => x.Gid.ToString() == gidReservationHotelFK))
+            throw new BusinessException(ReservationDetailsBusinessMessages.ReservationHotelAuthError);
+
+    }
 
 }

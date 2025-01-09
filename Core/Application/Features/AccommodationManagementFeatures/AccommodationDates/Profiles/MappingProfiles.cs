@@ -5,6 +5,7 @@ using Application.Features.AccommodationManagementFeatures.AccommodationDates.Co
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetList;
 using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetListByHotel;
+using Application.Features.AccommodationManagementFeatures.AccommodationDates.Queries.GetListByUser;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -34,5 +35,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.AccommodationDate, GetListByHotelAccommodationDateListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.AccommodationDate>, GetListResponse<GetListByHotelAccommodationDateListItemDto>>().ReverseMap();
+
+        CreateMap<X.AccommodationDate, GetListByUserAccommodationDateListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.AccommodationDate>, GetListResponse<GetListByUserAccommodationDateListItemDto>>().ReverseMap();
     }
 }

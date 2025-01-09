@@ -1,12 +1,16 @@
 using Application.Abstractions.Auth;
 using Application.Abstractions.Token;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.Login;
+using Application.Features.GeneralManagementFeatures.Auth.Commands.LoginForPartTime;
+using Application.Features.GeneralManagementFeatures.Auth.Commands.LoginForWorker;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.LoginWithSystemAdmin;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.Register;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.UpdatePassword;
 using Application.Features.GeneralManagementFeatures.Auth.Commands.UpdatePasswordBySystemAdmin;
 using Application.Features.GeneralManagementFeatures.Auth.Constants;
 using Application.Helpers;
+using Application.Repositories.AccommodationManagements.PartTimeWorkerRepo;
+using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
 using Application.Repositories.AuthManagementRepos.AuthUserRoleRepo;
 using Application.Repositories.GeneralManagementRepos.UserRefreshTokenRepo;
 using Application.Repositories.GeneralManagementRepos.UserRepo;
@@ -39,8 +43,10 @@ namespace Infrastracture.Services.Auth
         private readonly IUserRefreshTokenReadRepository _userRefreshTokenReadRepository;
         private readonly IUserRefreshTokenWriteRepository _userRefreshTokenWriteRepository;
         private readonly IMapper _mapper;
+        private readonly IPartTimeWorkerReadRepository _partTimeWorkerReadRepository;
+        private readonly IReservationHotelStaffReadRepository _reservationHotelStaffReadRepository;
 
-        public AuthService(ITokenHandler tokenHandler, IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, ILogSuccessedLoginWriteRepository logSuccessedLoginWriteRepository, GetUserInfo getUserInfo, ILogFailedLoginWriteRepository logFailedLoginWriteRepository, ILogFailedLoginReadRepository logFailedLoginReadRepository, IHttpContextAccessor httpContextAccessor, IAuthUserRoleReadRepository authUserRoleReadRepository, IMapper mapper, IUserRefreshTokenReadRepository userRefreshTokenReadRepository, IUserRefreshTokenWriteRepository userRefreshTokenWriteRepository)
+        public AuthService(ITokenHandler tokenHandler, IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, ILogSuccessedLoginWriteRepository logSuccessedLoginWriteRepository, GetUserInfo getUserInfo, ILogFailedLoginWriteRepository logFailedLoginWriteRepository, ILogFailedLoginReadRepository logFailedLoginReadRepository, IHttpContextAccessor httpContextAccessor, IAuthUserRoleReadRepository authUserRoleReadRepository, IMapper mapper, IUserRefreshTokenReadRepository userRefreshTokenReadRepository, IUserRefreshTokenWriteRepository userRefreshTokenWriteRepository, IPartTimeWorkerReadRepository partTimeWorkerReadRepository, IReservationHotelStaffReadRepository reservationHotelStaffReadRepository)
         {
             _tokenHandler = tokenHandler;
             _userReadRepository = userReadRepository;
@@ -55,6 +61,8 @@ namespace Infrastracture.Services.Auth
             _mapper = mapper;
             _userRefreshTokenReadRepository = userRefreshTokenReadRepository;
             _userRefreshTokenWriteRepository = userRefreshTokenWriteRepository;
+            _partTimeWorkerReadRepository = partTimeWorkerReadRepository;
+            _reservationHotelStaffReadRepository = reservationHotelStaffReadRepository;
         }
 
         public async Task<RegisterAuthResponse> Register(RegisterAuthCommand registerAuthCommand)
@@ -237,6 +245,259 @@ namespace Infrastracture.Services.Auth
                 IsValid = true,
                 Token = token,
                 SucceededLogGid = logSuccessedLogin.Gid,
+                SessionId = sessionId,
+            };
+        }
+
+        public async Task<LoginForPartTimeAuthResponse> LoginForPartTime(LoginForPartTimeAuthCommand loginAuthCommand)
+        {
+
+            #region Too Many Failed Attempts
+
+            List<LogFailedLogin> lstLogFailedLogins = GetFailedLogin(loginAuthCommand.Username, _getUserInfo.GetUserIpAddress(), 2); // Email yerine username yazýldý
+
+            if (lstLogFailedLogins.Count > 5)
+            {
+                return new LoginForPartTimeAuthResponse()
+                {
+                    Title = "Incorrect Operation",
+                    ActionType = ActionType.Error.ToString(),
+                    Message = "Too many failed attempts. Please try again 2 hours later",
+                    IsValid = false,
+                    Token = null
+                };
+            }
+
+            #endregion
+
+            var userToCheck = await _partTimeWorkerReadRepository.GetSingleAsync(x => x.UserName == loginAuthCommand.Username);
+
+            if (userToCheck == null)
+            {
+                #region LogFailedLogin
+
+                LogFailedLogin logFailedLogin = new LogFailedLogin();
+                logFailedLogin.Email = loginAuthCommand.Username;
+                logFailedLogin.Password = loginAuthCommand.Password;
+                logFailedLogin.IpAddress = _getUserInfo.GetUserIpAddress();
+                logFailedLogin.Description = "Kullanýcý Adý Bulunamadý!";
+
+                await _logFailedLoginWriteRepository.AddAsync(logFailedLogin);
+                await _logFailedLoginWriteRepository.SaveAsync();
+
+                #endregion
+
+                return new LoginForPartTimeAuthResponse()
+                {
+                    Title = AuthBussinessMessages.IncorrectOperation,
+                    ActionType = ActionType.Error.ToString(),
+                    Message = AuthBussinessMessages.EmailNotFound,
+                    IsValid = false,
+                    Token = null
+                };
+            }
+
+
+
+            if (!HashingHelperForAuth.VeriFyPasswordHash(loginAuthCommand.Password, userToCheck.Password, userToCheck.PasswordHash))
+            {
+                #region LogFailedLogin
+
+                LogFailedLogin logFailedLogin = new LogFailedLogin();
+                logFailedLogin.Email = loginAuthCommand.Username;
+                logFailedLogin.Password = loginAuthCommand.Password;
+                logFailedLogin.IpAddress = _getUserInfo.GetUserIpAddress();
+                logFailedLogin.Description = "Þifre Yanlýþ!";
+
+                await _logFailedLoginWriteRepository.AddAsync(logFailedLogin);
+                await _logFailedLoginWriteRepository.SaveAsync();
+
+                #endregion
+
+                return new LoginForPartTimeAuthResponse()
+                {
+                    Title = AuthBussinessMessages.IncorrectOperation,
+                    ActionType = ActionType.Error.ToString(),
+                    Message = AuthBussinessMessages.EmailOrPasswordIncorrect,
+                    IsValid = false,
+                    Token = null
+                };
+            }
+
+            #region token - refresh token
+            T.Token token = _tokenHandler.CreateAccessTokenForPartTime(userToCheck, 600);
+            var sessionId = Guid.NewGuid().ToString();
+
+            //var userRefreshToken = await _userRefreshTokenReadRepository.GetAsync(x => x.GidUserFK == userToCheck.Gid);
+
+            //if (userRefreshToken == null)
+            //{
+            //    UserRefreshToken refreshToken = new UserRefreshToken
+            //    {
+            //        GidUserFK = userToCheck.Gid,
+            //        RefreshToken = token.RefreshToken,
+            //        Expiration = token.RefreshTokenExpiration,
+            //    };
+            //    await _userRefreshTokenWriteRepository.AddAsync(refreshToken);
+
+            //}
+            //else
+            //{
+            //    userRefreshToken.RefreshToken = token.RefreshToken;
+            //    userRefreshToken.Expiration = token.RefreshTokenExpiration;
+            //}
+            //await _userRefreshTokenWriteRepository.SaveAsync();
+            #endregion
+
+
+
+            //#region LogSuccessedLogin
+
+            //LogSuccessedLogin logSuccessedLogin = new LogSuccessedLogin();
+            //logSuccessedLogin.GidUserFK = userToCheck.Gid;
+            //logSuccessedLogin.IpAddress = _getUserInfo.GetUserIpAddress();
+            //logSuccessedLogin.SessionId = sessionId;
+            //logSuccessedLogin.LogOutDate = null;
+
+            //await _logSuccessedLoginWriteRepository.AddAsync(logSuccessedLogin);
+
+
+            //await _logSuccessedLoginWriteRepository.SaveAsync();
+
+            //#endregion
+
+            return new LoginForPartTimeAuthResponse()
+            {
+                Message = AuthBussinessMessages.SuccessLogin,
+                IsValid = true,
+                Token = token,
+                //SucceededLogGid = logSuccessedLogin.Gid,
+                SessionId = sessionId,
+            };
+        }
+
+        public async Task<LoginForWorkerAuthResponse> LoginForWorker(LoginForWorkerAuthCommand loginAuthCommand)
+        {
+            #region Too Many Failed Attempts
+
+            List<LogFailedLogin> lstLogFailedLogins = GetFailedLogin(loginAuthCommand.Phone, _getUserInfo.GetUserIpAddress(), 2); // Email yerine phone yazýldý
+
+            if (lstLogFailedLogins.Count > 5)
+            {
+                return new LoginForWorkerAuthResponse()
+                {
+                    Title = "Incorrect Operation",
+                    ActionType = ActionType.Error.ToString(),
+                    Message = "Too many failed attempts. Please try again 2 hours later",
+                    IsValid = false,
+                    Token = null
+                };
+            }
+
+            #endregion
+
+            var userToCheck = await _reservationHotelStaffReadRepository.GetSingleAsync(x => x.GsmNo == loginAuthCommand.Phone);
+
+            if (userToCheck == null)
+            {
+                #region LogFailedLogin
+
+                LogFailedLogin logFailedLogin = new LogFailedLogin();
+                logFailedLogin.Email = loginAuthCommand.Phone;
+                logFailedLogin.Password = loginAuthCommand.Password;
+                logFailedLogin.IpAddress = _getUserInfo.GetUserIpAddress();
+                logFailedLogin.Description = "Telefon Numarasý Bulunamadý!";
+
+                await _logFailedLoginWriteRepository.AddAsync(logFailedLogin);
+                await _logFailedLoginWriteRepository.SaveAsync();
+
+                #endregion
+
+                return new LoginForWorkerAuthResponse()
+                {
+                    Title = AuthBussinessMessages.IncorrectOperation,
+                    ActionType = ActionType.Error.ToString(),
+                    Message = AuthBussinessMessages.EmailNotFound,
+                    IsValid = false,
+                    Token = null
+                };
+            }
+
+
+
+            if (!HashingHelperForAuth.VeriFyPasswordHash(loginAuthCommand.Password, userToCheck.Password, userToCheck.PasswordHash))
+            {
+                #region LogFailedLogin
+
+                LogFailedLogin logFailedLogin = new LogFailedLogin();
+                logFailedLogin.Email = loginAuthCommand.Phone;
+                logFailedLogin.Password = loginAuthCommand.Password;
+                logFailedLogin.IpAddress = _getUserInfo.GetUserIpAddress();
+                logFailedLogin.Description = "Þifre Yanlýþ!";
+
+                await _logFailedLoginWriteRepository.AddAsync(logFailedLogin);
+                await _logFailedLoginWriteRepository.SaveAsync();
+
+                #endregion
+
+                return new LoginForWorkerAuthResponse()
+                {
+                    Title = AuthBussinessMessages.IncorrectOperation,
+                    ActionType = ActionType.Error.ToString(),
+                    Message = AuthBussinessMessages.EmailOrPasswordIncorrect,
+                    IsValid = false,
+                    Token = null
+                };
+            }
+
+            #region token - refresh token
+            T.Token token = _tokenHandler.CreateAccessTokenForWorker(userToCheck, 600);
+            var sessionId = Guid.NewGuid().ToString();
+
+            //var userRefreshToken = await _userRefreshTokenReadRepository.GetAsync(x => x.GidUserFK == userToCheck.Gid);
+
+            //if (userRefreshToken == null)
+            //{
+            //    UserRefreshToken refreshToken = new UserRefreshToken
+            //    {
+            //        GidUserFK = userToCheck.Gid,
+            //        RefreshToken = token.RefreshToken,
+            //        Expiration = token.RefreshTokenExpiration,
+            //    };
+            //    await _userRefreshTokenWriteRepository.AddAsync(refreshToken);
+
+            //}
+            //else
+            //{
+            //    userRefreshToken.RefreshToken = token.RefreshToken;
+            //    userRefreshToken.Expiration = token.RefreshTokenExpiration;
+            //}
+            //await _userRefreshTokenWriteRepository.SaveAsync();
+            #endregion
+
+
+
+            //#region LogSuccessedLogin
+
+            //LogSuccessedLogin logSuccessedLogin = new LogSuccessedLogin();
+            //logSuccessedLogin.GidUserFK = userToCheck.Gid;
+            //logSuccessedLogin.IpAddress = _getUserInfo.GetUserIpAddress();
+            //logSuccessedLogin.SessionId = sessionId;
+            //logSuccessedLogin.LogOutDate = null;
+
+            //await _logSuccessedLoginWriteRepository.AddAsync(logSuccessedLogin);
+
+
+            //await _logSuccessedLoginWriteRepository.SaveAsync();
+
+            //#endregion
+
+            return new LoginForWorkerAuthResponse()
+            {
+                Message = AuthBussinessMessages.SuccessLogin,
+                IsValid = true,
+                Token = token,
+                //SucceededLogGid = logSuccessedLogin.Gid,
                 SessionId = sessionId,
             };
         }

@@ -193,9 +193,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 #region Cors
 // IServiceCollection arabirimine CORS (Cross-Origin ResourceFK Sharing) hizmetini ekler. CORS, web uygulamalarýnýn farklý kaynaklardan gelen isteklere izin vermesini saðlayan bir mekanizmadýr.
 // CORS hizmetini eklemek, Web API'nin farklý etki alanlarýndan gelen istekleri kabul etmesini ve gerekirse yanýtlara uygun CORS baþlýklarýný eklemesini saðlar. Bu þekilde, Web API'ye dýþ kaynaklardan eriþim saðlanabilir.
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-policy.WithOrigins("http://localhost:5173", "https://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
-));
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin() // Tüm kaynaklara izin verir
+              .AllowAnyHeader()  // Tüm baþlýklara izin verir
+              .AllowAnyMethod()  // Tüm HTTP metodlarýna izin verir
+    )
+);
 #endregion
 
 #region DbContext
@@ -250,7 +254,7 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging();
 app.UseHttpLogging();
 //if (app.Environment.IsProduction())
-    app.ConfigureCustomExceptionMiddleware();
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseCors();
 app.UseSession();

@@ -1,11 +1,6 @@
 ﻿using Domain.Entities.TransportationManagements;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.EntityConfiguration.TransportationManagements
 {
@@ -19,7 +14,8 @@ namespace Persistence.EntityConfiguration.TransportationManagements
             builder.HasOne(y => y.OrganizationFK).WithMany(u => u.Transportations).HasForeignKey(y => y.GidOrganizationFK);
             builder.HasOne(y => y.FeeCurrencyFK).WithMany(u => u.Transportations).HasForeignKey(y => y.GidFeeCurrencyFK).IsRequired();
 
-            builder.Property(y => y.CustomerInfo).IsRequired().HasColumnType("varchar").HasMaxLength(150);
+            //builder.Property(y => y.CustomerInfo).IsRequired().HasColumnType("varchar").HasMaxLength(150);
+            builder.HasOne(y => y.SCCompanyFK).WithMany(u => u.Transportations).HasForeignKey(y => y.GidCustomerFK);
             builder.Property(y => y.TransportationNo).IsRequired().HasColumnType("varchar").HasMaxLength(20);
             builder.Property(y => y.Title).IsRequired().HasColumnType("varchar").HasMaxLength(100);
             builder.Property(y => y.StartDate).IsRequired().HasColumnType("datetime");

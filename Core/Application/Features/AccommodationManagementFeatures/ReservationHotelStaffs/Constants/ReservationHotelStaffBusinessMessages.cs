@@ -21,5 +21,6 @@ public static class ReservationHotelStaffsBusinessMessages
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
 
     public const string HotelNotExists = "Otel Mevcut Deðil!";
+    public const string GsmNoAlreadyExists = "Bu GSM No Zaten Kayýtlý!";
 
 }

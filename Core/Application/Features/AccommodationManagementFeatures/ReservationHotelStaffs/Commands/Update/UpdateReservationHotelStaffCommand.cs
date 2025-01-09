@@ -1,6 +1,7 @@
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Constants;
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Queries.GetByGid;
 using Application.Features.AccommodationManagementFeatures.ReservationHotelStaffs.Rules;
+using Application.Helpers;
 using Application.Repositories.AccommodationManagements.ReservationHotelStaffRepo;
 using AutoMapper;
 using Domain.Enums;
@@ -48,6 +49,17 @@ public class UpdateReservationHotelStaffCommand : IRequest<UpdatedReservationHot
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _reservationHotelStaffBusinessRules.ReservationHotelStaffShouldExistWhenSelected(reservationHotelStaff);
             reservationHotelStaff = _mapper.Map(request, reservationHotelStaff);
+
+            if (request.Password != null)
+            {
+                string passwordHash, passwordSalt;
+                HashingHelperForApplicationLayer.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+                reservationHotelStaff.Password = passwordHash;
+                reservationHotelStaff.PasswordHash = passwordSalt;
+
+            }
+
 
             _reservationHotelStaffWriteRepository.Update(reservationHotelStaff!);
             await _reservationHotelStaffWriteRepository.SaveAsync();

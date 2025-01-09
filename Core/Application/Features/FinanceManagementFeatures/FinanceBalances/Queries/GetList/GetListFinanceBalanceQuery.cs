@@ -1,20 +1,23 @@
 using Application.Helpers.PaginationHelpers;
 using Application.Repositories.FinanceManagementRepos.FinanceBalanceRepo;
 using AutoMapper;
-using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
-using X = Domain.Entities.FinanceManagements;
-using MediatR;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using Domain.Entities.FinanceManagements;
+using Domain.Enums;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using X = Domain.Entities.FinanceManagements;
 
 namespace Application.Features.FinanceManagementFeatures.FinanceBalances.Queries.GetList;
 
 public class GetListFinanceBalanceQuery : IRequest<GetListResponse<GetListFinanceBalanceListItemDto>>
 {
-    public PageRequest PageRequest { get; set; }
+    public Guid BalanceResourceTypeGid { get; set; } //VehicleTransactionFK veya TransportationFK veya TransportationExternalServiceFK. Farkýný balanceResourceType'dan anlayabiliriz.
+    public EnumBalanceResourceType BalanceResourceType { get; set; }
+    public int PageIndex { get; set; } = 0;
+    public int PageSize { get; set; } = 10;
 
     public class GetListFinanceBalanceQueryHandler : IRequestHandler<GetListFinanceBalanceQuery, GetListResponse<GetListFinanceBalanceListItemDto>>
     {
@@ -31,8 +34,17 @@ public class GetListFinanceBalanceQuery : IRequest<GetListResponse<GetListFinanc
 
         public async Task<GetListResponse<GetListFinanceBalanceListItemDto>> Handle(GetListFinanceBalanceQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageRequest.PageIndex == -1)
+            Expression<Func<FinanceBalance, bool>> predicate = null;
+            if (request.BalanceResourceType == EnumBalanceResourceType.Araclar)
+                predicate = x => x.GidVehicleTransactionFK == request.BalanceResourceTypeGid;
+            else if (request.BalanceResourceType == EnumBalanceResourceType.Ulasim)
+                predicate = x => x.GidTransportationFK == request.BalanceResourceTypeGid;
+            else if (request.BalanceResourceType == EnumBalanceResourceType.DisUlasim)
+                predicate = x => x.GidTransportationExternalServiceFK == request.BalanceResourceTypeGid;
+
+            if (request.PageIndex == -1)
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    predicate: predicate,
                     includes: new Expression<Func<FinanceBalance, object>>[]
                     {
                        x => x.CurrencyFK,
@@ -44,8 +56,9 @@ public class GetListFinanceBalanceQuery : IRequest<GetListResponse<GetListFinanc
                     });
             //return await _noPagination.NoPaginationData(cancellationToken);
             IPaginate<X.FinanceBalance> financeBalances = await _financeBalanceReadRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
+                index: request.PageIndex,
+                size: request.PageSize,
+                predicate: predicate,
                 cancellationToken: cancellationToken,
                  include: x => x.Include(x => x.CurrencyFK).Include(x => x.SCCompanyFK).Include(x => x.TransportationExternalServiceFK).Include(x => x.TransportationFK).Include(x => x.VehicleTransactionFK).Include(x => x.VehicleTransactionFK).ThenInclude(x => x.VehicleAllFK)
             );

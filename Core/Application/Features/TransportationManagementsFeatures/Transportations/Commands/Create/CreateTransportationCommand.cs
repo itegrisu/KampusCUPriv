@@ -3,7 +3,6 @@ using Application.Features.TransportationManagementFeatures.Transportations.Quer
 using Application.Features.TransportationManagementFeatures.Transportations.Rules;
 using Application.Repositories.TransportationRepos.TransportationRepo;
 using AutoMapper;
-using Domain.Entities.TransportationManagements;
 using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,8 @@ public class CreateTransportationCommand : IRequest<CreatedTransportationRespons
 {
     public Guid? GidOrganizationFK { get; set; }
     public Guid GidFeeCurrencyFK { get; set; }
-    public string CustomerInfo { get; set; }
+    //public string CustomerInfo { get; set; }
+    public Guid GidCustomerFK { get; set; }
     public string TransportationNo { get; set; }
     public string Title { get; set; }
     public DateTime StartDate { get; set; }
@@ -51,10 +51,7 @@ public class CreateTransportationCommand : IRequest<CreatedTransportationRespons
             await _transportationWriteRepository.SaveAsync();
 
             X.Transportation savedTransportation = await _transportationReadRepository.GetAsync(predicate: x => x.Gid == transportation.Gid,
-                include: x => x.Include(x => x.OrganizationFK));
-                //include: x => x.Include(x => x.OrganizationFK).Include(x => x.CurrencyFK));
-            //INCLUDES Buraya Gelecek include varsa eklenecek
-            //include: x => x.Include(x => x.UserFK));
+                include: x => x.Include(x => x.OrganizationFK).Include(x => x.FeeCurrencyFK).Include(x => x.SCCompanyFK));
 
             GetByGidTransportationResponse obj = _mapper.Map<GetByGidTransportationResponse>(savedTransportation);
             return new()
