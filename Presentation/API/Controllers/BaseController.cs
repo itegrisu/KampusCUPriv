@@ -33,7 +33,6 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
     }
 
     [HttpPost("[action]")]
-    [Authorize(AuthenticationSchemes = "Admin")]
     
     public virtual async Task<IActionResult> Add([FromBody] TCreateCommand request)
     {
@@ -42,7 +41,6 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
     }
 
     [HttpPut("[action]")]
-    [Authorize(AuthenticationSchemes = "Admin")]
     
     public virtual async Task<IActionResult> Update([FromBody] TUpdateCommand request)
     {
@@ -51,7 +49,6 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
     }
 
     [HttpDelete("[action]/{Gid}")]
-    [Authorize(AuthenticationSchemes = "Admin")]
     
     public async Task<IActionResult> Delete([FromRoute] TDeleteCommand deleteCommand)
     {
@@ -60,7 +57,6 @@ public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
     }
 
     [HttpGet("[action]")]
-    [Authorize(AuthenticationSchemes = "Admin")]
     
     public async Task<IActionResult> GetByGid([FromQuery] TGetByGidQuery getByIdQuery)
     {

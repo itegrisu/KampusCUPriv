@@ -20,7 +20,7 @@ namespace Persistence.EntityConfiguration.ClubManagements
             builder.HasOne(y => y.CategoryFK).WithMany(u => u.Clubs).HasForeignKey(y => y.GidCategoryFK);
 
             builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(y => y.Logo).IsRequired(false).HasColumnType("varchar");
+            builder.Property(y => y.Logo).IsRequired(false).HasColumnType("varchar").HasMaxLength(500);
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(250);
 
             builder.HasMany(u => u.Events).WithOne(y => y.ClubFK).HasForeignKey(y => y.GidClubFK);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.EntityConfiguration.GeneralManagements
 {
@@ -21,7 +22,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
 
             builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
             builder.Property(y => y.LastName).IsRequired().HasColumnType("varchar").HasMaxLength(50);
-            builder.Property(y => y.Email).IsRequired().HasColumnType("varchar");
+            builder.Property(y => y.Email).IsRequired().HasColumnType("varchar").HasMaxLength(250);
             builder.Property(y => y.Password).IsRequired().HasColumnType("varchar").HasMaxLength(50);
             builder.Property(y => y.IsBloodDonor).IsRequired(false).HasColumnType("bit");
 
