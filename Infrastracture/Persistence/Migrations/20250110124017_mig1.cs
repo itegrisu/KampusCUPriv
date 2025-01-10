@@ -89,7 +89,7 @@ namespace Persistence.Migrations
                     GidClassFK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "varchar", nullable: false),
+                    Email = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false),
                     Password = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     IsBloodDonor = table.Column<bool>(type: "bit", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -120,7 +120,7 @@ namespace Persistence.Migrations
                     GidManagerFK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     GidCategoryFK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    Logo = table.Column<string>(type: "varchar", nullable: true),
+                    Logo = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true),
                     Description = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataState = table.Column<int>(type: "int", nullable: false)

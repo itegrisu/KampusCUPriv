@@ -7,6 +7,7 @@ using X = Domain.Entities.GeneralManagements;
 using MediatR;
 using System.Linq.Expressions;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
+using Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralFeatures.Users.Queries.GetList;
 
@@ -30,15 +31,13 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
         public async Task<GetListResponse<GetListUserListItemDto>> Handle(GetListUserQuery request, CancellationToken cancellationToken)
         {
             if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<User, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.UserMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    includes: new Expression<Func<User, object>>[]
+                    {
+                       x => x.ClassFK,
+                       x => x.DepartmentFK
+                    });
+            //return await _noPagination.NoPaginationData(cancellationToken);
             IPaginate<X.User> users = await _userReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
