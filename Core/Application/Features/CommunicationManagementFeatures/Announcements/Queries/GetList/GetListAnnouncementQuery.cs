@@ -7,6 +7,8 @@ using X = Domain.Entities.CommunicationManagements;
 using MediatR;
 using System.Linq.Expressions;
 using Application.Repositories.CommunicationManagementRepo.AnnouncementRepo;
+using Microsoft.EntityFrameworkCore;
+using Domain.Entities.CommunicationManagements;
 
 namespace Application.Features.CommunicationFeatures.Announcements.Queries.GetList;
 
@@ -31,18 +33,19 @@ public class GetListAnnouncementQuery : IRequest<GetListResponse<GetListAnnounce
         {
             if (request.PageRequest.PageIndex == -1)
                 //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<Announcement, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.AnnouncementMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+                //includes varsa eklenecek - Orn: Altta
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    includes: new Expression<Func<Announcement, object>>[]
+                    {
+                       x => x.UserFK,
+                       x => x.ClubFK,
+                       x => x.AnnouncementTypeFK
+                    });
             IPaginate<X.Announcement> announcements = await _announcementReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.AnnouncementTypeFK)
             );
 
             GetListResponse<GetListAnnouncementListItemDto> response = _mapper.Map<GetListResponse<GetListAnnouncementListItemDto>>(announcements);

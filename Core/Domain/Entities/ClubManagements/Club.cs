@@ -23,5 +23,7 @@ namespace Domain.Entities.ClubManagements
 
         public ICollection<Event>? Events { get; set; }
         public ICollection<Announcement>? Announcements { get; set; }
+        public ICollection<StudentClub>? StudentClubs { get; set; }
+
     }
 }

@@ -18,11 +18,11 @@ namespace Persistence.EntityConfiguration.CommunicationManagements
 
             builder.HasOne(y => y.ClubFK).WithMany(u => u.Events).HasForeignKey(y => y.GidClubFK);
 
-            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(250);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("nvarchar").HasMaxLength(250);
             builder.Property(y => y.StartDate).IsRequired().HasColumnType("datetime");
             builder.Property(y => y.EndDate).IsRequired().HasColumnType("datetime");
-            builder.Property(y => y.Location).IsRequired(false).HasColumnType("varchar").HasMaxLength(300);
-            builder.Property(y => y.Description).IsRequired(false).HasColumnType("varchar").HasMaxLength(300);
+            builder.Property(y => y.Location).IsRequired(false).HasColumnType("nvarchar").HasMaxLength(300);
+            builder.Property(y => y.Description).IsRequired(false).HasColumnType("nvarchar").HasMaxLength(300);
 
             builder.HasMany(u => u.Calendars).WithOne(y => y.EventFK).HasForeignKey(y => y.GidEventFK);
         }

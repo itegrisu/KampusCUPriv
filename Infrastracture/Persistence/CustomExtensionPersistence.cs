@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.EntityServices;
 using Application.Abstractions.UnitOfWork;
 using Application.Repositories.ClubManagementRepos.ClubRepo;
+using Application.Repositories.ClubManagementRepos.StudentClubRepo;
 using Application.Repositories.CommunicationManagementRepo.AnnouncementRepo;
 using Application.Repositories.CommunicationManagementRepo.CalendarRepo;
 using Application.Repositories.CommunicationManagementRepo.EventRepo;
@@ -13,6 +14,7 @@ using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Context;
 using Persistence.Repositories.ClubManagements.ClubRepo;
+using Persistence.Repositories.ClubManagements.StudentClubRepo;
 using Persistence.Repositories.CommunicationManagements.AnnouncementRepo;
 using Persistence.Repositories.CommunicationManagements.CalendarRepo;
 using Persistence.Repositories.CommunicationManagements.EventRepo;
@@ -82,6 +84,11 @@ namespace Persistence
             #region Calendar
             services.AddScoped<ICalendarReadRepository, CalendarReadRepository>();
             services.AddScoped<ICalendarWriteRepository, CalendarWriteRepository>();
+            #endregion
+
+            #region StudentClub
+            services.AddScoped<IStudentClubReadRepository, StudentClubReadRepository>();
+            services.AddScoped<IStudentClubWriteRepository, StudentClubWriteRepository>();
             #endregion
 
             services.AddScoped<C.Context, KampusCUContext>();

@@ -26,7 +26,7 @@ namespace Application.Features.ClubFeatures.Clubs.Queries.GetByGid
 
             public async Task<GetByGidClubResponse> Handle(GetByGidClubQuery request, CancellationToken cancellationToken)
             {
-                X.Club? club = await _clubReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
+                X.Club? club = await _clubReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK).Include(x => x.CategoryFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

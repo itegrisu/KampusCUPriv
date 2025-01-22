@@ -45,7 +45,7 @@ public class CreateEventCommand : IRequest<CreatedEventResponse>
             await _eventWriteRepository.AddAsync(event1);
             await _eventWriteRepository.SaveAsync();
 
-            X.Event savedEvent = await _eventReadRepository.GetAsync(predicate: x => x.Gid == event1.Gid);
+            X.Event savedEvent = await _eventReadRepository.GetAsync(predicate: x => x.Gid == event1.Gid, include: x => x.Include(x => x.ClubFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

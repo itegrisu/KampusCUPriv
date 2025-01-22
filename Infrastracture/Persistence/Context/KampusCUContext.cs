@@ -40,6 +40,8 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new AnnouncementConfiguration());
             modelBuilder.ApplyConfiguration(new AnnouncementTypeConfiguration());
             modelBuilder.ApplyConfiguration(new CalendarConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentClubConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
         }
@@ -81,7 +83,6 @@ namespace Persistence.Context
 
         }
 
-
         // DbSet, veritabaný tablosu üzerinde CRUD iþlemlerini gerçekleþtirmeyi saðlar
         public DbSet<User> Users { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -93,6 +94,6 @@ namespace Persistence.Context
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<AnnouncementType> AnnouncementTypes { get; set; }
         public DbSet<Calendar> Calendars { get; set; }
-
+        public DbSet<StudentClub> StudentClubs { get; set; }
     }
 }

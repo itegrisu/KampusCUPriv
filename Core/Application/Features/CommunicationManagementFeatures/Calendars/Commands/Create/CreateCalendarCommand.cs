@@ -12,7 +12,6 @@ namespace Application.Features.CommunicationFeatures.Calendars.Commands.Create;
 public class CreateCalendarCommand : IRequest<CreatedCalendarResponse>
 {
     public Guid GidEventFK { get; set; }
-
     public string Name { get; set; }
     public DateTime Date { get; set; }
     public string? Color { get; set; }
@@ -44,7 +43,7 @@ public class CreateCalendarCommand : IRequest<CreatedCalendarResponse>
             await _calendarWriteRepository.AddAsync(calendar);
             await _calendarWriteRepository.SaveAsync();
 
-            X.Calendar savedCalendar = await _calendarReadRepository.GetAsync(predicate: x => x.Gid == calendar.Gid);
+            X.Calendar savedCalendar = await _calendarReadRepository.GetAsync(predicate: x => x.Gid == calendar.Gid, include: x => x.Include(x => x.EventFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

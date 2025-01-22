@@ -26,7 +26,7 @@ namespace Application.Features.CommunicationFeatures.Calendars.Queries.GetByGid
 
             public async Task<GetByGidCalendarResponse> Handle(GetByGidCalendarQuery request, CancellationToken cancellationToken)
             {
-                X.Calendar? calendar = await _calendarReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
+                X.Calendar? calendar = await _calendarReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.EventFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

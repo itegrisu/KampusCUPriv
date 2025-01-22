@@ -36,7 +36,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Description")
                         .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<Guid>("GidCategoryFK")
                         .HasColumnType("uniqueidentifier");
@@ -46,12 +46,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Logo")
                         .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Gid");
 
@@ -60,6 +60,33 @@ namespace Persistence.Migrations
                     b.HasIndex("GidManagerFK");
 
                     b.ToTable("Clubs");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ClubManagements.StudentClub", b =>
+                {
+                    b.Property<Guid>("Gid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DataState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("GidClubFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Gid");
+
+                    b.HasIndex("GidClubFK");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("StudentClubs");
                 });
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.Announcement", b =>
@@ -77,7 +104,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<Guid>("GidAnnouncementType")
                         .HasColumnType("uniqueidentifier");
@@ -110,7 +137,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Color")
                         .HasMaxLength(7)
-                        .HasColumnType("varchar(7)");
+                        .HasColumnType("nvarchar(7)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -127,7 +154,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Gid");
 
@@ -150,7 +177,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Description")
                         .HasMaxLength(300)
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime");
@@ -163,12 +190,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Location")
                         .HasMaxLength(300)
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime");
@@ -195,7 +222,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Gid");
 
@@ -217,7 +244,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Gid");
 
@@ -239,7 +266,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Gid");
 
@@ -261,7 +288,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Gid");
 
@@ -283,12 +310,12 @@ namespace Persistence.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Gid");
 
@@ -310,7 +337,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<Guid?>("GidClassFK")
                         .HasColumnType("uniqueidentifier");
@@ -324,17 +351,17 @@ namespace Persistence.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Gid");
 
@@ -359,6 +386,25 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("CategoryFK");
+
+                    b.Navigation("UserFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ClubManagements.StudentClub", b =>
+                {
+                    b.HasOne("Domain.Entities.ClubManagements.Club", "ClubFK")
+                        .WithMany("StudentClubs")
+                        .HasForeignKey("GidClubFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("StudentClubs")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ClubFK");
 
                     b.Navigation("UserFK");
                 });
@@ -432,6 +478,8 @@ namespace Persistence.Migrations
                     b.Navigation("Announcements");
 
                     b.Navigation("Events");
+
+                    b.Navigation("StudentClubs");
                 });
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.Event", b =>
@@ -464,6 +512,8 @@ namespace Persistence.Migrations
                     b.Navigation("Announcements");
 
                     b.Navigation("Clubs");
+
+                    b.Navigation("StudentClubs");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,7 +20,7 @@ namespace Persistence.EntityConfiguration.CommunicationManagements
             builder.HasOne(y => y.UserFK).WithMany(u => u.Announcements).HasForeignKey(y => y.GidUserFK);
             builder.HasOne(y => y.AnnouncementTypeFK).WithMany(u => u.Announcements).HasForeignKey(y => y.GidAnnouncementType);
 
-            builder.Property(y => y.Description).IsRequired().HasColumnType("varchar").HasMaxLength(300);
+            builder.Property(y => y.Description).IsRequired().HasColumnType("nvarchar").HasMaxLength(300);
             builder.Property(y => y.IsRead).IsRequired().HasColumnType("bit");
         }
     }

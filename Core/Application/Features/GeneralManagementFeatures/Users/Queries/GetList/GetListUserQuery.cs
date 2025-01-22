@@ -8,6 +8,7 @@ using MediatR;
 using System.Linq.Expressions;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Domain.Entities.GeneralManagements;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.GeneralFeatures.Users.Queries.GetList;
 
@@ -41,7 +42,8 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
             IPaginate<X.User> users = await _userReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.ClassFK).Include(x => x.DepartmentFK)
             );
 
             GetListResponse<GetListUserListItemDto> response = _mapper.Map<GetListResponse<GetListUserListItemDto>>(users);

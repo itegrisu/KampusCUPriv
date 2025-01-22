@@ -25,5 +25,6 @@ namespace Domain.Entities.GeneralManagements
 
         public ICollection<Club>? Clubs { get; set; }
         public ICollection<Announcement>? Announcements { get; set; }
+        public ICollection<StudentClub>? StudentClubs { get; set; }
     }
 }

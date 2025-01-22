@@ -42,7 +42,7 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
             await _announcementWriteRepository.AddAsync(announcement);
             await _announcementWriteRepository.SaveAsync();
 
-            X.Announcement savedAnnouncement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == announcement.Gid);
+            X.Announcement savedAnnouncement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == announcement.Gid, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.AnnouncementTypeFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

@@ -18,9 +18,9 @@ namespace Persistence.EntityConfiguration.CommunicationManagements
 
             builder.HasOne(y => y.EventFK).WithMany(u => u.Calendars).HasForeignKey(y => y.GidEventFK);
 
-            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(150);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("nvarchar").HasMaxLength(150);
             builder.Property(y => y.Date).IsRequired().HasColumnType("datetime");
-            builder.Property(y => y.Color).IsRequired(false).HasColumnType("varchar").HasMaxLength(7);
+            builder.Property(y => y.Color).IsRequired(false).HasColumnType("nvarchar").HasMaxLength(7);
         }
     }
 }

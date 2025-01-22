@@ -5,6 +5,7 @@ using AutoMapper;
 using X = Domain.Entities.CommunicationManagements;
 using MediatR;
 using Application.Repositories.CommunicationManagementRepo.AnnouncementRepo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.CommunicationFeatures.Announcements.Commands.Update;
 
@@ -35,7 +36,7 @@ public class UpdateAnnouncementCommand : IRequest<UpdatedAnnouncementResponse>
 
         public async Task<UpdatedAnnouncementResponse> Handle(UpdateAnnouncementCommand request, CancellationToken cancellationToken)
         {
-            X.Announcement? announcement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
+            X.Announcement? announcement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.AnnouncementTypeFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _announcementBusinessRules.AnnouncementShouldExistWhenSelected(announcement);
             announcement = _mapper.Map(request, announcement);

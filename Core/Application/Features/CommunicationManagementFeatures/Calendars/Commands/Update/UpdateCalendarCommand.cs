@@ -5,6 +5,7 @@ using AutoMapper;
 using X = Domain.Entities.CommunicationManagements;
 using MediatR;
 using Application.Repositories.CommunicationManagementRepo.CalendarRepo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.CommunicationFeatures.Calendars.Commands.Update;
 
@@ -38,7 +39,7 @@ public string? Color { get; set; }
 
         public async Task<UpdatedCalendarResponse> Handle(UpdateCalendarCommand request, CancellationToken cancellationToken)
         {
-            X.Calendar? calendar = await _calendarReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
+            X.Calendar? calendar = await _calendarReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.EventFK));
 			//INCLUDES Buraya Gelecek include varsa eklenecek
             await _calendarBusinessRules.CalendarShouldExistWhenSelected(calendar);
             calendar = _mapper.Map(request, calendar);

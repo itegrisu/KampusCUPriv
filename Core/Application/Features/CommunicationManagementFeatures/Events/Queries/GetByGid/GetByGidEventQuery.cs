@@ -26,7 +26,7 @@ namespace Application.Features.CommunicationFeatures.Events.Queries.GetByGid
 
             public async Task<GetByGidEventResponse> Handle(GetByGidEventQuery request, CancellationToken cancellationToken)
             {
-                X.Event? event1 = await _eventReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
+                X.Event? event1 = await _eventReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.ClubFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

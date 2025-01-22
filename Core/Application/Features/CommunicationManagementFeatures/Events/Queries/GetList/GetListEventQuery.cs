@@ -7,6 +7,8 @@ using X = Domain.Entities.CommunicationManagements;
 using MediatR;
 using System.Linq.Expressions;
 using Application.Repositories.CommunicationManagementRepo.EventRepo;
+using Microsoft.EntityFrameworkCore;
+using Domain.Entities.CommunicationManagements;
 
 namespace Application.Features.CommunicationFeatures.Events.Queries.GetList;
 
@@ -31,18 +33,17 @@ public class GetListEventQuery : IRequest<GetListResponse<GetListEventListItemDt
         {
             if (request.PageRequest.PageIndex == -1)
                 //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<Event, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.EventMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+                //includes varsa eklenecek - Orn: Altta
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    includes: new Expression<Func<Event, object>>[]
+                    {
+                       x => x.ClubFK,
+                    });
             IPaginate<X.Event> events = await _eventReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.ClubFK)
             );
 
             GetListResponse<GetListEventListItemDto> response = _mapper.Map<GetListResponse<GetListEventListItemDto>>(events);
