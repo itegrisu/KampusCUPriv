@@ -9,7 +9,7 @@ using Infrastracture.Helpers.cls;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers.ClubManagementControllers
+namespace API.Controllers.CommunicationManagementControllers
 {
     [Route("api/[controller]")]
     [ApiController]

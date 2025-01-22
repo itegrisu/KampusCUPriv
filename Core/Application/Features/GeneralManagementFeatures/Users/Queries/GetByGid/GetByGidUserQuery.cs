@@ -3,6 +3,7 @@ using MediatR;
 using X = Domain.Entities.GeneralManagements;
 using Application.Features.GeneralFeatures.Users.Rules;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.GeneralFeatures.Users.Queries.GetByGid
 {
@@ -25,7 +26,7 @@ namespace Application.Features.GeneralFeatures.Users.Queries.GetByGid
 
             public async Task<GetByGidUserResponse> Handle(GetByGidUserQuery request, CancellationToken cancellationToken)
             {
-                X.User? user = await _userReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken);
+                X.User? user = await _userReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.ClassFK).Include(x => x.DepartmentFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

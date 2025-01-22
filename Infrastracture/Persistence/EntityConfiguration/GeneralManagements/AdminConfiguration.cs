@@ -16,8 +16,8 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.HasKey(t => t.Gid);
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
-            builder.Property(y => y.Email).IsRequired().HasColumnType("varchar").HasMaxLength(50);
-            builder.Property(y => y.Password).IsRequired().HasColumnType("varchar").HasMaxLength(50);
+            builder.Property(y => y.Email).IsRequired().HasColumnType("nvarchar").HasMaxLength(50);
+            builder.Property(y => y.Password).IsRequired().HasColumnType("nvarchar").HasMaxLength(50);
         }
     }
 }

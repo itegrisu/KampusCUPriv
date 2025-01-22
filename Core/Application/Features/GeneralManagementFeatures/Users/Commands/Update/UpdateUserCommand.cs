@@ -5,6 +5,7 @@ using AutoMapper;
 using X = Domain.Entities.GeneralManagements;
 using MediatR;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.GeneralFeatures.Users.Commands.Update;
 
@@ -37,7 +38,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            X.User? user = await _userReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
+            X.User? user = await _userReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.ClassFK).Include(x => x.DepartmentFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _userBusinessRules.UserShouldExistWhenSelected(user);
             user = _mapper.Map(request, user);

@@ -17,7 +17,7 @@ namespace Persistence.EntityConfiguration.DefinitionManagements
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
 
-            builder.Property(y => y.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
+            builder.Property(y => y.Name).IsRequired().HasColumnType("nvarchar").HasMaxLength(50);
 
             builder.HasMany(u => u.Clubs).WithOne(y => y.CategoryFK).HasForeignKey(y => y.GidCategoryFK);
         }

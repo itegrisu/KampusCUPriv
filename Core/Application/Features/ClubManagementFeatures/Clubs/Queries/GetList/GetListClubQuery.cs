@@ -7,6 +7,8 @@ using X = Domain.Entities.ClubManagements;
 using MediatR;
 using System.Linq.Expressions;
 using Application.Repositories.ClubManagementRepos.ClubRepo;
+using Microsoft.EntityFrameworkCore;
+using Domain.Entities.ClubManagements;
 
 namespace Application.Features.ClubFeatures.Clubs.Queries.GetList;
 
@@ -30,19 +32,17 @@ public class GetListClubQuery : IRequest<GetListResponse<GetListClubListItemDto>
         public async Task<GetListResponse<GetListClubListItemDto>> Handle(GetListClubQuery request, CancellationToken cancellationToken)
         {
             if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<Club, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.ClubMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    includes: new Expression<Func<Club, object>>[]
+                    {
+                       x => x.UserFK,
+                       x => x.CategoryFK
+                    });
             IPaginate<X.Club> clubs = await _clubReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.UserFK).Include(x => x.CategoryFK)
             );
 
             GetListResponse<GetListClubListItemDto> response = _mapper.Map<GetListResponse<GetListClubListItemDto>>(clubs);

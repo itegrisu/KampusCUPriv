@@ -42,7 +42,7 @@ public class CreateClubCommand : IRequest<CreatedClubResponse>
             await _clubWriteRepository.AddAsync(club);
             await _clubWriteRepository.SaveAsync();
 
-            X.Club savedClub = await _clubReadRepository.GetAsync(predicate: x => x.Gid == club.Gid);
+            X.Club savedClub = await _clubReadRepository.GetAsync(predicate: x => x.Gid == club.Gid, include: x => x.Include(x => x.UserFK).Include(x=> x.CategoryFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

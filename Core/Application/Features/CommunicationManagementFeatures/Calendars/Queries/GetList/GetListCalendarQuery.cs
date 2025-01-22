@@ -7,6 +7,8 @@ using X = Domain.Entities.CommunicationManagements;
 using MediatR;
 using System.Linq.Expressions;
 using Application.Repositories.CommunicationManagementRepo.CalendarRepo;
+using Microsoft.EntityFrameworkCore;
+using Domain.Entities.CommunicationManagements;
 
 namespace Application.Features.CommunicationFeatures.Calendars.Queries.GetList;
 
@@ -31,18 +33,17 @@ public class GetListCalendarQuery : IRequest<GetListResponse<GetListCalendarList
         {
             if (request.PageRequest.PageIndex == -1)
                 //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<Calendar, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.CalendarMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+                //includes varsa eklenecek - Orn: Altta
+                return await _noPagination.NoPaginationData(cancellationToken,
+                    includes: new Expression<Func<Calendar, object>>[]
+                    {
+                       x => x.EventFK,
+                    });
             IPaginate<X.Calendar> calendars = await _calendarReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                include: x => x.Include(x => x.EventFK)
             );
 
             GetListResponse<GetListCalendarListItemDto> response = _mapper.Map<GetListResponse<GetListCalendarListItemDto>>(calendars);

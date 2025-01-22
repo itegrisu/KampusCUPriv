@@ -5,6 +5,7 @@ using AutoMapper;
 using X = Domain.Entities.ClubManagements;
 using MediatR;
 using Application.Repositories.ClubManagementRepos.ClubRepo;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.ClubFeatures.Clubs.Commands.Update;
 
@@ -37,7 +38,7 @@ public class UpdateClubCommand : IRequest<UpdatedClubResponse>
 
         public async Task<UpdatedClubResponse> Handle(UpdateClubCommand request, CancellationToken cancellationToken)
         {
-            X.Club? club = await _clubReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
+            X.Club? club = await _clubReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK).Include(x => x.CategoryFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _clubBusinessRules.ClubShouldExistWhenSelected(club);
             club = _mapper.Map(request, club);

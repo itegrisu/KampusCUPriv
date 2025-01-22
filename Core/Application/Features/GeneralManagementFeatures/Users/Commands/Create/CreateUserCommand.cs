@@ -4,6 +4,7 @@ using Application.Features.GeneralFeatures.Users.Rules;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
 using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using X = Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralFeatures.Users.Commands.Create;
@@ -45,7 +46,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
             await _userWriteRepository.AddAsync(user);
             await _userWriteRepository.SaveAsync();
 
-            X.User savedUser = await _userReadRepository.GetAsync(predicate: x => x.Gid == user.Gid);
+            X.User savedUser = await _userReadRepository.GetAsync(predicate: x => x.Gid == user.Gid, include: x => x.Include(x => x.ClassFK).Include(x => x.DepartmentFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 
