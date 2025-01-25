@@ -3,6 +3,8 @@ using Application.Features.GeneralFeatures.Admins.Commands.Delete;
 using Application.Features.GeneralFeatures.Admins.Commands.Update;
 using Application.Features.GeneralFeatures.Admins.Queries.GetByGid;
 using Application.Features.GeneralFeatures.Admins.Queries.GetList;
+using Application.Features.GeneralManagementFeatures.Admins.Commands.Login;
+using Application.Features.GeneralManagementFeatures.Users.Commands.Login;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -25,6 +27,13 @@ namespace API.Controllers.GeneralManagementControllers
         {
             GetListAdminQuery getListAdminQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListAdminListItemDto> response = await Mediator.Send(getListAdminQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginAdminCommand loginAdminCommand)
+        {
+            LoginAdminResponse response = await Mediator.Send(loginAdminCommand);
             return Ok(response);
         }
     }
