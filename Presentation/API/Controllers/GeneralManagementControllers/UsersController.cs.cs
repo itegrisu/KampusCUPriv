@@ -3,6 +3,7 @@ using Application.Features.GeneralFeatures.Users.Commands.Delete;
 using Application.Features.GeneralFeatures.Users.Commands.Update;
 using Application.Features.GeneralFeatures.Users.Queries.GetByGid;
 using Application.Features.GeneralFeatures.Users.Queries.GetList;
+using Application.Features.GeneralManagementFeatures.Users.Commands.Login;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -26,6 +27,13 @@ namespace API.Controllers.GeneralManagementControllers
         {
             GetListUserQuery getListUserQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListUserListItemDto> response = await Mediator.Send(getListUserQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand loginUserCommand)
+        {
+            LoginUserResponse response = await Mediator.Send(loginUserCommand);
             return Ok(response);
         }
     }
