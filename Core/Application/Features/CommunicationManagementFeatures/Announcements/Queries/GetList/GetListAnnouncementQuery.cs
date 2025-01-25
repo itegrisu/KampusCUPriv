@@ -39,13 +39,12 @@ public class GetListAnnouncementQuery : IRequest<GetListResponse<GetListAnnounce
                     {
                        x => x.UserFK,
                        x => x.ClubFK,
-                       x => x.AnnouncementTypeFK
                     });
             IPaginate<X.Announcement> announcements = await _announcementReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.AnnouncementTypeFK)
+                include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK)
             );
 
             GetListResponse<GetListAnnouncementListItemDto> response = _mapper.Map<GetListResponse<GetListAnnouncementListItemDto>>(announcements);

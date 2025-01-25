@@ -12,5 +12,6 @@ public class UpdateClubCommandValidator : AbstractValidator<UpdateClubCommand>
         RuleFor(c => c.Name).NotNull().NotEmpty().MaximumLength(100);
         RuleFor(c => c.Logo).MaximumLength(500);
         RuleFor(c => c.Description).MaximumLength(250);
+        RuleFor(c => c.Color).MaximumLength(8);
     }
 }

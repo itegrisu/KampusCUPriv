@@ -1,0 +1,18 @@
+-- Tablo yapısı oluşturuluyor: Admins
+CREATE TABLE [dbo].[Admins](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[Email] [nvarchar](50) NOT NULL,
+	[Password] [nvarchar](50) NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+CONSTRAINT [PK_Admins] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Admins] ON 
+GO
+SET IDENTITY_INSERT [dbo].[Admins] OFF 
+GO
+
+

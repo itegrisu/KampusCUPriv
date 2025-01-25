@@ -3,6 +3,8 @@ using Application.Features.ClubFeatures.StudentClubs.Commands.Delete;
 using Application.Features.ClubFeatures.StudentClubs.Commands.Update;
 using Application.Features.ClubFeatures.StudentClubs.Queries.GetByGid;
 using Application.Features.ClubFeatures.StudentClubs.Queries.GetList;
+using Application.Features.ClubManagementFeatures.StudentClubs.Queries.GetByUserGid;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByUserGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -25,6 +27,14 @@ namespace API.Controllers.ClubManagementControllers
         {
             GetListStudentClubQuery getListStudentClubQuery = new() { PageRequest = pageRequest };
             GetListResponse<GetListStudentClubListItemDto> response = await Mediator.Send(getListStudentClubQuery);
+            return Ok(response);
+        }
+
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListStudentClubQuery getByUserGidListStudentClubQuery)
+        {
+            GetListResponse<GetByUserGidListStudentClubListItemDto> response = await Mediator.Send(getByUserGidListStudentClubQuery);
             return Ok(response);
         }
     }
