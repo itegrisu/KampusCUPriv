@@ -20,7 +20,5 @@ namespace Domain.Entities.CommunicationManagements
         public string? Location { get; set; }
         public string? Description { get; set; }
         public EnumEventStatus EventStatus { get; set; }
-
-        public ICollection<Calendar>? Calendars { get; set; }
     }
 }

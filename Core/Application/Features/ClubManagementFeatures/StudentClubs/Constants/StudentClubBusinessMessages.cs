@@ -18,5 +18,7 @@ public static class StudentClubsBusinessMessages
     public const string TechnicalError = "Technical Error";
 	public const string NotFoundRecord = "No Record Found!";
 	public const string IncorrectOperation = "Incorrect Operation";
-	//public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    //UserAlreadyInClub
+    public const string UserAlreadyInClub = "User Already In Club";
 }

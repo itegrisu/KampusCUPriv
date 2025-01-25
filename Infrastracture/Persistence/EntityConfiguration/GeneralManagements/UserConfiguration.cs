@@ -28,7 +28,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
 
             builder.HasMany(u => u.Clubs).WithOne(y => y.UserFK).HasForeignKey(y => y.GidManagerFK);
             builder.HasMany(u => u.Announcements).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK); builder.HasMany(u => u.StudentClubs).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
-
+            builder.HasMany(u => u.StudentAnnouncements).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
         }
     }
 }

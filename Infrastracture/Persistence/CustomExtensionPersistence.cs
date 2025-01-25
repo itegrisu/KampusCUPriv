@@ -3,9 +3,8 @@ using Application.Abstractions.UnitOfWork;
 using Application.Repositories.ClubManagementRepos.ClubRepo;
 using Application.Repositories.ClubManagementRepos.StudentClubRepo;
 using Application.Repositories.CommunicationManagementRepo.AnnouncementRepo;
-using Application.Repositories.CommunicationManagementRepo.CalendarRepo;
 using Application.Repositories.CommunicationManagementRepo.EventRepo;
-using Application.Repositories.DefinitionManagementRepo.AnnouncementTypeRepo;
+using Application.Repositories.CommunicationManagementRepo.StudentAnnouncementRepo;
 using Application.Repositories.DefinitionManagementRepo.CategoryRepo;
 using Application.Repositories.DefinitionManagementRepo.ClassRepo;
 using Application.Repositories.DefinitionManagementRepo.DepartmentRepo;
@@ -16,9 +15,8 @@ using Persistence.Context;
 using Persistence.Repositories.ClubManagements.ClubRepo;
 using Persistence.Repositories.ClubManagements.StudentClubRepo;
 using Persistence.Repositories.CommunicationManagements.AnnouncementRepo;
-using Persistence.Repositories.CommunicationManagements.CalendarRepo;
 using Persistence.Repositories.CommunicationManagements.EventRepo;
-using Persistence.Repositories.DefinitionManagements.AnnouncementTypeRepo;
+using Persistence.Repositories.CommunicationManagements.StudentAnnouncementRepo;
 using Persistence.Repositories.DefinitionManagements.CategoryRepo;
 using Persistence.Repositories.DefinitionManagements.ClassRepo;
 using Persistence.Repositories.DefinitionManagements.DepartmentRepo;
@@ -76,19 +74,14 @@ namespace Persistence
             services.AddScoped<IAnnouncementWriteRepository, AnnouncementWriteRepository>();
             #endregion
 
-            #region Announcement Type
-            services.AddScoped<IAnnouncementTypeReadRepository, AnnouncementTypeReadRepository>();
-            services.AddScoped<IAnnouncementTypeWriteRepository, AnnouncementTypeWriteRepository>();
-            #endregion
-
-            #region Calendar
-            services.AddScoped<ICalendarReadRepository, CalendarReadRepository>();
-            services.AddScoped<ICalendarWriteRepository, CalendarWriteRepository>();
-            #endregion
-
             #region StudentClub
             services.AddScoped<IStudentClubReadRepository, StudentClubReadRepository>();
             services.AddScoped<IStudentClubWriteRepository, StudentClubWriteRepository>();
+            #endregion
+
+            #region StudenAnnouncement
+            services.AddScoped<IStudentAnnouncementReadRepository, StudentAnnouncementReadRepository>();
+            services.AddScoped<IStudentAnnouncementWriteRepository, StudentAnnouncementWriteRepository>();
             #endregion
 
             services.AddScoped<C.Context, KampusCUContext>();

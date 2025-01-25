@@ -23,8 +23,6 @@ namespace Persistence.EntityConfiguration.CommunicationManagements
             builder.Property(y => y.EndDate).IsRequired().HasColumnType("datetime");
             builder.Property(y => y.Location).IsRequired(false).HasColumnType("nvarchar").HasMaxLength(300);
             builder.Property(y => y.Description).IsRequired(false).HasColumnType("nvarchar").HasMaxLength(300);
-
-            builder.HasMany(u => u.Calendars).WithOne(y => y.EventFK).HasForeignKey(y => y.GidEventFK);
         }
     }
 }

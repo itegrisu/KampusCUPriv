@@ -1,0 +1,79 @@
+-- Tablo yapısı oluşturuluyor: Clubs
+CREATE TABLE [dbo].[Clubs](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[GidManagerFK] [uniqueidentifier] NULL,
+	[GidCategoryFK] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Logo] [nvarchar](500) NULL,
+	[Description] [nvarchar](250) NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+	[Color] [varchar](8) NULL,
+CONSTRAINT [PK_Clubs] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Clubs] ON 
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (3306b392-b65e-428a-9a94-08bcde0bce12,6c4679af-8617-4776-b9fa-697d2c0a6813,42d49034-e92c-4248-9ba4-3e11ed77f232,N'Hemşirelik Öğrenci Kulübü (CÜHEK)', N'https://i.ibb.co/f9tjJmr/default.png', N'Hemşirelik öğrencileri için çeşitli etkinlikler.', CAST(N'2025-01-25T18:01:28.462' AS DateTime), 1,N'#FF5733')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (66100139-5662-4679-8d5c-0bc9f18e8af3,6c4679af-8617-4776-b9fa-697d2c0a6813,a8e9d01a-95ff-4239-bb4f-75fadf490495,N'Elektrik-Elektronik Kulübü (IEEE)', N'https://i.ibb.co/Q9FT7BG/ieee.jpg', N'Elektrik-elektronik mühendisliği alanında etkinlikler.', CAST(N'2025-01-25T17:27:12.155' AS DateTime), 1,N'#33FF57
+')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (d9592cce-ad36-44c3-96cc-1a28614f46e8,6c4679af-8617-4776-b9fa-697d2c0a6813,42d49034-e92c-4248-9ba4-3e11ed77f232,N'Beslenme ve Diyetetik Kulübü (SCÜBDK)', N'https://i.ibb.co/f9tjJmr/default.png', N'Beslenme ve diyetetik öğrencileri için bilgi paylaşımı.', CAST(N'2025-01-25T18:08:13.650' AS DateTime), 1,N'#3357FF')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (753d0bb4-9e65-4609-9414-206124e3d661,6c4679af-8617-4776-b9fa-697d2c0a6813,b1bfb896-09bd-4674-8d41-fc8f66f0e7e6,N'Halk Oyunları Kulübü', N'https://i.ibb.co/f9tjJmr/default.png', N'Geleneksel halk oyunları çalışmaları ve gösterileri.', CAST(N'2025-01-25T18:06:56.639' AS DateTime), 1,N'#FF33A8')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (7231a583-d4b5-4d0b-b592-297fc6b957cf,d186da29-f46b-4434-aea5-59f31647c452,ae241b2a-baff-48fa-b6f8-b5a0eeac997b,N'Doğa Sporları Topluluğu (CÜDOST)', N'https://i.ibb.co/f9tjJmr/default.png', N'Doğa yürüyüşleri ve kamp faaliyetleri.', CAST(N'2025-01-25T18:04:01.899' AS DateTime), 1,N'#A833FF')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (ea307bf3-d20e-4c97-ba03-6f91feafebdd,6c4679af-8617-4776-b9fa-697d2c0a6813,a8e9d01a-95ff-4239-bb4f-75fadf490495,N'BMK', N'bmk', N'Bilgisayar Muhendisligi Kulubu', CAST(N'2025-01-22T00:29:49.045' AS DateTime), 2,N'#33FFF5')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (fc313c2e-f722-4378-944b-9c27aa727283,d186da29-f46b-4434-aea5-59f31647c452,a8e9d01a-95ff-4239-bb4f-75fadf490495,N'Google Developer Student Club (GDSC)', N'https://i.ibb.co/9qndcdQ/gdsc.png', N'Geliştiriciler için eğitimler ve etkinlikler.', CAST(N'2025-01-25T17:21:00.476' AS DateTime), 1,N'#FFC733')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (4f0c7a0f-12f6-4191-bc0e-c46cd1e395b1,6c4679af-8617-4776-b9fa-697d2c0a6813,b1bfb896-09bd-4674-8d41-fc8f66f0e7e6,N'Tiyatro Kulübü', N'https://i.ibb.co/f9tjJmr/default.png', N'Tiyatro gösterileri düzenleyen bir topluluk.', CAST(N'2025-01-25T18:05:58.877' AS DateTime), 1,N'#57FF33')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (b01f43fc-3fcb-479e-a872-c7d393347e3c,d186da29-f46b-4434-aea5-59f31647c452,a8e9d01a-95ff-4239-bb4f-75fadf490495,N'Savunma Teknolojileri Kulübü (CÜSAV)', N'https://i.ibb.co/L9V4D9Y/cusav.jpg', N'Savunma teknolojileri alanında bilgi paylaşımı.', CAST(N'2025-01-25T17:24:28.850' AS DateTime), 1,N'#FF3380')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (173a0066-7528-499c-b703-d2ee86a17c03,d186da29-f46b-4434-aea5-59f31647c452,a8e9d01a-95ff-4239-bb4f-75fadf490495,N'Siber Güvenlik Kulübü (CÜSİBER)', N'https://i.ibb.co/4R3DfMx/cusiber.jpg', N'Siber güvenlik alanında bilgi paylaşımı.', CAST(N'2025-01-25T17:22:38.736' AS DateTime), 1,N'#33A8FF')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (63aa9e1b-40e8-45db-bfa8-e7d58787d14e,6c4679af-8617-4776-b9fa-697d2c0a6813,a8e9d01a-95ff-4239-bb4f-75fadf490495,N'Bilgisayar Mühendisliği Kulübü (BMK)', N'https://i.ibb.co/GQ9Mcc8/bmk.jpg', N'Bilgisayar mühendisleri için bir topluluk.', CAST(N'2025-01-25T17:28:07.226' AS DateTime), 1,N'#8C33FF')
+GO
+INSERT [dbo].[Clubs] (
+[Gid], [GidManagerFK], [GidCategoryFK], [Name], [Logo], [Description], [CreatedDate], [DataState], [Color])
+VALUES (2aa715cf-ea50-4f3a-93e3-f5fc59f31339,d186da29-f46b-4434-aea5-59f31647c452,ae241b2a-baff-48fa-b6f8-b5a0eeac997b,N'Okçuluk Kulübü (CÜOKÇU)', NULL, N'Okçuluk eğitimi ve pratik çalışmaları.', CAST(N'2025-01-25T18:04:45.952' AS DateTime), 1,N'#FF8333')
+GO
+SET IDENTITY_INSERT [dbo].[Clubs] OFF 
+GO
+ALTER TABLE [dbo].[Clubs] WITH CHECK ADD CONSTRAINT [FK_Clubs_Categories_GidCategoryFK] FOREIGN KEY([GidCategoryFK]) REFERENCES [dbo].[Categories] ([Gid])
+GO
+ALTER TABLE [dbo].[Clubs] CHECK CONSTRAINT [FK_Clubs_Categories_GidCategoryFK];
+GO
+ALTER TABLE [dbo].[Clubs] WITH CHECK ADD CONSTRAINT [FK_Clubs_Users_GidManagerFK] FOREIGN KEY([GidManagerFK]) REFERENCES [dbo].[Users] ([Gid])
+GO
+ALTER TABLE [dbo].[Clubs] CHECK CONSTRAINT [FK_Clubs_Users_GidManagerFK];
+GO
+
+

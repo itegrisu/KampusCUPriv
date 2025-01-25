@@ -26,7 +26,7 @@ namespace Application.Features.CommunicationFeatures.Announcements.Queries.GetBy
 
             public async Task<GetByGidAnnouncementResponse> Handle(GetByGidAnnouncementQuery request, CancellationToken cancellationToken)
             {
-                X.Announcement? announcement = await _announcementReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.AnnouncementTypeFK));
+                X.Announcement? announcement = await _announcementReadRepository.GetAsync(predicate: uc => uc.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK));
                     //unutma
 					//includes varsa eklenecek - Orn: Altta
 					//include: i => i.Include(i => i.AcademicTitleFK).Include(i => i.UniversityFK)

@@ -8,11 +8,9 @@ public class UpdateAnnouncementCommandValidator : AbstractValidator<UpdateAnnoun
     {
         RuleFor(c => c.Gid).NotNull().NotEmpty();
         //RuleFor(c => c.GidClubFK);//
-//RuleFor(c => c.GidUserFK);//
-RuleFor(c => c.GidAnnouncementType).NotNull().NotEmpty();
+        //RuleFor(c => c.GidUserFK);//
 
-RuleFor(c => c.Description).NotNull().NotEmpty().MaximumLength(300);
-RuleFor(c => c.IsRead).NotNull().NotEmpty();
+        RuleFor(c => c.Description).NotNull().NotEmpty().MaximumLength(300);
 
 
     }
