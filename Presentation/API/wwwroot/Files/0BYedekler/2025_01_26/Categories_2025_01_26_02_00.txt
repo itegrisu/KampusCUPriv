@@ -1,0 +1,41 @@
+-- Tablo yapısı oluşturuluyor: Categories
+CREATE TABLE [dbo].[Categories](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Categories] ON 
+GO
+INSERT [dbo].[Categories] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (7780e17c-a7cd-44c9-ac39-1a5ace3d24c4,N'Müzikk', CAST(N'2025-01-24T14:50:47.652' AS DateTime), 2)
+GO
+INSERT [dbo].[Categories] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (42d49034-e92c-4248-9ba4-3e11ed77f232,N'Sağlık', CAST(N'2025-01-10T15:41:53.448' AS DateTime), 1)
+GO
+INSERT [dbo].[Categories] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (a8e9d01a-95ff-4239-bb4f-75fadf490495,N'Bilişim', CAST(N'2025-01-11T21:41:24.872' AS DateTime), 1)
+GO
+INSERT [dbo].[Categories] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (ae241b2a-baff-48fa-b6f8-b5a0eeac997b,N'Spor', CAST(N'2025-01-11T21:41:34.077' AS DateTime), 1)
+GO
+INSERT [dbo].[Categories] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (7cf9b3af-4269-47b5-b805-d4adbcc5d71e,N'Müzik', CAST(N'2025-01-24T15:30:31.604' AS DateTime), 2)
+GO
+INSERT [dbo].[Categories] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (b1bfb896-09bd-4674-8d41-fc8f66f0e7e6,N'Sanat', CAST(N'2025-01-24T14:48:39.934' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[Categories] OFF 
+GO
+
+

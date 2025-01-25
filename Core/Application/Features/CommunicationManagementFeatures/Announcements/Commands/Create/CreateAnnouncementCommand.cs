@@ -6,6 +6,7 @@ using X = Domain.Entities.CommunicationManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.CommunicationManagementRepo.AnnouncementRepo;
+using Domain.Enums;
 
 namespace Application.Features.CommunicationFeatures.Announcements.Commands.Create;
 
@@ -13,9 +14,8 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
 {
     public Guid GidClubFK { get; set; }
     public Guid GidUserFK { get; set; }
-    public Guid GidAnnouncementType { get; set; }
+    public EnumAnnouncementType? AnnouncementType { get; set; }
     public string Description { get; set; }
-    public bool IsRead { get; set; }
 
     public class CreateAnnouncementCommandHandler : IRequestHandler<CreateAnnouncementCommand, CreatedAnnouncementResponse>
     {
@@ -42,7 +42,7 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
             await _announcementWriteRepository.AddAsync(announcement);
             await _announcementWriteRepository.SaveAsync();
 
-            X.Announcement savedAnnouncement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == announcement.Gid, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.AnnouncementTypeFK));
+            X.Announcement savedAnnouncement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == announcement.Gid, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
 

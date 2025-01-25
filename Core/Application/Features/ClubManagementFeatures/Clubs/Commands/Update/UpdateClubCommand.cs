@@ -17,8 +17,7 @@ public class UpdateClubCommand : IRequest<UpdatedClubResponse>
     public string Name { get; set; }
     public string? Logo { get; set; }
     public string? Description { get; set; }
-
-
+    public string? Color { get; set; }
 
     public class UpdateClubCommandHandler : IRequestHandler<UpdateClubCommand, UpdatedClubResponse>
     {

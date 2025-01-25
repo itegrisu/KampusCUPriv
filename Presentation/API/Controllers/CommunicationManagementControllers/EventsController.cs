@@ -3,6 +3,7 @@ using Application.Features.CommunicationFeatures.Events.Commands.Delete;
 using Application.Features.CommunicationFeatures.Events.Commands.Update;
 using Application.Features.CommunicationFeatures.Events.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.Events.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByUserGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -29,5 +30,11 @@ namespace API.Controllers.CommunicationManagementControllers
         }
 
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListEventQuery getByUserGidListEventQuery)
+        {
+            GetListResponse<GetByUserGidListEventListItemDto> response = await Mediator.Send(getByUserGidListEventQuery);
+            return Ok(response);
+        }
     }
 }

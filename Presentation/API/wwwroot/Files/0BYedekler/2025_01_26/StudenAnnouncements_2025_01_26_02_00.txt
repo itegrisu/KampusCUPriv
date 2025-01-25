@@ -1,0 +1,27 @@
+-- Tablo yapısı oluşturuluyor: StudenAnnouncements
+CREATE TABLE [dbo].[StudenAnnouncements](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[GidUserFK] [uniqueidentifier] NOT NULL,
+	[GidAnnouncementFK] [uniqueidentifier] NOT NULL,
+	[IsRead] [bit] NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+CONSTRAINT [PK_StudenAnnouncements] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[StudenAnnouncements] ON 
+GO
+SET IDENTITY_INSERT [dbo].[StudenAnnouncements] OFF 
+GO
+ALTER TABLE [dbo].[StudenAnnouncements] WITH CHECK ADD CONSTRAINT [FK_StudenAnnouncements_Users_GidUserFK] FOREIGN KEY([GidUserFK]) REFERENCES [dbo].[Users] ([Gid])
+GO
+ALTER TABLE [dbo].[StudenAnnouncements] CHECK CONSTRAINT [FK_StudenAnnouncements_Users_GidUserFK];
+GO
+ALTER TABLE [dbo].[StudenAnnouncements] WITH CHECK ADD CONSTRAINT [FK_StudenAnnouncements_Announcements_GidAnnouncementFK] FOREIGN KEY([GidAnnouncementFK]) REFERENCES [dbo].[Announcements] ([Gid])
+GO
+ALTER TABLE [dbo].[StudenAnnouncements] CHECK CONSTRAINT [FK_StudenAnnouncements_Announcements_GidAnnouncementFK];
+GO
+
+
