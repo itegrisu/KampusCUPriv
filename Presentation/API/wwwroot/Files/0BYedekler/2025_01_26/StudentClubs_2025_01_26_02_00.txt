@@ -1,0 +1,30 @@
+-- Tablo yapısı oluşturuluyor: StudentClubs
+CREATE TABLE [dbo].[StudentClubs](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[GidUserFK] [uniqueidentifier] NOT NULL,
+	[GidClubFK] [uniqueidentifier] NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+CONSTRAINT [PK_StudentClubs] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[StudentClubs] ON 
+GO
+INSERT [dbo].[StudentClubs] (
+[Gid], [GidUserFK], [GidClubFK], [CreatedDate], [DataState])
+VALUES (36bb3cc3-0f78-4f51-9ecd-67437bb1bd0f,d186da29-f46b-4434-aea5-59f31647c452,ea307bf3-d20e-4c97-ba03-6f91feafebdd,CAST(N'2025-01-22T19:10:12.475' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[StudentClubs] OFF 
+GO
+ALTER TABLE [dbo].[StudentClubs] WITH CHECK ADD CONSTRAINT [FK_StudentClubs_Users_GidUserFK] FOREIGN KEY([GidUserFK]) REFERENCES [dbo].[Users] ([Gid])
+GO
+ALTER TABLE [dbo].[StudentClubs] CHECK CONSTRAINT [FK_StudentClubs_Users_GidUserFK];
+GO
+ALTER TABLE [dbo].[StudentClubs] WITH CHECK ADD CONSTRAINT [FK_StudentClubs_Clubs_GidClubFK] FOREIGN KEY([GidClubFK]) REFERENCES [dbo].[Clubs] ([Gid])
+GO
+ALTER TABLE [dbo].[StudentClubs] CHECK CONSTRAINT [FK_StudentClubs_Clubs_GidClubFK];
+GO
+
+

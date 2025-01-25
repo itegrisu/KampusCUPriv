@@ -33,6 +33,7 @@ public class CreateStudentClubCommand : IRequest<CreatedStudentClubResponse>
 
         public async Task<CreatedStudentClubResponse> Handle(CreateStudentClubCommand request, CancellationToken cancellationToken)
         {
+            await _studentClubBusinessRules.UserCannotJoinSameClubTwice(request.GidUserFK, request.GidClubFK);
             //int maxRowNo = await _studentClubReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.StudentClub studentClub = _mapper.Map<X.StudentClub>(request);
             //studentClub.RowNo = maxRowNo + 1;

@@ -2,6 +2,7 @@
 using Domain.Entities.ClubManagements;
 using Domain.Entities.DefinitionManagements;
 using Domain.Entities.GeneralManagements;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,9 @@ namespace Domain.Entities.CommunicationManagements
         public Guid? GidUserFK { get; set; }
         public User? UserFK { get; set; }
         public Guid GidAnnouncementType { get; set; }
-        public AnnouncementType AnnouncementTypeFK { get; set; }
+        public EnumAnnouncementType? AnnouncementType { get; set; }
         public string Description { get; set; } = string.Empty;
-        public bool IsRead { get; set; }
+
+        public ICollection<StudentAnnouncement>? StudentAnnouncements { get; set; }
     }
 }

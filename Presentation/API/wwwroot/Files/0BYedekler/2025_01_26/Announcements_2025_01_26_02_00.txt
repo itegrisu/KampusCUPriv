@@ -1,0 +1,37 @@
+-- Tablo yapısı oluşturuluyor: Announcements
+CREATE TABLE [dbo].[Announcements](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[GidClubFK] [uniqueidentifier] NULL,
+	[GidUserFK] [uniqueidentifier] NULL,
+	[GidAnnouncementType] [uniqueidentifier] NOT NULL,
+	[Description] [nvarchar](300) NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+	[AnnouncementType] [int] NULL,
+CONSTRAINT [PK_Announcements] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Announcements] ON 
+GO
+INSERT [dbo].[Announcements] (
+[Gid], [GidClubFK], [GidUserFK], [GidAnnouncementType], [Description], [CreatedDate], [DataState], [AnnouncementType])
+VALUES (c4c670ea-d5db-4456-bd04-657f89d6a371,63aa9e1b-40e8-45db-bfa8-e7d58787d14e,6c4679af-8617-4776-b9fa-697d2c0a6813,7825e6e8-ac95-4cd9-a019-26fc309e1aa7,N'BMK Mezun Söylesisi', CAST(N'2025-01-22T00:46:47.700' AS DateTime), 1,2)
+GO
+INSERT [dbo].[Announcements] (
+[Gid], [GidClubFK], [GidUserFK], [GidAnnouncementType], [Description], [CreatedDate], [DataState], [AnnouncementType])
+VALUES (de680a1d-d48e-4f9a-a492-a76b6ae7e2bf,ea307bf3-d20e-4c97-ba03-6f91feafebdd,6c4679af-8617-4776-b9fa-697d2c0a6813,7825e6e8-ac95-4cd9-a019-26fc309e1aa7,N'BMK etkinlik duyurusu', CAST(N'2025-01-22T00:46:33.412' AS DateTime), 2,2)
+GO
+SET IDENTITY_INSERT [dbo].[Announcements] OFF 
+GO
+ALTER TABLE [dbo].[Announcements] WITH CHECK ADD CONSTRAINT [FK_Announcements_Users_GidUserFK] FOREIGN KEY([GidUserFK]) REFERENCES [dbo].[Users] ([Gid])
+GO
+ALTER TABLE [dbo].[Announcements] CHECK CONSTRAINT [FK_Announcements_Users_GidUserFK];
+GO
+ALTER TABLE [dbo].[Announcements] WITH CHECK ADD CONSTRAINT [FK_Announcements_Clubs_GidClubFK] FOREIGN KEY([GidClubFK]) REFERENCES [dbo].[Clubs] ([Gid])
+GO
+ALTER TABLE [dbo].[Announcements] CHECK CONSTRAINT [FK_Announcements_Clubs_GidClubFK];
+GO
+
+

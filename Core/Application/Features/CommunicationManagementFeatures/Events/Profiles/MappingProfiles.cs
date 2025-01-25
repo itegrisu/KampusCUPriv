@@ -3,6 +3,7 @@ using Application.Features.CommunicationFeatures.Events.Commands.Delete;
 using Application.Features.CommunicationFeatures.Events.Commands.Update;
 using Application.Features.CommunicationFeatures.Events.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.Events.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByUserGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.Event, GetListEventListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Event>, GetListResponse<GetListEventListItemDto>>().ReverseMap();
+
+        CreateMap<X.Event, GetByUserGidListEventListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.Event>, GetListResponse<GetByUserGidListEventListItemDto>>().ReverseMap();
     }
 }

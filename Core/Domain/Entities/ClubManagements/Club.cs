@@ -20,6 +20,7 @@ namespace Domain.Entities.ClubManagements
         public string Name { get; set; } = string.Empty;
         public string? Logo { get; set; }
         public string? Description { get; set; }
+        public string? Color { get; set; }
 
         public ICollection<Event>? Events { get; set; }
         public ICollection<Announcement>? Announcements { get; set; }

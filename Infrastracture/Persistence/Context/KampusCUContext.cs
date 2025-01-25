@@ -38,9 +38,9 @@ namespace Persistence.Context
             modelBuilder.ApplyConfiguration(new ClubConfiguration());
             modelBuilder.ApplyConfiguration(new EventConfiguration());
             modelBuilder.ApplyConfiguration(new AnnouncementConfiguration());
-            modelBuilder.ApplyConfiguration(new AnnouncementTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CalendarConfiguration());
             modelBuilder.ApplyConfiguration(new StudentClubConfiguration());
+            modelBuilder.ApplyConfiguration(new StudentAnnouncementConfiguration());
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -92,8 +92,7 @@ namespace Persistence.Context
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
-        public DbSet<AnnouncementType> AnnouncementTypes { get; set; }
-        public DbSet<Calendar> Calendars { get; set; }
         public DbSet<StudentClub> StudentClubs { get; set; }
+        public DbSet<StudentAnnouncement> StudenAnnouncements { get; set; }
     }
 }

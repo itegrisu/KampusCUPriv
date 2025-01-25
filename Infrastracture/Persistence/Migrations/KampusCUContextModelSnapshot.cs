@@ -28,6 +28,10 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Color")
+                        .HasMaxLength(8)
+                        .HasColumnType("varchar(8)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -95,6 +99,9 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("AnnouncementType")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -115,52 +122,13 @@ namespace Persistence.Migrations
                     b.Property<Guid?>("GidUserFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
                     b.HasKey("Gid");
-
-                    b.HasIndex("GidAnnouncementType");
 
                     b.HasIndex("GidClubFK");
 
                     b.HasIndex("GidUserFK");
 
                     b.ToTable("Announcements");
-                });
-
-            modelBuilder.Entity("Domain.Entities.CommunicationManagements.Calendar", b =>
-                {
-                    b.Property<Guid>("Gid")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Color")
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DataState")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime");
-
-                    b.Property<Guid>("GidEventFK")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Gid");
-
-                    b.HasIndex("GidEventFK");
-
-                    b.ToTable("Calendars");
                 });
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.Event", b =>
@@ -207,7 +175,7 @@ namespace Persistence.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Domain.Entities.DefinitionManagements.AnnouncementType", b =>
+            modelBuilder.Entity("Domain.Entities.CommunicationManagements.StudentAnnouncement", b =>
                 {
                     b.Property<Guid>("Gid")
                         .ValueGeneratedOnAdd()
@@ -219,14 +187,22 @@ namespace Persistence.Migrations
                     b.Property<int>("DataState")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                    b.Property<Guid>("GidAnnouncementFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GidUserFK")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
 
                     b.HasKey("Gid");
 
-                    b.ToTable("AnnouncementTypes");
+                    b.HasIndex("GidAnnouncementFK");
+
+                    b.HasIndex("GidUserFK");
+
+                    b.ToTable("StudenAnnouncements");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Category", b =>
@@ -411,12 +387,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.Announcement", b =>
                 {
-                    b.HasOne("Domain.Entities.DefinitionManagements.AnnouncementType", "AnnouncementTypeFK")
-                        .WithMany("Announcements")
-                        .HasForeignKey("GidAnnouncementType")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.ClubManagements.Club", "ClubFK")
                         .WithMany("Announcements")
                         .HasForeignKey("GidClubFK")
@@ -427,22 +397,9 @@ namespace Persistence.Migrations
                         .HasForeignKey("GidUserFK")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("AnnouncementTypeFK");
-
                     b.Navigation("ClubFK");
 
                     b.Navigation("UserFK");
-                });
-
-            modelBuilder.Entity("Domain.Entities.CommunicationManagements.Calendar", b =>
-                {
-                    b.HasOne("Domain.Entities.CommunicationManagements.Event", "EventFK")
-                        .WithMany("Calendars")
-                        .HasForeignKey("GidEventFK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("EventFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.Event", b =>
@@ -454,6 +411,25 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("ClubFK");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CommunicationManagements.StudentAnnouncement", b =>
+                {
+                    b.HasOne("Domain.Entities.CommunicationManagements.Announcement", "AnnouncementFK")
+                        .WithMany("StudentAnnouncements")
+                        .HasForeignKey("GidAnnouncementFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.GeneralManagements.User", "UserFK")
+                        .WithMany("StudentAnnouncements")
+                        .HasForeignKey("GidUserFK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AnnouncementFK");
+
+                    b.Navigation("UserFK");
                 });
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.User", b =>
@@ -482,14 +458,9 @@ namespace Persistence.Migrations
                     b.Navigation("StudentClubs");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CommunicationManagements.Event", b =>
+            modelBuilder.Entity("Domain.Entities.CommunicationManagements.Announcement", b =>
                 {
-                    b.Navigation("Calendars");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DefinitionManagements.AnnouncementType", b =>
-                {
-                    b.Navigation("Announcements");
+                    b.Navigation("StudentAnnouncements");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Category", b =>
@@ -512,6 +483,8 @@ namespace Persistence.Migrations
                     b.Navigation("Announcements");
 
                     b.Navigation("Clubs");
+
+                    b.Navigation("StudentAnnouncements");
 
                     b.Navigation("StudentClubs");
                 });
