@@ -49,7 +49,8 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.Login
                 {
                     Title = UsersBusinessMessages.ProcessCompleted,
                     Message = UsersBusinessMessages.SectionName,
-                    IsValid = true
+                    IsValid = true,
+                    UserGid = user.Gid
                 };
             }
         }
