@@ -16,6 +16,7 @@ namespace Application.Features.CommunicationManagementFeatures.StudentAnnounceme
         public Guid GidAnnouncementFK { get; set; }
         public string AnnouncementFKDescription { get; set; }
         public string AnnouncementFKClubFKLogo { get; set; }
+        public string AnnouncementFKClubFKName { get; set; }
         public EnumAnnouncementType AnnouncementFKAnnouncementType { get; set; }
         public bool IsRead { get; set; }
         public DateTime CreatedDate { get; set; }
