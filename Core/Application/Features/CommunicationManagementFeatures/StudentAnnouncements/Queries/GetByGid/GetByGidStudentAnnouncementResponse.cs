@@ -9,6 +9,7 @@ namespace Application.Features.CommunicationFeatures.StudentAnnouncements.Querie
         public string UserFKName { get; set; }
         public Guid GidAnnouncementFK { get; set; }
         public string AnnouncementFKDescription { get; set; }
+        public string AnnouncementFKClubFKLogo { get; set; }
         public bool IsRead { get; set; }
     }
 }

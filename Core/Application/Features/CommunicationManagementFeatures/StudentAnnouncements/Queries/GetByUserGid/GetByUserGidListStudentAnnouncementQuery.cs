@@ -45,14 +45,15 @@ namespace Application.Features.CommunicationManagementFeatures.StudentAnnounceme
                         predicate: x => x.GidUserFK == request.UserGid,
                         includes: new Expression<Func<StudentAnnouncement, object>>[]
                         {
-                       x => x.UserFK,
-                       x=> x.AnnouncementFK
+                          x => x.UserFK,
+                          x=> x.AnnouncementFK,
+                          x=> x.AnnouncementFK.ClubFK
                         });
                 IPaginate<X.StudentAnnouncement> studentAnnouncements = await _studentAnnouncementReadRepository.GetListAsync(
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.UserFK).Include(x => x.AnnouncementFK),
+                    include: x => x.Include(x => x.UserFK).Include(x => x.AnnouncementFK).ThenInclude(x => x.ClubFK).Include(x => x.AnnouncementFK),
                     predicate: x => x.GidUserFK == request.UserGid
                 );
 

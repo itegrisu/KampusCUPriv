@@ -12,8 +12,8 @@ namespace Application.Features.CommunicationFeatures.Announcements.Commands.Crea
 
 public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
 {
-    public Guid GidClubFK { get; set; }
-    public Guid GidUserFK { get; set; }
+    public Guid? GidClubFK { get; set; }
+    public Guid? GidUserFK { get; set; }
     public EnumAnnouncementType? AnnouncementType { get; set; }
     public string Description { get; set; }
 
