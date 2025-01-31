@@ -38,13 +38,14 @@ public class GetListStudentAnnouncementQuery : IRequest<GetListResponse<GetListS
                     includes: new Expression<Func<StudentAnnouncement, object>>[]
                     {
                        x => x.UserFK,
-                       x=> x.AnnouncementFK
+                       x => x.AnnouncementFK,
+                       x => x.AnnouncementFK.ClubFK
                     });
             IPaginate<X.StudentAnnouncement> studentAnnouncements = await _studentAnnouncementReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.UserFK).Include(x => x.AnnouncementFK)
+                include: x => x.Include(x => x.UserFK).Include(x => x.AnnouncementFK).ThenInclude(x => x.ClubFK).Include(x => x.AnnouncementFK)
             );
 
             GetListResponse<GetListStudentAnnouncementListItemDto> response = _mapper.Map<GetListResponse<GetListStudentAnnouncementListItemDto>>(studentAnnouncements);

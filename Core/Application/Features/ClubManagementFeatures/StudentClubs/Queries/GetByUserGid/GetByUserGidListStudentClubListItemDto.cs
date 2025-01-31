@@ -14,5 +14,6 @@ namespace Application.Features.ClubManagementFeatures.StudentClubs.Queries.GetBy
         public string UserFKName { get; set; }
         public Guid GidClubFK { get; set; }
         public string ClubFKName { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

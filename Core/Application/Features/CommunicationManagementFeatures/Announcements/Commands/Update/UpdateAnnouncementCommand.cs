@@ -13,8 +13,8 @@ namespace Application.Features.CommunicationFeatures.Announcements.Commands.Upda
 public class UpdateAnnouncementCommand : IRequest<UpdatedAnnouncementResponse>
 {
     public Guid Gid { get; set; }
-    public Guid GidClubFK { get; set; }
-    public Guid GidUserFK { get; set; }
+    public Guid? GidClubFK { get; set; }
+    public Guid? GidUserFK { get; set; }
     public EnumAnnouncementType? AnnouncementType { get; set; }
     public string Description { get; set; }
 
