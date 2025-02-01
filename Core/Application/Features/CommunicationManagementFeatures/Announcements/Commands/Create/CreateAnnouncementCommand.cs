@@ -7,6 +7,10 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.CommunicationManagementRepo.AnnouncementRepo;
 using Domain.Enums;
+using Application.Repositories.GeneralManagementRepo.UserRepo;
+using Application.Repositories.ClubManagementRepos.StudentClubRepo;
+using Application.Repositories.CommunicationManagementRepo.StudentAnnouncementRepo;
+using Application.Features.CommunicationFeatures.StudentAnnouncements.Commands.Create;
 
 namespace Application.Features.CommunicationFeatures.Announcements.Commands.Create;
 
@@ -23,29 +27,75 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
         private readonly IAnnouncementWriteRepository _announcementWriteRepository;
         private readonly IAnnouncementReadRepository _announcementReadRepository;
         private readonly AnnouncementBusinessRules _announcementBusinessRules;
-
+        private readonly IUserReadRepository _userRepository;
+        private readonly IStudentClubReadRepository _studentClubRepository;
+        private readonly IStudentAnnouncementWriteRepository _studentAnnouncementRepository;
         public CreateAnnouncementCommandHandler(IMapper mapper, IAnnouncementWriteRepository announcementWriteRepository,
-                                         AnnouncementBusinessRules announcementBusinessRules, IAnnouncementReadRepository announcementReadRepository)
+                                         AnnouncementBusinessRules announcementBusinessRules, IAnnouncementReadRepository announcementReadRepository, IUserReadRepository userRepository, IStudentClubReadRepository studentClubRepository, IStudentAnnouncementWriteRepository studentAnnouncementRepository)
         {
             _mapper = mapper;
             _announcementWriteRepository = announcementWriteRepository;
             _announcementBusinessRules = announcementBusinessRules;
             _announcementReadRepository = announcementReadRepository;
+            _userRepository = userRepository;
+            _studentClubRepository = studentClubRepository;
+            _studentAnnouncementRepository = studentAnnouncementRepository;
         }
 
         public async Task<CreatedAnnouncementResponse> Handle(CreateAnnouncementCommand request, CancellationToken cancellationToken)
         {
-            //int maxRowNo = await _announcementReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.Announcement announcement = _mapper.Map<X.Announcement>(request);
-            //announcement.RowNo = maxRowNo + 1;
-
             await _announcementWriteRepository.AddAsync(announcement);
             await _announcementWriteRepository.SaveAsync();
 
             X.Announcement savedAnnouncement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == announcement.Gid, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK));
-            //INCLUDES Buraya Gelecek include varsa eklenecek
-            //include: x => x.Include(x => x.UserFK));
 
+            if (request.AnnouncementType == EnumAnnouncementType.Genel)
+            {
+                var users = await _userRepository.GetAll().ToListAsync();
+                foreach (var user in users)
+                {
+                    var studentAnnouncement = new CreateStudentAnnouncementCommand
+                    {
+                        GidUserFK = user.Gid,
+                        GidAnnouncementFK = savedAnnouncement.Gid,
+                        IsRead = false
+                    };
+                    await _studentAnnouncementRepository.AddAsync(_mapper.Map<X.StudentAnnouncement>(studentAnnouncement));
+                }
+            }
+            else if (request.AnnouncementType == EnumAnnouncementType.Kulup && request.GidClubFK.HasValue)
+            {
+                var clubMembers = await _studentClubRepository.GetWhere(sc => sc.GidClubFK == request.GidClubFK.Value).ToListAsync();
+                foreach (var member in clubMembers)
+                {
+                    var studentAnnouncement = new CreateStudentAnnouncementCommand
+                    {
+                        GidUserFK = member.GidUserFK,
+                        GidAnnouncementFK = savedAnnouncement.Gid,
+                        IsRead = false
+                    };
+                    await _studentAnnouncementRepository.AddAsync(_mapper.Map<X.StudentAnnouncement>(studentAnnouncement));
+                }
+            }
+            else if (request.AnnouncementType == EnumAnnouncementType.Kan)
+            {
+                var bloodDonors = await _userRepository.GetWhere(u => u.IsBloodDonor == true).ToListAsync();
+                foreach (var donor in bloodDonors)
+                {
+                    var studentAnnouncement = new CreateStudentAnnouncementCommand
+                    {
+                        GidUserFK = donor.Gid,
+                        GidAnnouncementFK = savedAnnouncement.Gid,
+                        IsRead = false
+                    };
+                    await _studentAnnouncementRepository.AddAsync(_mapper.Map<X.StudentAnnouncement>(studentAnnouncement));
+                }
+            }
+
+            await _studentAnnouncementRepository.SaveAsync();
+
+          
             GetByGidAnnouncementResponse obj = _mapper.Map<GetByGidAnnouncementResponse>(savedAnnouncement);
             return new()
             {
