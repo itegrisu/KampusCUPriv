@@ -3,6 +3,7 @@ using Application.Features.CommunicationFeatures.Events.Commands.Delete;
 using Application.Features.CommunicationFeatures.Events.Commands.Update;
 using Application.Features.CommunicationFeatures.Events.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.Events.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByCount;
 using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByUserGid;
 using Core.Application.Request;
 using Core.Application.Responses;
@@ -34,6 +35,13 @@ namespace API.Controllers.CommunicationManagementControllers
         public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListEventQuery getByUserGidListEventQuery)
         {
             GetListResponse<GetByUserGidListEventListItemDto> response = await Mediator.Send(getByUserGidListEventQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByCount([FromQuery] GetByCountListEventQuery getByCountListEventQuery)
+        {
+            GetListResponse<GetByCountListEventListItemDto> response = await Mediator.Send(getByCountListEventQuery);
             return Ok(response);
         }
     }

@@ -3,6 +3,8 @@ using Application.Features.ClubFeatures.Clubs.Commands.Delete;
 using Application.Features.ClubFeatures.Clubs.Commands.Update;
 using Application.Features.ClubFeatures.Clubs.Queries.GetByGid;
 using Application.Features.ClubFeatures.Clubs.Queries.GetList;
+using Application.Features.ClubManagementFeatures.Clubs.Queries.GetByCount;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByCount;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -28,6 +30,12 @@ namespace API.Controllers.ClubManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByCount([FromQuery] GetByCountListClubQuery getByCountListClubQuery)
+        {
+            GetListResponse<GetByCountListClubListItemDto> response = await Mediator.Send(getByCountListClubQuery);
+            return Ok(response);
+        }
 
     }
 }
