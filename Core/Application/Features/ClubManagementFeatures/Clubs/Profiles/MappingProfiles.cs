@@ -3,6 +3,7 @@ using Application.Features.ClubFeatures.Clubs.Commands.Delete;
 using Application.Features.ClubFeatures.Clubs.Commands.Update;
 using Application.Features.ClubFeatures.Clubs.Queries.GetByGid;
 using Application.Features.ClubFeatures.Clubs.Queries.GetList;
+using Application.Features.ClubManagementFeatures.Clubs.Queries.GetByCount;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.Club, GetListClubListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Club>, GetListResponse<GetListClubListItemDto>>().ReverseMap();
+
+        CreateMap<X.Club, GetByCountListClubListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.Club>, GetListResponse<GetByCountListClubListItemDto>>().ReverseMap();
     }
 }
