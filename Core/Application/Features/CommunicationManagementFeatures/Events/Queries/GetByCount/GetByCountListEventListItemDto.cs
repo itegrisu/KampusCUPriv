@@ -14,6 +14,7 @@ namespace Application.Features.CommunicationManagementFeatures.Events.Queries.Ge
         public Guid GidClubFK { get; set; }
         public string ClubFKName { get; set; }
         public string ClubFKColor { get; set; }
+        public string ClubFKLogo { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
