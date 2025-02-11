@@ -21,6 +21,8 @@ public static class UsersBusinessMessages
     //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
     public const string IncorrectAvatarImageMessage = "Avatar Image Type Is Not In The Allowed File Type";
     public const string FileReadyForUpload = "The File Is Ready For To Be Uploaded To The System";
-
-
+    //InvalidCode
+    public const string InvalidCode = "Invalid Code";
+    //UserAlreadyExists
+    public const string UserAlreadyExists = "User Already Exists";
 }

@@ -18,7 +18,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
     public string Email { get; set; }
     public string Password { get; set; }
     public bool? IsBloodDonor { get; set; }
-
+    public bool IsEmailVerified { get; set; }
 
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserResponse>
@@ -27,24 +27,41 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IUserReadRepository _userReadRepository;
         private readonly UserBusinessRules _userBusinessRules;
-
+        private readonly IEmailService _emailService;
         public CreateUserCommandHandler(IMapper mapper, IUserWriteRepository userWriteRepository,
-                                         UserBusinessRules userBusinessRules, IUserReadRepository userReadRepository)
+                                         UserBusinessRules userBusinessRules, IUserReadRepository userReadRepository, IEmailService emailService)
         {
             _mapper = mapper;
             _userWriteRepository = userWriteRepository;
             _userBusinessRules = userBusinessRules;
             _userReadRepository = userReadRepository;
+            _emailService = emailService;
         }
 
         public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
+            await _userBusinessRules.UserAlreadyExist(request.Email);
+            await _userBusinessRules.EmailDomainCheck(request.Email);
+
             //int maxRowNo = await _userReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.User user = _mapper.Map<X.User>(request);
             //user.RowNo = maxRowNo + 1;
 
+            // Kullanýcý kaydýnýn yapýldýðý anda doðrulama kodunu üretelim
+            string verificationCode = GenerateVerificationCode();
+            user.EmailVerificationCode = verificationCode;
+            user.EmailVerificationCodeExpire = DateTime.UtcNow.AddHours(1); // Kodun 1 saat geçerli olduðunu varsayalým
+
             await _userWriteRepository.AddAsync(user);
             await _userWriteRepository.SaveAsync();
+
+            // Güncellenmiþ kullanýcýyý veritabanýna kaydedin
+            //_userWriteRepository.Update(user);
+            //await _userWriteRepository.SaveAsync();
+
+            // Email gönderim servisini çaðýrýn (aþaðýda örnek vereceðiz)
+            await _emailService.SendEmailAsync(user.Email, "Kayýt Doðrulama Kodu",
+                $"Merhaba {user.Name},\n\nDoðrulama kodunuz: {verificationCode}\n\nKod 1 saat geçerlidir.");
 
             X.User savedUser = await _userReadRepository.GetAsync(predicate: x => x.Gid == user.Gid, include: x => x.Include(x => x.ClassFK).Include(x => x.DepartmentFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
@@ -59,5 +76,14 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
                 Obj = obj
             };
         }
+        private string GenerateVerificationCode()
+        {
+            Random random = new Random();
+            int code = random.Next(100000, 999999);
+            return code.ToString();
+        }
     }
+ 
+
 }
+
