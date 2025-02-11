@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(KampusCUContext))]
-    partial class KampusCUContextModelSnapshot : ModelSnapshot
+    [Migration("20250211174619_mig2")]
+    partial class mig2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,7 +333,7 @@ namespace Persistence.Migrations
                     b.Property<bool?>("IsBloodDonor")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsEmailVerified")
+                    b.Property<bool?>("IsEmailVerified")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")

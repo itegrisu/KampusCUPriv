@@ -4,14 +4,12 @@ using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Core.Application;
 using Core.CrossCuttingConcern.Exceptions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using X = Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralFeatures.Users.Rules;
 
 public class UserBusinessRules : BaseBusinessRules
 {
-    IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
     private readonly IUserReadRepository _userReadRepository;
     private readonly IFileTypeCheckService _fileTypeCheckService;
 
@@ -30,5 +28,16 @@ public class UserBusinessRules : BaseBusinessRules
     {
         if (!await _fileTypeCheckService.CheckFileType(extension, allowedExtensions) || !await _fileTypeCheckService.CheckFileType(extension, formFiles[0]))
             throw new BusinessException(UsersBusinessMessages.IncorrectAvatarImageMessage);
+    }
+    public async Task UserAlreadyExist(string email)
+    {
+        var user = await _userReadRepository.GetSingleAsync(u => u.Email == email);
+        if (user != null)
+            throw new BusinessException(UsersBusinessMessages.UserAlreadyExists);
+    }
+    public async Task EmailDomainCheck(string email)
+    {
+        if (!email.EndsWith("@cumhuriyet.edu.com.tr"))
+            throw new BusinessException("Only email addresses with the domain @cumhuriyet.edu.com.tr can be registered.");
     }
 }

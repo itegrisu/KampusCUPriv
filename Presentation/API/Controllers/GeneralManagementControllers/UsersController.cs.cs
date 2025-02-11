@@ -4,6 +4,7 @@ using Application.Features.GeneralFeatures.Users.Commands.Update;
 using Application.Features.GeneralFeatures.Users.Queries.GetByGid;
 using Application.Features.GeneralFeatures.Users.Queries.GetList;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Login;
+using Application.Features.GeneralManagementFeatures.Users.Commands.VerifyEmail;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -34,6 +35,13 @@ namespace API.Controllers.GeneralManagementControllers
         public async Task<IActionResult> Login([FromBody] LoginUserCommand loginUserCommand)
         {
             LoginUserResponse response = await Mediator.Send(loginUserCommand);
+            return Ok(response);
+        }
+
+        [HttpPost("VerifyEmailUser")]
+        public async Task<IActionResult> VerifyEmailUser([FromBody] VerifyEmailUserCommand verifyEmailUserCommand)
+        {
+            VerifyEmailUserResponse response = await Mediator.Send(verifyEmailUserCommand);
             return Ok(response);
         }
     }
