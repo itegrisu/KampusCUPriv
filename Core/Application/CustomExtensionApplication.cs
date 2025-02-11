@@ -20,6 +20,8 @@ namespace Application
             services.AddScoped(typeof(UpdateRowNoHelper<,>));
             #endregion
 
+            services.AddScoped<IEmailService, EmailService>();
+
             // services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         }
         public static IServiceCollection AddSubClassesOfType(

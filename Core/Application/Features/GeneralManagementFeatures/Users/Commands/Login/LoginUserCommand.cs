@@ -33,7 +33,7 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.Login
 
             public async Task<LoginUserResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
             {
-                User? user = await _userReadRepository.GetAsync(predicate: x => x.Email == request.Email && x.Password == request.Password, cancellationToken: cancellationToken);
+                User? user = await _userReadRepository.GetAsync(predicate: x => x.Email == request.Email && x.Password == request.Password && x.IsEmailVerified == true, cancellationToken: cancellationToken);
 
                 if (user == null)
                 {
