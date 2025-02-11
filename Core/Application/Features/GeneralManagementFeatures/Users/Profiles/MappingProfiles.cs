@@ -3,6 +3,8 @@ using Application.Features.GeneralFeatures.Users.Commands.Delete;
 using Application.Features.GeneralFeatures.Users.Commands.Update;
 using Application.Features.GeneralFeatures.Users.Queries.GetByGid;
 using Application.Features.GeneralFeatures.Users.Queries.GetList;
+using Application.Features.GeneralManagementFeatures.Users.Commands.Login;
+using Application.Features.GeneralManagementFeatures.Users.Commands.VerifyEmail;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -22,6 +24,12 @@ public class MappingProfiles : Profile
         CreateMap<X.User, DeletedUserResponse>().ReverseMap();
 
 		CreateMap<X.User, GetByGidUserResponse>().ReverseMap();
+
+        CreateMap<X.User, LoginUserCommand>().ReverseMap();
+        CreateMap<X.User, LoginUserResponse>().ReverseMap();
+
+        CreateMap<X.User, VerifyEmailUserCommand>().ReverseMap();
+        CreateMap<X.User, VerifyEmailUserResponse>().ReverseMap();
 
         CreateMap<X.User, GetListUserListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.User>, GetListResponse<GetListUserListItemDto>>().ReverseMap();

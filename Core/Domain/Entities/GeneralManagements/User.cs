@@ -22,6 +22,9 @@ namespace Domain.Entities.GeneralManagements
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public bool? IsBloodDonor { get; set; }
+        public bool IsEmailVerified { get; set; }
+        public string? EmailVerificationCode { get; set; }
+        public DateTime? EmailVerificationCodeExpire { get; set; }
 
         public ICollection<Club>? Clubs { get; set; }
         public ICollection<Announcement>? Announcements { get; set; }
