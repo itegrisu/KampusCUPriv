@@ -15,8 +15,6 @@ namespace Domain.Entities.CommunicationManagements
     {
         public Guid? GidClubFK { get; set; }
         public Club? ClubFK { get; set; }
-        public Guid? GidUserFK { get; set; }
-        public User? UserFK { get; set; }
         public Guid GidAnnouncementType { get; set; }
         public EnumAnnouncementType? AnnouncementType { get; set; }
         public string Description { get; set; } = string.Empty;

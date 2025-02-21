@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using Application.Repositories.CommunicationManagementRepo.EventRepo;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities.CommunicationManagements;
+using Domain.Enums;
 
 namespace Application.Features.CommunicationFeatures.Events.Queries.GetList;
 
@@ -35,6 +36,7 @@ public class GetListEventQuery : IRequest<GetListResponse<GetListEventListItemDt
                 //unutma
                 //includes varsa eklenecek - Orn: Altta
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    predicate: x=> x.EventStatus == EnumEventStatus.Active,
                     includes: new Expression<Func<Event, object>>[]
                     {
                        x => x.ClubFK,
@@ -43,6 +45,7 @@ public class GetListEventQuery : IRequest<GetListResponse<GetListEventListItemDt
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
+                predicate: x => x.EventStatus == EnumEventStatus.Active,
                 include: x => x.Include(x => x.ClubFK)
             );
 

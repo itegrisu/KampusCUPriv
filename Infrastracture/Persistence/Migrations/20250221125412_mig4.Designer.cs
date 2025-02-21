@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(KampusCUContext))]
-    partial class KampusCUContextModelSnapshot : ModelSnapshot
+    [Migration("20250221125412_mig4")]
+    partial class mig4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +65,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidManagerFK");
 
-                    b.ToTable("Clubs", (string)null);
+                    b.ToTable("Clubs");
                 });
 
             modelBuilder.Entity("Domain.Entities.ClubManagements.StudentClub", b =>
@@ -90,7 +92,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidUserFK");
 
-                    b.ToTable("StudentClubs", (string)null);
+                    b.ToTable("StudentClubs");
                 });
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.Announcement", b =>
@@ -123,7 +125,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidClubFK");
 
-                    b.ToTable("Announcements", (string)null);
+                    b.ToTable("Announcements");
                 });
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.Event", b =>
@@ -167,7 +169,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidClubFK");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Domain.Entities.CommunicationManagements.StudentAnnouncement", b =>
@@ -197,7 +199,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidUserFK");
 
-                    b.ToTable("StudenAnnouncements", (string)null);
+                    b.ToTable("StudenAnnouncements");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Category", b =>
@@ -219,7 +221,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Gid");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Class", b =>
@@ -241,7 +243,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Gid");
 
-                    b.ToTable("Classes", (string)null);
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("Domain.Entities.DefinitionManagements.Department", b =>
@@ -263,7 +265,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Gid");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.Admin", b =>
@@ -295,7 +297,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidClubFK");
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("Domain.Entities.GeneralManagements.User", b =>
@@ -355,7 +357,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GidDepartmentFK");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Domain.Entities.ClubManagements.Club", b =>

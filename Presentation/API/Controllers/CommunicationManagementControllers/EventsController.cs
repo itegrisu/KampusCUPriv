@@ -3,6 +3,7 @@ using Application.Features.CommunicationFeatures.Events.Commands.Delete;
 using Application.Features.CommunicationFeatures.Events.Commands.Update;
 using Application.Features.CommunicationFeatures.Events.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.Events.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByClubGid;
 using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByCount;
 using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByUserGid;
 using Core.Application.Request;
@@ -42,6 +43,13 @@ namespace API.Controllers.CommunicationManagementControllers
         public async Task<IActionResult> GetByCount([FromQuery] GetByCountListEventQuery getByCountListEventQuery)
         {
             GetListResponse<GetByCountListEventListItemDto> response = await Mediator.Send(getByCountListEventQuery);
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByClubGid([FromQuery] GetByClubGidListEventQuery getByClubGidListEventQuery)
+        {
+            GetListResponse<GetByClubGidListEventListItemDto> response = await Mediator.Send(getByClubGidListEventQuery);
             return Ok(response);
         }
     }

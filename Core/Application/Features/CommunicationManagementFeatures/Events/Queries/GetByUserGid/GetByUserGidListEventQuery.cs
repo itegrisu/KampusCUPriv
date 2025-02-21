@@ -54,7 +54,7 @@ namespace Application.Features.CommunicationManagementFeatures.Events.Queries.Ge
                     // Eğer tüm verileri filtreye göre döndürecekseniz
                     return await _noPagination.NoPaginationData(
                         cancellationToken: cancellationToken,
-                        predicate: x => clubGids.Contains(x.GidClubFK), // Burada filtre eklendi
+                        predicate: x => clubGids.Contains(x.GidClubFK) && x.EventStatus == Domain.Enums.EnumEventStatus.Active,
                         includes: new Expression<Func<Event, object>>[]
                         {
                            x => x.ClubFK
@@ -63,7 +63,7 @@ namespace Application.Features.CommunicationManagementFeatures.Events.Queries.Ge
 
                 // Sayfalama işlemiyle dönecek veriler
                 IPaginate<X.Event> events = await _eventReadRepository.GetListAsync(
-                    predicate: x => clubGids.Contains(x.GidClubFK), // Burada filtre eklendi
+                    predicate: x => clubGids.Contains(x.GidClubFK) && x.EventStatus == Domain.Enums.EnumEventStatus.Active, 
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,

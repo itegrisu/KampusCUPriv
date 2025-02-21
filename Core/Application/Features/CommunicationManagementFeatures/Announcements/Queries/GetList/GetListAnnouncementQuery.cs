@@ -37,14 +37,13 @@ public class GetListAnnouncementQuery : IRequest<GetListResponse<GetListAnnounce
                 return await _noPagination.NoPaginationData(cancellationToken,
                     includes: new Expression<Func<Announcement, object>>[]
                     {
-                       x => x.UserFK,
                        x => x.ClubFK,
                     });
             IPaginate<X.Announcement> announcements = await _announcementReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK)
+                include: x => x.Include(x => x.ClubFK)
             );
 
             GetListResponse<GetListAnnouncementListItemDto> response = _mapper.Map<GetListResponse<GetListAnnouncementListItemDto>>(announcements);
