@@ -52,7 +52,7 @@ namespace Application.Features.GeneralManagementFeatures.Admins.Commands.Login
                     Title = AdminsBusinessMessages.ProcessCompleted,
                     Message = AdminsBusinessMessages.SectionName,
                     IsValid = true,
-                    ClubGid = admin.Gid
+                    ClubGid = admin.GidClubFK
                 };
             }
         }
