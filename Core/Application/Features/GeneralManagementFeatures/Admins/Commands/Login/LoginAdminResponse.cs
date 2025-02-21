@@ -10,5 +10,6 @@ namespace Application.Features.GeneralManagementFeatures.Admins.Commands.Login
 {
     public class LoginAdminResponse : BaseResponse, IResponse 
     {
+        public Guid ClubGid{ get; set; }
     }
 }
