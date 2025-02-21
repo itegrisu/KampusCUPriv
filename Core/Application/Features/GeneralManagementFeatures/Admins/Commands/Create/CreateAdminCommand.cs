@@ -11,12 +11,9 @@ namespace Application.Features.GeneralFeatures.Admins.Commands.Create;
 
 public class CreateAdminCommand : IRequest<CreatedAdminResponse>
 {
-
+    public Guid GidClubFK { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-
-
-
     public class CreateAdminCommandHandler : IRequestHandler<CreateAdminCommand, CreatedAdminResponse>
     {
         private readonly IMapper _mapper;

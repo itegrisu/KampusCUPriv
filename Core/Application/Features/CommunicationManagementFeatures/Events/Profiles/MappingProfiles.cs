@@ -3,6 +3,7 @@ using Application.Features.CommunicationFeatures.Events.Commands.Delete;
 using Application.Features.CommunicationFeatures.Events.Commands.Update;
 using Application.Features.CommunicationFeatures.Events.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.Events.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByClubGid;
 using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByCount;
 using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByUserGid;
 using AutoMapper;
@@ -33,5 +34,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.Event, GetByCountListEventListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Event>, GetListResponse<GetByCountListEventListItemDto>>().ReverseMap();
+
+        CreateMap<X.Event, GetByClubGidListEventListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.Event>, GetListResponse<GetByClubGidListEventListItemDto>>().ReverseMap();
     }
 }
