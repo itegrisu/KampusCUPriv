@@ -14,7 +14,6 @@ public class UpdateAnnouncementCommand : IRequest<UpdatedAnnouncementResponse>
 {
     public Guid Gid { get; set; }
     public Guid? GidClubFK { get; set; }
-    public Guid? GidUserFK { get; set; }
     public EnumAnnouncementType? AnnouncementType { get; set; }
     public string Description { get; set; }
 
@@ -36,7 +35,7 @@ public class UpdateAnnouncementCommand : IRequest<UpdatedAnnouncementResponse>
 
         public async Task<UpdatedAnnouncementResponse> Handle(UpdateAnnouncementCommand request, CancellationToken cancellationToken)
         {
-            X.Announcement? announcement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK));
+            X.Announcement? announcement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.ClubFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _announcementBusinessRules.AnnouncementShouldExistWhenSelected(announcement);
             announcement = _mapper.Map(request, announcement);

@@ -3,6 +3,7 @@ using Application.Features.ClubFeatures.StudentClubs.Commands.Delete;
 using Application.Features.ClubFeatures.StudentClubs.Commands.Update;
 using Application.Features.ClubFeatures.StudentClubs.Queries.GetByGid;
 using Application.Features.ClubFeatures.StudentClubs.Queries.GetList;
+using Application.Features.ClubManagementFeatures.StudentClubs.Queries.GetByClubGid;
 using Application.Features.ClubManagementFeatures.StudentClubs.Queries.GetByUserGid;
 using AutoMapper;
 using Core.Application.Responses;
@@ -29,5 +30,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.StudentClub, GetByUserGidListStudentClubListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.StudentClub>, GetListResponse<GetByUserGidListStudentClubListItemDto>>().ReverseMap();
+
+        CreateMap<X.StudentClub, GetByClubGidListStudentClubListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.StudentClub>, GetListResponse<GetByClubGidListStudentClubListItemDto>>().ReverseMap();
     }
 }

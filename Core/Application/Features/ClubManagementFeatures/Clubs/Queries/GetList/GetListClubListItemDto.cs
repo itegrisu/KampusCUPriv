@@ -14,4 +14,6 @@ public class GetListClubListItemDto : IDto
     public string? Logo { get; set; }
     public string? Description { get; set; }
     public string? Color { get; set; }
+    public int? MemberCount { get; set; }
+    public int? EventCount { get; set; }
 }

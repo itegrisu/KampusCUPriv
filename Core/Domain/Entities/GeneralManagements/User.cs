@@ -27,7 +27,6 @@ namespace Domain.Entities.GeneralManagements
         public DateTime? EmailVerificationCodeExpire { get; set; }
 
         public ICollection<Club>? Clubs { get; set; }
-        public ICollection<Announcement>? Announcements { get; set; }
         public ICollection<StudentClub>? StudentClubs { get; set; }
         public ICollection<StudentAnnouncement>? StudentAnnouncements { get; set; }
     }
