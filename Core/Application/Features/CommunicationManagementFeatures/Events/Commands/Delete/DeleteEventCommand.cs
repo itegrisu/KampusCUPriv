@@ -4,6 +4,7 @@ using AutoMapper;
 using X = Domain.Entities.CommunicationManagements;
 using MediatR;
 using Application.Repositories.CommunicationManagementRepo.EventRepo;
+using Domain.Enums;
 
 namespace Application.Features.CommunicationFeatures.Events.Commands.Delete;
 
@@ -31,7 +32,7 @@ public class DeleteEventCommand : IRequest<DeletedEventResponse>
         {
             X.Event? event1 = await _eventReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             await _eventBusinessRules.EventShouldExistWhenSelected(event1);
-            event1.DataState = Core.Enum.DataState.Deleted;
+            event1.EventStatus = EnumEventStatus.Canceled;
 
             _eventWriteRepository.Update(event1);
             await _eventWriteRepository.SaveAsync();

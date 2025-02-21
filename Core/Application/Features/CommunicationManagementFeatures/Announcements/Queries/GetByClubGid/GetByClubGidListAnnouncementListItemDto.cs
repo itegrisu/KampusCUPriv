@@ -1,10 +1,14 @@
-using Core.Application.Responses;
-using Domain.Entities.DefinitionManagements;
+﻿using Core.Application.Dtos;
 using Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Application.Features.CommunicationFeatures.Announcements.Queries.GetByGid
+namespace Application.Features.CommunicationManagementFeatures.Announcements.Queries.GetByClubGid
 {
-    public class GetByGidAnnouncementResponse : IResponse
+    public class GetByClubGidListAnnouncementListItemDto : IDto
     {
         public Guid Gid { get; set; }
         public Guid? GidClubFK { get; set; }

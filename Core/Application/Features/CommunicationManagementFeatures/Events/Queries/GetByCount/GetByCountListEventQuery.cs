@@ -8,6 +8,7 @@ using Core.Application.Request;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
 using Domain.Entities.CommunicationManagements;
+using Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -43,7 +44,8 @@ namespace Application.Features.CommunicationManagementFeatures.Events.Queries.Ge
                     size: request.Count,
                     cancellationToken: cancellationToken,
                     orderByDesc: x => x.OrderByDescending(e => e.CreatedDate),
-                    include: x => x.Include(x => x.ClubFK)
+                    include: x => x.Include(x => x.ClubFK),
+                    predicate: x => x.EventStatus == EnumEventStatus.Active
                 );
 
                 GetListResponse<GetByCountListEventListItemDto> response = _mapper.Map<GetListResponse<GetByCountListEventListItemDto>>(events);

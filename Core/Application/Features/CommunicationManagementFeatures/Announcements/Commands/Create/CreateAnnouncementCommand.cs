@@ -17,7 +17,6 @@ namespace Application.Features.CommunicationFeatures.Announcements.Commands.Crea
 public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
 {
     public Guid? GidClubFK { get; set; }
-    public Guid? GidUserFK { get; set; }
     public EnumAnnouncementType? AnnouncementType { get; set; }
     public string Description { get; set; }
 
@@ -48,7 +47,7 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
             await _announcementWriteRepository.AddAsync(announcement);
             await _announcementWriteRepository.SaveAsync();
 
-            X.Announcement savedAnnouncement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == announcement.Gid, include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK));
+            X.Announcement savedAnnouncement = await _announcementReadRepository.GetAsync(predicate: x => x.Gid == announcement.Gid, include: x => x.Include(x => x.ClubFK));
 
             if (request.AnnouncementType == EnumAnnouncementType.Genel)
             {

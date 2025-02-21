@@ -3,6 +3,7 @@ using Application.Features.CommunicationFeatures.Announcements.Commands.Delete;
 using Application.Features.CommunicationFeatures.Announcements.Commands.Update;
 using Application.Features.CommunicationFeatures.Announcements.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.Announcements.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.Announcements.Queries.GetByClubGid;
 using AutoMapper;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -25,5 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.Announcement, GetListAnnouncementListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.Announcement>, GetListResponse<GetListAnnouncementListItemDto>>().ReverseMap();
+
+        CreateMap<X.Announcement, GetByClubGidListAnnouncementListItemDto>().ReverseMap();
+        CreateMap<IPaginate<X.Announcement>, GetListResponse<GetByClubGidListAnnouncementListItemDto>>().ReverseMap();
     }
 }

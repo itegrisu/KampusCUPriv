@@ -3,6 +3,8 @@ using Application.Features.CommunicationFeatures.Announcements.Commands.Delete;
 using Application.Features.CommunicationFeatures.Announcements.Commands.Update;
 using Application.Features.CommunicationFeatures.Announcements.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.Announcements.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.Announcements.Queries.GetByClubGid;
+using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByClubGid;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -29,6 +31,12 @@ namespace API.Controllers.CommunicationManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetByClubGid([FromQuery] GetByClubGidListAnnouncementQuery getByClubGidListAnnouncementQuery)
+        {
+            GetListResponse<GetByClubGidListAnnouncementListItemDto> response = await Mediator.Send(getByClubGidListAnnouncementQuery);
+            return Ok(response);
+        }
 
     }
 }

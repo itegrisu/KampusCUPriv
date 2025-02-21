@@ -17,7 +17,6 @@ namespace Persistence.EntityConfiguration.CommunicationManagements
             builder.Property(t => t.Gid).IsRequired().HasColumnType("uniqueidentifier");
 
             builder.HasOne(y => y.ClubFK).WithMany(u => u.Announcements).HasForeignKey(y => y.GidClubFK);
-            builder.HasOne(y => y.UserFK).WithMany(u => u.Announcements).HasForeignKey(y => y.GidUserFK);
 
             builder.Property(y => y.Description).IsRequired().HasColumnType("nvarchar").HasMaxLength(300);
             builder.HasMany(u => u.StudentAnnouncements).WithOne(y => y.AnnouncementFK).HasForeignKey(y => y.GidAnnouncementFK);
