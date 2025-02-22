@@ -5,7 +5,9 @@ using Core;
 using Core.Context;
 using Core.CrossCuttingConcern.Exceptions.WepApi.Extensions;
 using Core.Infrastracture;
+using FirebaseAdmin;
 using FluentValidation.AspNetCore;
+using Google.Apis.Auth.OAuth2;
 using Hangfire;
 using Hangfire.MemoryStorage;
 using Infrastracture;
@@ -219,6 +221,15 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connectionString);
 });
 #endregion 
+
+void InitializeFirebase()
+{
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.FromFile("")
+    });
+}
+
 builder.Services.AddContainerWithDependenciesApplication();
 builder.Services.AddContainerWithDependenciesPersistence();
 builder.Services.AddContainerWithDependenciesCore();

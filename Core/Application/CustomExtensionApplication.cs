@@ -1,3 +1,4 @@
+using Application.Helpers.Application.Helpers;
 using Application.Helpers.PaginationHelpers;
 using Application.Helpers.UpdateRowNo;
 using Core.Application;
@@ -21,6 +22,7 @@ namespace Application
             #endregion
 
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IPushNotificationService, FirebasePushNotificationService>();
 
             // services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         }
