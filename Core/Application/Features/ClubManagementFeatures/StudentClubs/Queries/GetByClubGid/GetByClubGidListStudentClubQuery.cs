@@ -42,14 +42,16 @@ namespace Application.Features.ClubManagementFeatures.StudentClubs.Queries.GetBy
                         predicate: x => x.GidClubFK == request.ClubGid,
                         includes: new Expression<Func<StudentClub, object>>[]
                         {
-                       x => x.UserFK,
-                       x => x.ClubFK
+                           x => x.UserFK,
+                           x => x.ClubFK,
+                           x => x.UserFK.ClassFK,
+                           x => x.UserFK.DepartmentFK
                         });
                 IPaginate<X.StudentClub> studentClubs = await _studentClubReadRepository.GetListAsync(
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
-                    include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK),
+                    include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.UserFK).ThenInclude(x => x.ClassFK).Include(x => x.UserFK).ThenInclude(x => x.DepartmentFK),
                     predicate: x => x.GidClubFK == request.ClubGid
                 );
 
