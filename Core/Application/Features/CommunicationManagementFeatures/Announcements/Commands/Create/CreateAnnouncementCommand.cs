@@ -11,6 +11,10 @@ using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Application.Repositories.ClubManagementRepos.StudentClubRepo;
 using Application.Repositories.CommunicationManagementRepo.StudentAnnouncementRepo;
 using Application.Features.CommunicationFeatures.StudentAnnouncements.Commands.Create;
+using Application.Helpers;
+using Domain.Entities.GeneralManagements;
+using AutoMapper.Execution;
+using Application.Helpers.Application.Helpers;
 
 namespace Application.Features.CommunicationFeatures.Announcements.Commands.Create;
 
@@ -29,6 +33,7 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
         private readonly IUserReadRepository _userRepository;
         private readonly IStudentClubReadRepository _studentClubRepository;
         private readonly IStudentAnnouncementWriteRepository _studentAnnouncementRepository;
+        private readonly IPushNotificationService _pushNotificationService;
         public CreateAnnouncementCommandHandler(IMapper mapper, IAnnouncementWriteRepository announcementWriteRepository,
                                          AnnouncementBusinessRules announcementBusinessRules, IAnnouncementReadRepository announcementReadRepository, IUserReadRepository userRepository, IStudentClubReadRepository studentClubRepository, IStudentAnnouncementWriteRepository studentAnnouncementRepository)
         {
@@ -61,6 +66,15 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
                         IsRead = false
                     };
                     await _studentAnnouncementRepository.AddAsync(_mapper.Map<X.StudentAnnouncement>(studentAnnouncement));
+
+                    if (!string.IsNullOrEmpty(user.DeviceToken))
+                    {
+                        await _pushNotificationService.SendPushNotificationAsync(
+                            user.DeviceToken,
+                            "Yeni Duyuru",
+                            $"Merhaba {user.Name}, yeni bir duyuru var: {savedAnnouncement.Description}"
+                        );
+                    }
                 }
             }
             else if (request.AnnouncementType == EnumAnnouncementType.Kulup && request.GidClubFK.HasValue)
@@ -75,6 +89,15 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
                         IsRead = false
                     };
                     await _studentAnnouncementRepository.AddAsync(_mapper.Map<X.StudentAnnouncement>(studentAnnouncement));
+
+                    if (!string.IsNullOrEmpty(member.UserFK.DeviceToken))
+                    {
+                        await _pushNotificationService.SendPushNotificationAsync(
+                            member.UserFK.DeviceToken,
+                        "Yeni Duyuru",
+                            $"Merhaba {member.UserFK.Name}, yeni bir duyuru var: {savedAnnouncement.Description}"
+                        );
+                    }
                 }
             }
             else if (request.AnnouncementType == EnumAnnouncementType.Kan)
@@ -89,12 +112,21 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
                         IsRead = false
                     };
                     await _studentAnnouncementRepository.AddAsync(_mapper.Map<X.StudentAnnouncement>(studentAnnouncement));
+
+                    if (!string.IsNullOrEmpty(donor.DeviceToken))
+                    {
+                        await _pushNotificationService.SendPushNotificationAsync(
+                            donor.DeviceToken,
+                        "Yeni Duyuru",
+                            $"Merhaba {donor.Name}, yeni bir duyuru var: {savedAnnouncement.Description}"
+                        );
+                    }
                 }
             }
 
             await _studentAnnouncementRepository.SaveAsync();
 
-          
+
             GetByGidAnnouncementResponse obj = _mapper.Map<GetByGidAnnouncementResponse>(savedAnnouncement);
             return new()
             {

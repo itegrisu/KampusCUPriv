@@ -25,6 +25,7 @@ namespace Domain.Entities.GeneralManagements
         public bool IsEmailVerified { get; set; }
         public string? EmailVerificationCode { get; set; }
         public DateTime? EmailVerificationCodeExpire { get; set; }
+        public string? DeviceToken { get; set; }
 
         public ICollection<Club>? Clubs { get; set; }
         public ICollection<StudentClub>? StudentClubs { get; set; }

@@ -50,7 +50,7 @@ public class DeleteAnnouncementCommand : IRequest<DeletedAnnouncementResponse>
                 _studentAnnouncementWriteRepository.Update(item);
             }
 
-            await _announcementWriteRepository.SaveAsync();
+            await _studentAnnouncementWriteRepository.SaveAsync();
 
             return new()
             {
