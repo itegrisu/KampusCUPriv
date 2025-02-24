@@ -79,8 +79,8 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
             }
             else if (request.AnnouncementType == EnumAnnouncementType.Kulup && request.GidClubFK.HasValue)
             {
-                var clubMembers = await _studentClubRepository.GetWhere(sc => sc.GidClubFK == request.GidClubFK.Value).ToListAsync();
-                foreach (var member in clubMembers)
+                var clubMembers = await _studentClubRepository.GetListAsync(sc => sc.GidClubFK == request.GidClubFK.Value, include: x => x.Include(x => x.UserFK));
+                foreach (var member in clubMembers.Items)
                 {
                     var studentAnnouncement = new CreateStudentAnnouncementCommand
                     {
