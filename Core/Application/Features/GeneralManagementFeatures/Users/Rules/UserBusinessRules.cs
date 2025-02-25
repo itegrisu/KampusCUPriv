@@ -37,7 +37,7 @@ public class UserBusinessRules : BaseBusinessRules
     }
     public async Task EmailDomainCheck(string email)
     {
-        if (!email.EndsWith("@cumhuriyet.edu.com.tr"))
+        if (!email.EndsWith("@cumhuriyet.edu.tr"))
             throw new BusinessException("Only email addresses with the domain @cumhuriyet.edu.com.tr can be registered.");
     }
 }
