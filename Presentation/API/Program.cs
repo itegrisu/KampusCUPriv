@@ -226,7 +226,7 @@ void InitializeFirebase()
 {
     FirebaseApp.Create(new AppOptions()
     {
-        Credential = GoogleCredential.FromFile("")
+        Credential = GoogleCredential.FromFile("Downloads/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json")
     });
 }
 
