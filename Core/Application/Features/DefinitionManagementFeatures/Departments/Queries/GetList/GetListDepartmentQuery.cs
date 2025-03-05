@@ -42,7 +42,8 @@ public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartment
             IPaginate<X.Department> departments = await _departmentReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(o => o.Name)
             );
 
             GetListResponse<GetListDepartmentListItemDto> response = _mapper.Map<GetListResponse<GetListDepartmentListItemDto>>(departments);
