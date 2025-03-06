@@ -38,7 +38,7 @@ public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartment
                 //       x => x.UserFK,
                 //       x=> x.DepartmentMembers
                 //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+				return await _noPagination.NoPaginationData(cancellationToken,orderBy: x => x.Name);
             IPaginate<X.Department> departments = await _departmentReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,

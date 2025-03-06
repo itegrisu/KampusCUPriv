@@ -38,11 +38,12 @@ public class GetListCategoryQuery : IRequest<GetListResponse<GetListCategoryList
                 //       x => x.UserFK,
                 //       x=> x.CategoryMembers
                 //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+				return await _noPagination.NoPaginationData(cancellationToken, orderBy: x => x.Name);
             IPaginate<X.Category> categorys = await _categoryReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(o => o.Name)
             );
 
             GetListResponse<GetListCategoryListItemDto> response = _mapper.Map<GetListResponse<GetListCategoryListItemDto>>(categorys);

@@ -38,11 +38,12 @@ public class GetListClassQuery : IRequest<GetListResponse<GetListClassListItemDt
                 //       x => x.UserFK,
                 //       x=> x.ClassMembers
                 //    });
-				return await _noPagination.NoPaginationData(cancellationToken);
+				return await _noPagination.NoPaginationData(cancellationToken, orderBy: x => x.Name);
             IPaginate<X.Class> classs = await _classReadRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken
+                cancellationToken: cancellationToken,
+                orderBy: x => x.OrderBy(o => o.Name)
             );
 
             GetListResponse<GetListClassListItemDto> response = _mapper.Map<GetListResponse<GetListClassListItemDto>>(classs);
