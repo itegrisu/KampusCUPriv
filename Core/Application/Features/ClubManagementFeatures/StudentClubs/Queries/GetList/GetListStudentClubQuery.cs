@@ -33,6 +33,7 @@ public class GetListStudentClubQuery : IRequest<GetListResponse<GetListStudentCl
         {
             if (request.PageRequest.PageIndex == -1)
                 return await _noPagination.NoPaginationData(cancellationToken,
+                    orderBy: x => x.ClubFK.Name,
                     includes: new Expression<Func<StudentClub, object>>[]
                     {
                        x => x.UserFK,
@@ -42,7 +43,8 @@ public class GetListStudentClubQuery : IRequest<GetListResponse<GetListStudentCl
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken,
-                include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK)
+                include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK),
+                orderBy: x => x.OrderBy(x => x.ClubFK.Name)
             );
 
             GetListResponse<GetListStudentClubListItemDto> response = _mapper.Map<GetListResponse<GetListStudentClubListItemDto>>(studentClubs);
