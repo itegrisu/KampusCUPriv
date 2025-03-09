@@ -28,7 +28,7 @@ namespace Persistence.EntityConfiguration.GeneralManagements
             builder.Property(y => y.IsEmailVerified).IsRequired(true).HasColumnType("bit");
             builder.Property(y => y.EmailVerificationCode).IsRequired(false).HasColumnType("varchar").HasMaxLength(6);
             builder.Property(y => y.EmailVerificationCodeExpire).IsRequired(false).HasColumnType("datetime");
-            builder.Property(y => y.DeviceToken).IsRequired(false).HasColumnType("varchar").HasMaxLength(100);
+            builder.Property(y => y.DeviceToken).IsRequired(false).HasColumnType("nvarchar").HasMaxLength(250);
 
             builder.HasMany(u => u.Clubs).WithOne(y => y.UserFK).HasForeignKey(y => y.GidManagerFK);
             builder.HasMany(u => u.StudentAnnouncements).WithOne(y => y.UserFK).HasForeignKey(y => y.GidUserFK);
