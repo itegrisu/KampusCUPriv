@@ -226,9 +226,11 @@ void InitializeFirebase()
 {
     FirebaseApp.Create(new AppOptions()
     {
-        Credential = GoogleCredential.FromFile("Downloads/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json")
+        Credential = GoogleCredential.FromFile("C:/Users/itegr/Downloads/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json")
     });
 }
+
+InitializeFirebase();
 
 builder.Services.AddContainerWithDependenciesApplication();
 builder.Services.AddContainerWithDependenciesPersistence();

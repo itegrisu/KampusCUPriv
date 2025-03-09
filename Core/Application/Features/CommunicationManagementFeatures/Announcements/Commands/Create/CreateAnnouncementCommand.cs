@@ -14,7 +14,6 @@ using Application.Features.CommunicationFeatures.StudentAnnouncements.Commands.C
 using Application.Helpers;
 using Domain.Entities.GeneralManagements;
 using AutoMapper.Execution;
-using Application.Helpers.Application.Helpers;
 
 namespace Application.Features.CommunicationFeatures.Announcements.Commands.Create;
 

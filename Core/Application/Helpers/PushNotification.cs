@@ -13,8 +13,7 @@ namespace Application.Helpers
     using System.Text;
     using System.Threading.Tasks;
 
-    namespace Application.Helpers
-    {
+  
         public interface IPushNotificationService
         {
             Task SendPushNotificationAsync(string deviceToken, string title, string body);
@@ -36,7 +35,6 @@ namespace Application.Helpers
 
                 string response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
             }
-        }
-    }
+        }   
 
 }
