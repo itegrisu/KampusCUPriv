@@ -135,6 +135,8 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
                 IsValid = true,
                 Obj = obj
             };
+
+
         }
     }
 }
