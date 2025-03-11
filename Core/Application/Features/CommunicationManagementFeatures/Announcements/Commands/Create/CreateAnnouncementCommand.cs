@@ -34,7 +34,7 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
         private readonly IStudentAnnouncementWriteRepository _studentAnnouncementRepository;
         private readonly IPushNotificationService _pushNotificationService;
         public CreateAnnouncementCommandHandler(IMapper mapper, IAnnouncementWriteRepository announcementWriteRepository,
-                                         AnnouncementBusinessRules announcementBusinessRules, IAnnouncementReadRepository announcementReadRepository, IUserReadRepository userRepository, IStudentClubReadRepository studentClubRepository, IStudentAnnouncementWriteRepository studentAnnouncementRepository)
+                                         AnnouncementBusinessRules announcementBusinessRules, IAnnouncementReadRepository announcementReadRepository, IUserReadRepository userRepository, IStudentClubReadRepository studentClubRepository, IStudentAnnouncementWriteRepository studentAnnouncementRepository, IPushNotificationService pushNotificationService)
         {
             _mapper = mapper;
             _announcementWriteRepository = announcementWriteRepository;
@@ -43,6 +43,7 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
             _userRepository = userRepository;
             _studentClubRepository = studentClubRepository;
             _studentAnnouncementRepository = studentAnnouncementRepository;
+            _pushNotificationService = pushNotificationService;
         }
 
         public async Task<CreatedAnnouncementResponse> Handle(CreateAnnouncementCommand request, CancellationToken cancellationToken)
