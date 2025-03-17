@@ -4,7 +4,9 @@ using Application.Features.CommunicationFeatures.StudentAnnouncements.Commands.U
 using Application.Features.CommunicationFeatures.StudentAnnouncements.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.StudentAnnouncements.Queries.GetList;
 using Application.Features.CommunicationManagementFeatures.Events.Queries.GetByUserGid;
+using Application.Features.CommunicationManagementFeatures.StudentAnnouncements.Commands.MarkAllAsRead;
 using Application.Features.CommunicationManagementFeatures.StudentAnnouncements.Queries.GetByUserGid;
+using Application.Features.GeneralManagementFeatures.Users.Commands.Login;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -35,6 +37,13 @@ namespace API.Controllers.CommunicationManagementControllers
         public async Task<IActionResult> GetByUserGid([FromQuery] GetByUserGidListStudentAnnouncementQuery getByUserGidListStudentAnnouncementQuery)
         {
             GetListResponse<GetByUserGidListStudentAnnouncementListItemDto> response = await Mediator.Send(getByUserGidListStudentAnnouncementQuery);
+            return Ok(response);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> MarkAllAsRead([FromBody] MarkAllAsReadStudentAnnouncementCommand markAllAsReadStudentAnnouncementCommand)
+        {
+            MarkAllAsReadStudentAnnouncementResponse response = await Mediator.Send(markAllAsReadStudentAnnouncementCommand);
             return Ok(response);
         }
     }
