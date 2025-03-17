@@ -3,6 +3,7 @@ using Application.Features.CommunicationFeatures.StudentAnnouncements.Commands.D
 using Application.Features.CommunicationFeatures.StudentAnnouncements.Commands.Update;
 using Application.Features.CommunicationFeatures.StudentAnnouncements.Queries.GetByGid;
 using Application.Features.CommunicationFeatures.StudentAnnouncements.Queries.GetList;
+using Application.Features.CommunicationManagementFeatures.StudentAnnouncements.Commands.MarkAllAsRead;
 using Application.Features.CommunicationManagementFeatures.StudentAnnouncements.Queries.GetByUserGid;
 using AutoMapper;
 using Core.Application.Responses;
@@ -29,5 +30,8 @@ public class MappingProfiles : Profile
 
         CreateMap<X.StudentAnnouncement, GetByUserGidListStudentAnnouncementListItemDto>().ReverseMap();
         CreateMap<IPaginate<X.StudentAnnouncement>, GetListResponse<GetByUserGidListStudentAnnouncementListItemDto>>().ReverseMap();
+
+        CreateMap<X.StudentAnnouncement, MarkAllAsReadStudentAnnouncementCommand>().ReverseMap();
+        CreateMap<X.StudentAnnouncement, MarkAllAsReadStudentAnnouncementResponse>().ReverseMap();
     }
 }
