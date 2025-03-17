@@ -12,13 +12,9 @@ namespace Application.Features.CommunicationFeatures.StudentAnnouncements.Comman
 public class UpdateStudentAnnouncementCommand : IRequest<UpdatedStudentAnnouncementResponse>
 {
     public Guid Gid { get; set; }
-
 	public Guid GidUserFK { get; set; }
-public Guid GidAnnouncementFK { get; set; }
-
-public bool IsRead { get; set; }
-
-
+    public Guid GidAnnouncementFK { get; set; }
+    public bool IsRead { get; set; }
 
     public class UpdateStudentAnnouncementCommandHandler : IRequestHandler<UpdateStudentAnnouncementCommand, UpdatedStudentAnnouncementResponse>
     {
