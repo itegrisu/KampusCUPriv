@@ -17,4 +17,5 @@ public class GetListUserListItemDto : IDto
     public bool IsBloodDonor { get; set; }
     public bool IsEmailVerified { get; set; }
     public string DeviceToken { get; set; }
+    public bool IsNotificationsEnabled { get; set; }
 }
