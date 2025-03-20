@@ -16,5 +16,6 @@ namespace Application.Features.GeneralFeatures.Users.Queries.GetByGid
         public bool IsBloodDonor { get; set; }
         public bool IsEmailVerified { get; set; }
         public string DeviceToken { get; set; }
+        public bool IsNotificationsEnabled { get; set; }
     }
 }

@@ -23,6 +23,8 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>
     public string? EmailVerificationCode { get; set; }
     public DateTime? EmailVerificationCodeExpire { get; set; }
     public string? DeviceToken { get; set; }
+    public bool IsNotificationsEnabled { get; set; }
+
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>
     {
         private readonly IMapper _mapper;
