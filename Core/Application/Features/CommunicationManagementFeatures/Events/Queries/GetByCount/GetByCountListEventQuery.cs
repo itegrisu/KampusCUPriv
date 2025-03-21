@@ -45,7 +45,7 @@ namespace Application.Features.CommunicationManagementFeatures.Events.Queries.Ge
                     cancellationToken: cancellationToken,
                     orderByDesc: x => x.OrderByDescending(e => e.CreatedDate),
                     include: x => x.Include(x => x.ClubFK),
-                    predicate: x => x.EventStatus == EnumEventStatus.Active
+                    predicate: x => x.EventStatus == EnumEventStatus.Active && x.DataState == Core.Enum.DataState.Active
                 );
 
                 GetListResponse<GetByCountListEventListItemDto> response = _mapper.Map<GetListResponse<GetByCountListEventListItemDto>>(events);

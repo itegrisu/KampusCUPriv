@@ -42,7 +42,7 @@ namespace Application.Features.CommunicationManagementFeatures.StudentAnnounceme
                     //unutma
                     //includes varsa eklenecek - Orn: Altta
                     return await _noPagination.NoPaginationData(cancellationToken,
-                        predicate: x => x.GidUserFK == request.UserGid,
+                        predicate: x => x.GidUserFK == request.UserGid && x.DataState == Core.Enum.DataState.Active,
                         includes: new Expression<Func<StudentAnnouncement, object>>[]
                         {
                           x => x.UserFK,
@@ -54,7 +54,7 @@ namespace Application.Features.CommunicationManagementFeatures.StudentAnnounceme
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
                     include: x => x.Include(x => x.UserFK).Include(x => x.AnnouncementFK).ThenInclude(x => x.ClubFK).Include(x => x.AnnouncementFK),
-                    predicate: x => x.GidUserFK == request.UserGid
+                    predicate: x => x.GidUserFK == request.UserGid && x.DataState == Core.Enum.DataState.Active
                 );
 
                 GetListResponse<GetByUserGidListStudentAnnouncementListItemDto> response = _mapper.Map<GetListResponse<GetByUserGidListStudentAnnouncementListItemDto>>(studentAnnouncements);

@@ -40,4 +40,10 @@ public class UserBusinessRules : BaseBusinessRules
         if (!email.EndsWith("@cumhuriyet.edu.tr"))
             throw new BusinessException("Only email addresses with the domain @cumhuriyet.edu.com.tr can be registered.");
     }
+    public async Task UserEmailShouldBeUniqueWhenUpdating(Guid userId, string newEmail)
+    {
+        var user = await _userReadRepository.GetSingleAsync(u => u.Email == newEmail && u.Gid != userId);
+        if (user != null)
+            throw new BusinessException(UsersBusinessMessages.UserAlreadyExists);
+    }
 }

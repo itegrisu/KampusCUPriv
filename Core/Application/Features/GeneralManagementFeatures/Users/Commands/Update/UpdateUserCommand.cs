@@ -43,6 +43,8 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            await _userBusinessRules.UserEmailShouldBeUniqueWhenUpdating(request.Gid, request.Email);
+
             X.User? user = await _userReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.ClassFK).Include(x => x.DepartmentFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _userBusinessRules.UserShouldExistWhenSelected(user);

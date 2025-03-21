@@ -39,7 +39,7 @@ namespace Application.Features.ClubManagementFeatures.StudentClubs.Queries.GetBy
             {
                 if (request.PageIndex == -1)
                     return await _noPagination.NoPaginationData(cancellationToken,
-                        predicate: x => x.GidClubFK == request.ClubGid,
+                        predicate: x => x.GidClubFK == request.ClubGid && x.DataState == Core.Enum.DataState.Active,
                         orderBy: x => x.ClubFK.Name,
                         includes: new Expression<Func<StudentClub, object>>[]
                         {
@@ -53,7 +53,7 @@ namespace Application.Features.ClubManagementFeatures.StudentClubs.Queries.GetBy
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
                     include: x => x.Include(x => x.UserFK).Include(x => x.ClubFK).Include(x => x.UserFK).ThenInclude(x => x.ClassFK).Include(x => x.UserFK).ThenInclude(x => x.DepartmentFK),
-                    predicate: x => x.GidClubFK == request.ClubGid,
+                    predicate: x => x.GidClubFK == request.ClubGid && x.DataState == Core.Enum.DataState.Active,
                     orderBy: x => x.OrderBy(x => x.ClubFK.Name)
                 );
 
