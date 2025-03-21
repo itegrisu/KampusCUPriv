@@ -32,6 +32,7 @@ public class CreateAdminCommand : IRequest<CreatedAdminResponse>
 
         public async Task<CreatedAdminResponse> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
         {
+            await _adminBusinessRules.AdminEmailShouldBeUnique(request.Email);
             //int maxRowNo = await _adminReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.Admin admin = _mapper.Map<X.Admin>(request);
             //admin.RowNo = maxRowNo + 1;

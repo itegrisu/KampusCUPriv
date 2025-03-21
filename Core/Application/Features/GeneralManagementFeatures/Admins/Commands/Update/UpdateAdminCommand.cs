@@ -32,6 +32,8 @@ public class UpdateAdminCommand : IRequest<UpdatedAdminResponse>
 
         public async Task<UpdatedAdminResponse> Handle(UpdateAdminCommand request, CancellationToken cancellationToken)
         {
+            await _adminBusinessRules.AdminEmailShouldBeUniqueWhenUpdating(request.Gid, request.Email);
+
             X.Admin? admin = await _adminReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _adminBusinessRules.AdminShouldExistWhenSelected(admin);

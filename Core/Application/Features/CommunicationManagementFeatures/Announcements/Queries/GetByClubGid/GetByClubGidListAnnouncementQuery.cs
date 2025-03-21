@@ -42,7 +42,7 @@ namespace Application.Features.CommunicationManagementFeatures.Announcements.Que
                     //unutma
                     //includes varsa eklenecek - Orn: Altta
                     return await _noPagination.NoPaginationData(cancellationToken,
-                        predicate: x => x.GidClubFK == request.ClubGid,
+                        predicate: x => x.GidClubFK == request.ClubGid && x.DataState == Core.Enum.DataState.Active,
                         includes: new Expression<Func<Announcement, object>>[]
                         {
                        x => x.ClubFK,
@@ -51,7 +51,7 @@ namespace Application.Features.CommunicationManagementFeatures.Announcements.Que
                     index: request.PageIndex,
                     size: request.PageSize,
                     cancellationToken: cancellationToken,
-                    predicate: x => x.GidClubFK == request.ClubGid,
+                    predicate: x => x.GidClubFK == request.ClubGid && x.DataState == Core.Enum.DataState.Active,
                     include: x => x.Include(x => x.ClubFK)
                 );
 

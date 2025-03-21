@@ -18,5 +18,6 @@ public static class AdminsBusinessMessages
     public const string TechnicalError = "Technical Error";
 	public const string NotFoundRecord = "No Record Found!";
 	public const string IncorrectOperation = "Incorrect Operation";
-	//public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    //public const string IdNumberAlreadyExists = "This Id Number is Already Registered in the System";
+    public const string EmailAlreadyExists = "This Email is Already Registered in the System";
 }
