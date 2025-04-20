@@ -35,6 +35,7 @@ using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddConsole();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -258,6 +259,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc();
 var app = builder.Build();
+app.Logger.LogInformation("Uygulama başlatıldı!");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

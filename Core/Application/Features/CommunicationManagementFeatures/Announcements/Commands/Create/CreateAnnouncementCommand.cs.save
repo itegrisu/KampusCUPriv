@@ -33,21 +33,17 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
         private readonly IStudentClubReadRepository _studentClubRepository;
         private readonly IStudentAnnouncementWriteRepository _studentAnnouncementRepository;
         private readonly IPushNotificationService _pushNotificationService;
-
-	
-	public CreateAnnouncementCommandHandler(IMapper mapper, IAnnouncementWriteRepository announcementWriteRepository,
-	                                   AnnouncementBusinessRules announcementBusinessRules, IAnnouncementReadRepository announcementReadRepository, IUserReadRepository userRepository, IStudentClubReadRepository studentClubRepository, IStudentAnnouncementWriteRepository studentAnnouncementRepository, IPushNotificationService pushNotificationService)
-	  {
-	      _mapper = mapper;
-	      _announcementWriteRepository = announcementWriteRepository;
-	      _announcementBusinessRules = announcementBusinessRules;
-	      _announcementReadRepository = announcementReadRepository;
-	      _userRepository = userRepository;
-	      _studentClubRepository = studentClubRepository;
-	      _studentAnnouncementRepository = studentAnnouncementRepository;
-	      _pushNotificationService = pushNotificationService;
-	  }
-
+        public CreateAnnouncementCommandHandler(IMapper mapper, IAnnouncementWriteRepository announcementWriteRepository,
+                                         AnnouncementBusinessRules announcementBusinessRules, IAnnouncementReadRepository announcementReadRepository, IUserReadRepository userRepository, IStudentClubReadRepository studentClubRepository, IStudentAnnouncementWriteRepository studentAnnouncementRepository)
+        {
+            _mapper = mapper;
+            _announcementWriteRepository = announcementWriteRepository;
+            _announcementBusinessRules = announcementBusinessRules;
+            _announcementReadRepository = announcementReadRepository;
+            _userRepository = userRepository;
+            _studentClubRepository = studentClubRepository;
+            _studentAnnouncementRepository = studentAnnouncementRepository;
+        }
 
         public async Task<CreatedAnnouncementResponse> Handle(CreateAnnouncementCommand request, CancellationToken cancellationToken)
         {
@@ -80,29 +76,7 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
                     }
                 }
             }
-            else if (request.AnnouncementType == EnumAnnouncementType.Kulup && request.GidClubFK.HasValue)
-            {
-                var clubMembers = await _studentClubRepository.GetListAsync(sc => sc.GidClubFK == request.GidClubFK.Value, include: x => x.Include(x => x.UserFK));
-                foreach (var member in clubMembers.Items)
-                {
-                    var studentAnnouncement = new CreateStudentAnnouncementCommand
-                    {
-                        GidUserFK = member.GidUserFK,
-                        GidAnnouncementFK = savedAnnouncement.Gid,
-                        IsRead = false
-                    };
-                    await _studentAnnouncementRepository.AddAsync(_mapper.Map<X.StudentAnnouncement>(studentAnnouncement));
 
-                    if (!string.IsNullOrEmpty(member.UserFK.DeviceToken))
-                    {
-                        await _pushNotificationService.SendPushNotificationAsync(
-                            member.UserFK.DeviceToken,
-                        "Yeni Duyuru",
-                            $"Merhaba {member.UserFK.Name}, yeni bir duyuru var: {savedAnnouncement.Description}"
-                        );
-                    }
-                }
-            }
             else if (request.AnnouncementType == EnumAnnouncementType.Kan)
             {
                 var bloodDonors = await _userRepository.GetWhere(u => u.IsBloodDonor == true).ToListAsync();
@@ -138,8 +112,6 @@ public class CreateAnnouncementCommand : IRequest<CreatedAnnouncementResponse>
                 IsValid = true,
                 Obj = obj
             };
-
-
         }
     }
 }
