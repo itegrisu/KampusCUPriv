@@ -35,6 +35,7 @@ using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddConsole();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -226,7 +227,7 @@ void InitializeFirebase()
 {
     FirebaseApp.Create(new AppOptions()
     {
-        Credential = GoogleCredential.FromFile("C:/Users/itegr/Downloads/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json")
+        Credential = GoogleCredential.FromFile("../kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json")
     });
 }
 
@@ -255,6 +256,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc();
 var app = builder.Build();
+app.Logger.LogInformation("Uygulama başlatıldı!");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
