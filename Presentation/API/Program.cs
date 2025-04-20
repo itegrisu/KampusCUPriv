@@ -225,12 +225,14 @@ builder.Services.AddDbContext<Context>(options =>
 
 void InitializeFirebase()
 {
+    string basePath = AppContext.BaseDirectory;
+    string credentialPath = Path.Combine(basePath, "kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json");
+
     FirebaseApp.Create(new AppOptions()
     {
-        Credential = GoogleCredential.FromFile("../kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json")
+        Credential = GoogleCredential.FromFile(credentialPath)
     });
 }
-
 InitializeFirebase();
 
 builder.Services.AddContainerWithDependenciesApplication();

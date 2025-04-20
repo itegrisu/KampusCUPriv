@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Firebase credential dosyasý
+Presentation/API/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json
