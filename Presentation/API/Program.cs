@@ -81,11 +81,11 @@ columnOpt.Store.Remove(StandardColumn.MessageTemplate);
 
 Logger log = new LoggerConfiguration()
 .WriteTo.MSSqlServer(
-               connectionString: connectionString, // MSSQL baðlantý dizesi
+               connectionString: connectionString, // MSSQL baï¿½lantï¿½ dizesi
                sinkOptions: new MSSqlServerSinkOptions
                {
-                   TableName = "LogErrors", // Tablo adý
-                   AutoCreateSqlTable = true // Tabloyu otomatik oluþtur
+                   TableName = "LogErrors", // Tablo adï¿½
+                   AutoCreateSqlTable = true // Tabloyu otomatik oluï¿½tur
                },
                columnOptions: columnOpt
                ).MinimumLevel.Error()
@@ -104,8 +104,8 @@ builder.Services.AddHttpLogging(logging =>
 });
 
 // Minimum log seviyesini belirle
-//.WriteTo.Seq("Url") // Seq'e log gönder
-//.Enrich.FromLogContext() // Log baðlamýný zenginleþtir
+//.WriteTo.Seq("Url") // Seq'e log gï¿½nder
+//.Enrich.FromLogContext() // Log baï¿½lamï¿½nï¿½ zenginleï¿½tir
 //.MinimumLevel.Information() // Minimum log seviyesini belirle
 //.CreateLogger();
 
@@ -117,15 +117,15 @@ builder.Services.AddControllers().AddFluentValidation(configuration =>
 {
     configuration.DisableDataAnnotationsValidation = true;
 
-    // YoneticiValidator sýnýfýnýn bulunduðu derlemedeki doðrulayýcýlarý FluentValidation yapýlandýrmasýna kaydeder. Bu þekilde, belirtilen derlemedeki tüm doðrulayýcýlar otomatik olarak kullanýlabilir hale gelir.
-    //configuration.RegisterValidatorsFromAssemblyContaining<YoneticiValidator>(); -->validatorleri yazdýktan sonra eklicez
+    // YoneticiValidator sï¿½nï¿½fï¿½nï¿½n bulunduï¿½u derlemedeki doï¿½rulayï¿½cï¿½larï¿½ FluentValidation yapï¿½landï¿½rmasï¿½na kaydeder. Bu ï¿½ekilde, belirtilen derlemedeki tï¿½m doï¿½rulayï¿½cï¿½lar otomatik olarak kullanï¿½labilir hale gelir.
+    //configuration.RegisterValidatorsFromAssemblyContaining<YoneticiValidator>(); -->validatorleri yazdï¿½ktan sonra eklicez
 
-    //otomatik doðrulama özelliðini etkinleþtirir. Bu, bir HTTP isteði alýndýðýnda, doðrulama kurallarýnýn otomatik olarak uygulanmasýný saðlar.
+    //otomatik doï¿½rulama ï¿½zelliï¿½ini etkinleï¿½tirir. Bu, bir HTTP isteï¿½i alï¿½ndï¿½ï¿½ï¿½nda, doï¿½rulama kurallarï¿½nï¿½n otomatik olarak uygulanmasï¿½nï¿½ saï¿½lar.
     configuration.AutomaticValidationEnabled = true;
 })
 .AddJsonOptions(configurations =>
 {
-    // Serileþtirmesinde döngüsel referanslarý iþlemek için referans iþleyiciyi ayarlar. IgnoreCycles, döngüsel referanslarý görmezden gelerek olasý bir sonsuz döngüyü önler.
+    // Serileï¿½tirmesinde dï¿½ngï¿½sel referanslarï¿½ iï¿½lemek iï¿½in referans iï¿½leyiciyi ayarlar. IgnoreCycles, dï¿½ngï¿½sel referanslarï¿½ gï¿½rmezden gelerek olasï¿½ bir sonsuz dï¿½ngï¿½yï¿½ ï¿½nler.
     configurations.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 #endregion
@@ -134,41 +134,41 @@ builder.Services.AddControllers().AddFluentValidation(configuration =>
 // IServiceCollection arabirimine ApiVersioning hizmetini ekler. 
 builder.Services.AddApiVersioning(options =>
 {
-    // Varsayýlan API sürümünü ayarlar. Burada 1.0 sürümü, projenin varsayýlan API sürümü olarak belirlenir.
+    // Varsayï¿½lan API sï¿½rï¿½mï¿½nï¿½ ayarlar. Burada 1.0 sï¿½rï¿½mï¿½, projenin varsayï¿½lan API sï¿½rï¿½mï¿½ olarak belirlenir.
     options.DefaultApiVersion = new ApiVersion(1, 0);
 
-    // Belirtilmeyen durumlarda varsayýlan API sürümünün kullanýlmasýný saðlar. Yani istemci bir API sürümü belirtmezse, options.DefaultApiVersion ile belirtilen varsayýlan sürüm kullanýlýr.
+    // Belirtilmeyen durumlarda varsayï¿½lan API sï¿½rï¿½mï¿½nï¿½n kullanï¿½lmasï¿½nï¿½ saï¿½lar. Yani istemci bir API sï¿½rï¿½mï¿½ belirtmezse, options.DefaultApiVersion ile belirtilen varsayï¿½lan sï¿½rï¿½m kullanï¿½lï¿½r.
     options.AssumeDefaultVersionWhenUnspecified = true;
 
-    // API sürümlerini yanýtta raporlama ayarýný etkinleþtirir. Bu, API yanýtlarýnda kullanýlan sürüm bilgisini gönderir.
+    // API sï¿½rï¿½mlerini yanï¿½tta raporlama ayarï¿½nï¿½ etkinleï¿½tirir. Bu, API yanï¿½tlarï¿½nda kullanï¿½lan sï¿½rï¿½m bilgisini gï¿½nderir.
     options.ReportApiVersions = true;
 });
 
 // IServiceCollection arabirimine VersionedApiExplorer hizmetini ekler. 
 builder.Services.AddVersionedApiExplorer(options =>
 {
-    // API grup adý biçimini belirler. 'v'VVV formatý kullanýlarak grup adlarý oluþturulur. VVV, API sürümünü temsil eden yer tutucudur.
+    // API grup adï¿½ biï¿½imini belirler. 'v'VVV formatï¿½ kullanï¿½larak grup adlarï¿½ oluï¿½turulur. VVV, API sï¿½rï¿½mï¿½nï¿½ temsil eden yer tutucudur.
     options.GroupNameFormat = "'v'VVV";
 
-    // API sürümünü URL içinde yerine koyma ayarýný etkinleþtirir. Böylece, API isteklerinde URL içindeki sürüm belirtilmiþ olur.
+    // API sï¿½rï¿½mï¿½nï¿½ URL iï¿½inde yerine koyma ayarï¿½nï¿½ etkinleï¿½tirir. Bï¿½ylece, API isteklerinde URL iï¿½indeki sï¿½rï¿½m belirtilmiï¿½ olur.
     options.SubstituteApiVersionInUrl = true;
 });
 #endregion
 
 #region Swagger
-// Swagger yapýlandýrma seçeneklerini SwaggerGenOptions için yapýlandýran ConfigureSwaggerOptions sýnýfýný IConfigureOptions arabirimine ekler. Bu, Swagger belgelendirmesinin yapýlandýrýlmasýný saðlar.
+// Swagger yapï¿½landï¿½rma seï¿½eneklerini SwaggerGenOptions iï¿½in yapï¿½landï¿½ran ConfigureSwaggerOptions sï¿½nï¿½fï¿½nï¿½ IConfigureOptions arabirimine ekler. Bu, Swagger belgelendirmesinin yapï¿½landï¿½rï¿½lmasï¿½nï¿½ saï¿½lar.
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 // IServiceCollection arabirimine SwaggerGen hizmetini ekler.
 builder.Services.AddSwaggerGen(options =>
 {
-    // Mevcut projenin XML belgelendirme dosyasýnýn adýný oluþturur. Bu dosya, projenin içinde API hakkýnda detaylý bilgileri içerir.
+    // Mevcut projenin XML belgelendirme dosyasï¿½nï¿½n adï¿½nï¿½ oluï¿½turur. Bu dosya, projenin iï¿½inde API hakkï¿½nda detaylï¿½ bilgileri iï¿½erir.
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 
-    // XML belgelendirme dosyasýnýn tam yolunu oluþturur. AppContext.BaseDirectory, uygulamanýn çalýþtýðý dizini temsil eder.
+    // XML belgelendirme dosyasï¿½nï¿½n tam yolunu oluï¿½turur. AppContext.BaseDirectory, uygulamanï¿½n ï¿½alï¿½ï¿½tï¿½ï¿½ï¿½ dizini temsil eder.
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-    // Swagger belgelendirmesine XML belgelendirme dosyasýný dahil etme ayarýný yapar. Bu sayede, API Controller'larýndaki örnekler, parametreler ve dönüþ deðerleri gibi detaylý açýklamalarý Swagger belgelerine ekler.
+    // Swagger belgelendirmesine XML belgelendirme dosyasï¿½nï¿½ dahil etme ayarï¿½nï¿½ yapar. Bu sayede, API Controller'larï¿½ndaki ï¿½rnekler, parametreler ve dï¿½nï¿½ï¿½ deï¿½erleri gibi detaylï¿½ aï¿½ï¿½klamalarï¿½ Swagger belgelerine ekler.
 });
 #endregion
 
@@ -178,10 +178,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         option.TokenValidationParameters = new()
         {
-            ValidateAudience = true, //oluþturulacak tokenin kimlerin/ hangi sitelerin/ hangi originlerin kullanacaðýný belirlediðimiz deðerdir(www.lawyerclient.com)
-            ValidateIssuer = true,  //oluþturulacak  tokenin kimin daðýtýðýmýný ifade eden alandýr(www.lawyerapi.com)
-            ValidateLifetime = true, //oluþturulacak tokenin süresini kontrol edecek alandýr
-            ValidateIssuerSigningKey = true, //üretilecek token deðerinin uygulamamýza ait bir deðer olduðunu ifade eden security key verisinin doðrulanmasýdýr 
+            ValidateAudience = true, //oluï¿½turulacak tokenin kimlerin/ hangi sitelerin/ hangi originlerin kullanacaï¿½ï¿½nï¿½ belirlediï¿½imiz deï¿½erdir(www.lawyerclient.com)
+            ValidateIssuer = true,  //oluï¿½turulacak  tokenin kimin daï¿½ï¿½tï¿½ï¿½ï¿½mï¿½nï¿½ ifade eden alandï¿½r(www.lawyerapi.com)
+            ValidateLifetime = true, //oluï¿½turulacak tokenin sï¿½resini kontrol edecek alandï¿½r
+            ValidateIssuerSigningKey = true, //ï¿½retilecek token deï¿½erinin uygulamamï¿½za ait bir deï¿½er olduï¿½unu ifade eden security key verisinin doï¿½rulanmasï¿½dï¿½r 
 
             ValidAudience = builder.Configuration["Token:Audience"],
             ValidIssuer = builder.Configuration["Token:Issuer"],
@@ -193,30 +193,30 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 #endregion
 
 #region Cors
-// IServiceCollection arabirimine CORS (Cross-Origin ResourceFK Sharing) hizmetini ekler. CORS, web uygulamalarýnýn farklý kaynaklardan gelen isteklere izin vermesini saðlayan bir mekanizmadýr.
-// CORS hizmetini eklemek, Web API'nin farklý etki alanlarýndan gelen istekleri kabul etmesini ve gerekirse yanýtlara uygun CORS baþlýklarýný eklemesini saðlar. Bu þekilde, Web API'ye dýþ kaynaklardan eriþim saðlanabilir.
+// IServiceCollection arabirimine CORS (Cross-Origin ResourceFK Sharing) hizmetini ekler. CORS, web uygulamalarï¿½nï¿½n farklï¿½ kaynaklardan gelen isteklere izin vermesini saï¿½layan bir mekanizmadï¿½r.
+// CORS hizmetini eklemek, Web API'nin farklï¿½ etki alanlarï¿½ndan gelen istekleri kabul etmesini ve gerekirse yanï¿½tlara uygun CORS baï¿½lï¿½klarï¿½nï¿½ eklemesini saï¿½lar. Bu ï¿½ekilde, Web API'ye dï¿½ï¿½ kaynaklardan eriï¿½im saï¿½lanabilir.
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
-        policy.AllowAnyOrigin() // Tüm kaynaklara izin verir
-              .AllowAnyHeader()  // Tüm baþlýklara izin verir
-              .AllowAnyMethod()  // Tüm HTTP metodlarýna izin verir
+        policy.AllowAnyOrigin() // Tï¿½m kaynaklara izin verir
+              .AllowAnyHeader()  // Tï¿½m baï¿½lï¿½klara izin verir
+              .AllowAnyMethod()  // Tï¿½m HTTP metodlarï¿½na izin verir
     )
 );
 #endregion
 
 #region DbContext
-//IServiceCollection arabirimine XXXContext tipinde bir veritabaný baðlamýný (DbContext) ekler.
+//IServiceCollection arabirimine XXXContext tipinde bir veritabanï¿½ baï¿½lamï¿½nï¿½ (DbContext) ekler.
 builder.Services.AddDbContext<KampusCUContext>(options =>
 {
-    // SQL Server veritabaný saðlayýcýsýný kullanarak veritabaný baðlamýnýn yapýlandýrýlmasýný yapar. connectionString parametresi, SQL Server baðlantý dizesini temsil eder. 
-    // b => b.MigrationsAssembly("SalihPoc.Api") ifadesi, veritabaný migrasyonlarýný uygulamak için kullanýlacak olan migrasyon derlemesinin adýný belirtir. Bu ad, "SalihPoc.Api" olarak belirtilmiþtir.
+    // SQL Server veritabanï¿½ saï¿½layï¿½cï¿½sï¿½nï¿½ kullanarak veritabanï¿½ baï¿½lamï¿½nï¿½n yapï¿½landï¿½rï¿½lmasï¿½nï¿½ yapar. connectionString parametresi, SQL Server baï¿½lantï¿½ dizesini temsil eder. 
+    // b => b.MigrationsAssembly("SalihPoc.Api") ifadesi, veritabanï¿½ migrasyonlarï¿½nï¿½ uygulamak iï¿½in kullanï¿½lacak olan migrasyon derlemesinin adï¿½nï¿½ belirtir. Bu ad, "SalihPoc.Api" olarak belirtilmiï¿½tir.
 
     options.UseSqlServer(connectionString);
 });
 builder.Services.AddDbContext<Context>(options =>
 {
-    // SQL Server veritabaný saðlayýcýsýný kullanarak veritabaný baðlamýnýn yapýlandýrýlmasýný yapar. connectionString parametresi, SQL Server baðlantý dizesini temsil eder. 
-    // b => b.MigrationsAssembly("SalihPoc.Api") ifadesi, veritabaný migrasyonlarýný uygulamak için kullanýlacak olan migrasyon derlemesinin adýný belirtir. Bu ad, "SalihPoc.Api" olarak belirtilmiþtir.
+    // SQL Server veritabanï¿½ saï¿½layï¿½cï¿½sï¿½nï¿½ kullanarak veritabanï¿½ baï¿½lamï¿½nï¿½n yapï¿½landï¿½rï¿½lmasï¿½nï¿½ yapar. connectionString parametresi, SQL Server baï¿½lantï¿½ dizesini temsil eder. 
+    // b => b.MigrationsAssembly("SalihPoc.Api") ifadesi, veritabanï¿½ migrasyonlarï¿½nï¿½ uygulamak iï¿½in kullanï¿½lacak olan migrasyon derlemesinin adï¿½nï¿½ belirtir. Bu ad, "SalihPoc.Api" olarak belirtilmiï¿½tir.
 
     options.UseSqlServer(connectionString);
 });
@@ -224,9 +224,12 @@ builder.Services.AddDbContext<Context>(options =>
 
 void InitializeFirebase()
 {
+    string basePath = AppContext.BaseDirectory;
+    string credentialPath = Path.Combine(basePath, "kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json");
+
     FirebaseApp.Create(new AppOptions()
     {
-        Credential = GoogleCredential.FromFile("C:/Users/itegr/Downloads/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json")
+        Credential = GoogleCredential.FromFile(credentialPath)
     });
 }
 
