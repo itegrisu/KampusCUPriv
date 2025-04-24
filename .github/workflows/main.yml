@@ -21,10 +21,10 @@ jobs:
           key: nuget-${{ runner.OS }}-${{ hashFiles('**/*.csproj') }}
           restore-keys: nuget-${{ runner.OS }}-
 
-      - name: Setup .NET 9
+      - name: Setup .NET 6 SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Restore dependencies
         run: dotnet restore KampusCU.sln
@@ -47,7 +47,6 @@ jobs:
 
       - name: Set IMAGE_TAG
         run: |
-          # Semantik versiyon için run_number tabanlı bir etiket belirliyoruz
           echo "IMAGE_TAG=v${{ github.run_number }}" >> $GITHUB_ENV
 
       - name: Login to Docker Hub
