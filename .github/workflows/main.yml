@@ -83,5 +83,6 @@ jobs:
             -o StrictHostKeyChecking=no \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
             "cd /home/ubuntu/temiz-kampuscu && \
+             docker-compose down --volumes && \
              docker-compose pull && \
              docker-compose up -d --force-recreate"
