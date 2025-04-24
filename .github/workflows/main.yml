@@ -21,7 +21,7 @@ jobs:
           key: nuget-${{ runner.OS }}-${{ hashFiles('**/*.csproj') }}
           restore-keys: nuget-${{ runner.OS }}-
 
-      - name: Setup .NET 6 SDK
+      - name: Setup .NET 6
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build & Push Image with two tags
+      - name: Build & Push Image
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -75,7 +75,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key.pem
           chmod 600 ~/.ssh/deploy_key.pem
-  
+
       - name: Deploy via SSH & Docker Compose
         run: |
           ssh -i ~/.ssh/deploy_key.pem \
