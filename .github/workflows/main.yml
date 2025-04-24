@@ -76,7 +76,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key.pem
           chmod 600 ~/.ssh/deploy_key.pem
-
+  
       - name: Deploy via SSH & Docker Compose
         run: |
           ssh -i ~/.ssh/deploy_key.pem \
