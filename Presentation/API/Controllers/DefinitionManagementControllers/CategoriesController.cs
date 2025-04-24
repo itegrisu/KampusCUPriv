@@ -28,6 +28,11 @@ namespace API.Controllers.DefinitionManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("ping")]
+        public IActionResult Ping()
+        {
+            return Ok("Pong");
+        }       
 
     }
 }
