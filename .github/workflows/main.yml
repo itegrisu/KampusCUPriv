@@ -76,13 +76,12 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key.pem
           chmod 600 ~/.ssh/deploy_key.pem
 
-      - name: Deploy via SSH & Docker Compose
+      - name: Deploy via SSH & Docker Compose (build on server)
         run: |
           ssh -i ~/.ssh/deploy_key.pem \
             -o StrictHostKeyChecking=no \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
             "cd /home/ubuntu/temiz-kampuscu && \
-             git pull origin master && \          
+             git pull origin master && \
              docker-compose down --volumes && \
-             docker-compose pull && \            
-             docker-compose up -d --force-recreate"
+             docker-compose up -d --build --force-recreate"
