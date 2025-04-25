@@ -40,6 +40,13 @@ namespace API.Controllers.DefinitionManagementControllers
             return Ok("Ping");
         }
 
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("Test API is working!");
+        }
+
+
 
     }
 }

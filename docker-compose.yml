@@ -3,8 +3,6 @@ version: "3.9"
 services:
   kampuscu-api:
     image: itegrisu/kampuscu:latest
-      context: .
-      dockerfile: Dockerfile
     environment:
       - ASPNETCORE_URLS=http://+:5000
       - FIREBASE_CREDENTIALS_PATH=/app/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json
