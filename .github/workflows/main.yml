@@ -69,11 +69,13 @@ jobs:
           chmod 600 ~/.ssh/deploy_key.pem
 
       - name: Deploy via SSH & Docker Compose
+      - name: Deploy via SSH & Docker Compose
         run: |
           ssh -i ~/.ssh/deploy_key.pem \
             -o StrictHostKeyChecking=no \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
             "cd /home/ubuntu/temiz-kampuscu && \
              docker-compose down --volumes && \
+             docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/kampuscu:latest || true && \
              docker-compose pull && \
              docker-compose up -d --force-recreate"
