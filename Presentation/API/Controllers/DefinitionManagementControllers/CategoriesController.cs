@@ -27,26 +27,5 @@ namespace API.Controllers.DefinitionManagementControllers
             GetListResponse<GetListCategoryListItemDto> response = await Mediator.Send(getListCategoryQuery);
             return Ok(response);
         }
-
-        [HttpGet("ping")]
-        public IActionResult Ping()
-        {
-            return Ok("Pong");
-        }
-
-        [HttpGet("pong")]
-        public IActionResult Pong()
-        {
-            return Ok("Ping");
-        }
-
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            return Ok("Test API is working!");
-        }
-
-
-
     }
 }
