@@ -7,7 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-  # 1) Build & Test
   build-and-test:
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +27,6 @@ jobs:
       - name: Run tests
         run: dotnet test KampusCU.sln --no-build --configuration Release
 
-  # 2) Build, Tag & Push Docker Image
   build-and-push:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -57,7 +55,6 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/kampuscu:${{ env.IMAGE_TAG }}
             ${{ secrets.DOCKERHUB_USERNAME }}/kampuscu:latest
 
-  # 3) Deploy on Server (build on server)
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
