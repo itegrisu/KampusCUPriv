@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   kampuscu-api:
-    build:
+    image: itegrisu/kampuscu:latest
       context: .
       dockerfile: Dockerfile
     environment:

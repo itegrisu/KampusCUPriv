@@ -32,7 +32,14 @@ namespace API.Controllers.DefinitionManagementControllers
         public IActionResult Ping()
         {
             return Ok("Pong");
-        }       
+        }
+
+        [HttpGet("pong")]
+        public IActionResult Pong()
+        {
+            return Ok("Ping");
+        }
+
 
     }
 }
