@@ -11,5 +11,7 @@ namespace Application.Features.GeneralManagementFeatures.Admins.Commands.Login
     public class LoginAdminResponse : BaseResponse, IResponse 
     {
         public Guid ClubGid{ get; set; }
+        public string? Token { get; set; }
+        public string? RefreshToken { get; set; }
     }
 }

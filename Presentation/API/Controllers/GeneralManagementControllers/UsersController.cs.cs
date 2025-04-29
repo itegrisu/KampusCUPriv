@@ -7,6 +7,8 @@ using Application.Features.GeneralManagementFeatures.Users.Commands.Login;
 using Application.Features.GeneralManagementFeatures.Users.Commands.RefreshToken;
 using Application.Features.GeneralManagementFeatures.Users.Commands.RevokeRefreshToken;
 using Application.Features.GeneralManagementFeatures.Users.Commands.VerifyEmail;
+using Application.Helpers;
+using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
@@ -22,8 +24,12 @@ namespace API.Controllers.GeneralManagementControllers
     public class UsersController : BaseController<CreateUserCommand, DeleteUserCommand, UpdateUserCommand, GetByGidUserQuery,
         CreatedUserResponse, DeletedUserResponse, UpdatedUserResponse, GetByGidUserResponse>
     {
-        public UsersController(IMediator mediator, clsAuth clsAuth) : base(mediator, clsAuth)
+        private readonly IUserReadRepository _userReadRepository;
+        private readonly IUserWriteRepository _userWriteRepository;
+        public UsersController(IMediator mediator, clsAuth clsAuth, IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository) : base(mediator, clsAuth)
         {
+            _userReadRepository = userReadRepository;
+            _userWriteRepository = userWriteRepository;
         }
 
         [HttpGet("[action]")]
@@ -64,5 +70,6 @@ namespace API.Controllers.GeneralManagementControllers
             RevokeRefreshTokenResponse response = await Mediator.Send(revokeRefreshTokenCommand);
             return Ok(response);
         }
+
     }
 }

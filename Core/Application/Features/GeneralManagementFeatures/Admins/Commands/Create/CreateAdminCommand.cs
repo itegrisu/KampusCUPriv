@@ -6,6 +6,8 @@ using X = Domain.Entities.GeneralManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.GeneralManagementRepo.AdminRepo;
+using Application.Helpers;
+using Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralFeatures.Admins.Commands.Create;
 
@@ -36,6 +38,14 @@ public class CreateAdminCommand : IRequest<CreatedAdminResponse>
             //int maxRowNo = await _adminReadRepository.GetAll().MaxAsync(r => r.RowNo);
             X.Admin admin = _mapper.Map<X.Admin>(request);
             //admin.RowNo = maxRowNo + 1;
+
+            // Þifre Hashleme Ýþlemi
+            string passwordHash, passwordSalt;
+            HashingHelperForApplicationLayer.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+            // Hash ve salt deðerlerini kullanýcý nesnesine kaydet
+            admin.Password = passwordHash;  // Düz metin þifre yerine hash deðerini sakla
+            admin.PasswordSalt = passwordSalt;
 
             await _adminWriteRepository.AddAsync(admin);
             await _adminWriteRepository.SaveAsync();

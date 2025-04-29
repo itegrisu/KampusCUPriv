@@ -1,9 +1,11 @@
 using Application.Abstractions.Auth;
 using Application.Abstractions.Token;
 using Application.Features.GeneralManagementFeatures.Users.Commands.Login;
+using Application.Repositories.GeneralManagementRepo.AdminRepo;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Domain.Entities.GeneralManagements;
 using Domain.Enums;
+using Infrastracture.Helpers;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,17 +19,22 @@ namespace Infrastracture.Services.Auth
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
+        private readonly IAdminReadRepository _adminReadRepository;
+        private readonly IAdminWriteRepository _adminWriteRepository;
         public AuthService(
             ITokenHandler tokenHandler,
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IAdminReadRepository adminReadRepository,
+            IAdminWriteRepository adminWriteRepository)
         {
             _tokenHandler = tokenHandler;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
             _httpContextAccessor = httpContextAccessor;
+            _adminReadRepository = adminReadRepository;
+            _adminWriteRepository = adminWriteRepository;
         }
 
         public async Task<LoginUserResponse> Login(LoginUserCommand loginUserCommand)
@@ -45,8 +52,13 @@ namespace Infrastracture.Services.Auth
                 };
             }
 
-            // Şifre kontrolü - projenizdeki şifre doğrulama mantığına göre değiştirin
-            if (userToCheck.Password != loginUserCommand.Password) // Gerçek hayatta hash kontrolü yapılmalı!
+            // Şifre kontrolü - hash ile doğrulama
+            bool isPasswordValid = HashingHelperForAuth.VeriFyPasswordHash(
+                loginUserCommand.Password,
+                userToCheck.Password,
+                userToCheck.PasswordSalt);
+
+            if (!isPasswordValid)
             {
                 return new LoginUserResponse()
                 {
@@ -78,47 +90,80 @@ namespace Infrastracture.Services.Auth
 
         public async Task<T.Token> CreateTokenByRefreshToken(string refreshToken)
         {
-            // Refresh token ile kullanıcıyı bul
-            var user = await _userReadRepository.GetSingleAsync(u => 
-                u.RefreshToken == refreshToken && 
+            // Önce User'larda arama yap
+            var user = await _userReadRepository.GetSingleAsync(u =>
+                u.RefreshToken == refreshToken &&
                 u.RefreshTokenExpiration > DateTime.UtcNow);
 
-            if (user == null)
+            if (user != null)
             {
-                return null; // Geçersiz veya süresi dolmuş refresh token
+                // Kullanıcı bulundu, yeni token oluştur
+                var token = _tokenHandler.CreateAccessToken(user, 600);
+
+                // Kullanıcının refresh token bilgilerini güncelle
+                user.RefreshToken = token.RefreshToken;
+                user.RefreshTokenExpiration = token.RefreshTokenExpiration;
+
+                _userWriteRepository.Update(user);
+                await _userWriteRepository.SaveAsync();
+
+                return token;
             }
 
-            // Yeni token oluştur
-            var token = _tokenHandler.CreateAccessToken(user, 600);
-            
-            // Kullanıcının refresh token bilgilerini güncelle
-            user.RefreshToken = token.RefreshToken;
-            user.RefreshTokenExpiration = token.RefreshTokenExpiration;
-            
-            _userWriteRepository.Update(user);
-            await _userWriteRepository.SaveAsync();
+            // User'larda bulunamadıysa Admin'lerde ara
+            var admin = await _adminReadRepository.GetSingleAsync(a =>
+                a.RefreshToken == refreshToken &&
+                a.RefreshTokenExpiration > DateTime.UtcNow);
 
-            return token;
+            if (admin != null)
+            {
+                // Admin bulundu, yeni token oluştur
+                var token = _tokenHandler.CreateAccessToken(admin, 600);
+
+                // Admin'in refresh token bilgilerini güncelle
+                admin.RefreshToken = token.RefreshToken;
+                admin.RefreshTokenExpiration = token.RefreshTokenExpiration;
+
+                _adminWriteRepository.Update(admin);
+                await _adminWriteRepository.SaveAsync();
+
+                return token;
+            }
+
+            return null; // Geçerli refresh token bulunamadı
         }
 
         public async Task<bool> RevokeRefreshToken(string refreshToken)
         {
-            // Refresh token ile kullanıcıyı bul
+            bool revoked = false;
+
+            // User'larda ara
             var user = await _userReadRepository.GetSingleAsync(u => u.RefreshToken == refreshToken);
-            
-            if (user == null)
+            if (user != null)
             {
-                return false;
+                // Refresh token'ı sıfırla
+                user.RefreshToken = null;
+                user.RefreshTokenExpiration = DateTime.UtcNow.AddMinutes(-1);
+
+                _userWriteRepository.Update(user);
+                await _userWriteRepository.SaveAsync();
+                revoked = true;
             }
-            
-            // Refresh token'ı sıfırla
-            user.RefreshToken = null;
-            user.RefreshTokenExpiration = DateTime.UtcNow.AddMinutes(-1); // Geçmiş bir tarih
-            
-            _userWriteRepository.Update(user);
-            await _userWriteRepository.SaveAsync();
-            
-            return true;
+
+            // Admin'lerde ara
+            var admin = await _adminReadRepository.GetSingleAsync(a => a.RefreshToken == refreshToken);
+            if (admin != null)
+            {
+                // Refresh token'ı sıfırla
+                admin.RefreshToken = null;
+                admin.RefreshTokenExpiration = DateTime.UtcNow.AddMinutes(-1);
+
+                _adminWriteRepository.Update(admin);
+                await _adminWriteRepository.SaveAsync();
+                revoked = true;
+            }
+
+            return revoked;
         }
 
     }

@@ -5,6 +5,8 @@ using AutoMapper;
 using X = Domain.Entities.GeneralManagements;
 using MediatR;
 using Application.Repositories.GeneralManagementRepo.AdminRepo;
+using Application.Helpers;
+using Domain.Entities.GeneralManagements;
 
 namespace Application.Features.GeneralFeatures.Admins.Commands.Update;
 
@@ -37,6 +39,25 @@ public class UpdateAdminCommand : IRequest<UpdatedAdminResponse>
             X.Admin? admin = await _adminReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _adminBusinessRules.AdminShouldExistWhenSelected(admin);
+
+            // Þifre deðiþikliði var mý kontrol et
+            if (!string.IsNullOrEmpty(request.Password))
+            {
+                // Yeni þifreyi hashle
+                string passwordHash, passwordSalt;
+                HashingHelperForApplicationLayer.CreatePasswordHash(
+                    request.Password,
+                    out passwordHash,
+                    out passwordSalt);
+
+                // Kullanýcý nesnesinin þifre alanlarýný güncelle
+                admin.Password = passwordHash;
+                admin.PasswordSalt = passwordSalt;
+
+                // Password alanýný request'ten temizle (mapper'ýn üzerine yazmamasý için)
+                request.Password = null;
+            }
+
             admin = _mapper.Map(request, admin);
 
             _adminWriteRepository.Update(admin!);

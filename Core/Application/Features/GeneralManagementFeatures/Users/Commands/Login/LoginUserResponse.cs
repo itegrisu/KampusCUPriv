@@ -12,6 +12,6 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.Login
     {
         public Guid UserGid { get; set; }
         public string? Token { get; set; }
-        public string RefreshToken { get; set; }
+        public string? RefreshToken { get; set; }
     }
 }

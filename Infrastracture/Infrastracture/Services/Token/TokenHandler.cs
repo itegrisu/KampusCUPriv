@@ -69,5 +69,46 @@ namespace Infrastracture.Services.Token
             token.RefreshTokenExpiration = DateTime.UtcNow.AddMinutes(minute + 20); //accesstokendan 20 dakika daha uzun sürer
             return token;
         }
+
+        public T.Token CreateAccessToken(Admin admin, int minute = 600)
+        {
+            var claims = new List<Claim>
+            {
+                  new Claim(ClaimTypes.NameIdentifier, admin.Gid.ToString()),
+                  //new Claim("http://schemas.yourdomain.com/claims/email",user.Email),
+                  //new Claim("http://schemas.yourdomain.com/claims/isSystemAdmin", user.IsSystemAdmin.ToString()),
+                  //new Claim("http://schemas.yourdomain.com/claims/isLoginStatus", user.IsLoginStatus.ToString())
+
+                  new Claim(ClaimTypes.Email,admin.Email),
+            };
+
+
+            T.Token token = new();
+
+            //Security Key'in simetriðini alýyoruz.
+            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_configuration["Token:SecurityKey"]));
+
+            //Þifrelenmiþ kimliði oluþturuyoruz.
+            SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha256);
+
+            //Oluþturulacak token ayarlarýný veriyoruz.
+            token.AccessTokenExpiration = DateTime.UtcNow.AddMinutes(minute);
+            JwtSecurityToken securityToken = new(
+                audience: _configuration["Token:Audience"],
+                issuer: _configuration["Token:Issuer"],
+                expires: token.AccessTokenExpiration,
+                notBefore: DateTime.UtcNow,
+                signingCredentials: signingCredentials,
+                claims: claims
+                );
+
+            //Token oluþturucu sýnýfýndan bir örnek alalým.
+            JwtSecurityTokenHandler tokenHandler = new();
+            token.AccessToken = tokenHandler.WriteToken(securityToken);
+            token.RefreshToken = CreateRefreshToken();
+            token.RefreshTokenExpiration = DateTime.UtcNow.AddMinutes(minute + 20); //accesstokendan 20 dakika daha uzun sürer
+            return token;
+        }
+
     }
 }

@@ -6,6 +6,7 @@ using X = Domain.Entities.GeneralManagements;
 using MediatR;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
 using Microsoft.EntityFrameworkCore;
+using Application.Helpers;
 
 namespace Application.Features.GeneralFeatures.Users.Commands.Update;
 
@@ -49,6 +50,25 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>
             X.User? user = await _userReadRepository.GetAsync(predicate: x => x.Gid == request.Gid, cancellationToken: cancellationToken, include: x => x.Include(x => x.ClassFK).Include(x => x.DepartmentFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek
             await _userBusinessRules.UserShouldExistWhenSelected(user);
+
+            // Þifre deðiþikliði var mý kontrol et
+            if (!string.IsNullOrEmpty(request.Password))
+            {
+                // Yeni þifreyi hashle
+                string passwordHash, passwordSalt;
+                HashingHelperForApplicationLayer.CreatePasswordHash(
+                    request.Password,
+                    out passwordHash,
+                    out passwordSalt);
+
+                // Kullanýcý nesnesinin þifre alanlarýný güncelle
+                user.Password = passwordHash;
+                user.PasswordSalt = passwordSalt;
+
+                // Password alanýný request'ten temizle (mapper'ýn üzerine yazmamasý için)
+                request.Password = null;
+            }
+
             user = _mapper.Map(request, user);
 
             _userWriteRepository.Update(user!);

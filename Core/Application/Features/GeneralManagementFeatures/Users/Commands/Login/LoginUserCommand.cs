@@ -2,6 +2,7 @@
 using Application.Features.GeneralFeatures.Users.Commands.Delete;
 using Application.Features.GeneralFeatures.Users.Constants;
 using Application.Features.GeneralFeatures.Users.Rules;
+using Application.Helpers;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
 using AutoMapper;
 using Domain.Entities.GeneralManagements;
@@ -62,7 +63,12 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.Login
                     };
                 }
 
-                if (user.Password != request.Password) // NOT: Gerçek projelerde hash kontrolü kullanılmalı
+                bool isPasswordValid = HashingHelperForApplicationLayer.VeriFyPasswordHash(
+                    request.Password,
+                    user.Password, 
+                    user.PasswordSalt);
+
+                if (!isPasswordValid)
                 {
                     return new()
                     {

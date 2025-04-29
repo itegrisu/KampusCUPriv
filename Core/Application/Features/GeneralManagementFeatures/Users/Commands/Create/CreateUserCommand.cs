@@ -1,6 +1,7 @@
 using Application.Features.GeneralFeatures.Users.Constants;
 using Application.Features.GeneralFeatures.Users.Queries.GetByGid;
 using Application.Features.GeneralFeatures.Users.Rules;
+using Application.Helpers;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
 using AutoMapper;
 using MediatR;
@@ -48,6 +49,14 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
             X.User user = _mapper.Map<X.User>(request);
             //user.RowNo = maxRowNo + 1;
 
+            // Þifre Hashleme Ýþlemi
+            string passwordHash, passwordSalt;
+            HashingHelperForApplicationLayer.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+            // Hash ve salt deðerlerini kullanýcý nesnesine kaydet
+            user.Password = passwordHash;  // Düz metin þifre yerine hash deðerini sakla
+            user.PasswordSalt = passwordSalt;
+
             // Kullanýcý kaydýnýn yapýldýðý anda doðrulama kodunu üretelim
             string verificationCode = GenerateVerificationCode();
             user.EmailVerificationCode = verificationCode;
@@ -55,10 +64,6 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
 
             await _userWriteRepository.AddAsync(user);
             await _userWriteRepository.SaveAsync();
-
-            // Güncellenmiþ kullanýcýyý veritabanýna kaydedin
-            //_userWriteRepository.Update(user);
-            //await _userWriteRepository.SaveAsync();
 
             // Email gönderim servisini çaðýrýn (aþaðýda örnek vereceðiz)
             await _emailService.SendEmailAsync(user.Email, "Kayýt Doðrulama Kodu",
