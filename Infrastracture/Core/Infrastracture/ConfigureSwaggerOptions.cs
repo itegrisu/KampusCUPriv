@@ -25,8 +25,8 @@ namespace Core.Infrastracture
                         Version = description.ApiVersion.ToString(),
                         Contact = new OpenApiContact()
                         {
-                            Url = new Uri("https://www.rementsoft.com"),
-                            Email = "lys@rementsoft.com",
+                            Url = new Uri("https://www.kampuscu.com"),
+                            Email = "lys@kampuscu.com",
                             Name = "KampusCU"
                         }
                     });

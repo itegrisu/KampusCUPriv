@@ -50,7 +50,7 @@ namespace Infrastracture.Services
 
         //    mail.Subject = subject;
         //    mail.Body = body;
-        //    mail.From = new MailAddress(_configuration["Mail:Username"], "RementSoft", System.Text.Encoding.UTF8);
+        //    mail.From = new MailAddress(_configuration["Mail:Username"], "KampusCU", System.Text.Encoding.UTF8);
 
         //    SmtpClient smtp = new SmtpClient();
         //    smtp.Credentials = new System.Net.NetworkCredential(_configuration["Mail:Username"], _configuration["Mail:Password"]);
@@ -69,7 +69,7 @@ namespace Infrastracture.Services
         //    mail.AppendLine(userId);
         //    mail.AppendLine("/");
         //    mail.AppendLine(resetToken);
-        //    mail.AppendLine("\">Þifre Yenileme Linki</a></strong><br><br><span style=\"font-size=12px;\" >Not: Talep tarafýnýzca yapýlmadýysa bu maili ciddiye almayýnýz. </span><br><br>Ýyi günler dileriz... <br><br>Rement Bilgi Teknolojileri");
+        //    mail.AppendLine("\">Þifre Yenileme Linki</a></strong><br><br><span style=\"font-size=12px;\" >Not: Talep tarafýnýzca yapýlmadýysa bu maili ciddiye almayýnýz. </span><br><br>Ýyi günler dileriz... <br><br>Kampuscu");
         //    await SendMailAsync(to, "Þifre Yenileme Talebi", mail.ToString());
 
 
