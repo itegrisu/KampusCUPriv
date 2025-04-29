@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController]
+[Authorize(AuthenticationSchemes = "Admin")] 
 public class BaseController<TCreateCommand, TDeleteCommand, TUpdateCommand,
                             TGetByGidQuery,
                             TCreateResponse, TDeleteResponse, TUpdateResponse,

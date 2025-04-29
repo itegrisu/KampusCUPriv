@@ -27,6 +27,8 @@ namespace Domain.Entities.GeneralManagements
         public DateTime? EmailVerificationCodeExpire { get; set; }
         public string? DeviceToken { get; set; }
         public bool IsNotificationsEnabled { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiration { get; set; }
         public ICollection<Club>? Clubs { get; set; }
         public ICollection<StudentClub>? StudentClubs { get; set; }
         public ICollection<StudentAnnouncement>? StudentAnnouncements { get; set; }

@@ -1,4 +1,5 @@
-﻿using Application.Features.GeneralFeatures.Users.Commands.Delete;
+﻿using Application.Abstractions.Token;
+using Application.Features.GeneralFeatures.Users.Commands.Delete;
 using Application.Features.GeneralFeatures.Users.Constants;
 using Application.Features.GeneralFeatures.Users.Rules;
 using Application.Repositories.GeneralManagementRepo.UserRepo;
@@ -21,36 +22,72 @@ namespace Application.Features.GeneralManagementFeatures.Users.Commands.Login
         {
             private readonly IMapper _mapper;
             private readonly IUserReadRepository _userReadRepository;
+            private readonly IUserWriteRepository _userWriteRepository;
             private readonly UserBusinessRules _userBusinessRules;
-
+            private readonly ITokenHandler _tokenHandler;
             public LoginUserCommandHandler(IMapper mapper, IUserReadRepository userReadRepository,
-                                             UserBusinessRules userBusinessRules)
+                                             UserBusinessRules userBusinessRules, ITokenHandler tokenHandler, IUserWriteRepository userWriteRepository)
             {
                 _mapper = mapper;
                 _userReadRepository = userReadRepository;
                 _userBusinessRules = userBusinessRules;
+                _tokenHandler = tokenHandler;
+                _userWriteRepository = userWriteRepository;
             }
 
+            // Application/Features/GeneralManagementFeatures/Users/Commands/Login/LoginUserCommand.cs
             public async Task<LoginUserResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
             {
-                User? user = await _userReadRepository.GetAsync(predicate: x => x.Email == request.Email && x.Password == request.Password && x.IsEmailVerified == true, cancellationToken: cancellationToken);
+                User? user = await _userReadRepository.GetAsync(
+                    predicate: x => x.Email == request.Email,
+                    cancellationToken: cancellationToken);
 
                 if (user == null)
                 {
                     return new()
                     {
                         Title = UsersBusinessMessages.NotFoundRecord,
-                        Message = UsersBusinessMessages.UserNotExists,
+                        Message = "Email adresine sahip kullanıcı bulunamadı",
                         IsValid = false
                     };
                 }
 
+                if (!user.IsEmailVerified)
+                {
+                    return new()
+                    {
+                        Title = "İşlem Başarısız",
+                        Message = "Email adresiniz henüz doğrulanmamış",
+                        IsValid = false
+                    };
+                }
+
+                if (user.Password != request.Password) // NOT: Gerçek projelerde hash kontrolü kullanılmalı
+                {
+                    return new()
+                    {
+                        Title = "İşlem Başarısız",
+                        Message = "Şifre hatalı",
+                        IsValid = false
+                    };
+                }
+
+                var token = _tokenHandler.CreateAccessToken(user);
+
+                user.RefreshToken = token.RefreshToken;
+                user.RefreshTokenExpiration = token.RefreshTokenExpiration;
+
+                _userWriteRepository.Update(user);
+                await _userWriteRepository.SaveAsync();
+
                 return new()
                 {
                     Title = UsersBusinessMessages.ProcessCompleted,
-                    Message = UsersBusinessMessages.SectionName,
+                    Message = "Giriş başarılı",
                     IsValid = true,
-                    UserGid = user.Gid
+                    UserGid = user.Gid,
+                    Token = token.AccessToken,
+                    RefreshToken = token.RefreshToken
                 };
             }
         }

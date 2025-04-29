@@ -174,23 +174,27 @@ builder.Services.AddSwaggerGen(options =>
 #endregion
 
 #region Authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer("Admin", option =>
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = "Admin"; // Varsayılan kimlik doğrulama şeması
+    options.DefaultChallengeScheme = "Admin";    // Varsayılan zorlama şeması
+    options.DefaultScheme = "Admin";             // Genel varsayılan şema
+})
+.AddJwtBearer("Admin", option =>
+{
+    option.TokenValidationParameters = new()
     {
-        option.TokenValidationParameters = new()
-        {
-            ValidateAudience = true, //olu�turulacak tokenin kimlerin/ hangi sitelerin/ hangi originlerin kullanaca��n� belirledi�imiz de�erdir(www.lawyerclient.com)
-            ValidateIssuer = true,  //olu�turulacak  tokenin kimin da��t���m�n� ifade eden aland�r(www.lawyerapi.com)
-            ValidateLifetime = true, //olu�turulacak tokenin s�resini kontrol edecek aland�r
-            ValidateIssuerSigningKey = true, //�retilecek token de�erinin uygulamam�za ait bir de�er oldu�unu ifade eden security key verisinin do�rulanmas�d�r 
-
-            ValidAudience = builder.Configuration["Token:Audience"],
-            ValidIssuer = builder.Configuration["Token:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
-            LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
-            NameClaimType = ClaimTypes.NameIdentifier
-        };
-    });
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidAudience = builder.Configuration["Token:Audience"],
+        ValidIssuer = builder.Configuration["Token:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"])),
+        LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.UtcNow : false,
+        NameClaimType = ClaimTypes.NameIdentifier
+    };
+});
 #endregion
 
 #region Cors
