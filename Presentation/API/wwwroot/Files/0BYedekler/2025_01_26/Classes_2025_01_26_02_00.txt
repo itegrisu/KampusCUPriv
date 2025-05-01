@@ -1,0 +1,45 @@
+-- Tablo yapısı oluşturuluyor: Classes
+CREATE TABLE [dbo].[Classes](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+CONSTRAINT [PK_Classes] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Classes] ON 
+GO
+INSERT [dbo].[Classes] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (1a786261-5d62-44af-83b3-29e487ff820f,N'2. Sinif', CAST(N'2025-01-22T00:01:04.871' AS DateTime), 2)
+GO
+INSERT [dbo].[Classes] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (d6a8689d-e129-40ad-8a07-37fd1528c178,N'6. Sinif', CAST(N'2025-01-22T00:01:26.918' AS DateTime), 1)
+GO
+INSERT [dbo].[Classes] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (a175cca1-1f9c-4984-bd8e-48505d51860d,N'1. Sinif', CAST(N'2025-01-21T23:51:05.615' AS DateTime), 1)
+GO
+INSERT [dbo].[Classes] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (1e169a8e-14a1-41f3-8cdc-5bc4d85bbb5c,N'5. Sinif', CAST(N'2025-01-22T00:01:24.065' AS DateTime), 1)
+GO
+INSERT [dbo].[Classes] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (1db9a281-f1ca-4620-b0fd-785a03b667c7,N'4. Sinif', CAST(N'2025-01-22T00:01:21.060' AS DateTime), 1)
+GO
+INSERT [dbo].[Classes] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (ee1b96a7-7ff4-40c5-b57d-c0601cfd1f1c,N'2. Sinif', CAST(N'2025-01-21T23:54:02.926' AS DateTime), 1)
+GO
+INSERT [dbo].[Classes] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (9e5973dc-7149-44f7-bd56-da75a7af21a2,N'3. Sinif', CAST(N'2025-01-22T00:01:17.692' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[Classes] OFF 
+GO
+
+

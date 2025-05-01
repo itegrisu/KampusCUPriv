@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\StockManagementFeatures\**" />
+    <EmbeddedResource Remove="Features\StockManagementFeatures\**" />
+    <None Remove="Features\StockManagementFeatures\**" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="FirebaseAdmin" Version="3.1.0" />
+		<PackageReference Include="FluentValidation" Version="11.5.2" />
+		<PackageReference Include="Google.Apis.Auth" Version="1.69.0" />
+		<PackageReference Include="MediatR" Version="12.1.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="NETCore.MailKit" Version="2.1.0" />
+		<PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />
+		<PackageReference Include="System.ServiceModel.Federation" Version="6.0.*" />
+		<PackageReference Include="System.ServiceModel.Http" Version="6.0.*" />
+		<PackageReference Include="System.ServiceModel.NetTcp" Version="6.0.*" />
+		<PackageReference Include="System.ServiceModel.Security" Version="6.0.*" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Infrastracture\Core\Core.csproj" />
+	  <ProjectReference Include="..\Domain\Domain.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Abstractions\EntityServices\DefinationManagement\" />
+	  <Folder Include="Dtos\DefinitionManagerDtos\" />
+	</ItemGroup>
+	
+	
+	
+</Project>

@@ -1,0 +1,31 @@
+-- Tablo yapısı oluşturuluyor: Events
+CREATE TABLE [dbo].[Events](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[GidClubFK] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](250) NOT NULL,
+	[StartDate] [datetime] NOT NULL,
+	[EndDate] [datetime] NOT NULL,
+	[Location] [nvarchar](300) NULL,
+	[Description] [nvarchar](300) NULL,
+	[EventStatus] [int] NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+CONSTRAINT [PK_Events] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Events] ON 
+GO
+INSERT [dbo].[Events] (
+[Gid], [GidClubFK], [Name], [StartDate], [EndDate], [Location], [Description], [EventStatus], [CreatedDate], [DataState])
+VALUES (a027d660-fbea-4459-b614-0046bef6e3fd,ea307bf3-d20e-4c97-ba03-6f91feafebdd,N'Mezun Söylesisi', CAST(N'2025-01-23T15:00:00.000' AS DateTime), CAST(N'2025-01-23T17:30:00.000' AS DateTime), N'Muhendislik B Binasi', N'Sektorde yer alan okul mezunlarimiz tarafindan gerceklesecek bu etkinligi kacirmayin!', 1,CAST(N'2025-01-22T00:41:34.156' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[Events] OFF 
+GO
+ALTER TABLE [dbo].[Events] WITH CHECK ADD CONSTRAINT [FK_Events_Clubs_GidClubFK] FOREIGN KEY([GidClubFK]) REFERENCES [dbo].[Clubs] ([Gid])
+GO
+ALTER TABLE [dbo].[Events] CHECK CONSTRAINT [FK_Events_Clubs_GidClubFK];
+GO
+
+

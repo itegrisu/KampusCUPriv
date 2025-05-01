@@ -1,0 +1,33 @@
+-- Tablo yapısı oluşturuluyor: Departments
+CREATE TABLE [dbo].[Departments](
+	[Gid] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[CreatedDate] [datetime2] NOT NULL,
+	[DataState] [int] NOT NULL,
+CONSTRAINT [PK_Departments] PRIMARY KEY CLUSTERED (
+	[Gid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Departments] ON 
+GO
+INSERT [dbo].[Departments] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (b3fd7622-530a-44fd-a896-159f4e3ca329,N'Bilgisayar Mühendisligi', CAST(N'2025-01-21T23:56:18.084' AS DateTime), 1)
+GO
+INSERT [dbo].[Departments] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (bcfc4f69-d562-4ac3-b11b-997196597a98,N'Mimarlık', CAST(N'2025-01-24T14:53:21.764' AS DateTime), 1)
+GO
+INSERT [dbo].[Departments] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (667bacee-61e5-40fe-8bc2-9bb0c371d900,N'Hemsirelik', CAST(N'2025-01-21T23:57:24.845' AS DateTime), 1)
+GO
+INSERT [dbo].[Departments] (
+[Gid], [Name], [CreatedDate], [DataState])
+VALUES (b1c52d81-f129-4c82-815a-da976d01b64c,N'Elektrik Elektronik Mühendisligi', CAST(N'2025-01-21T23:56:49.263' AS DateTime), 1)
+GO
+SET IDENTITY_INSERT [dbo].[Departments] OFF 
+GO
+
+

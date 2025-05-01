@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  kampuscu-api:
+    image: itegrisu/kampuscu:latest
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - FIREBASE_CREDENTIALS_PATH=/app/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json
+    volumes:
+      - ./Presentation/API/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json:/app/kampuscu-6c1ae-firebase-adminsdk-fbsvc-56d05a892b.json
+    ports:
+      - "5001:5000"
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "81:81"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - kampuscu-api
