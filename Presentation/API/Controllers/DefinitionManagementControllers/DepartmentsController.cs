@@ -7,6 +7,7 @@ using Core.Application.Request;
 using Core.Application.Responses;
 using Infrastracture.Helpers.cls;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.DefinitionManagementControllers
@@ -21,6 +22,7 @@ namespace API.Controllers.DefinitionManagementControllers
         }
 
         [HttpGet("[action]")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListDepartmentQuery getListDepartmentQuery = new() { PageRequest = pageRequest };

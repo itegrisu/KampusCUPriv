@@ -40,6 +40,14 @@ namespace API.Controllers.GeneralManagementControllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
+        [HttpPost("Add")]
+        public override async Task<IActionResult> Add([FromBody] CreateUserCommand request)
+        {
+            CreatedUserResponse response = await Mediator.Send(request);
+            return Ok(response);
+        }
+
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginUserCommand loginUserCommand)

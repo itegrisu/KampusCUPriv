@@ -22,8 +22,7 @@ namespace API.Controllers.DefinitionManagementControllers
         }
 
         [HttpGet("[action]")]
-        [Authorize]
-
+        [AllowAnonymous]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListClassQuery getListClassQuery = new() { PageRequest = pageRequest };
