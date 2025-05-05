@@ -1,6 +1,7 @@
 using API.Filters;
 using Application;
 using Application.Features.GeneralFeatures.Users.Profiles;
+using AspNetCoreRateLimit;
 using Core;
 using Core.Context;
 using Core.CrossCuttingConcern.Exceptions.WepApi.Extensions;
@@ -54,6 +55,15 @@ builder.Services.AddHangfire(x =>
 });
 builder.Services.AddHangfireServer();
 
+
+#endregion
+
+#region IP Limiting
+
+builder.Services.AddMemoryCache();
+builder.Services.Configure<IpRateLimitOptions>(builder.Configuration.GetSection("IpRateLimiting"));
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 
 #endregion
 
@@ -285,7 +295,7 @@ app.UseHttpLogging();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 //app.UseMiddleware<SessionMiddleware>();
-
+app.UseIpRateLimiting();
 app.MapControllers();
 app.UseHangfireDashboard();
 app.Run();

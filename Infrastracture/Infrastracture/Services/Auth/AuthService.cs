@@ -70,7 +70,7 @@ namespace Infrastracture.Services.Auth
             }
 
             // Token oluştur
-            T.Token token = _tokenHandler.CreateAccessToken(userToCheck, 1);
+            T.Token token = _tokenHandler.CreateAccessToken(userToCheck, 60);
             var sessionId = Guid.NewGuid().ToString();
 
             // Refresh token'ı kullanıcı modelinde sakla
@@ -98,7 +98,7 @@ namespace Infrastracture.Services.Auth
             if (user != null)
             {
                 // Kullanıcı bulundu, yeni token oluştur
-                var token = _tokenHandler.CreateAccessToken(user, 1);
+                var token = _tokenHandler.CreateAccessToken(user, 60);
 
                 // Kullanıcının refresh token bilgilerini güncelle
                 user.RefreshToken = token.RefreshToken;
@@ -118,7 +118,7 @@ namespace Infrastracture.Services.Auth
             if (admin != null)
             {
                 // Admin bulundu, yeni token oluştur
-                var token = _tokenHandler.CreateAccessToken(admin, 1);
+                var token = _tokenHandler.CreateAccessToken(admin, 60);
 
                 // Admin'in refresh token bilgilerini güncelle
                 admin.RefreshToken = token.RefreshToken;

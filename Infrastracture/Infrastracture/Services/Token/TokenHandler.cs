@@ -30,7 +30,7 @@ namespace Infrastracture.Services.Token
             return Convert.ToBase64String(numberByte);
         }
 
-        public T.Token CreateAccessToken(User user, int minute = 1)
+        public T.Token CreateAccessToken(User user, int minute = 60)
         {
             var claims = new List<Claim>
             {
@@ -70,7 +70,7 @@ namespace Infrastracture.Services.Token
             return token;
         }
 
-        public T.Token CreateAccessToken(Admin admin, int minute = 1)
+        public T.Token CreateAccessToken(Admin admin, int minute = 60)
         {
             var claims = new List<Claim>
             {
@@ -106,7 +106,7 @@ namespace Infrastracture.Services.Token
             JwtSecurityTokenHandler tokenHandler = new();
             token.AccessToken = tokenHandler.WriteToken(securityToken);
             token.RefreshToken = CreateRefreshToken();
-            token.RefreshTokenExpiration = DateTime.UtcNow.AddMinutes(minute); //accesstokendan 20 dakika daha uzun sürer
+            token.RefreshTokenExpiration = DateTime.UtcNow.AddMinutes(minute); 
             return token;
         }
 

@@ -79,5 +79,11 @@ namespace API.Controllers.GeneralManagementControllers
             return Ok(response);
         }
 
+        [HttpGet("Ping")]
+        [AllowAnonymous]
+        public IActionResult Ping()
+        {
+            return Ok("Pong");
+        }
     }
 }
