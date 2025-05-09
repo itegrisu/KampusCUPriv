@@ -64,21 +64,15 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key.pem
           chmod 600 ~/.ssh/deploy_key.pem
-
+  
       - name: Deploy via SSH & Docker Compose
         run: |
           ssh -i ~/.ssh/deploy_key.pem \
             -o StrictHostKeyChecking=no \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "set -e && \
-             cd /ubuntu/temiz-kampuscu && \
-             echo '>>> Güncel kodu çekiliyor…' && \
+            "cd /ubuntu/temiz-kampuscu && \
              git pull origin master && \
-             echo '>>> Docker Compose dosyası:' && ls -la main.yaml && \
-             echo '>>> Mevcut containerlar indiriliyor…' && \
-             docker-compose -f main.yaml down --volumes && \
-             echo '>>> Yeni image çekiliyor…' && \
-             docker-compose -f main.yaml pull && \
-             echo '>>> Containerlar yeniden oluşturuluyor…' && \
-             docker-compose -f main.yaml up -d --force-recreate && \
-             echo '>>> Deploy tamam.'"            
+             docker-compose down --volumes && \
+             docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/kampuscu:latest || true && \
+             docker-compose pull && \
+             docker-compose up -d --force-recreate"       
