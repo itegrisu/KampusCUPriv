@@ -4,6 +4,7 @@ using AutoMapper;
 using X = Domain.Entities.ClubManagements;
 using MediatR;
 using Application.Repositories.ClubManagementRepos.ClubRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.ClubFeatures.Clubs.Commands.Delete;
 
@@ -17,14 +18,15 @@ public class DeleteClubCommand : IRequest<DeletedClubResponse>
         private readonly IClubReadRepository _clubReadRepository;
         private readonly IClubWriteRepository _clubWriteRepository;
         private readonly ClubBusinessRules _clubBusinessRules;
-
+        private readonly IRedisCacheService _redisCacheService;
         public DeleteClubCommandHandler(IMapper mapper, IClubReadRepository clubReadRepository,
-                                         ClubBusinessRules clubBusinessRules, IClubWriteRepository clubWriteRepository)
+                                         ClubBusinessRules clubBusinessRules, IClubWriteRepository clubWriteRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _clubReadRepository = clubReadRepository;
             _clubBusinessRules = clubBusinessRules;
             _clubWriteRepository = clubWriteRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<DeletedClubResponse> Handle(DeleteClubCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,8 @@ public class DeleteClubCommand : IRequest<DeletedClubResponse>
 
             _clubWriteRepository.Update(club);
             await _clubWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Clubs_");
 
             return new()
             {

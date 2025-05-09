@@ -6,6 +6,7 @@ using X = Domain.Entities.ClubManagements;
 using MediatR;
 using Application.Repositories.ClubManagementRepos.ClubRepo;
 using Microsoft.EntityFrameworkCore;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.ClubFeatures.Clubs.Commands.Update;
 
@@ -25,14 +26,15 @@ public class UpdateClubCommand : IRequest<UpdatedClubResponse>
         private readonly IClubWriteRepository _clubWriteRepository;
         private readonly IClubReadRepository _clubReadRepository;
         private readonly ClubBusinessRules _clubBusinessRules;
-
+        private readonly IRedisCacheService _redisCacheService;
         public UpdateClubCommandHandler(IMapper mapper, IClubWriteRepository clubWriteRepository,
-                                         ClubBusinessRules clubBusinessRules, IClubReadRepository clubReadRepository)
+                                         ClubBusinessRules clubBusinessRules, IClubReadRepository clubReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _clubWriteRepository = clubWriteRepository;
             _clubBusinessRules = clubBusinessRules;
             _clubReadRepository = clubReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<UpdatedClubResponse> Handle(UpdateClubCommand request, CancellationToken cancellationToken)
@@ -44,6 +46,9 @@ public class UpdateClubCommand : IRequest<UpdatedClubResponse>
 
             _clubWriteRepository.Update(club!);
             await _clubWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Clubs_");
+
             GetByGidClubResponse obj = _mapper.Map<GetByGidClubResponse>(club);
 
             return new()

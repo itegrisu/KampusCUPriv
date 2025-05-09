@@ -5,6 +5,7 @@ using AutoMapper;
 using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Application.Repositories.DefinitionManagementRepo.ClassRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Classes.Commands.Update;
 
@@ -19,14 +20,16 @@ public class UpdateClassCommand : IRequest<UpdatedClassResponse>
         private readonly IClassWriteRepository _classWriteRepository;
         private readonly IClassReadRepository _classReadRepository;
         private readonly ClassBusinessRules _classBusinessRules;
+        private readonly IRedisCacheService _redisCacheService;
 
         public UpdateClassCommandHandler(IMapper mapper, IClassWriteRepository classWriteRepository,
-                                         ClassBusinessRules classBusinessRules, IClassReadRepository classReadRepository)
+                                         ClassBusinessRules classBusinessRules, IClassReadRepository classReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _classWriteRepository = classWriteRepository;
             _classBusinessRules = classBusinessRules;
             _classReadRepository = classReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<UpdatedClassResponse> Handle(UpdateClassCommand request, CancellationToken cancellationToken)
@@ -38,6 +41,9 @@ public class UpdateClassCommand : IRequest<UpdatedClassResponse>
 
             _classWriteRepository.Update(class1!);
             await _classWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Classes_");
+
             GetByGidClassResponse obj = _mapper.Map<GetByGidClassResponse>(class1);
 
             return new()

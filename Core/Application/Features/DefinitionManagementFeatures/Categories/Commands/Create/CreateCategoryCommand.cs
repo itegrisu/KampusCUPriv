@@ -6,6 +6,7 @@ using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.DefinitionManagementRepo.CategoryRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Categories.Commands.Create;
 
@@ -22,14 +23,15 @@ public string Name { get; set; }
         private readonly ICategoryWriteRepository _categoryWriteRepository;
         private readonly ICategoryReadRepository _categoryReadRepository;
         private readonly CategoryBusinessRules _categoryBusinessRules;
-
+        private readonly IRedisCacheService _redisCacheService;
         public CreateCategoryCommandHandler(IMapper mapper, ICategoryWriteRepository categoryWriteRepository,
-                                         CategoryBusinessRules categoryBusinessRules, ICategoryReadRepository categoryReadRepository)
+                                         CategoryBusinessRules categoryBusinessRules, ICategoryReadRepository categoryReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _categoryWriteRepository = categoryWriteRepository;
             _categoryBusinessRules = categoryBusinessRules;
             _categoryReadRepository = categoryReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<CreatedCategoryResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
@@ -41,7 +43,9 @@ public string Name { get; set; }
             await _categoryWriteRepository.AddAsync(category);
             await _categoryWriteRepository.SaveAsync();
 
-			X.Category savedCategory = await _categoryReadRepository.GetAsync(predicate: x => x.Gid == category.Gid);
+            await _redisCacheService.RemoveByPattern("Categories_");
+
+            X.Category savedCategory = await _categoryReadRepository.GetAsync(predicate: x => x.Gid == category.Gid);
 			//INCLUDES Buraya Gelecek include varsa eklenecek
 			//include: x => x.Include(x => x.UserFK));
 

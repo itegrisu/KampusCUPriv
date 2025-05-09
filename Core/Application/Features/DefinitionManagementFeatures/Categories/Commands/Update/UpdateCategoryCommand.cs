@@ -5,6 +5,7 @@ using AutoMapper;
 using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Application.Repositories.DefinitionManagementRepo.CategoryRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Categories.Commands.Update;
 
@@ -23,14 +24,16 @@ public string Name { get; set; }
         private readonly ICategoryWriteRepository _categoryWriteRepository;
         private readonly ICategoryReadRepository _categoryReadRepository;
         private readonly CategoryBusinessRules _categoryBusinessRules;
+        private readonly IRedisCacheService _redisCacheService;
 
         public UpdateCategoryCommandHandler(IMapper mapper, ICategoryWriteRepository categoryWriteRepository,
-                                         CategoryBusinessRules categoryBusinessRules, ICategoryReadRepository categoryReadRepository)
+                                         CategoryBusinessRules categoryBusinessRules, ICategoryReadRepository categoryReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _categoryWriteRepository = categoryWriteRepository;
             _categoryBusinessRules = categoryBusinessRules;
             _categoryReadRepository = categoryReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<UpdatedCategoryResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
@@ -42,6 +45,9 @@ public string Name { get; set; }
 
             _categoryWriteRepository.Update(category!);
             await _categoryWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Categories_");
+
             GetByGidCategoryResponse obj = _mapper.Map<GetByGidCategoryResponse>(category);
 
             return new()

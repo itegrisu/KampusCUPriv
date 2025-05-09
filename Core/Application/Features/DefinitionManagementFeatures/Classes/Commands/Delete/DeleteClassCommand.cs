@@ -4,6 +4,7 @@ using AutoMapper;
 using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Application.Repositories.DefinitionManagementRepo.ClassRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Classes.Commands.Delete;
 
@@ -17,14 +18,16 @@ public class DeleteClassCommand : IRequest<DeletedClassResponse>
         private readonly IClassReadRepository _classReadRepository;
         private readonly IClassWriteRepository _classWriteRepository;
         private readonly ClassBusinessRules _classBusinessRules;
+        private readonly IRedisCacheService _redisCacheService;
 
         public DeleteClassCommandHandler(IMapper mapper, IClassReadRepository classReadRepository,
-                                         ClassBusinessRules classBusinessRules, IClassWriteRepository classWriteRepository)
+                                         ClassBusinessRules classBusinessRules, IClassWriteRepository classWriteRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _classReadRepository = classReadRepository;
             _classBusinessRules = classBusinessRules;
             _classWriteRepository = classWriteRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<DeletedClassResponse> Handle(DeleteClassCommand request, CancellationToken cancellationToken)
@@ -35,6 +38,8 @@ public class DeleteClassCommand : IRequest<DeletedClassResponse>
 
             _classWriteRepository.Update(class1);
             await _classWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Classes_");
 
             return new()
             {

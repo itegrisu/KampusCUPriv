@@ -6,6 +6,7 @@ using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.DefinitionManagementRepo.DepartmentRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Departments.Commands.Create;
 
@@ -19,14 +20,16 @@ public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
         private readonly IDepartmentWriteRepository _departmentWriteRepository;
         private readonly IDepartmentReadRepository _departmentReadRepository;
         private readonly DepartmentBusinessRules _departmentBusinessRules;
+        private readonly IRedisCacheService _redisCacheService;
 
         public CreateDepartmentCommandHandler(IMapper mapper, IDepartmentWriteRepository departmentWriteRepository,
-                                         DepartmentBusinessRules departmentBusinessRules, IDepartmentReadRepository departmentReadRepository)
+                                         DepartmentBusinessRules departmentBusinessRules, IDepartmentReadRepository departmentReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _departmentWriteRepository = departmentWriteRepository;
             _departmentBusinessRules = departmentBusinessRules;
             _departmentReadRepository = departmentReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<CreatedDepartmentResponse> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
@@ -41,6 +44,8 @@ public class CreateDepartmentCommand : IRequest<CreatedDepartmentResponse>
             X.Department savedDepartment = await _departmentReadRepository.GetAsync(predicate: x => x.Gid == department.Gid);
             //INCLUDES Buraya Gelecek include varsa eklenecek
             //include: x => x.Include(x => x.UserFK));
+
+            await _redisCacheService.RemoveByPattern("Departments_");
 
             GetByGidDepartmentResponse obj = _mapper.Map<GetByGidDepartmentResponse>(savedDepartment);
             return new()

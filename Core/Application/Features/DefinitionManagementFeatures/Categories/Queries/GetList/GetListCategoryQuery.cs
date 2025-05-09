@@ -7,6 +7,7 @@ using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using System.Linq.Expressions;
 using Application.Repositories.DefinitionManagementRepo.CategoryRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Categories.Queries.GetList;
 
@@ -19,34 +20,48 @@ public class GetListCategoryQuery : IRequest<GetListResponse<GetListCategoryList
         private readonly ICategoryReadRepository _categoryReadRepository;
         private readonly IMapper _mapper;
         private readonly NoPagination<X.Category, GetListCategoryListItemDto> _noPagination;
-
-        public GetListCategoryQueryHandler(ICategoryReadRepository categoryReadRepository, IMapper mapper, NoPagination<X.Category, GetListCategoryListItemDto> noPagination)
+        private readonly IRedisCacheService _redisCacheService;
+        public GetListCategoryQueryHandler(ICategoryReadRepository categoryReadRepository, IMapper mapper, NoPagination<X.Category, GetListCategoryListItemDto> noPagination, IRedisCacheService redisCacheService)
         {
             _categoryReadRepository = categoryReadRepository;
             _mapper = mapper;
             _noPagination = noPagination;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<GetListResponse<GetListCategoryListItemDto>> Handle(GetListCategoryQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageRequest.PageIndex == -1)
-                //unutma
-				//includes varsa eklenecek - Orn: Altta
-				//return await _noPagination.NoPaginationData(cancellationToken, 
-                //    includes: new Expression<Func<Category, object>>[]
-                //    {
-                //       x => x.UserFK,
-                //       x=> x.CategoryMembers
-                //    });
-				return await _noPagination.NoPaginationData(cancellationToken, orderBy: x => x.Name);
-            IPaginate<X.Category> categorys = await _categoryReadRepository.GetListAsync(
-                index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize,
-                cancellationToken: cancellationToken,
-                orderBy: x => x.OrderBy(o => o.Name)
-            );
+            // 1) Cache key olu�tur
+            string key = $"Categories_{request.PageRequest.PageIndex}_{request.PageRequest.PageSize}";
 
-            GetListResponse<GetListCategoryListItemDto> response = _mapper.Map<GetListResponse<GetListCategoryListItemDto>>(categorys);
+            // 2) Cache kontrol�
+            var cached = await _redisCacheService.GetAsync<GetListResponse<GetListCategoryListItemDto>>(key);
+            if (cached is not null)
+                return cached;
+
+            // 3) As�l veri sorgusu
+            GetListResponse<GetListCategoryListItemDto> response;
+            if (request.PageRequest.PageIndex == -1)
+            {
+                response = await _noPagination.NoPaginationData(
+                    cancellationToken,
+                    orderBy: x => x.Name);
+            }
+            else
+            {
+                IPaginate<X.Category> categorys = await _categoryReadRepository.GetListAsync(
+                    index: request.PageRequest.PageIndex,
+                    size: request.PageRequest.PageSize,
+                    cancellationToken: cancellationToken,
+                    orderBy: x => x.OrderBy(o => o.Name)
+                );
+
+                response = _mapper.Map<GetListResponse<GetListCategoryListItemDto>>(categorys);
+            }
+
+            // 4) Sonu�lar� cache�e yaz
+            await _redisCacheService.SetAsync(key, response, TimeSpan.FromMinutes(5));
+
             return response;
         }
     }

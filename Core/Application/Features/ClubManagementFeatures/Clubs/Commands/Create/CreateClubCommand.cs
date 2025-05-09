@@ -6,6 +6,7 @@ using X = Domain.Entities.ClubManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.ClubManagementRepos.ClubRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.ClubFeatures.Clubs.Commands.Create;
 
@@ -24,14 +25,15 @@ public class CreateClubCommand : IRequest<CreatedClubResponse>
         private readonly IClubWriteRepository _clubWriteRepository;
         private readonly IClubReadRepository _clubReadRepository;
         private readonly ClubBusinessRules _clubBusinessRules;
-
+        private readonly IRedisCacheService _redisCacheService;
         public CreateClubCommandHandler(IMapper mapper, IClubWriteRepository clubWriteRepository,
-                                         ClubBusinessRules clubBusinessRules, IClubReadRepository clubReadRepository)
+                                         ClubBusinessRules clubBusinessRules, IClubReadRepository clubReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _clubWriteRepository = clubWriteRepository;
             _clubBusinessRules = clubBusinessRules;
             _clubReadRepository = clubReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<CreatedClubResponse> Handle(CreateClubCommand request, CancellationToken cancellationToken)
@@ -42,6 +44,8 @@ public class CreateClubCommand : IRequest<CreatedClubResponse>
 
             await _clubWriteRepository.AddAsync(club);
             await _clubWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Clubs_");
 
             X.Club savedClub = await _clubReadRepository.GetAsync(predicate: x => x.Gid == club.Gid, include: x => x.Include(x => x.UserFK).Include(x=> x.CategoryFK));
             //INCLUDES Buraya Gelecek include varsa eklenecek

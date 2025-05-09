@@ -5,6 +5,7 @@ using AutoMapper;
 using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Application.Repositories.DefinitionManagementRepo.DepartmentRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Departments.Commands.Update;
 
@@ -19,14 +20,16 @@ public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>
         private readonly IDepartmentWriteRepository _departmentWriteRepository;
         private readonly IDepartmentReadRepository _departmentReadRepository;
         private readonly DepartmentBusinessRules _departmentBusinessRules;
+        private readonly IRedisCacheService _redisCacheService;
 
         public UpdateDepartmentCommandHandler(IMapper mapper, IDepartmentWriteRepository departmentWriteRepository,
-                                         DepartmentBusinessRules departmentBusinessRules, IDepartmentReadRepository departmentReadRepository)
+                                         DepartmentBusinessRules departmentBusinessRules, IDepartmentReadRepository departmentReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _departmentWriteRepository = departmentWriteRepository;
             _departmentBusinessRules = departmentBusinessRules;
             _departmentReadRepository = departmentReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<UpdatedDepartmentResponse> Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken)
@@ -39,6 +42,8 @@ public class UpdateDepartmentCommand : IRequest<UpdatedDepartmentResponse>
             _departmentWriteRepository.Update(department!);
             await _departmentWriteRepository.SaveAsync();
             GetByGidDepartmentResponse obj = _mapper.Map<GetByGidDepartmentResponse>(department);
+
+            await _redisCacheService.RemoveByPattern("Departments_");
 
             return new()
             {

@@ -6,6 +6,7 @@ using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Repositories.DefinitionManagementRepo.ClassRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Classes.Commands.Create;
 
@@ -19,14 +20,16 @@ public class CreateClassCommand : IRequest<CreatedClassResponse>
         private readonly IClassWriteRepository _classWriteRepository;
         private readonly IClassReadRepository _classReadRepository;
         private readonly ClassBusinessRules _classBusinessRules;
+        private readonly IRedisCacheService _redisCacheService;
 
         public CreateClassCommandHandler(IMapper mapper, IClassWriteRepository classWriteRepository,
-                                         ClassBusinessRules classBusinessRules, IClassReadRepository classReadRepository)
+                                         ClassBusinessRules classBusinessRules, IClassReadRepository classReadRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _classWriteRepository = classWriteRepository;
             _classBusinessRules = classBusinessRules;
             _classReadRepository = classReadRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<CreatedClassResponse> Handle(CreateClassCommand request, CancellationToken cancellationToken)
@@ -37,6 +40,8 @@ public class CreateClassCommand : IRequest<CreatedClassResponse>
 
             await _classWriteRepository.AddAsync(class1);
             await _classWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Classes_");
 
             X.Class savedClass = await _classReadRepository.GetAsync(predicate: x => x.Gid == class1.Gid);
             //INCLUDES Buraya Gelecek include varsa eklenecek

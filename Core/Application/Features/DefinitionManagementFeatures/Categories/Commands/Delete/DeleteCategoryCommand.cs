@@ -4,6 +4,7 @@ using AutoMapper;
 using X = Domain.Entities.DefinitionManagements;
 using MediatR;
 using Application.Repositories.DefinitionManagementRepo.CategoryRepo;
+using Application.Abstractions.Redis;
 
 namespace Application.Features.DefinitionFeatures.Categories.Commands.Delete;
 
@@ -17,14 +18,16 @@ public class DeleteCategoryCommand : IRequest<DeletedCategoryResponse>
         private readonly ICategoryReadRepository _categoryReadRepository;
         private readonly ICategoryWriteRepository _categoryWriteRepository;
         private readonly CategoryBusinessRules _categoryBusinessRules;
+        private readonly IRedisCacheService _redisCacheService;
 
         public DeleteCategoryCommandHandler(IMapper mapper, ICategoryReadRepository categoryReadRepository,
-                                         CategoryBusinessRules categoryBusinessRules, ICategoryWriteRepository categoryWriteRepository)
+                                         CategoryBusinessRules categoryBusinessRules, ICategoryWriteRepository categoryWriteRepository, IRedisCacheService redisCacheService)
         {
             _mapper = mapper;
             _categoryReadRepository = categoryReadRepository;
             _categoryBusinessRules = categoryBusinessRules;
             _categoryWriteRepository = categoryWriteRepository;
+            _redisCacheService = redisCacheService;
         }
 
         public async Task<DeletedCategoryResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
@@ -35,6 +38,8 @@ public class DeleteCategoryCommand : IRequest<DeletedCategoryResponse>
 
             _categoryWriteRepository.Update(category);
             await _categoryWriteRepository.SaveAsync();
+
+            await _redisCacheService.RemoveByPattern("Categories_");
 
             return new()
             {

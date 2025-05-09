@@ -26,6 +26,7 @@ using Persistence.HangfireJobs.FileSystem;
 using Serilog;
 using Serilog.Core;
 using Serilog.Sinks.MSSqlServer;
+using StackExchange.Redis;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -237,6 +238,7 @@ builder.Services.AddDbContext<Context>(options =>
 });
 #endregion 
 
+#region Firebase
 void InitializeFirebase()
 {
     string basePath = AppContext.BaseDirectory;
@@ -250,7 +252,9 @@ void InitializeFirebase()
 
 InitializeFirebase();
 
-builder.Services.AddContainerWithDependenciesApplication();
+#endregion
+
+builder.Services.AddContainerWithDependenciesApplication(builder.Configuration);
 builder.Services.AddContainerWithDependenciesPersistence();
 builder.Services.AddContainerWithDependenciesCore();
 
