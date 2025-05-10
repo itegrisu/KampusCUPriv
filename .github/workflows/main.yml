@@ -70,7 +70,7 @@ jobs:
           ssh -i ~/.ssh/deploy_key.pem \
             -o StrictHostKeyChecking=no \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "cd /home/ubuntu/KampusCU/KampusCUPriv && \
+            "cd /home/ubuntu/KampusCUPriv && \
              docker-compose down --volumes && \
              docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/kampuscu:latest || true && \
              docker-compose pull && \
